@@ -11,3 +11,31 @@ class Entity{
 private:
     int id;
 };
+
+class Sprite : Entity{
+
+};
+
+class Pickup : Sprite{
+
+};
+
+class Projectile : Sprite {
+
+};
+
+class Character: Sprite {
+
+};
+
+class Player : Character {
+
+};
+
+class Terrain : Entity{
+
+};
+
+class Background : Entity{
+
+};
