@@ -4,7 +4,7 @@
 #include <SDL_mixer.h>
 #include <math.h>
 #include <cstdio>
-#include <gameManager.h>
+#include "gameManager.h"
 
 #define TWOPI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
@@ -30,6 +30,7 @@ SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH) {
 }
 
 // Setup the instance of SDL2
+
 void GameManager::setup() {
   // Initialize SDL2
   if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
