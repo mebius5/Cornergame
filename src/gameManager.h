@@ -1,3 +1,6 @@
+#ifndef CORNERGAME_GAME_MANAGER_H
+#define CORNERGAME_GAME_MANAGER_H
+
 #include <SDL.h>
 #include <SDL_image.h>
 #include <SDL_ttf.h>
@@ -14,20 +17,21 @@ private:
   SDL_Renderer* renderer;
   Mix_Music* music;
 
-  SDL_Texture* texture;
+  SDL_Texture* texture;     // background texture
   int texWidth;
   int texHeight;
   TTF_Font* font;
-  TTF_Font* font2;
 
-  const char * title = "Intro to Video Games";
-  const int width = 800;
-  const int height = 600;
+  const char* title;
+  const int width;
+  const int height;
 
-  //Methods
+public:
+  GameManager();
   void setup();
   void load();
   void run();
   void cleanup();
-
 };
+
+#endif //CORNERGAME_GAME_MANAGER_H

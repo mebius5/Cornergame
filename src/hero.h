@@ -5,8 +5,8 @@
 #ifndef CORNERGAME_HERO_H
 #define CORNERGAME_HERO_H
 
-#endif //CORNERGAME_HERO_H
-
 class Hero: public Player {
 
 };
+
+#endif //CORNERGAME_HERO_H

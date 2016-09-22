@@ -5,8 +5,6 @@
 #ifndef CORNERGAME_SYSTEM_H
 #define CORNERGAME_SYSTEM_H
 
-#endif //CORNERGAME_SYSTEM_H
-
 class Systems {
 
 };
@@ -30,3 +28,5 @@ class InputHandler : public Systems {
 class SoundHandler : public Systems {
 
 };
+
+#endif //CORNERGAME_SYSTEM_H

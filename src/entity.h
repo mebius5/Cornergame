@@ -5,8 +5,6 @@
 #ifndef CORNERGAME_ENTITY_H
 #define CORNERGAME_ENTITY_H
 
-#endif //CORNERGAME_ENTITY_H
-
 class Entity{
 private:
     int id;
@@ -39,3 +37,5 @@ class Terrain : Entity{
 class Background : Entity{
 
 };
+
+#endif //CORNERGAME_ENTITY_H
