@@ -5,6 +5,8 @@
 #ifndef CORNERGAME_HERO_H
 #define CORNERGAME_HERO_H
 
+#include "entity.h"
+
 class Hero: public Player {
 
 };
