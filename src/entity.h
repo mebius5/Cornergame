@@ -44,14 +44,12 @@ class Hero: public Player {
 
 private:
 public:
-    Hero(int startX, int startY, int width, int height);
-    ~Hero();
+    Hero(SDL_Renderer * renderer, int startX, int startY, int width, int height);
 };
 
 class Enemy : public Character {
 public:
     Enemy(int startX, int startY, int width, int height);
-    ~Enemy();
 };
 
 class Terrain : public Entity{

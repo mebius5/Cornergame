@@ -5,12 +5,19 @@
 #ifndef CORNERGAME_SYSTEM_H
 #define CORNERGAME_SYSTEM_H
 
+#include <list>
+#include "entity.h"
+
 class System {
 
 };
 
 class Drawer : public System {
-
+private:
+    SDL_Renderer * renderer;
+public:
+    Drawer(SDL_Renderer * renderer);
+    void draw(std::list<Entity> * entityList);
 };
 
 class CollisionDetector : public System {

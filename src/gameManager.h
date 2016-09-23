@@ -7,31 +7,36 @@
 #include <SDL_mixer.h>
 #include <math.h>
 #include <cstdio>
+#include <list>
+#include "command.h"
+#include "entity.h"
 
 #define TWOPI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
 
 class GameManager {
 private:
-  SDL_Window* window;
-  SDL_Renderer* renderer;
-  Mix_Music* music;
+    SDL_Window* window;
+    SDL_Renderer* renderer;
+    Mix_Music* music;
 
-  SDL_Texture* texture;     // background texture
-  int texWidth;
-  int texHeight;
-  TTF_Font* font;
+    SDL_Texture* texture;     // background texture
+    int texWidth;
+    int texHeight;
+    TTF_Font* font;
 
-  const char* title;
-  const int width;
-  const int height;
+    const char* title;
+    const int width;
+    const int height;
+    std::list<Command> * commandList;
+    std::list<Entity> * entityList;
 
 public:
-  GameManager();
-  void setup();
-  void load();
-  void run();
-  void cleanup();
+    GameManager();
+    void setup();
+    void load();
+    void run();
+    void cleanup();
 };
 
 #endif //CORNERGAME_GAME_MANAGER_H

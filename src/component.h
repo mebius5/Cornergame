@@ -6,6 +6,9 @@
 #define CORNERGAME_PLUGIN_H
 
 
+#include <SDL_render.h>
+#include "command.h"
+
 class Component {
 
 };
@@ -28,12 +31,18 @@ class Physics : public Component{
 };
 
 class Texture : public Component{
-    Texture texture;
+public:
+    SDL_Texture * texture;
+    int layer;
+    Texture(SDL_Texture * texture, int layer);
 };
 
 class Input : public Component {
 public:
-    enum Direction {up, down, left, right};
+    Command * onLeft;
+    Command * onRight;
+    Command * onUp;
+    Command * onDown;
 };
 
 #endif //CORNERGAME_PLUGIN_H
