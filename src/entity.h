@@ -38,6 +38,12 @@ class Player : Character {
 
 };
 
+class Enemy : public Character {
+public:
+    Enemy();
+    ~Enemy();
+}
+
 class Terrain : Entity{
 
 };
