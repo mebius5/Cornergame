@@ -6,8 +6,15 @@
 #define CORNERGAME_HERO_H
 
 #include "entity.h"
+#include "plugin.h"
 
 class Hero: public Player {
+
+private:
+    Location location;
+    Health health;
+
+public:
 
 };
 

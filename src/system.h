@@ -5,27 +5,27 @@
 #ifndef CORNERGAME_SYSTEM_H
 #define CORNERGAME_SYSTEM_H
 
-class Systems {
+class System {
 
 };
 
-class Drawer : public Systems {
+class Drawer : public System {
 
 };
 
-class CollisionDetector : public Systems {
+class CollisionDetector : public System {
 
 };
 
-class LocationCalculator : public Systems {
+class LocationCalculator : public System {
 
 };
 
-class InputHandler : public Systems {
+class InputHandler : public System {
 
 };
 
-class SoundHandler : public Systems {
+class SoundHandler : public System {
 
 };
 
