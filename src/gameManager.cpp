@@ -101,7 +101,7 @@ void GameManager::load() {
     }
 
     // Load image
-    SDL_Surface* loadedImage = IMG_Load("resources/blue_rectangle_m.png");
+    SDL_Surface* loadedImage = IMG_Load("resources/jhu_logo.png");
     SDL_Surface* finalImage = NULL;
     if (loadedImage == NULL) {
         printf("Unable to load image! SDL_image Error: %s\n", IMG_GetError());
