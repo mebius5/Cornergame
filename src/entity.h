@@ -20,23 +20,23 @@ public:
     Input * input;
 };
 
-class Sprite : Entity{
+class Sprite : public Entity{
 
 };
 
-class Pickup : Sprite{
+class Pickup : public Sprite{
 
 };
 
-class Projectile : Sprite {
+class Projectile : public Sprite {
 
 };
 
-class Character: Sprite {
+class Character: public Sprite {
 
 };
 
-class Player : Character {
+class Player : public Character {
 
 };
 
@@ -48,11 +48,11 @@ public:
     ~Hero();
 };
 
-class Terrain : Entity{
+class Terrain : public Entity{
 
 };
 
-class Background : Entity{
+class Background : public Entity{
 
 };
 
