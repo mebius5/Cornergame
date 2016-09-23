@@ -4,7 +4,7 @@
 
 #include "component.h"
 
-Location::Location(int x, int y) {
+Location::Location(int x, int y, int width, int height) {
     this->xPixel = x;
     this->yPixel = y;
 }
