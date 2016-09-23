@@ -7,4 +7,6 @@
 Location::Location(int x, int y, int width, int height) {
     this->xPixel = x;
     this->yPixel = y;
+    this->width = width;
+    this->height = height;
 }
