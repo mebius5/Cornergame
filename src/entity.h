@@ -8,8 +8,10 @@
 #include "component.h"
 
 class Entity{
+
 private:
     int id;
+
 public:
     Location * location;
     Health * health;
@@ -36,6 +38,14 @@ class Character: Sprite {
 
 class Player : Character {
 
+};
+
+class Hero: public Player {
+
+private:
+public:
+    Hero(int startX, int startY, SDL_Texture * texture);
+    ~Hero();
 };
 
 class Terrain : Entity{
