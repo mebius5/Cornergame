@@ -6,7 +6,7 @@
 #define CORNERGAME_HERO_H
 
 #include "entity.h"
-#include "plugin.h"
+#include "component.h"
 
 class Hero: public Player {
 
@@ -15,7 +15,8 @@ private:
     Health health;
 
 public:
-
+    Hero();
+    ~Hero();
 };
 
 #endif //CORNERGAME_HERO_H

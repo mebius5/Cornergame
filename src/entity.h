@@ -5,9 +5,17 @@
 #ifndef CORNERGAME_ENTITY_H
 #define CORNERGAME_ENTITY_H
 
+#include "component.h"
+
 class Entity{
 private:
     int id;
+public:
+    Location * location;
+    Health * health;
+    Physics * physics;
+    Texture * texture;
+    Input * input;
 };
 
 class Sprite : Entity{
