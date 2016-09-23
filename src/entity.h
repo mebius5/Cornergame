@@ -44,7 +44,7 @@ class Hero: public Player {
 
 private:
 public:
-    Hero(int startX, int startY, SDL_Texture * texture);
+    Hero(int startX, int startY, int width, int height);
     ~Hero();
 };
 

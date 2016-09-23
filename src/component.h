@@ -16,7 +16,7 @@ public:
     int yPixel;
     int width;
     int height;
-    Location(int x, int y);
+    Location(int x, int y, int width, int height);
 };
 
 class Health: public Component {
