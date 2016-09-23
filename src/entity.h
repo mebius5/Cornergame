@@ -50,9 +50,9 @@ public:
 
 class Enemy : public Character {
 public:
-    Enemy();
+    Enemy(int startX, int startY, int width, int height);
     ~Enemy();
-}
+};
 
 class Terrain : public Entity{
 
