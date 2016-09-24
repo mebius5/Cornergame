@@ -64,6 +64,7 @@ Entity* EntityHandler::createEnemy(int x, int y) {
 
     enemy->movement = new MovementComponent();
     enemy->movement->insertMovement(new MoveDownCommand(enemy));
+    enemy->movement->insertMovement(new MoveLeftCommand(enemy));
 
     return enemy;
 }
