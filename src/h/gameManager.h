@@ -13,6 +13,9 @@
 #include "entity.h"
 #include "drawingHandler.h"
 #include "entityHandler.h"
+#include "inputHandler.h"
+#include "soundHandler.h"
+#include "locationHandler.h"
 
 #define TWOPI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI

@@ -1,7 +1,8 @@
-#include "gameManager.h"
 
 #define TWO_PI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
+
+#include "gameManager.h"
 
 /* gameManager.cpp
  * Cornerstone <GAME NAME>
@@ -148,10 +149,12 @@ void GameManager::run() {
     SDL_Event event;
     Mix_PlayMusic(this->music, -1);
 
-    std::list<Command> commandList;
+    std::list<Command * > commandList;
     std::map<int, Entity*> entityMap;
     DrawingHandler drawer(this->renderer);
     EntityHandler entityHandler(this->renderer);
+    InputHandler inputHandler(entityMap, commandList);
+    LocationHandler locationHandler;
 
     SDL_Rect backgroundRect = centeredRect(this->width, this->height,
                                            this->texWidth, this->texHeight);
@@ -178,13 +181,19 @@ void GameManager::run() {
                     event.key.keysym.sym == SDLK_q) {
                     running = false;
                 }
+            } else if (event.type == SDL_KEYDOWN){
+                    inputHandler.handleKeyDown(event);
             }
         }
 
         SDL_RenderClear(this->renderer);
         SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,
                          radToDeg(sin(time)), NULL, SDL_FLIP_NONE);
+
+        locationHandler.handleLocationCommands(commandList);
+
         drawer.draw(entityMap);
+
         SDL_RenderPresent(this->renderer);
     }
 

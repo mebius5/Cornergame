@@ -3,12 +3,14 @@
 SRCFILES = \
 	artComponent.cpp \
 	collisionHandler.cpp \
+	command.cpp \
 	drawingHandler.cpp \
 	entity.cpp \
 	entityHandler.cpp \
 	gameManager.cpp \
 	inputComponent.cpp \
 	inputHandler.cpp \
+	locationHandler.cpp \
 	locationComponent.cpp \
 	physicsComponent.cpp \
 	soundHandler.cpp \

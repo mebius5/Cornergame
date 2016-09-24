@@ -27,5 +27,13 @@ Entity* EntityHandler::createHero(int x, int y) {
     hero->art = new ArtComponent(SDL_CreateTextureFromSurface(this->renderer,
                                                               finalImage), 1);
     SDL_FreeSurface(finalImage);
+
+    //Need to see parameter in future
+    hero->input = new InputComponent();
+    hero->input->insertKeyDown(SDLK_DOWN, new MoveDownCommand(hero));
+    hero->input->insertKeyDown(SDLK_UP, new MoveUpCommand(hero));
+    hero->input->insertKeyDown(SDLK_LEFT, new MoveLeftCommand(hero));
+    hero->input->insertKeyDown(SDLK_RIGHT, new MoveRightCommand(hero));
+
     return hero;
 }
