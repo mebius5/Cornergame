@@ -2,8 +2,7 @@
 #define TWO_PI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
 
-#include <movementHandler.h>
-#include <collisionHandler.h>
+
 #include "gameManager.h"
 
 /* gameManager.cpp

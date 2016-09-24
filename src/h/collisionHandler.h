@@ -2,6 +2,7 @@
 #define CORNERGAME_COLLISION_HANDLER_H
 
 #include "command.h"
+#include <locationComponent.h>
 #include <iostream>
 
 

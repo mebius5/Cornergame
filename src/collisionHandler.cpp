@@ -1,4 +1,3 @@
-#include <locationComponent.h>
 #include "collisionHandler.h"
 
 CollisionHandler::CollisionHandler(std::map<int, Entity *> & entityMap,

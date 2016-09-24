@@ -16,6 +16,8 @@
 #include "inputHandler.h"
 #include "soundHandler.h"
 #include "locationHandler.h"
+#include "movementHandler.h"
+#include "collisionHandler.h"
 
 #define TWOPI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI

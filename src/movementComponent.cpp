@@ -1,7 +1,3 @@
-//
-// Created by Grady Xiao on 9/24/16.
-//
-
 #include <movementComponent.h>
 
 
