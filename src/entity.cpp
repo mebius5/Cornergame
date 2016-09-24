@@ -7,6 +7,7 @@ Entity::Entity(int id) {
     this->physics = NULL;
     this->art = NULL;
     this->input = NULL;
+    this->movement = NULL;
 }
 
 Entity::~Entity() {
@@ -20,6 +21,8 @@ Entity::~Entity() {
         delete this->art;
     if (this->input)
         delete this->input;
+    if (this->movement)
+        delete this->movement;
 }
 
 int Entity::getId() {

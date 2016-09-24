@@ -6,7 +6,12 @@ MovementComponent::MovementComponent() {
 }
 
 MovementComponent::~MovementComponent() {
-
+    std::list<Command *>::const_iterator it;
+    for(it=movementList.begin();it!=movementList.end();++it){
+        if(*it){
+            delete *it;
+        }
+    }
 }
 
 void MovementComponent::insertMovement(Command *command) {

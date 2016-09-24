@@ -9,11 +9,12 @@ CollisionHandler::CollisionHandler(std::map<int, Entity *> & entityMap,
 void CollisionHandler::handleCollision(){
     std::map<int, Entity*>::const_iterator it;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {
-        Entity * currentEntity = it ->second; //TODO: might have to free this
+        Entity * currentEntity = it ->second;
+
         if(currentEntity->input){ //Means that it's a player
             std::map<int, Entity*>::const_iterator b;
             for(b = entityMap.begin(); b != entityMap.end(); ++b){
-                Entity * otherEntity = b -> second; //TODO: might have to free this
+                Entity * otherEntity = b -> second;
                 if(currentEntity!=otherEntity && currentEntity->location && otherEntity->location){
                     //TODO: this also detects collision with another player, need fix later
                     if(isRectOverlapping(currentEntity->location, otherEntity->location)){
@@ -27,7 +28,7 @@ void CollisionHandler::handleCollision(){
     }
 }
 
-void CollisionHandler::handleBorderCollision(Entity *entity){ //TODO: might have to free entity
+void CollisionHandler::handleBorderCollision(Entity *entity){
     if(entity->input){ //It's a hero
         if(entity->location->x<0){
             entity->location->x=0;
@@ -71,7 +72,6 @@ void CollisionHandler::handleBorderCollision(Entity *entity){ //TODO: might have
 }
 
 bool CollisionHandler::isRectOverlapping(LocationComponent * a, LocationComponent * b){
-    //TODO: might have to free a & b
 
     //The sides of the rectangles
     int leftA, leftB;

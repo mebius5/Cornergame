@@ -221,7 +221,7 @@ void GameManager::run() {
         SDL_RenderPresent(this->renderer);
     }
 
-    /***
+
     // Release memory for Entities
     std::map<int, Entity*>::const_iterator it;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {
@@ -236,7 +236,6 @@ void GameManager::run() {
         delete *cIt;
     }
     commandList.clear();
-     ***/
 }
 
 int main(void) {
