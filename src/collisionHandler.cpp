@@ -16,6 +16,10 @@ void CollisionHandler::handleCollision(){
             for(b = entityMap.begin(); b != entityMap.end(); ++b){
                 Entity * otherEntity = b -> second;
                 if(currentEntity!=otherEntity && currentEntity->location && otherEntity->location){
+                    /***
+                     * TODO: This detects collision with every other entity other than itself
+                     * , including the other player
+                     */
                     if(isRectOverlapping(currentEntity->location, otherEntity->location)){
                         std::cout<<"Collision detected!"<<std::endl;
                         /***
