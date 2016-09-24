@@ -21,7 +21,7 @@ class GameManager {
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
-//    Mix_Music* music;
+    Mix_Music* music;
 
     SDL_Texture* texture;     // background texture
     int texWidth;
