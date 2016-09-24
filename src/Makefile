@@ -5,7 +5,7 @@ SRCFILES = \
 	collisionHandler.cpp \
 	drawingHandler.cpp \
 	entity.cpp \
-	entityHandler.cpp\
+	entityHandler.cpp \
 	gameManager.cpp \
 	inputComponent.cpp \
 	inputHandler.cpp \
@@ -19,17 +19,18 @@ CXXFLAGS = -std=c++11 -Wall -Wextra -Wpedantic -O2
 CXXFLAGS += `pkg-config --cflags sdl2 SDL2_mixer SDL2_image SDL2_ttf`
 LDFLAGS += `pkg-config --libs sdl2 SDL2_mixer SDL2_image SDL2_ttf`
 MACFLAGS = -I/usr/local/include/SDL2 -L/usr/local/lib -lSDL2_ttf -lSDL2_mixer -lSDL2_image -lSDL2
+INCLUDE = -Ih
 
 TARGET = gameManager
 
 all: $(TARGET)
 
 $(TARGET): $(SRCFILES)
-	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) $(LDFLAGS)
+	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) $(INCLUDE) $(LDFLAGS)
 
 clean:
 	$(RM) $(TARGET) *.o
 
 #For compiling on mac only
 mac:
-	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) $(MACFLAGS)
+	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) $(INCLUDE) $(MACFLAGS)
