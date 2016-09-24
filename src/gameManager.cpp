@@ -3,6 +3,7 @@
 #define RAD_TO_DEG 180 / M_PI
 
 #include <movementHandler.h>
+#include <collisionHandler.h>
 #include "gameManager.h"
 
 /* gameManager.cpp
@@ -157,6 +158,7 @@ void GameManager::run() {
     InputHandler inputHandler(entityMap, commandList);
     MovementHandler movementHandler(entityMap, commandList);
     LocationHandler locationHandler;
+    CollisionHandler collisionHandler(entityMap, commandList);
 
     SDL_Rect backgroundRect = centeredRect(this->width, this->height,
                                            this->texWidth, this->texHeight);
@@ -212,6 +214,8 @@ void GameManager::run() {
         //movementHandler.handleMovement();
 
         locationHandler.handleLocationCommands(commandList);
+
+        collisionHandler.handleCollision();
 
         drawer.draw(entityMap);
 
