@@ -7,6 +7,7 @@
 #include <SDL_mixer.h>
 #include <math.h>
 #include <list>
+#include <map>
 #include <iostream>
 #include "command.h"
 #include "entity.h"

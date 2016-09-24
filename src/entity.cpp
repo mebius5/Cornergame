@@ -1,6 +1,7 @@
 #include "entity.h"
 
-Entity::Entity() {
+Entity::Entity(int id) {
+    this->id = id;
     this->location = NULL;
     this->stats = NULL;
     this->physics = NULL;
@@ -19,4 +20,8 @@ Entity::~Entity() {
         delete this->art;
     if (this->input)
         delete this->input;
+}
+
+int Entity::getId() {
+    return this->id;
 }

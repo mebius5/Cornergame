@@ -1,10 +1,11 @@
 #include "entityHandler.h"
 
-EntityHandler::EntityHandler() {
-
+EntityHandler::EntityHandler(SDL_Renderer* renderer) {
+    this->nextId = 0;
+    this->renderer = renderer;
 }
 
-Entity* EntityHandler::createHero(SDL_Renderer* renderer, int x, int y) {
+Entity* EntityHandler::createHero(int x, int y) {
     SDL_Surface* loadedImage = IMG_Load("resources/hero.png");
     if (loadedImage == NULL) {
         std::cerr << "Unable to load image! SDL_image Error: "
@@ -21,10 +22,10 @@ Entity* EntityHandler::createHero(SDL_Renderer* renderer, int x, int y) {
         return NULL;
     }
 
-    Entity* hero = new Entity();
+    Entity* hero = new Entity(this->nextId++);
     hero->location = new LocationComponent(x, y, finalImage->w, finalImage->h);
-    hero->art =
-        new ArtComponent(SDL_CreateTextureFromSurface(renderer, finalImage), 1);
+    hero->art = new ArtComponent(SDL_CreateTextureFromSurface(this->renderer,
+                                                              finalImage), 1);
     SDL_FreeSurface(finalImage);
     return hero;
 }

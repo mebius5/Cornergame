@@ -19,8 +19,9 @@ public:
     ArtComponent* art;
     InputComponent* input;
 
-    Entity();
+    Entity(int id);
     ~Entity();
+    int getId();
 };
 
 #endif //CORNERGAME_ENTITY_H

@@ -149,16 +149,16 @@ void GameManager::run() {
     //Mix_PlayMusic(this->music, -1);
 
     std::list<Command> commandList;
-    std::list<Entity*> entityList;
+    std::map<int, Entity*> entityMap;
     DrawingHandler drawer(this->renderer);
-    EntityHandler entityHandler;
+    EntityHandler entityHandler(this->renderer);
 
     SDL_Rect backgroundRect = centeredRect(this->width, this->height,
                                            this->texWidth, this->texHeight);
 
     // Create hero entity
-    Entity* hero = entityHandler.createHero(this->renderer, 100, 100);
-    entityList.push_back(hero);
+    Entity* hero = entityHandler.createHero(100, 100);
+    entityMap[hero->getId()] = hero;
 
     while (running) {
         int currentTime = SDL_GetTicks();
@@ -184,11 +184,16 @@ void GameManager::run() {
         SDL_RenderClear(this->renderer);
         SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,
                          radToDeg(sin(time)), NULL, SDL_FLIP_NONE);
-        drawer.draw(entityList);
+        drawer.draw(entityMap);
         SDL_RenderPresent(this->renderer);
     }
 
-    delete hero;
+    // Release memory for Entities
+    std::map<int, Entity*>::const_iterator it;
+    for (it = entityMap.begin(); it != entityMap.end(); it++) {
+        delete it->second;      // delete Entity
+    }
+    entityMap.clear();
 }
 
 int main(void) {
