@@ -19,7 +19,12 @@ Handlers (aka. Systems)
     CollisionHandler, DrawingHandler, EntityHandler, InputHandler,
     LocationHandler, SoundHandler
     These objects handle entities, performing various functions depending on
-    the entity's components. For example, the Collision
+    the entity's components. For example, the LocationHandler will look at
+    each entity's current LocationComponent and PhysicsComponent to calculate
+    where the entity should move to. Once these calculations are made, the
+    Handler will update that Entity's LocationComponent and PhysicsComponent.
+    Handlers can emit commands if they want another Handler to do something
+    for them.
 
 Components
     ArtComponent, InputComponent, LocationComponent, PhysicsComponent,
