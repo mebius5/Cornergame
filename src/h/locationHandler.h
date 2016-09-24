@@ -8,7 +8,7 @@ class LocationHandler {
 
 public:
     LocationHandler();
-    void handleLocationCommands(std::list<Command *> commandList);
+    void handleLocationCommands(std::list<Command *> & commandList);
 };
 
 #endif //CORNERGAME_LOCATION_HANDLER_H

@@ -191,6 +191,7 @@ void GameManager::run() {
                          radToDeg(sin(time)), NULL, SDL_FLIP_NONE);
 
         locationHandler.handleLocationCommands(commandList);
+        //commandList.clear();
 
         drawer.draw(entityMap);
 
