@@ -12,6 +12,8 @@ SRCFILES = \
 	inputHandler.cpp \
 	locationHandler.cpp \
 	locationComponent.cpp \
+	movementComponent.cpp \
+	movementHandler.cpp \
 	physicsComponent.cpp \
 	soundHandler.cpp \
 	statsComponent.cpp

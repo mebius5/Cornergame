@@ -6,8 +6,10 @@
 #include "locationComponent.h"
 #include "physicsComponent.h"
 #include "statsComponent.h"
+#include "movementComponent.h"
 
 class InputComponent;   // forward declared for circular dependency
+class MovementComponent;
 
 class Entity {
 private:
@@ -18,6 +20,8 @@ public:
     PhysicsComponent* physics;
     ArtComponent* art;
     InputComponent* input;
+    MovementComponent * movement;
+
 
     Entity(int id);
     ~Entity();

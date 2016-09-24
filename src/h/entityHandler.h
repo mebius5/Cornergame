@@ -12,6 +12,7 @@ private:
 public:
     EntityHandler(SDL_Renderer* renderer);
     Entity* createHero(int x, int y);
+    Entity* createEnemy(int x, int y);
 };
 
 #endif //CORNERGAME_ENTITY_HANDLER_H

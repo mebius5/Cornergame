@@ -2,6 +2,7 @@
 #define TWO_PI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
 
+#include <movementHandler.h>
 #include "gameManager.h"
 
 /* gameManager.cpp
@@ -154,6 +155,7 @@ void GameManager::run() {
     DrawingHandler drawer(this->renderer);
     EntityHandler entityHandler(this->renderer);
     InputHandler inputHandler(entityMap, commandList);
+    MovementHandler movementHandler(entityMap, commandList);
     LocationHandler locationHandler;
 
     SDL_Rect backgroundRect = centeredRect(this->width, this->height,
@@ -162,6 +164,23 @@ void GameManager::run() {
     // Create hero entity
     Entity* hero = entityHandler.createHero(100, 100);
     entityMap[hero->getId()] = hero;
+
+
+    //Create enemy entities
+    Entity * enemy1 = entityHandler.createEnemy(350,150);
+    entityMap[enemy1->getId()] = enemy1;
+
+    Entity * enemy2 = entityHandler.createEnemy(500,150);
+    entityMap[enemy2->getId()] = enemy2;
+
+    Entity * enemy3 = entityHandler.createEnemy(650,150);
+    entityMap[enemy3->getId()] = enemy3;
+
+    Entity * enemy4 = entityHandler.createEnemy(400,300);
+    entityMap[enemy4->getId()] = enemy4;
+
+    Entity * enemy5 = entityHandler.createEnemy(600,300);
+    entityMap[enemy5->getId()] = enemy5;
 
     while (running) {
         int currentTime = SDL_GetTicks();
@@ -190,20 +209,31 @@ void GameManager::run() {
         SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,
                          radToDeg(sin(time)), NULL, SDL_FLIP_NONE);
 
+        //movementHandler.handleMovement();
+
         locationHandler.handleLocationCommands(commandList);
-        //commandList.clear();
 
         drawer.draw(entityMap);
 
         SDL_RenderPresent(this->renderer);
     }
 
+    /***
     // Release memory for Entities
     std::map<int, Entity*>::const_iterator it;
-    for (it = entityMap.begin(); it != entityMap.end(); it++) {
+    for (it = entityMap.begin(); it != entityMap.end(); ++it) {
         delete it->second;      // delete Entity
     }
     entityMap.clear();
+
+
+    // Release memory for Commands
+    std::list<Command *>::const_iterator cIt;
+    for(cIt = commandList.begin(); cIt != commandList.end(); ++cIt){
+        delete *cIt;
+    }
+    commandList.clear();
+     ***/
 }
 
 int main(void) {
