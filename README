@@ -1,11 +1,43 @@
 <GAME NAME> README
 Cornerstone
 
-I am a readme. Fill me in someday.
-
-
-Contributors <ADD YOUR EMAILS(?)>:
-Akshay Srivatsan
+CONTRIBUTORS
+Akshay Srivatsan <ADD EMAIL>
 Andrew Zhu azhu8@jhu.edu
 Grady Xiao gxiao2@jhu.edu
 Pratyush Trivedi ptrived8@jhu.edu
+
+
+CLASS STRUCTURE
+
+Entity
+    This is a skeleton for any object that appears on the screen. To add
+    functionality, various Components are attached to an Entity. The
+    EntityHandler is responsible for creating and destroying entities.
+
+Handlers (aka. Systems)
+    CollisionHandler, DrawingHandler, EntityHandler, InputHandler,
+    LocationHandler, SoundHandler
+    These objects handle entities, performing various functions depending on
+    the entity's components. For example, the Collision
+
+Components
+    ArtComponent, InputComponent, LocationComponent, PhysicsComponent,
+    StatsComponent
+    These define certain types of behavior for an entity. They are purely data
+    objects, and their fields are used to determine how handlers interact with
+    them.
+
+Commands
+    These are used to by Handlers to communicate with each other. Each handler
+    handles a different set of commands.
+
+GameManager
+    The game manager maintains the game loop, all entities, and all commands.
+    It is also responsible for startup and shutdown of the game.
+
+
+Handy command to compile a single file:
+g++ -std=c++11 -Wall -Wextra -Wpedantic -O2 -c -I/usr/local/include/SDL2 -L/usr/local/lib -lSDL2_ttf -lSDL2_mixer -lSDL2_image -lSDL2 <FILENAME.cpp>
+
+TODO: fix sound! - might just be [andrew's] system.

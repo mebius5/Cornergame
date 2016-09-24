@@ -1,12 +1,4 @@
-#include <SDL.h>
-#include <SDL_image.h>
-#include <SDL_ttf.h>
-#include <SDL_mixer.h>
-#include <math.h>
-#include <cstdio>
 #include "gameManager.h"
-#include "entity.h"
-#include "system.h"
 
 #define TWO_PI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
@@ -33,41 +25,43 @@ SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH) {
 }
 
 GameManager::GameManager() : title("<GAME NAME>"), width(800), height(600) {
-    commandList = new std::list<Command>();
-    entityList = new std::list<Entity>();
+
 }
 
 // Setup the instance of SDL2
 void GameManager::setup() {
     // Initialize SDL2
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO) != 0) {
-        printf("Unable to initialize SDL:  %s\n", SDL_GetError());
+        std::cerr << "Unable to initialize SDL: "
+                  << SDL_GetError() << std::endl;
         return;
     }
 
     // Initialize font
     if (TTF_Init() == -1) {
-        printf("SDL_ttf could not initialize! SDL_ttf Error: %s\n", TTF_GetError());
+        std::cerr << "SDL_ttf could not initialize! SDL_ttf Error: "
+                  << TTF_GetError() << std::endl;
         return;
     }
 
     // Initialize image
     int imgFlags = IMG_INIT_PNG;
     if (!(IMG_Init(imgFlags) & imgFlags)) {
-        printf("SDL_img could not initialize! SDL_img Error: %s\n", IMG_GetError());
+        std::cerr << "SDL_img could not initialize! SDL_img Error: "
+                  << IMG_GetError() << std::endl;
         return;
     }
 
     // Initialize Mixer
-    if (Mix_Init(MIX_INIT_MOD)) {
-        printf("The mixer failed to initialize!\n");
-        return;
-    }
+    //if (Mix_Init(MIX_INIT_MOD)) {
+    //    std::cerr << "The mixer failed to initialize!" << std::endl;
+    //    return;
+    //}
 
-    if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1) {
-        printf("The mixer failed to initialize!\n");
-        return;
-    }
+    //if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1) {
+    //    std::cerr << "The mixer failed to initialize!" << std::endl;
+    //    return;
+    //}
 
     // Initialize window
     this->window = SDL_CreateWindow(
@@ -87,7 +81,8 @@ void GameManager::setup() {
     this->renderer = SDL_CreateRenderer(this->window, -1, rendererFlags);
 
     if (!this->renderer) {
-        printf("Unable to initialize renderer:  %s\n", SDL_GetError());
+        std::cerr << "Unable to initialize renderer: "
+                  << SDL_GetError() << std::endl;
         return;
     }
 }
@@ -95,21 +90,23 @@ void GameManager::setup() {
 // Load the necessary assets
 void GameManager::load() {
     // Load music
-    this->music = Mix_LoadMUS("resources/abstract_tracking.xm");
-    if (!this->music) {
-        printf("Unable to load music:  %s\n", SDL_GetError());
-    }
+    //this->music = Mix_LoadMUS("resources/abstract_tracking.xm");
+    //if (!this->music) {
+    //    std::cerr << "Unable to load music: " << SDL_GetError() << std::endl;
+    //}
 
     // Load image
-    SDL_Surface* loadedImage = IMG_Load("resources/jhu_logo.png");
+    SDL_Surface* loadedImage = IMG_Load("resources/jhu-logo.png");
     SDL_Surface* finalImage = NULL;
     if (loadedImage == NULL) {
-        printf("Unable to load image! SDL_image Error: %s\n", IMG_GetError());
+        std::cerr << "Unable to load image! SDL_image Error: "
+                  << IMG_GetError() << std::endl;
         return;
     } else {
         finalImage = SDL_ConvertSurface(loadedImage, loadedImage->format, 0);
         if (finalImage == NULL) {
-            printf("Unable to optimize image! SDL Error: %s\n", SDL_GetError());
+            std::cerr << "Unable to optimize image! SDL Error: "
+                      << SDL_GetError() << std::endl;
         }
 
         //Get rid of old loaded surface
@@ -128,8 +125,8 @@ void GameManager::load() {
 void GameManager::cleanup() {
     TTF_CloseFont(this->font);
     SDL_DestroyTexture(this->texture);
-    Mix_FreeMusic(this->music);
-    Mix_CloseAudio();
+    //Mix_FreeMusic(this->music);
+    //Mix_CloseAudio();
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
     TTF_Quit();
@@ -137,7 +134,7 @@ void GameManager::cleanup() {
 
     //Set free pointers
     this->texture = NULL;
-    this->music = NULL;
+    //this->music = NULL;
     this->renderer = NULL;
     this->window = NULL;
 }
@@ -149,15 +146,19 @@ void GameManager::run() {
     float time = 0;
 
     SDL_Event event;
-    Mix_PlayMusic(this->music, -1);
-    SDL_Rect textureRect = centeredRect(this->width, this->height,
-                                        this->texWidth, this->texHeight);
+    //Mix_PlayMusic(this->music, -1);
 
-    Hero hero(this->renderer, 0, 0, 50, 100);
+    std::list<Command> commandList;
+    std::list<Entity*> entityList;
+    DrawingHandler drawer(this->renderer);
+    EntityHandler entityHandler;
 
-    this->entityList->push_back(hero);
+    SDL_Rect backgroundRect = centeredRect(this->width, this->height,
+                                           this->texWidth, this->texHeight);
 
-    Drawer drawer(this->renderer);
+    // Create hero entity
+    Entity* hero = entityHandler.createHero(this->renderer, 100, 100);
+    entityList.push_back(hero);
 
     while (running) {
         int currentTime = SDL_GetTicks();
@@ -180,13 +181,14 @@ void GameManager::run() {
             }
         }
 
-        SDL_SetRenderDrawColor( this->renderer, 0xFF, 0xFF, 0xFF, 0xFF );
         SDL_RenderClear(this->renderer);
-
-        drawer.draw(this->entityList);
-
+        SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,
+                         radToDeg(sin(time)), NULL, SDL_FLIP_NONE);
+        drawer.draw(entityList);
         SDL_RenderPresent(this->renderer);
     }
+
+    delete hero;
 }
 
 int main(void) {

@@ -6,10 +6,12 @@
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
 #include <math.h>
-#include <cstdio>
 #include <list>
+#include <iostream>
 #include "command.h"
 #include "entity.h"
+#include "drawingHandler.h"
+#include "entityHandler.h"
 
 #define TWOPI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
@@ -18,7 +20,7 @@ class GameManager {
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
-    Mix_Music* music;
+//    Mix_Music* music;
 
     SDL_Texture* texture;     // background texture
     int texWidth;
@@ -28,8 +30,6 @@ private:
     const char* title;
     const int width;
     const int height;
-    std::list<Command> * commandList;
-    std::list<Entity> * entityList;
 
 public:
     GameManager();
