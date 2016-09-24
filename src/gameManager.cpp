@@ -158,7 +158,7 @@ void GameManager::run() {
     InputHandler inputHandler(entityMap, commandList);
     MovementHandler movementHandler(entityMap, commandList);
     LocationHandler locationHandler;
-    CollisionHandler collisionHandler(entityMap, commandList);
+    CollisionHandler collisionHandler(entityMap, commandList, this->width, this->height);
 
     SDL_Rect backgroundRect = centeredRect(this->width, this->height,
                                            this->texWidth, this->texHeight);
