@@ -22,6 +22,13 @@ Hero::Hero(SDL_Renderer * renderer, int startX, int startY, int width, int heigh
         SDL_FreeSurface(loadedImage);
     }
 
+    /**
+     * Free this later
+     */
+    //SDL_Rect rect = {100,200,50,50};
+
+    //SDL_FillRect(finalImage, & rect, SDL_MapRGB(finalImage->format, 255, 0, 0));
+
     this->texture = new Texture(SDL_CreateTextureFromSurface(renderer, finalImage),1);
 }
 

@@ -153,7 +153,7 @@ void GameManager::run() {
     SDL_Rect textureRect = centeredRect(this->width, this->height,
                                         this->texWidth, this->texHeight);
 
-    Hero hero(this->renderer, 0, 0, 0, 0);
+    Hero hero(this->renderer, 0, 0, 50, 100);
 
     this->entityList->push_back(hero);
 
