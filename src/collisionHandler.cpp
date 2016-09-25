@@ -8,45 +8,28 @@ CollisionHandler::CollisionHandler(std::map<int, Entity*>& entityMap,
 
 void CollisionHandler::handleCollision(){
     std::map<int, Entity*>::const_iterator it;
+    std::map<int, Entity*>::const_iterator it2;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {
-        Entity * currentEntity = it ->second;
-
-        if(currentEntity->input){ //Means that it's a player
-            std::map<int, Entity*>::const_iterator b;
-            for(b = entityMap.begin(); b != entityMap.end(); ++b){
-                Entity * otherEntity = b -> second;
-                if(currentEntity!=otherEntity && currentEntity->location && otherEntity->location){
-                    //TODO: this also detects collision with another player, need fix later
-                    if(isRectOverlapping(currentEntity->location, otherEntity->location)){
-                        std::cout<<"Collision detected!"<<std::endl;
-                        //TODO: Play audio effect for collision
+        Entity* e1 = it->second;
+        if (e1->location && e1->location->onCollision) {
+            for (it2 = std::next(it, 1); it2 != entityMap.end(); ++it2) {
+                Entity* e2 = it2->second;
+                if (e1 != e2 && e2->location) {
+                    if (isRectOverlapping(e1->location, e2->location)) {
+                        commandList.push_back(e1->location->onCollision);
+                        if (e2->location->onCollision)
+                            commandList.push_back(e2->location->onCollision);
                     }
                 }
             }
         }
-        handleBorderCollision(currentEntity);
+
+        handleBorderCollision(e1);
     }
 }
 
 void CollisionHandler::handleBorderCollision(Entity *entity){
-    if(entity->input){ //It's a hero
-        if(entity->location->x<0){
-            entity->location->x=0;
-        }
-
-        if (entity->location->x+entity->location->width >this->width){
-            entity->location->x = this->width - entity->location->width;
-        }
-
-        if (entity->location->y<0){
-            entity->location->y=0;
-        }
-
-        if (entity->location->y+entity->location->height > this->height){
-            entity->location->y = this->height - entity->location->width;
-        }
-
-    } else if (entity->ai){ //It's an enemy
+    if (entity->input || entity->ai) {   //It's a moving character
         if(entity->location->x<0){
             entity->location->x=0;
         }

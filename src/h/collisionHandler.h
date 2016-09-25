@@ -6,7 +6,7 @@
 #include <iostream>
 #include <list>
 #include <map>
-
+#include <iterator>
 
 class CollisionHandler {
 private:

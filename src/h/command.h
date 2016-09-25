@@ -37,4 +37,14 @@ public:
     MoveDownCommand(Entity * entity);
 };
 
+class SoundCommand : public Command {
+
+};
+
+class PlaySoundCommand : public SoundCommand {
+public:
+    const char* filename;
+    PlaySoundCommand(const char* filename);
+};
+
 #endif //CORNERGAME_COMMAND_H

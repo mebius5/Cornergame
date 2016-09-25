@@ -19,3 +19,7 @@ MoveLeftCommand::MoveLeftCommand(Entity *entity) {
 MoveRightCommand::MoveRightCommand(Entity *entity) {
     this->entity = entity;
 }
+
+PlaySoundCommand::PlaySoundCommand(const char* filename) {
+    this->filename = filename;
+}
