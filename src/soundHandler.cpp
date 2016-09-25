@@ -21,7 +21,7 @@ SoundHandler::~SoundHandler() {
             Mix_HaltChannel(this->lastChannelUsedForSFX);
         }
         if(Mix_Playing(this->lastChannelUsedForSFX)==0){
-            Mix_FreeChunk(this->sfxChunk);
+            //Mix_FreeChunk(this->sfxChunk);
         }
     }
     Mix_CloseAudio();
@@ -49,7 +49,7 @@ void SoundHandler::playSFX(const char * filename) {
             Mix_HaltChannel(this->lastChannelUsedForSFX);
         }
         if(Mix_Playing(this->lastChannelUsedForSFX)==0){
-            Mix_FreeChunk(this->sfxChunk);
+            //Mix_FreeChunk(this->sfxChunk);
         }
     }
     this->sfxChunk = Mix_LoadWAV(filename);
