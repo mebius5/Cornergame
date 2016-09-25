@@ -16,14 +16,19 @@ SoundHandler::SoundHandler() {
 SoundHandler::~SoundHandler() {
     //Cleanup Mixer
     Mix_FreeMusic(this->backgroundMusic);
+
+    //Freeing previous chunk if exists
     if(this->sfxChunk!=NULL){
-        if(lastChannelUsedForSFX!=-1&& Mix_Playing(this->lastChannelUsedForSFX)==1){
-            Mix_HaltChannel(this->lastChannelUsedForSFX);
-        }
-        if(Mix_Playing(this->lastChannelUsedForSFX)==0){
+        if(Mix_Playing(this->lastChannelUsedForSFX)==0){ //If not playing
             //Mix_FreeChunk(this->sfxChunk);
+            this->sfxChunk=NULL;
+        } else{
+            Mix_HaltChannel(this->lastChannelUsedForSFX);
+            //Mix_FreeChunk(this->sfxChunk);
+            this->sfxChunk=NULL;
         }
     }
+
     Mix_CloseAudio();
     this->backgroundMusic = NULL;
     this->sfxChunk = NULL;
@@ -44,14 +49,19 @@ void SoundHandler::playBackgroundMusic(const char *filename) {
 }
 
 void SoundHandler::playSFX(const char * filename) {
+
+    //Freeing previous chunk if exists
     if(this->sfxChunk!=NULL){
-        if(lastChannelUsedForSFX!=-1&& Mix_Playing(this->lastChannelUsedForSFX)==1){
-            Mix_HaltChannel(this->lastChannelUsedForSFX);
-        }
-        if(Mix_Playing(this->lastChannelUsedForSFX)==0){
+        if(Mix_Playing(this->lastChannelUsedForSFX)==0){ //If not playing
             //Mix_FreeChunk(this->sfxChunk);
+            this->sfxChunk=NULL;
+        } else{
+            Mix_HaltChannel(this->lastChannelUsedForSFX);
+            //Mix_FreeChunk(this->sfxChunk);
+            this->sfxChunk=NULL;
         }
     }
+
     this->sfxChunk = Mix_LoadWAV(filename);
     if(!this->sfxChunk) {
         std::cerr << "Unable to load chunk: " << Mix_GetError() << std::endl;
