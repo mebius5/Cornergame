@@ -11,6 +11,7 @@ class SoundHandler {
 private:
     Mix_Music * backgroundMusic;
     Mix_Chunk * sfxChunk;
+    int lastChannelUsedForSFX;
     Mix_Music * loadMusic(const char * filename);
     void playSFX(const char * filename);
 public:

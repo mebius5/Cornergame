@@ -16,8 +16,14 @@ SoundHandler::SoundHandler() {
 SoundHandler::~SoundHandler() {
     //Cleanup Mixer
     Mix_FreeMusic(this->backgroundMusic);
-    if(this->sfxChunk!=NULL)
-        Mix_FreeChunk(this->sfxChunk);
+    if(this->sfxChunk!=NULL){
+        if(lastChannelUsedForSFX!=-1&& Mix_Playing(this->lastChannelUsedForSFX)==1){
+            Mix_HaltChannel(this->lastChannelUsedForSFX);
+        }
+        if(Mix_Playing(this->lastChannelUsedForSFX)==0){
+            Mix_FreeChunk(this->sfxChunk);
+        }
+    }
     Mix_CloseAudio();
     this->backgroundMusic = NULL;
     this->sfxChunk = NULL;
@@ -39,13 +45,19 @@ void SoundHandler::playBackgroundMusic(const char *filename) {
 
 void SoundHandler::playSFX(const char * filename) {
     if(this->sfxChunk!=NULL){
-        Mix_FreeChunk(this->sfxChunk);
+        if(lastChannelUsedForSFX!=-1&& Mix_Playing(this->lastChannelUsedForSFX)==1){
+            Mix_HaltChannel(this->lastChannelUsedForSFX);
+        }
+        if(Mix_Playing(this->lastChannelUsedForSFX)==0){
+            Mix_FreeChunk(this->sfxChunk);
+        }
     }
     this->sfxChunk = Mix_LoadWAV(filename);
     if(!this->sfxChunk) {
         std::cerr << "Unable to load chunk: " << Mix_GetError() << std::endl;
     } else {
-        if(Mix_PlayChannel(-1, this->sfxChunk, 0)==-1) {
+        this->lastChannelUsedForSFX=Mix_PlayChannel(-1, this->sfxChunk, 0);
+        if(this->lastChannelUsedForSFX==-1) {
             std::cerr << "Mix_PlayChannel: " << Mix_GetError() << std::endl;
             // may be critical error, or maybe just no channels were free.
             // you could allocated another channel in that case...
