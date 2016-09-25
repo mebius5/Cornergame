@@ -15,20 +15,34 @@ SoundHandler::SoundHandler() {
 
 SoundHandler::~SoundHandler() {
     //Cleanup Mixer
-    Mix_FreeMusic(this->music);
+    Mix_FreeMusic(this->backgroundMusic);
     Mix_CloseAudio();
-    this->music = NULL;
+    this->backgroundMusic = NULL;
 }
 
-void SoundHandler::loadMusic(const char * filename) {
-    //Load music
-    this->music = Mix_LoadMUS(filename);
-    if (!this->music) {
+Mix_Music * SoundHandler::loadMusic( const char * filename) {
+    //Load backgroundMusic
+    Mix_Music * music = Mix_LoadMUS(filename);
+    if (!this->backgroundMusic) {
         std::cerr << "Unable to load music: " << SDL_GetError() << std::endl;
     }
+    return music;
 }
 
 void SoundHandler::playBackgroundMusic(const char *filename) {
-    loadMusic(filename);
-    Mix_PlayMusic(this->music, -1);
+    this->backgroundMusic = loadMusic(filename);
+    Mix_PlayMusic(this->backgroundMusic, -1);
+}
+
+void SoundHandler::playSFX(const char * filename) {
+    Mix_Chunk * music = Mix_LoadWAV(filename);
+    if(!music) {
+        std::cerr << "Unable to load chunk: " << Mix_GetError() << std::endl;
+    } else {
+        if(Mix_PlayChannel(-1, music, -1)==-1) {
+            std::cerr << "Mix_PlayChannel: " << Mix_GetError() << std::endl;
+            // may be critical error, or maybe just no channels were free.
+            // you could allocated another channel in that case...
+        }
+    }
 }
