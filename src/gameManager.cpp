@@ -25,7 +25,7 @@ SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH) {
 }
 
 GameManager::GameManager() : title("<GAME NAME>"), width(800), height(600) {
-
+    srand(time(NULL));
 }
 
 // Setup the instance of SDL2
@@ -154,7 +154,7 @@ void GameManager::run() {
     EntityHandler entityHandler(this->renderer);
     InputHandler inputHandler(entityMap, commandList);
     AiHandler aiHandler(entityMap, commandList);
-    LocationHandler locationHandler;
+    LocationHandler locationHandler(commandList);
     CollisionHandler collisionHandler(entityMap, commandList, this->width, this->height);
 
     SDL_Rect backgroundRect = centeredRect(this->width, this->height,
@@ -210,7 +210,7 @@ void GameManager::run() {
 
         aiHandler.handleAi(time);
 
-        locationHandler.handleLocationCommands(commandList);
+        locationHandler.handleLocationCommands();
 
         collisionHandler.handleCollision();
 

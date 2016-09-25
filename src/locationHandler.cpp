@@ -1,27 +1,30 @@
 #include "locationHandler.h"
 
-LocationHandler::LocationHandler() {
-
+LocationHandler::LocationHandler(std::list<Command*>& cmdList) :
+        commandList(cmdList) {
 }
 
-void LocationHandler::handleLocationCommands(std::list<Command *> & commandList){
-    //AZ TODO: change to list of locationCommands
-
-    std::list<Command *>::const_iterator it;
-    for( it = commandList.begin(); it != commandList.end(); ++it){
-        Command * command = *it;
-        if(MoveDownCommand * moveDown = dynamic_cast<MoveDownCommand *> (command)){
-            moveDown->entity->location->y+=10;
-            commandList.erase(it);
-        } else if (MoveUpCommand * moveUp = dynamic_cast<MoveUpCommand * > (command)){
-            moveUp->entity->location->y-=10;
-            commandList.erase(it);
-        } else if (MoveLeftCommand * moveLeft = dynamic_cast<MoveLeftCommand * > (command)){
-            moveLeft->entity->location->x-=10;
-            commandList.erase(it);
-        } else if (MoveRightCommand * moveRight = dynamic_cast<MoveRightCommand * > (command)){
-            moveRight->entity->location->x+=10;
-            commandList.erase(it);
+//TODO: smooth out movement here
+void LocationHandler::handleLocationCommands() {
+    std::list<Command*>::const_iterator it;
+    for (it = this->commandList.begin(); it != this->commandList.end(); ++it) {
+        Command* c = *it;
+        if (MoveDownCommand* dCmd = dynamic_cast<MoveDownCommand*>(c)) {
+            dCmd->entity->location->y += 1;
+            it = this->commandList.erase(it);
+            --it;
+        } else if (MoveUpCommand* uCmd = dynamic_cast<MoveUpCommand*>(c)) {
+            uCmd->entity->location->y -= 1;
+            it = this->commandList.erase(it);
+            --it;
+        } else if (MoveLeftCommand* lCmd = dynamic_cast<MoveLeftCommand*>(c)) {
+            lCmd->entity->location->x -= 1;
+            it = this->commandList.erase(it);
+            --it;
+        } else if (MoveRightCommand* rCmd = dynamic_cast<MoveRightCommand*>(c)){
+            rCmd->entity->location->x += 1;
+            it = this->commandList.erase(it);
+            --it;
         }
     }
 }

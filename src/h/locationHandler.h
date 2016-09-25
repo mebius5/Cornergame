@@ -5,10 +5,11 @@
 #include "command.h"
 
 class LocationHandler {
-
+private:
+    std::list<Command*>& commandList;
 public:
-    LocationHandler();
-    void handleLocationCommands(std::list<Command *> & commandList);
+    LocationHandler(std::list<Command*>& cmdList);
+    void handleLocationCommands();
 };
 
 #endif //CORNERGAME_LOCATION_HANDLER_H

@@ -1,6 +1,5 @@
 #include "aiComponent.h"
 
-
 AiComponent::AiComponent() {
     this->lastGenTime = 0.0f;
     this->lastGenCommand = NULL;
