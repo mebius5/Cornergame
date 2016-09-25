@@ -8,12 +8,13 @@
 
 class InputHandler {
 private:
-    std::map<int, Entity *> & entityMap;
-    std::list<Command *> & commandList;
+    std::map<int, Entity*>& entityMap;
+    std::list<Command*>& commandList;
 
 public:
-    InputHandler(std::map<int, Entity *> & entityMap, std::list<Command*> & commandList);
-    void handleKeyDown (SDL_Event event);
+    InputHandler(std::map<int, Entity*>& entityMap,
+                 std::list<Command*>& cmdList);
+    void handleKeyDown(SDL_Event event);
 };
 
 #endif //CORNERGAME_INPUT_HANDLER_H

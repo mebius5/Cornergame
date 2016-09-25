@@ -27,3 +27,8 @@ Command* AiComponent::generateBehavior(float time) {
     this->lastGenTime = time;
     return this->lastGenCommand;
 }
+
+// force the entity to pick a new behavior
+void AiComponent::resetTimer() {
+    this->lastGenTime = 0.0f;
+}

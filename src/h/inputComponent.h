@@ -9,12 +9,13 @@ class Command;          // forward declared for circular dependency
 
 class InputComponent {
 public:
-    std::map<SDL_Keycode, Command *> onKeyDownMap;
+    std::map<SDL_Keycode, Command*> onKeyDown;
 
     InputComponent();
     ~InputComponent();
 
-    void insertKeyDown(SDL_Keycode keycode, Command * command);
+    void insertKeyDown(SDL_Keycode keycode, Command* command);
+    Command* getKeyDownCmd(SDL_Keycode);
 };
 
 #endif //CORNERGAME_INPUT_COMPONENT_H

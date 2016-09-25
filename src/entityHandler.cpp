@@ -6,27 +6,12 @@ EntityHandler::EntityHandler(SDL_Renderer* renderer) {
 }
 
 Entity* EntityHandler::createHero(int x, int y) {
-    SDL_Surface* loadedImage = IMG_Load("resources/hero.png");
-    if (loadedImage == NULL) {
-        std::cerr << "Unable to load image! SDL_image Error: "
-                  << IMG_GetError() << std::endl;
-        return NULL;
-    }
-
-    SDL_Surface* finalImage =
-        SDL_ConvertSurface(loadedImage, loadedImage->format, 0);
-    SDL_FreeSurface(loadedImage);
-    if (finalImage == NULL) {
-        std::cerr << "Unable to optimize image! SDL Error: "
-                  << SDL_GetError() << std::endl;
-        return NULL;
-    }
-
     Entity* hero = new Entity(this->nextId++);
-    hero->location = new LocationComponent(x, y, finalImage->w, finalImage->h);
+    SDL_Surface* image = this->loadImage("resources/hero.png");
+    hero->location = new LocationComponent(x, y, image->w, image->h);
     hero->art = new ArtComponent(SDL_CreateTextureFromSurface(this->renderer,
-                                                              finalImage), 1);
-    SDL_FreeSurface(finalImage);
+                                                              image), 1);
+    SDL_FreeSurface(image);
 
     //Need to see parameter in future
     hero->input = new InputComponent();
@@ -38,29 +23,13 @@ Entity* EntityHandler::createHero(int x, int y) {
     return hero;
 }
 
-
 Entity* EntityHandler::createEnemy(int x, int y) {
-    SDL_Surface* loadedImage = IMG_Load("resources/enemy.png");
-    if (loadedImage == NULL) {
-        std::cerr << "Unable to load image! SDL_image Error: "
-                  << IMG_GetError() << std::endl;
-        return NULL;
-    }
-
-    SDL_Surface* finalImage =
-            SDL_ConvertSurface(loadedImage, loadedImage->format, 0);
-    SDL_FreeSurface(loadedImage);
-    if (finalImage == NULL) {
-        std::cerr << "Unable to optimize image! SDL Error: "
-                  << SDL_GetError() << std::endl;
-        return NULL;
-    }
-
     Entity* enemy = new Entity(this->nextId++);
-    enemy->location = new LocationComponent(x, y, finalImage->w, finalImage->h);
+    SDL_Surface* image = this->loadImage("resources/enemy.png");
+    enemy->location = new LocationComponent(x, y, image->w, image->h);
     enemy->art = new ArtComponent(SDL_CreateTextureFromSurface(this->renderer,
-                                                              finalImage), 1);
-    SDL_FreeSurface(finalImage);
+                                                              image), 1);
+    SDL_FreeSurface(image);
 
     enemy->ai = new AiComponent();
     enemy->ai->newBehavior(new MoveDownCommand(enemy));
@@ -69,4 +38,22 @@ Entity* EntityHandler::createEnemy(int x, int y) {
     enemy->ai->newBehavior(new MoveRightCommand(enemy));
 
     return enemy;
+}
+
+SDL_Surface* EntityHandler::loadImage(const char* filename) {
+    SDL_Surface* image = IMG_Load(filename);
+    if (image == NULL) {
+        std::cerr << "Unable to load image! SDL_image Error: "
+                  << IMG_GetError() << std::endl;
+        return NULL;
+    }
+
+    SDL_Surface* finalImage = SDL_ConvertSurface(image, image->format, 0);
+    SDL_FreeSurface(image);
+    if (finalImage == NULL) {
+        std::cerr << "Unable to optimize image! SDL Error: "
+                  << SDL_GetError() << std::endl;
+        return NULL;
+    }
+    return finalImage;
 }

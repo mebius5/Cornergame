@@ -204,18 +204,14 @@ void GameManager::run() {
             }
         }
 
+        aiHandler.handleAi(time);
+        locationHandler.handleLocationCommands();
+        collisionHandler.handleCollision();
+
         SDL_RenderClear(this->renderer);
         SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,
                          radToDeg(sin(time)), NULL, SDL_FLIP_NONE);
-
-        aiHandler.handleAi(time);
-
-        locationHandler.handleLocationCommands();
-
-        collisionHandler.handleCollision();
-
         drawer.draw(entityMap);
-
         SDL_RenderPresent(this->renderer);
     }
 
@@ -227,12 +223,6 @@ void GameManager::run() {
     }
     entityMap.clear();
 
-
-    // Release memory for Commands
-    //std::list<Command *>::const_iterator cIt;
-    //for(cIt = commandList.begin(); cIt != commandList.end(); ++cIt){
-    //    delete *cIt;
-    //}
     commandList.clear();
 }
 

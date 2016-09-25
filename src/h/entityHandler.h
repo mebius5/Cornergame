@@ -9,6 +9,7 @@ class EntityHandler {
 private:
     int nextId;
     SDL_Renderer* renderer;
+    SDL_Surface* loadImage(const char* filename);
 public:
     EntityHandler(SDL_Renderer* renderer);
     Entity* createHero(int x, int y);

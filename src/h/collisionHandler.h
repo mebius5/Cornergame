@@ -19,7 +19,7 @@ private:
 public:
     CollisionHandler(std::map<int, Entity *> & entityMap,
                      std::list<Command*> & commandList,
-                     const int WIDTH, const int HEIGHT);
+                     const int w, const int h);
     void handleCollision();
 };
 

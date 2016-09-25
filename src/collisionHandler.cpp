@@ -1,9 +1,9 @@
 #include "collisionHandler.h"
 
-CollisionHandler::CollisionHandler(std::map<int, Entity *> & entityMap,
-                                   std::list<Command *> & commandList, const int WIDTH, const int HEIGHT):
-        entityMap(entityMap), commandList(commandList), width(WIDTH), height(HEIGHT){
-
+CollisionHandler::CollisionHandler(std::map<int, Entity*>& entityMap,
+                                   std::list<Command*>& commandList,
+                                   const int w, const int h):
+        entityMap(entityMap), commandList(commandList), width(w), height(h) {
 }
 
 void CollisionHandler::handleCollision(){
@@ -62,16 +62,11 @@ void CollisionHandler::handleBorderCollision(Entity *entity){
         if (entity->location->y+entity->location->height > this->height){
             entity->location->y = this->height - entity->location->width;
         }
-
-        //std::list<Command *>::const_iterator iterator;
-        //for(iterator=entity->movement->movementList.begin();iterator!=entity->movement->movementList.end(); ++iterator){
-            //Command * command = * iterator;
-            //TODO: randomize movement
-        //}
     }
 }
 
-bool CollisionHandler::isRectOverlapping(LocationComponent * a, LocationComponent * b){
+bool CollisionHandler::isRectOverlapping(LocationComponent* a,
+                                         LocationComponent* b) {
 
     //The sides of the rectangles
     int leftA, leftB;

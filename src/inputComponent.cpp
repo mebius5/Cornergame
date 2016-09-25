@@ -5,14 +5,20 @@ InputComponent::InputComponent() {
 }
 
 InputComponent::~InputComponent() {
-    std::map<SDL_Keycode , Command *>::const_iterator it;
-    for(it=onKeyDownMap.begin();it!=onKeyDownMap.end();++it){
-        if(it->second){
-            delete it->second;
-        }
+    std::map<SDL_Keycode, Command*>::const_iterator it;
+    for (it = this->onKeyDown.begin(); it != this->onKeyDown.end(); ++it) {
+        delete it->second;
     }
 }
 
-void InputComponent::insertKeyDown(SDL_Keycode keycode, Command * command){
-    this->onKeyDownMap[keycode]=command;
+void InputComponent::insertKeyDown(SDL_Keycode keycode, Command* command){
+    this->onKeyDown[keycode] = command;
+}
+
+Command* InputComponent::getKeyDownCmd(SDL_Keycode keycode) {
+    try {
+        return this->onKeyDown.at(keycode);
+    } catch (const std::out_of_range& oor) {
+        return NULL;
+    }
 }

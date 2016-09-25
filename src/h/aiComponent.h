@@ -5,7 +5,6 @@
 #include <command.h>
 
 class Command;          // forward declared for circular dependency
-class Entity;
 
 class AiComponent {
 private:
@@ -18,6 +17,7 @@ public:
 
     void newBehavior(Command* command);
     Command* generateBehavior(float time);
+    void resetTimer();
 };
 
 #endif //CORNERGAME_AI_COMPONENT_H

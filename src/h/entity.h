@@ -20,7 +20,7 @@ public:
     PhysicsComponent* physics;
     ArtComponent* art;
     InputComponent* input;
-    AiComponent * ai;
+    AiComponent* ai;
 
     Entity(int id);
     ~Entity();
