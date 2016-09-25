@@ -1,11 +1,11 @@
-#include "entityHandler.h"
+#include "entityBuilder.h"
 
-EntityHandler::EntityHandler(SDL_Renderer* renderer) {
+EntityBuilder::EntityBuilder(SDL_Renderer* renderer) {
     this->nextId = 0;
     this->renderer = renderer;
 }
 
-Entity* EntityHandler::createHero(int x, int y) {
+Entity* EntityBuilder::createHero(int x, int y) {
     Entity* hero = new Entity(this->nextId++);
     SDL_Surface* image = this->loadImage("resources/hero.png");
     hero->location = new LocationComponent(x, y, image->w, image->h,
@@ -15,7 +15,7 @@ Entity* EntityHandler::createHero(int x, int y) {
     SDL_FreeSurface(image);
 
     //Need to see parameter in future
-    hero->input = new InputComponent(1.0f);
+    hero->input = new InputComponent(.8f);
     hero->input->insertKeyDown(SDLK_DOWN, new MoveDownCommand(hero));
     hero->input->insertKeyDown(SDLK_UP, new MoveUpCommand(hero));
     hero->input->insertKeyDown(SDLK_LEFT, new MoveLeftCommand(hero));
@@ -24,7 +24,7 @@ Entity* EntityHandler::createHero(int x, int y) {
     return hero;
 }
 
-Entity* EntityHandler::createEnemy(int x, int y) {
+Entity* EntityBuilder::createEnemy(int x, int y) {
     Entity* enemy = new Entity(this->nextId++);
     SDL_Surface* image = this->loadImage("resources/enemy.png");
     enemy->location = new LocationComponent(x, y, image->w, image->h, NULL,
@@ -33,7 +33,7 @@ Entity* EntityHandler::createEnemy(int x, int y) {
                                                               image), 1);
     SDL_FreeSurface(image);
 
-    enemy->ai = new AiComponent(.4f);
+    enemy->ai = new AiComponent(.2f);
     enemy->ai->newBehavior(new MoveDownCommand(enemy));
     enemy->ai->newBehavior(new MoveUpCommand(enemy));
     enemy->ai->newBehavior(new MoveLeftCommand(enemy));
@@ -42,7 +42,7 @@ Entity* EntityHandler::createEnemy(int x, int y) {
     return enemy;
 }
 
-SDL_Surface* EntityHandler::loadImage(const char* filename) {
+SDL_Surface* EntityBuilder::loadImage(const char* filename) {
     SDL_Surface* image = IMG_Load(filename);
     if (image == NULL) {
         std::cerr << "Unable to load image! SDL_image Error: "

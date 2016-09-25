@@ -8,7 +8,7 @@ SRCFILES = \
 	command.cpp \
 	drawingHandler.cpp \
 	entity.cpp \
-	entityHandler.cpp \
+	entityBuilder.cpp \
 	gameManager.cpp \
 	inputComponent.cpp \
 	inputHandler.cpp \

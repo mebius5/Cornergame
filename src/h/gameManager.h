@@ -12,7 +12,7 @@
 #include "command.h"
 #include "entity.h"
 #include "drawingHandler.h"
-#include "entityHandler.h"
+#include "entityBuilder.h"
 #include "inputHandler.h"
 #include "soundHandler.h"
 #include "locationHandler.h"

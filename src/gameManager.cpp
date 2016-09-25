@@ -78,7 +78,6 @@ void GameManager::setup() {
 
 // Load the necessary assets
 void GameManager::load() {
-
     // Load image
     SDL_Surface* loadedImage = IMG_Load("resources/jhu-logo.png");
     SDL_Surface* finalImage = NULL;
@@ -130,7 +129,7 @@ void GameManager::run() {
     std::list<Command*> commandList;
     std::map<int, Entity*> entityMap;
     DrawingHandler drawer(this->renderer);
-    EntityHandler entityHandler(this->renderer);
+    EntityBuilder entityBuilder(this->renderer);
     InputHandler inputHandler(entityMap, commandList);
     AiHandler aiHandler(entityMap, commandList);
     LocationHandler locationHandler(commandList);
@@ -143,23 +142,23 @@ void GameManager::run() {
                                            this->texWidth, this->texHeight);
 
     // Create hero entity
-    Entity* hero = entityHandler.createHero(100, 100);
+    Entity* hero = entityBuilder.createHero(100, 100);
     entityMap[hero->getId()] = hero;
 
     //Create enemy entities
-    Entity * enemy1 = entityHandler.createEnemy(350,150);
+    Entity * enemy1 = entityBuilder.createEnemy(350,150);
     entityMap[enemy1->getId()] = enemy1;
 
-    Entity * enemy2 = entityHandler.createEnemy(500,150);
+    Entity * enemy2 = entityBuilder.createEnemy(500,150);
     entityMap[enemy2->getId()] = enemy2;
 
-    Entity * enemy3 = entityHandler.createEnemy(650,150);
+    Entity * enemy3 = entityBuilder.createEnemy(650,150);
     entityMap[enemy3->getId()] = enemy3;
 
-    Entity * enemy4 = entityHandler.createEnemy(400,300);
+    Entity * enemy4 = entityBuilder.createEnemy(400,300);
     entityMap[enemy4->getId()] = enemy4;
 
-    Entity * enemy5 = entityHandler.createEnemy(600,300);
+    Entity * enemy5 = entityBuilder.createEnemy(600,300);
     entityMap[enemy5->getId()] = enemy5;
 
     while (running) {
@@ -179,8 +178,8 @@ void GameManager::run() {
                 if (event.key.keysym.sym == SDLK_ESCAPE) {
                     running = false;
                 }
-            } else if (event.type == SDL_KEYDOWN){
-                inputHandler.handleKeyDown(event);
+            } else if (event.type == SDL_KEYDOWN) {
+                inputHandler.handleKeyDown(event.key.keysym.sym);
             }
         }
 

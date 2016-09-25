@@ -2,7 +2,6 @@
 Cornerstone
 
 TODOS:
-make player faster
 find out why key held down doesn't work at start
 diagonal movement for player
 fix leaks!
@@ -33,10 +32,10 @@ CLASS STRUCTURE
 Entity
     This is a skeleton for any object that appears on the screen. To add
     functionality, various Components are attached to an Entity. The
-    EntityHandler is responsible for creating and destroying entities.
+    EntityBuilder is responsible for creating and destroying entities.
 
 Handlers (aka. Systems)
-    CollisionHandler, DrawingHandler, EntityHandler, InputHandler,
+    CollisionHandler, DrawingHandler, InputHandler, AiHandler
     LocationHandler, SoundHandler
     These objects handle entities, performing various functions depending on
     the entity's components. For example, the LocationHandler will look at
@@ -48,7 +47,7 @@ Handlers (aka. Systems)
 
 Components
     ArtComponent, InputComponent, LocationComponent, PhysicsComponent,
-    StatsComponent
+    StatsComponent, AiComponent
     These define certain types of behavior for an entity. They are purely data
     objects, and their fields are used to determine how handlers interact with
     them.
