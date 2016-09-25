@@ -15,7 +15,7 @@ Entity* EntityHandler::createHero(int x, int y) {
     SDL_FreeSurface(image);
 
     //Need to see parameter in future
-    hero->input = new InputComponent();
+    hero->input = new InputComponent(1.0f);
     hero->input->insertKeyDown(SDLK_DOWN, new MoveDownCommand(hero));
     hero->input->insertKeyDown(SDLK_UP, new MoveUpCommand(hero));
     hero->input->insertKeyDown(SDLK_LEFT, new MoveLeftCommand(hero));
@@ -33,7 +33,7 @@ Entity* EntityHandler::createEnemy(int x, int y) {
                                                               image), 1);
     SDL_FreeSurface(image);
 
-    enemy->ai = new AiComponent();
+    enemy->ai = new AiComponent(.4f);
     enemy->ai->newBehavior(new MoveDownCommand(enemy));
     enemy->ai->newBehavior(new MoveUpCommand(enemy));
     enemy->ai->newBehavior(new MoveLeftCommand(enemy));

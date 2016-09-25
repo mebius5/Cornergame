@@ -13,7 +13,9 @@ private:
     int lastGenTime;            // last time a command was generated
     Command* lastGenCommand;    // last command that was generated
 public:
-    AiComponent();
+    float speed;
+
+    AiComponent(float speed);
     ~AiComponent();
 
     void newBehavior(Command* command);

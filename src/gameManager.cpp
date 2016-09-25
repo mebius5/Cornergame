@@ -186,7 +186,7 @@ void GameManager::run() {
 
         aiHandler.handleAiCommands();
         aiHandler.handleAi(currentTime);
-        locationHandler.handleLocationCommands(time);
+        locationHandler.handleLocationCommands(currentTime);
         collisionHandler.handleCollision();
         soundHandler.handleSFX(commandList, currentTime);
 

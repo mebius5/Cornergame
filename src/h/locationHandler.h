@@ -8,10 +8,11 @@
 class LocationHandler {
 private:
     std::list<Command*>& commandList;
-    float prevTime;             // records last time commands were handled
+    int prevTime;              // records last time commands were handled
+    float getSpeed(Entity* entity);
 public:
     LocationHandler(std::list<Command*>& cmdList);
-    void handleLocationCommands(float time);
+    void handleLocationCommands(int rawtime);
 };
 
 #endif //CORNERGAME_LOCATION_HANDLER_H

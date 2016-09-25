@@ -10,8 +10,9 @@ class Command;          // forward declared for circular dependency
 class InputComponent {
 public:
     std::map<SDL_Keycode, Command*> onKeyDown;
+    float speed;
 
-    InputComponent();
+    InputComponent(float speed);
     ~InputComponent();
 
     void insertKeyDown(SDL_Keycode keycode, Command* command);

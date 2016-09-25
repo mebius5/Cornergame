@@ -1,11 +1,31 @@
 <GAME NAME> README
 Cornerstone
 
+TODOS:
+make player faster
+find out why key held down doesn't work at start
+diagonal movement for player
+fix leaks!
+general refactor
+80 lines (for things that matter)
+Part 1
+THIS README
+Game name?
+
 CONTRIBUTORS
 Akshay Srivatsan <ADD EMAIL>
 Andrew Zhu azhu8@jhu.edu
 Grady Xiao gxiao2@jhu.edu
 Pratyush Trivedi ptrived8@jhu.edu
+
+ASSIGNMENT 2 NOTES
+See the game-plan.txt file for part 1 of the assignment. The first part is what
+we submitted for assignment 1, but at the bottom are additions/revisions to the
+vision for this assignment.
+
+To compile and run, type the following:
+make
+./gameManager
 
 
 CLASS STRUCTURE
@@ -44,10 +64,3 @@ GameManager
 
 Handy command to compile a single file:
 g++ -std=c++11 -Wall -Wextra -Wpedantic -O2 -c -Ih -I/usr/local/include/SDL2 -L/usr/local/lib -lSDL2_ttf -lSDL2_mixer -lSDL2_image -lSDL2 <FILENAME.cpp>
-
-To compile:
-make
-
-To run:
-./gameManager
-

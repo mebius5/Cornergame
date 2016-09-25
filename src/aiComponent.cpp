@@ -1,8 +1,9 @@
 #include "aiComponent.h"
 
-AiComponent::AiComponent() {
+AiComponent::AiComponent(float speed) {
     this->lastGenTime = 0;
     this->lastGenCommand = NULL;
+    this->speed = speed;
 }
 
 AiComponent::~AiComponent() {
