@@ -1,16 +1,6 @@
 <GAME NAME> README
 Cornerstone
 
-TODOS:
-find out why key held down doesn't work at start
-diagonal movement for player
-fix leaks!
-general refactor
-80 lines (for things that matter)
-Part 1
-THIS README
-Game name?
-
 CONTRIBUTORS
 Akshay Srivatsan <ADD EMAIL>
 Andrew Zhu azhu8@jhu.edu
@@ -25,6 +15,12 @@ vision for this assignment.
 To compile and run, type the following:
 make
 ./gameManager
+
+
+
+
+
+
 
 
 CLASS STRUCTURE
@@ -63,3 +59,9 @@ GameManager
 
 Handy command to compile a single file:
 g++ -std=c++11 -Wall -Wextra -Wpedantic -O2 -c -Ih -I/usr/local/include/SDL2 -L/usr/local/lib -lSDL2_ttf -lSDL2_mixer -lSDL2_image -lSDL2 <FILENAME.cpp>
+
+
+TODOS
+diagonal movement for player - solve SDL_getKeyboardState() issue
+Part 1
+THIS README

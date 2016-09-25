@@ -42,6 +42,7 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
     return enemy;
 }
 
+// Surface must be freed when done!
 SDL_Surface* EntityBuilder::loadImage(const char* filename) {
     SDL_Surface* image = IMG_Load(filename);
     if (image == NULL) {

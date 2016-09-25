@@ -9,15 +9,17 @@ CollisionHandler::CollisionHandler(std::map<int, Entity*>& entityMap,
 void CollisionHandler::handleCollision(){
     std::map<int, Entity*>::const_iterator it;
     std::map<int, Entity*>::const_iterator it2;
-    for (it = entityMap.begin(); it != entityMap.end(); ++it) {
+    for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it) {
         Entity* e1 = it->second;
         if (e1->location && e1->location->onEntityCollision) {
             for (it2 = std::next(it, 1); it2 != entityMap.end(); ++it2) {
                 Entity* e2 = it2->second;
                 if (e1 != e2 && e2->location && isRectOverlapping(e1, e2)) {
-                    this->commandList.push_back(e1->location->onEntityCollision);
+                    this->commandList.push_back(
+                            e1->location->onEntityCollision);
                     if (e2->location->onEntityCollision)
-                        this->commandList.push_back(e2->location->onEntityCollision);
+                        this->commandList.push_back(
+                                e2->location->onEntityCollision);
                 }
             }
         }

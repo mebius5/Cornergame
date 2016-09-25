@@ -3,7 +3,6 @@
 
 #include "command.h"
 #include <locationComponent.h>
-#include <iostream>
 #include <list>
 #include <map>
 #include <iterator>

@@ -17,7 +17,8 @@ SoundHandler::SoundHandler() {
 
 SoundHandler::~SoundHandler() {
     //Cleanup Mixer
-    Mix_FreeMusic(this->backgroundMusic);
+    if (this->backgroundMusic)
+        Mix_FreeMusic(this->backgroundMusic);
 
     //Freeing previous chunk if exists
     if(this->sfxChunk!=NULL){
@@ -26,14 +27,13 @@ SoundHandler::~SoundHandler() {
             this->sfxChunk=NULL;
         } else{
             Mix_HaltChannel(this->lastChannelUsedForSFX);
-            //Mix_FreeChunk(this->sfxChunk);
+            Mix_FreeChunk(this->sfxChunk);
             this->sfxChunk=NULL;
         }
     }
 
     Mix_CloseAudio();
     this->backgroundMusic = NULL;
-    this->sfxChunk = NULL;
 }
 
 Mix_Music * SoundHandler::loadMusic( const char * filename) {
@@ -64,7 +64,7 @@ void SoundHandler::playSFX(const char * filename, int rawtime) {
             this->sfxChunk=NULL;
         } else{
             Mix_HaltChannel(this->lastChannelUsedForSFX);
-            //Mix_FreeChunk(this->sfxChunk);
+            Mix_FreeChunk(this->sfxChunk);
             this->sfxChunk=NULL;
         }
     }
