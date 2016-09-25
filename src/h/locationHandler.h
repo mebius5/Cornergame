@@ -7,9 +7,10 @@
 class LocationHandler {
 private:
     std::list<Command*>& commandList;
+    float prevTime;             // records last time commands were handled
 public:
     LocationHandler(std::list<Command*>& cmdList);
-    void handleLocationCommands();
+    void handleLocationCommands(float time);
 };
 
 #endif //CORNERGAME_LOCATION_HANDLER_H

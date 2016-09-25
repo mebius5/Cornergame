@@ -155,7 +155,8 @@ void GameManager::run() {
     InputHandler inputHandler(entityMap, commandList);
     AiHandler aiHandler(entityMap, commandList);
     LocationHandler locationHandler(commandList);
-    CollisionHandler collisionHandler(entityMap, commandList, this->width, this->height);
+    CollisionHandler collisionHandler(entityMap, commandList,
+                                      this->width, this->height);
 
     SDL_Rect backgroundRect = centeredRect(this->width, this->height,
                                            this->texWidth, this->texHeight);
@@ -163,7 +164,6 @@ void GameManager::run() {
     // Create hero entity
     Entity* hero = entityHandler.createHero(100, 100);
     entityMap[hero->getId()] = hero;
-
 
     //Create enemy entities
     Entity * enemy1 = entityHandler.createEnemy(350,150);
@@ -205,7 +205,7 @@ void GameManager::run() {
         }
 
         aiHandler.handleAi(time);
-        locationHandler.handleLocationCommands();
+        locationHandler.handleLocationCommands(time);
         collisionHandler.handleCollision();
 
         SDL_RenderClear(this->renderer);
