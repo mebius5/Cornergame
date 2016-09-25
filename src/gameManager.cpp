@@ -136,8 +136,8 @@ void GameManager::run() {
     LocationHandler locationHandler(commandList);
     CollisionHandler collisionHandler(entityMap, commandList,
                                       this->width, this->height);
-    //SoundHandler soundHandler;
-    //soundHandler.playBackgroundMusic("resources/abstract_tracking.xm");
+    SoundHandler soundHandler;
+    soundHandler.playBackgroundMusic("resources/abstract_tracking.xm");
 
     SDL_Rect backgroundRect = centeredRect(this->width, this->height,
                                            this->texWidth, this->texHeight);
@@ -188,6 +188,7 @@ void GameManager::run() {
         aiHandler.handleAi(time);
         locationHandler.handleLocationCommands(time);
         collisionHandler.handleCollision();
+        soundHandler.handleSFX(commandList);
 
         SDL_RenderClear(this->renderer);
         SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,
