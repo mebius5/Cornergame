@@ -16,7 +16,8 @@ SoundHandler::SoundHandler() {
 SoundHandler::~SoundHandler() {
     //Cleanup Mixer
     Mix_FreeMusic(this->backgroundMusic);
-    Mix_FreeChunk(this->sfxChunk);
+    if(this->sfxChunk!=NULL)
+        Mix_FreeChunk(this->sfxChunk);
     Mix_CloseAudio();
     this->backgroundMusic = NULL;
     this->sfxChunk = NULL;
