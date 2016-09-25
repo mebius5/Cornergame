@@ -5,7 +5,7 @@ AiHandler::AiHandler(std::map<int, Entity*>& entityMap,
         entityMap(entityMap), commandList(cmdList) {
 }
 
-void AiHandler::handleAi(float time) {
+void AiHandler::handleAi(int time) {
     std::map<int, Entity*>::const_iterator it;
     for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it) {
         if (it->second->ai) {

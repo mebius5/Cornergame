@@ -127,7 +127,7 @@ void GameManager::run() {
     float time = 0;
 
     SDL_Event event;
-    std::list<Command * > commandList;
+    std::list<Command*> commandList;
     std::map<int, Entity*> entityMap;
     DrawingHandler drawer(this->renderer);
     EntityHandler entityHandler(this->renderer);
@@ -185,10 +185,10 @@ void GameManager::run() {
         }
 
         aiHandler.handleAiCommands();
-        aiHandler.handleAi(time);
+        aiHandler.handleAi(currentTime);
         locationHandler.handleLocationCommands(time);
         collisionHandler.handleCollision();
-        soundHandler.handleSFX(commandList);
+        soundHandler.handleSFX(commandList, currentTime);
 
         SDL_RenderClear(this->renderer);
         SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,

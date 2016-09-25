@@ -10,14 +10,14 @@ class Command;          // forward declared for circular dependency
 class AiComponent {
 private:
     std::vector<Command*> commands;
-    float lastGenTime;          // last time a command was generated
+    int lastGenTime;            // last time a command was generated
     Command* lastGenCommand;    // last command that was generated
 public:
     AiComponent();
     ~AiComponent();
 
     void newBehavior(Command* command);
-    Command* generateBehavior(float time);
+    Command* generateBehavior(int rawtime);
     void resetTimer();
 };
 
