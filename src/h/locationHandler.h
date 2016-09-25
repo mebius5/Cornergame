@@ -2,6 +2,7 @@
 #define CORNERGAME_LOCATION_HANDLER_H
 
 #include <list>
+#include <math.h>
 #include "command.h"
 
 class LocationHandler {

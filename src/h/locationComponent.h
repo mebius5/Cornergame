@@ -11,9 +11,11 @@ public:
     float y;
     int width;
     int height;
-    Command* onCollision;
+    Command* onEntityCollision;
+    Command* onBorderCollision;
 
-    LocationComponent(int x, int y, int width, int height, Command* command);
+    LocationComponent(int x, int y, int width, int height,
+                      Command* entityCollisionCmd, Command* borderCollisionCmd);
     ~LocationComponent();
 };
 

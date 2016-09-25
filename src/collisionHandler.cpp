@@ -11,15 +11,13 @@ void CollisionHandler::handleCollision(){
     std::map<int, Entity*>::const_iterator it2;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {
         Entity* e1 = it->second;
-        if (e1->location && e1->location->onCollision) {
+        if (e1->location && e1->location->onEntityCollision) {
             for (it2 = std::next(it, 1); it2 != entityMap.end(); ++it2) {
                 Entity* e2 = it2->second;
-                if (e1 != e2 && e2->location) {
-                    if (isRectOverlapping(e1->location, e2->location)) {
-                        commandList.push_back(e1->location->onCollision);
-                        if (e2->location->onCollision)
-                            commandList.push_back(e2->location->onCollision);
-                    }
+                if (e1 != e2 && e2->location && isRectOverlapping(e1, e2)) {
+                    this->commandList.push_back(e1->location->onEntityCollision);
+                    if (e2->location->onEntityCollision)
+                        this->commandList.push_back(e2->location->onEntityCollision);
                 }
             }
         }
@@ -29,27 +27,37 @@ void CollisionHandler::handleCollision(){
 }
 
 void CollisionHandler::handleBorderCollision(Entity *entity){
-    if (entity->input || entity->ai) {   //It's a moving character
-        if(entity->location->x<0){
-            entity->location->x=0;
+    if (entity->location && (entity->input || entity->ai)) {
+        LocationComponent* loc = entity->location;
+        if (loc->x < 0){
+            loc->x = 0;
+            if (loc->onBorderCollision)
+                this->commandList.push_back(loc->onBorderCollision);
         }
 
-        if (entity->location->x+entity->location->width >this->width){
-            entity->location->x = this->width - entity->location->width;
+        if (loc->x + loc->width > this->width) {
+            loc->x = this->width - loc->width;
+            if (loc->onBorderCollision)
+                this->commandList.push_back(loc->onBorderCollision);
         }
 
-        if (entity->location->y<0){
-            entity->location->y=0;
+        if (loc->y < 0) {
+            loc->y = 0;
+            if (loc->onBorderCollision)
+                this->commandList.push_back(loc->onBorderCollision);
         }
 
-        if (entity->location->y+entity->location->height > this->height){
-            entity->location->y = this->height - entity->location->width;
+        if (loc->y + loc->height > this->height) {
+            loc->y = this->height - loc->width;
+            if (loc->onBorderCollision)
+                this->commandList.push_back(loc->onBorderCollision);
         }
     }
 }
 
-bool CollisionHandler::isRectOverlapping(LocationComponent* a,
-                                         LocationComponent* b) {
+bool CollisionHandler::isRectOverlapping(Entity* entity1, Entity* entity2) {
+    LocationComponent* a = entity1->location;
+    LocationComponent* b = entity2->location;
 
     //The sides of the rectangles
     int leftA, leftB;

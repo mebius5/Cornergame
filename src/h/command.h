@@ -14,7 +14,7 @@ public:
 // A command to be handled by the location calculator
 class LocationCommand : public Command {
 public:
-    Entity * entity; //the entity to move;
+    Entity* entity; //the entity to move;
 };
 
 class MoveLeftCommand : public LocationCommand {
@@ -45,6 +45,16 @@ class PlaySoundCommand : public SoundCommand {
 public:
     const char* filename;
     PlaySoundCommand(const char* filename);
+};
+
+class AiCommand : public Command {
+public:
+    Entity* entity;
+};
+
+class ResetAiCommand : public AiCommand {
+public:
+    ResetAiCommand(Entity* entity);
 };
 
 #endif //CORNERGAME_COMMAND_H

@@ -9,7 +9,7 @@ Entity* EntityHandler::createHero(int x, int y) {
     Entity* hero = new Entity(this->nextId++);
     SDL_Surface* image = this->loadImage("resources/hero.png");
     hero->location = new LocationComponent(x, y, image->w, image->h,
-        new PlaySoundCommand("resources/collision_alert.wav"));
+        new PlaySoundCommand("resources/collision_alert.wav"), NULL);
     hero->art = new ArtComponent(SDL_CreateTextureFromSurface(this->renderer,
                                                               image), 1);
     SDL_FreeSurface(image);
@@ -27,7 +27,8 @@ Entity* EntityHandler::createHero(int x, int y) {
 Entity* EntityHandler::createEnemy(int x, int y) {
     Entity* enemy = new Entity(this->nextId++);
     SDL_Surface* image = this->loadImage("resources/enemy.png");
-    enemy->location = new LocationComponent(x, y, image->w, image->h, NULL);
+    enemy->location = new LocationComponent(x, y, image->w, image->h, NULL,
+                                            new ResetAiCommand(enemy));
     enemy->art = new ArtComponent(SDL_CreateTextureFromSurface(this->renderer,
                                                               image), 1);
     SDL_FreeSurface(image);

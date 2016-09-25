@@ -1,14 +1,19 @@
 #include "locationComponent.h"
 
 LocationComponent::LocationComponent(int x, int y, int width, int height,
-                                     Command* onCollision) {
+                                     Command* entityCollisionCmd,
+                                     Command* borderCollisionCmd) {
     this->x = x;
     this->y = y;
     this->width = width;
     this->height = height;
-    this->onCollision = onCollision;
+    this->onEntityCollision = entityCollisionCmd;
+    this->onBorderCollision = borderCollisionCmd;
 }
 
 LocationComponent::~LocationComponent() {
-    delete this->onCollision;
+    if (this->onEntityCollision)
+        delete this->onEntityCollision;
+    if (this->onBorderCollision)
+        delete this->onBorderCollision;
 }

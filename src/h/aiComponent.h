@@ -2,6 +2,7 @@
 #define CORNERGAME_AI_COMPONENT_H
 
 #include <vector>
+#include <math.h>
 #include "command.h"
 
 class Command;          // forward declared for circular dependency

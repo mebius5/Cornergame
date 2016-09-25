@@ -176,15 +176,15 @@ void GameManager::run() {
             if (event.type == SDL_QUIT) {
                 running = false;
             } else if (event.type == SDL_KEYUP) {
-                if (event.key.keysym.sym == SDLK_ESCAPE ||
-                    event.key.keysym.sym == SDLK_q) {
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
                     running = false;
                 }
             } else if (event.type == SDL_KEYDOWN){
-                    inputHandler.handleKeyDown(event);
+                inputHandler.handleKeyDown(event);
             }
         }
 
+        aiHandler.handleAiCommands();
         aiHandler.handleAi(time);
         locationHandler.handleLocationCommands(time);
         collisionHandler.handleCollision();

@@ -13,3 +13,16 @@ void AiHandler::handleAi(float time) {
         }
     }
 }
+
+void AiHandler::handleAiCommands() {
+    std::list<Command*>::const_iterator it;
+    for (it = this->commandList.begin(); it != this->commandList.end(); ) {
+        Command* c = *it;
+        if (ResetAiCommand* resetCmd = dynamic_cast<ResetAiCommand*>(c)) {
+            resetCmd->entity->ai->resetTimer();
+            it = this->commandList.erase(it);
+        } else {
+            ++it;
+        }
+    }
+}

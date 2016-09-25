@@ -13,6 +13,7 @@ private:
 public:
     AiHandler(std::map<int, Entity*>& entityMap, std::list<Command*>& cmdList);
     void handleAi(float time);
+    void handleAiCommands();
 };
 
 #endif //CORNERGAME_AI_HANDLER_H

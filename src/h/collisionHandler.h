@@ -14,7 +14,7 @@ private:
     std::list<Command *> & commandList;
     const int width;
     const int height;
-    bool isRectOverlapping(LocationComponent * a, LocationComponent * b);
+    bool isRectOverlapping(Entity* entity1, Entity* entity2);
     void handleBorderCollision(Entity *entity);
 public:
     CollisionHandler(std::map<int, Entity *> & entityMap,
