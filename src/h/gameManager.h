@@ -16,7 +16,7 @@
 #include "inputHandler.h"
 #include "soundHandler.h"
 #include "locationHandler.h"
-#include "movementHandler.h"
+#include "aiHandler.h"
 #include "collisionHandler.h"
 
 #define TWOPI 2 * M_PI

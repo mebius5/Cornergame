@@ -46,7 +46,7 @@ void CollisionHandler::handleBorderCollision(Entity *entity){
             entity->location->y = this->height - entity->location->width;
         }
 
-    } else if (entity->movement){ //It's an enemy
+    } else if (entity->ai){ //It's an enemy
         if(entity->location->x<0){
             entity->location->x=0;
         }
@@ -63,11 +63,11 @@ void CollisionHandler::handleBorderCollision(Entity *entity){
             entity->location->y = this->height - entity->location->width;
         }
 
-        std::list<Command *>::const_iterator iterator;
-        for(iterator=entity->movement->movementList.begin();iterator!=entity->movement->movementList.end(); ++iterator){
+        //std::list<Command *>::const_iterator iterator;
+        //for(iterator=entity->movement->movementList.begin();iterator!=entity->movement->movementList.end(); ++iterator){
             //Command * command = * iterator;
             //TODO: randomize movement
-        }
+        //}
     }
 }
 

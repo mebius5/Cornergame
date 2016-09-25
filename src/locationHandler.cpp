@@ -5,6 +5,7 @@ LocationHandler::LocationHandler() {
 }
 
 void LocationHandler::handleLocationCommands(std::list<Command *> & commandList){
+    //AZ TODO: change to list of locationCommands
 
     std::list<Command *>::const_iterator it;
     for( it = commandList.begin(); it != commandList.end(); ++it){

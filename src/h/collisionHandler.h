@@ -4,6 +4,8 @@
 #include "command.h"
 #include <locationComponent.h>
 #include <iostream>
+#include <list>
+#include <map>
 
 
 class CollisionHandler {
@@ -15,7 +17,8 @@ private:
     bool isRectOverlapping(LocationComponent * a, LocationComponent * b);
     void handleBorderCollision(Entity *entity);
 public:
-    CollisionHandler(std::map<int, Entity *> & entityMap, std::list<Command*> & commandList,
+    CollisionHandler(std::map<int, Entity *> & entityMap,
+                     std::list<Command*> & commandList,
                      const int WIDTH, const int HEIGHT);
     void handleCollision();
 };

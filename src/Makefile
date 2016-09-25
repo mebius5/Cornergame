@@ -1,6 +1,8 @@
 # <GAME NAME> Makefile
 
 SRCFILES = \
+	aiComponent.cpp \
+	aiHandler.cpp \
 	artComponent.cpp \
 	collisionHandler.cpp \
 	command.cpp \
@@ -12,8 +14,6 @@ SRCFILES = \
 	inputHandler.cpp \
 	locationHandler.cpp \
 	locationComponent.cpp \
-	movementComponent.cpp \
-	movementHandler.cpp \
 	physicsComponent.cpp \
 	soundHandler.cpp \
 	statsComponent.cpp

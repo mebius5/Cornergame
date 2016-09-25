@@ -1,7 +1,5 @@
-
 #define TWO_PI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
-
 
 #include "gameManager.h"
 
@@ -55,15 +53,15 @@ void GameManager::setup() {
     }
 
     // Initialize Mixer
-    if (Mix_Init(MIX_INIT_MOD)) {
-        std::cerr << "The mixer failed to initialize!" << std::endl;
-        return;
-    }
+    //if (Mix_Init(MIX_INIT_MOD)) {
+    //    std::cerr << "The mixer failed to initialize!" << std::endl;
+    //    return;
+    //}
 
-    if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1) {
-        std::cerr << "The mixer failed to initialize!" << std::endl;
-        return;
-    }
+    //if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1) {
+    //    std::cerr << "The mixer failed to initialize!" << std::endl;
+    //    return;
+    //}
 
     // Initialize window
     this->window = SDL_CreateWindow(
@@ -92,10 +90,10 @@ void GameManager::setup() {
 // Load the necessary assets
 void GameManager::load() {
     // Load music
-    this->music = Mix_LoadMUS("resources/abstract_tracking.xm");
-    if (!this->music) {
-        std::cerr << "Unable to load music: " << SDL_GetError() << std::endl;
-    }
+    //this->music = Mix_LoadMUS("resources/abstract_tracking.xm");
+    //if (!this->music) {
+    //    std::cerr << "Unable to load music: " << SDL_GetError() << std::endl;
+    //}
 
     // Load image
     SDL_Surface* loadedImage = IMG_Load("resources/jhu-logo.png");
@@ -127,8 +125,8 @@ void GameManager::load() {
 void GameManager::cleanup() {
     TTF_CloseFont(this->font);
     SDL_DestroyTexture(this->texture);
-    Mix_FreeMusic(this->music);
-    Mix_CloseAudio();
+    //Mix_FreeMusic(this->music);
+    //Mix_CloseAudio();
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
     TTF_Quit();
@@ -136,7 +134,7 @@ void GameManager::cleanup() {
 
     //Set free pointers
     this->texture = NULL;
-    this->music = NULL;
+    //this->music = NULL;
     this->renderer = NULL;
     this->window = NULL;
 }
@@ -148,14 +146,14 @@ void GameManager::run() {
     float time = 0;
 
     SDL_Event event;
-    Mix_PlayMusic(this->music, -1);
+    //Mix_PlayMusic(this->music, -1);
 
     std::list<Command * > commandList;
     std::map<int, Entity*> entityMap;
     DrawingHandler drawer(this->renderer);
     EntityHandler entityHandler(this->renderer);
     InputHandler inputHandler(entityMap, commandList);
-    MovementHandler movementHandler(entityMap, commandList);
+    AiHandler aiHandler(entityMap, commandList);
     LocationHandler locationHandler;
     CollisionHandler collisionHandler(entityMap, commandList, this->width, this->height);
 
@@ -210,7 +208,7 @@ void GameManager::run() {
         SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,
                          radToDeg(sin(time)), NULL, SDL_FLIP_NONE);
 
-        //movementHandler.handleMovement();
+        aiHandler.handleAi(time);
 
         locationHandler.handleLocationCommands(commandList);
 
@@ -231,10 +229,10 @@ void GameManager::run() {
 
 
     // Release memory for Commands
-    std::list<Command *>::const_iterator cIt;
-    for(cIt = commandList.begin(); cIt != commandList.end(); ++cIt){
-        delete *cIt;
-    }
+    //std::list<Command *>::const_iterator cIt;
+    //for(cIt = commandList.begin(); cIt != commandList.end(); ++cIt){
+    //    delete *cIt;
+    //}
     commandList.clear();
 }
 

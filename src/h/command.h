@@ -5,8 +5,6 @@
 
 class Entity;           // forward declared for circular dependency
 
-
-
 class Command {
 public:
     int id;

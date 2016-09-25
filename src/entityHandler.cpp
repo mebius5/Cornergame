@@ -62,9 +62,11 @@ Entity* EntityHandler::createEnemy(int x, int y) {
                                                               finalImage), 1);
     SDL_FreeSurface(finalImage);
 
-    enemy->movement = new MovementComponent();
-    enemy->movement->insertMovement(new MoveDownCommand(enemy));
-    enemy->movement->insertMovement(new MoveLeftCommand(enemy));
+    enemy->ai = new AiComponent();
+    enemy->ai->newBehavior(new MoveDownCommand(enemy));
+    enemy->ai->newBehavior(new MoveUpCommand(enemy));
+    enemy->ai->newBehavior(new MoveLeftCommand(enemy));
+    enemy->ai->newBehavior(new MoveRightCommand(enemy));
 
     return enemy;
 }
