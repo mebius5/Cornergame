@@ -7,12 +7,13 @@
 
 class SoundHandler {
 private:
-    Mix_Music * music;
-    void loadMusic(const char * filename);
+    Mix_Music * backgroundMusic;
+    Mix_Music * loadMusic(const char * filename);
 public:
     SoundHandler();
     ~SoundHandler();
     void playBackgroundMusic(const char * filename);
+    void playSFX(const char * filename);
 };
 
 #endif //CORNERGAME_SOUND_HANDLER_H

@@ -108,10 +108,10 @@ void setup() {
 
 // Load the necessary assets
 void load() {
-  // Load music
+  // Load backgroundMusic
   music = Mix_LoadMUS("abstract_tracking.xm");
   if (!music) {
-    printf("Unable to load music:  %s\n", SDL_GetError());
+    printf("Unable to load backgroundMusic:  %s\n", SDL_GetError());
   }
 
   // Load image

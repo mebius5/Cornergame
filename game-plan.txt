@@ -26,7 +26,7 @@ Running through JHU campus with benches, trees, and buildings (static) while try
 
 For example, the students can be going from dorm to Garland Hall to get to the university registrar for the last spot in Peter's class (thus, forcing the students to fight each other and get to there as fast as possible before the last spot is taken).
 
-Music/sound effect: Campus music that varies based on the levels. Ex: Hippy music, orchestra music, terrible pop music, etc.
+Music/sound effect: Campus backgroundMusic that varies based on the levels. Ex: Hippy backgroundMusic, orchestra backgroundMusic, terrible pop backgroundMusic, etc.
 
 Art style: Pixel art
 
@@ -89,7 +89,7 @@ Alpha (2 weeks)
 - Rudimentary sounds (All members)
 
 Beta (3 weeks)
-- Finish the choice of background music and sound design  (All members)
+- Finish the choice of background backgroundMusic and sound design  (All members)
 - Complete important character graphics (Grady and Pratyush)
 - Ability to move through the stages (All Members)
 - More powerups and obstacles (All Members)
@@ -110,7 +110,7 @@ Member responsibilities
 Akshay
 -Coding
 -Procedural generation of stages
--Sound and music
+-Sound and backgroundMusic
 Andrew
 -Coding
 -Realistic physics
