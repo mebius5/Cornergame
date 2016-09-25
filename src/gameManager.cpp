@@ -157,6 +157,8 @@ void GameManager::run() {
     LocationHandler locationHandler(commandList);
     CollisionHandler collisionHandler(entityMap, commandList,
                                       this->width, this->height);
+    SoundHandler soundHandler;
+    soundHandler.playBackgroundMusic("resources/abstract_tracking.xm");
 
     SDL_Rect backgroundRect = centeredRect(this->width, this->height,
                                            this->texWidth, this->texHeight);
