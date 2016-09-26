@@ -1,13 +1,13 @@
 #include "entity.h"
 
-Entity::Entity(int id) {
-    this->id = id;
-    this->location = NULL;
-    this->stats = NULL;
-    this->physics = NULL;
-    this->art = NULL;
-    this->input = NULL;
-    this->ai = NULL;
+Entity::Entity(int id) :
+        id(id),
+        location(NULL),
+        stats(NULL),
+        physics(NULL),
+        art(NULL),
+        input(NULL),
+        ai(NULL) {
 }
 
 Entity::~Entity() {

@@ -4,8 +4,8 @@
 
 
 LocationHandler::LocationHandler(std::list<Command*>& cmdList) :
-        commandList(cmdList) {
-    this->prevTime = 0;
+        commandList(cmdList),
+        prevTime(0) {
 }
 
 void LocationHandler::handleLocationCommands(int rawtime) {

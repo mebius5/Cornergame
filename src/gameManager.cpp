@@ -24,7 +24,11 @@ SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH) {
     return rect;
 }
 
-GameManager::GameManager() : title("<GAME NAME>"), width(800), height(600) {
+GameManager::GameManager() :
+        title("<GAME NAME>"),
+        width(800),
+        height(600) {
+
     srand(time(NULL));
 }
 

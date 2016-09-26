@@ -14,6 +14,8 @@ public:
 
 // A command to be handled by the location calculator
 class LocationCommand : public Command {
+protected:
+    LocationCommand(Entity* entity);
 public:
     Entity* entity; //the entity to move;
 };
@@ -50,6 +52,8 @@ public:
 };
 
 class AiCommand : public Command {
+protected:
+    AiCommand(Entity* entity);
 public:
     Entity* entity;
 };

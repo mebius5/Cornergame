@@ -1,8 +1,8 @@
 #include "entityBuilder.h"
 
-EntityBuilder::EntityBuilder(SDL_Renderer* renderer) {
-    this->nextId = 0;
-    this->renderer = renderer;
+EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
+        nextId(0),
+        renderer(renderer) {
 }
 
 Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {

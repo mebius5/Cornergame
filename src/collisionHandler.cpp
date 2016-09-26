@@ -2,8 +2,11 @@
 
 CollisionHandler::CollisionHandler(std::map<int, Entity*>& entityMap,
                                    std::list<Command*>& commandList,
-                                   const int w, const int h):
-        entityMap(entityMap), commandList(commandList), width(w), height(h) {
+                                   const int w, const int h) :
+        entityMap(entityMap),
+        commandList(commandList),
+        width(w),
+        height(h) {
 }
 
 void CollisionHandler::handleCollision(){

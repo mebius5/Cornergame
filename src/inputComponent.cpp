@@ -1,7 +1,7 @@
 #include "inputComponent.h"
 
-InputComponent::InputComponent(float speed) {
-    this->speed = speed;
+InputComponent::InputComponent(float speed) :
+        speed(speed) {
 }
 
 InputComponent::~InputComponent() {

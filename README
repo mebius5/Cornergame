@@ -82,7 +82,6 @@ g++ -std=c++11 -Wall -Wextra -Wpedantic -O2 -c -Ih -I/usr/local/include/SDL2 -L/
 
 TODOS
 diagonal movement for player: solve SDL_getKeyboardState() issue
-optimize sound handling: let EntityBuilder create a sfxChunks
 leaks?
 background generation to DrawingHandler
 change everything to use initializer lists!
@@ -90,3 +89,4 @@ add const to stuff
 rule of three
 separate commandLists?
 separate componentLists?
+merge AI with input kinda? (see gameProgrammingPatterns article)

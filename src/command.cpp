@@ -4,24 +4,28 @@ Command::~Command() {
 
 }
 
-MoveUpCommand::MoveUpCommand(Entity* entity) {
-    this->entity = entity;
+LocationCommand::LocationCommand(Entity* entity) :
+        entity(entity) {
 }
 
-MoveDownCommand::MoveDownCommand(Entity* entity) {
-    this->entity = entity;
+MoveUpCommand::MoveUpCommand(Entity* entity) :
+        LocationCommand(entity) {
 }
 
-MoveLeftCommand::MoveLeftCommand(Entity* entity) {
-    this->entity = entity;
+MoveDownCommand::MoveDownCommand(Entity* entity) :
+        LocationCommand(entity) {
 }
 
-MoveRightCommand::MoveRightCommand(Entity* entity) {
-    this->entity = entity;
+MoveLeftCommand::MoveLeftCommand(Entity* entity) :
+        LocationCommand(entity) {
 }
 
-PlaySoundCommand::PlaySoundCommand(Mix_Chunk* sfxChunk) {
-    this->sfxChunk = sfxChunk;
+MoveRightCommand::MoveRightCommand(Entity* entity) :
+        LocationCommand(entity) {
+}
+
+PlaySoundCommand::PlaySoundCommand(Mix_Chunk* sfxChunk) :
+        sfxChunk(sfxChunk) {
 }
 
 PlaySoundCommand::~PlaySoundCommand() {
@@ -29,6 +33,10 @@ PlaySoundCommand::~PlaySoundCommand() {
     this->sfxChunk = NULL;
 }
 
-ResetAiCommand::ResetAiCommand(Entity* entity) {
-    this->entity = entity;
+AiCommand::AiCommand(Entity* entity) :
+        entity(entity) {
+}
+
+ResetAiCommand::ResetAiCommand(Entity* entity) :
+        AiCommand(entity) {
 }

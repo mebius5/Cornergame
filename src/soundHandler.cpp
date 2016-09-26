@@ -1,7 +1,8 @@
 #include "soundHandler.h"
 
-SoundHandler::SoundHandler(std::list<Command*>& cmdList): commandList(cmdList) {
-    this->prevTime = 0;
+SoundHandler::SoundHandler(std::list<Command*>& cmdList) :
+        commandList(cmdList),
+        prevTime(0) {
 }
 
 SoundHandler::~SoundHandler() {

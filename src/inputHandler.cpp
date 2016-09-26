@@ -1,8 +1,9 @@
 #include "inputHandler.h"
 
 InputHandler::InputHandler(std::map<int, Entity*>& entMap,
-                           std::list<Command*>& cmdList):
-        entityMap(entMap), commandList(cmdList) {
+                           std::list<Command*>& cmdList) :
+        entityMap(entMap),
+        commandList(cmdList) {
 }
 
 // void InputHandler::pollKeys() {

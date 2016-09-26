@@ -1,8 +1,8 @@
 #include "aiHandler.h"
 
-AiHandler::AiHandler(std::map<int, Entity*>& entityMap,
-                     std::list<Command*>& cmdList) :
-        entityMap(entityMap), commandList(cmdList) {
+AiHandler::AiHandler(std::map<int, Entity*>& ent, std::list<Command*>& cmd) :
+        entityMap(ent),
+        commandList(cmd) {
 }
 
 void AiHandler::handleAi(int time) {

@@ -1,7 +1,7 @@
 #include "drawingHandler.h"
 
-DrawingHandler::DrawingHandler(SDL_Renderer* renderer) {
-    this->renderer = renderer;
+DrawingHandler::DrawingHandler(SDL_Renderer* renderer) :
+        renderer(renderer) {
 }
 
 void DrawingHandler::draw(std::map<int, Entity*>& entityMap) {\
