@@ -128,6 +128,7 @@ void GameManager::run() {
     SDL_Event event;
     std::list<Command*> commandList;
     std::map<int, Entity*> entityMap;
+
     DrawingHandler drawer(this->renderer);
     EntityBuilder entityBuilder(this->renderer);
     InputHandler inputHandler(entityMap, commandList);
@@ -135,7 +136,7 @@ void GameManager::run() {
     LocationHandler locationHandler(commandList);
     CollisionHandler collisionHandler(entityMap, commandList,
                                       this->width, this->height);
-    SoundHandler soundHandler;
+    SoundHandler soundHandler(commandList);
     soundHandler.playBackgroundMusic("resources/abstract_tracking.xm");
 
     SDL_Rect backgroundRect = centeredRect(this->width, this->height,
@@ -187,7 +188,7 @@ void GameManager::run() {
         aiHandler.handleAi(currentTime);
         locationHandler.handleLocationCommands(currentTime);
         collisionHandler.handleCollision();
-        soundHandler.handleSFX(commandList, currentTime);
+        soundHandler.handleSFX(currentTime);
 
         SDL_RenderClear(this->renderer);
         SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,

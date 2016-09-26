@@ -1,6 +1,6 @@
 #include "soundHandler.h"
 
-SoundHandler::SoundHandler() {
+SoundHandler::SoundHandler(std::list<Command*>& cmdList): commandList(cmdList) {
     // Initialize Mixer
     if (Mix_Init(MIX_INIT_MOD)) {
         std::cerr << "The mixer failed to initialize!" << std::endl;
@@ -82,13 +82,13 @@ void SoundHandler::playSFX(const char * filename, int rawtime) {
     }
 }
 
-void SoundHandler::handleSFX(std::list<Command *> & commandList, int rawtime) {
+void SoundHandler::handleSFX(int rawtime) {
     std::list<Command *>::const_iterator it;
-    for (it = commandList.begin(); it != commandList.end();) {
+    for (it = this->commandList.begin(); it != this->commandList.end();) {
         Command* c = *it;
         if (PlaySoundCommand * sCmd = dynamic_cast<PlaySoundCommand *>(c)) {
             playSFX(sCmd->filename, rawtime);
-            it = commandList.erase(it);
+            it = this->commandList.erase(it);
         } else {
             ++it;
         }

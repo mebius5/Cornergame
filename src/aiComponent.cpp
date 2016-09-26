@@ -1,7 +1,7 @@
 #include "aiComponent.h"
 
 AiComponent::AiComponent(float speed) {
-    this->lastGenTime = 0;
+    this->lastGenTime = -600;
     this->lastGenCommand = NULL;
     this->speed = speed;
 }
@@ -21,7 +21,7 @@ void AiComponent::newBehavior(Command *command) {
 // picks a behavior at random, and keeps it until timer resets
 Command* AiComponent::generateBehavior(int rawtime) {
     int timeDiff = rawtime - this->lastGenTime;
-    if (timeDiff > 600) {
+    if (timeDiff >= 600) {
         int random = rand() % this->commands.size();
         this->lastGenCommand = this->commands[random];
         this->lastGenTime = rawtime;
