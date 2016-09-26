@@ -2,6 +2,7 @@
 #define CORNERGAME_ENTITY_BUILDER_H
 
 #include <SDL_image.h>
+#include <SDL_mixer.h>
 #include <iostream>
 #include "entity.h"
 
@@ -12,7 +13,7 @@ private:
     SDL_Surface* loadImage(const char* filename);
 public:
     EntityBuilder(SDL_Renderer* renderer);
-    Entity* createHero(int x, int y);
+    Entity* createHero(int x, int y, const char* collisionSfxFile);
     Entity* createEnemy(int x, int y);
 };
 

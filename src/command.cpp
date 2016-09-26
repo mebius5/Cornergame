@@ -20,8 +20,13 @@ MoveRightCommand::MoveRightCommand(Entity* entity) {
     this->entity = entity;
 }
 
-PlaySoundCommand::PlaySoundCommand(const char* filename) {
-    this->filename = filename;
+PlaySoundCommand::PlaySoundCommand(Mix_Chunk* sfxChunk) {
+    this->sfxChunk = sfxChunk;
+}
+
+PlaySoundCommand::~PlaySoundCommand() {
+    Mix_FreeChunk(this->sfxChunk);
+    this->sfxChunk = NULL;
 }
 
 ResetAiCommand::ResetAiCommand(Entity* entity) {

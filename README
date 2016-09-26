@@ -86,3 +86,7 @@ optimize sound handling: let EntityBuilder create a sfxChunks
 leaks?
 background generation to DrawingHandler
 change everything to use initializer lists!
+add const to stuff
+rule of three
+separate commandLists?
+separate componentLists?

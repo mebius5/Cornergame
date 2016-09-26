@@ -74,6 +74,17 @@ void GameManager::setup() {
                   << SDL_GetError() << std::endl;
         return;
     }
+
+    // Initialize mixer
+    if (Mix_Init(MIX_INIT_MOD)) {
+        std::cerr << "The mixer failed to initialize!" << std::endl;
+        return;
+    }
+
+    if (Mix_OpenAudio(22050, MIX_DEFAULT_FORMAT, 2, 4096) == -1) {
+        std::cerr << "The mixer failed to initialize!" << std::endl;
+        return;
+    }
 }
 
 // Load the necessary assets
@@ -110,6 +121,8 @@ void GameManager::cleanup() {
     SDL_DestroyTexture(this->texture);
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
+    Mix_CloseAudio();
+    Mix_Quit();
     TTF_Quit();
     SDL_Quit();
 
@@ -143,7 +156,8 @@ void GameManager::run() {
                                            this->texWidth, this->texHeight);
 
     // Create hero entity
-    Entity* hero = entityBuilder.createHero(100, 100);
+    Entity* hero = entityBuilder.createHero(100, 100,
+                                            "resources/collision_alert.wav");
     entityMap[hero->getId()] = hero;
 
     //Create enemy entities

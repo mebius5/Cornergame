@@ -5,11 +5,18 @@ EntityBuilder::EntityBuilder(SDL_Renderer* renderer) {
     this->renderer = renderer;
 }
 
-Entity* EntityBuilder::createHero(int x, int y) {
+Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
     Entity* hero = new Entity(this->nextId++);
     SDL_Surface* image = this->loadImage("resources/hero.png");
+
+    Mix_Chunk* chunk = Mix_LoadWAV(collisionSfxFile);
+    if (!chunk) {
+        std::cerr << "Unable to load chunk: " << Mix_GetError() << std::endl;
+        return NULL;
+    }
+
     hero->location = new LocationComponent(x, y, image->w, image->h,
-        new PlaySoundCommand("resources/collision_alert.wav"), NULL);
+                                           new PlaySoundCommand(chunk), NULL);
     hero->art = new ArtComponent(SDL_CreateTextureFromSurface(this->renderer,
                                                               image), 1);
     SDL_FreeSurface(image);

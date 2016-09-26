@@ -11,10 +11,9 @@ private:
     std::list<Command*>& commandList;
     int prevTime;                 // last time a sound was played
     Mix_Music* backgroundMusic;
-    Mix_Chunk* sfxChunk;
     int lastChannelUsedForSFX;
     Mix_Music* loadMusic(const char* filename);
-    void playSFX(const char * filename, int rawtime);
+    void playSFX(Mix_Chunk* sfxChunk, int rawtime);
 public:
     SoundHandler(std::list<Command*>& commandList);
     ~SoundHandler();
