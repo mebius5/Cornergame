@@ -16,13 +16,6 @@ To compile and run, type the following:
 make
 ./gameManager
 
-
-
-
-
-
-
-
 CLASS STRUCTURE
 
 Entity
@@ -44,9 +37,9 @@ Handlers (aka. Systems)
 Components
     ArtComponent, InputComponent, LocationComponent, PhysicsComponent,
     StatsComponent, AiComponent
-    These define certain types of behavior for an entity. They are purely data
-    objects, and their fields are used to determine how handlers interact with
-    them.
+    These define certain types of behavior for an entity. Their fields are used
+    to determine how handlers interact with them. Some components can run
+    complex functions to tell their handlers exactly what to do with them.
 
 Commands
     These are used to by Handlers to communicate with each other. Each handler
@@ -56,12 +49,34 @@ GameManager
     The game manager maintains the game loop, all entities, and all commands.
     It is also responsible for startup and shutdown of the game.
 
+The class structure seems a bit unwieldy, but it should make it easier to
+add new features in the end. All objects are defined by their components, so
+certain aspects that are the same between different characters can use the
+same components (ex. different skins for characters, different sound effects,
+but everything else the same). Also, each Handler only has to worry about
+a certain subset of the components, and can operate based on whether an entity
+has that subset, not worrying about anything else. Future iterations will
+probably create subclasses of the components to add more elaborate details.
+
+FEATURES
+
+Your hero is the black box! You are trying to dodge the 5 red devils, who each
+pick a random cardinal direction to move in for a while. If they hit a wall,
+they will pick a new direction. They also pick a new direction every so often.
+If your hero gets hit, an alarm noise will play. That's it for now!
+
+Hit ESC to quit the game.
+
+QUIRKS
+- we currently use the keydown event to determine how to move, which is why
+    your hero will move a little bit when first hitting an arrow key, but then
+    move faster while that arrow key is pressed. We should probably move to
+    using SDL_getKeyboardState() at some for more fluid movement.
+- no game name yet!
 
 Handy command to compile a single file:
 g++ -std=c++11 -Wall -Wextra -Wpedantic -O2 -c -Ih -I/usr/local/include/SDL2 -L/usr/local/lib -lSDL2_ttf -lSDL2_mixer -lSDL2_image -lSDL2 <FILENAME.cpp>
 
-
 TODOS
-diagonal movement for player - solve SDL_getKeyboardState() issue
-Part 1
-THIS README
+diagonal movement for player: solve SDL_getKeyboardState() issue
+optimize sound handling: let EntityBuilder create a sfxChunks

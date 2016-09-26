@@ -194,8 +194,6 @@ void GameManager::run() {
                          radToDeg(sin(time)), NULL, SDL_FLIP_NONE);
         drawer.draw(entityMap);
         SDL_RenderPresent(this->renderer);
-
-        std::cout << commandList.size() << " " << commandList.back() << std::endl;
     }
 
 
