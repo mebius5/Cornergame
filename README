@@ -82,3 +82,4 @@ diagonal movement for player: solve SDL_getKeyboardState() issue
 optimize sound handling: let EntityBuilder create a sfxChunks
 leaks?
 background generation to DrawingHandler
+change everything to use initializer lists!
