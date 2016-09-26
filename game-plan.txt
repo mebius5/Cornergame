@@ -19,10 +19,10 @@ must keep up with the screen while fighting each other. The players will have li
 by hitting certain obstacles, being hit by the other player, or if they are being dragged along by the left
 side of the screen and not keeping up. Throughout the level, players will have to jump over and across obstacles,
 and will also use platforms strategically in combat to dodge and hit the other player. The game will always
-be two-player and will end if one player’s life bar depletes completely.
+be two-player and will end if one player's life bar depletes completely.
 
 
-We decided to keep the two-player, set-scrolling mechanic despite doubts, but we’ll keep in mind the challenges
+We decided to keep the two-player, set-scrolling mechanic despite doubts, but we'll keep in mind the challenges
 it may cause us and make sure the game is fun.
 
 
@@ -57,7 +57,7 @@ the JHU campus. This will reduce the amount of graphic overload from attempt to 
 
 
 For example, the students can be going from dorm to Garland Hall to get to the university registrar 
-for the last spot in Peter’s class (thus, forcing the students to fight each other and get to there 
+for the last spot in Peter's class (thus, forcing the students to fight each other and get to there 
 as fast as possible before the last spot is taken).
 
 
@@ -94,7 +94,7 @@ Game Mechanics
 * Most levels will stick to the general student & university scene, but maybe a few special ones about instructors or student party scenes.
 * Character will have HP bars that sustains a certain number of hits
 * The stage constantly moves to the right, and the characters must stay within frame to avoid losing health
-* The levels are cleared and unlocked one at a time, but you can choose specific levels that you’ve previously unlocked from the menu
+* The levels are cleared and unlocked one at a time, but you can choose specific levels that you've previously unlocked from the menu
 * Powerups
    * Coffee/Espresso Shot (speeds up the character)
    * Textbooks (lets you pretend to be reading and avoid friends)
@@ -210,6 +210,6 @@ possible so that JHU students can recognize the setting as JHU. This change also
 audience from just JHU students to all college students.
 * We will implement the tile-block level editor instead of the procedurally generated stages.
 * The game will no longer support network game play.
-* The game will stick with the automatic scrolling or “move by itself” platform. This way, the game mimics a time-pressured, multiplayer Mario Bros
+* The game will stick with the automatic scrolling or "move by itself" platform. This way, the game mimics a time-pressured, multiplayer Mario Bros
 * We will implement the entity-component design for this game
 * The game will have Mario physics instead of real-word physics
