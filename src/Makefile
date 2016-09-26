@@ -35,6 +35,7 @@ $(TARGET): $(SRCFILES)
 
 clean:
 	$(RM) $(TARGET) *.o
+	$(RM) -rf *.dSYM
 
 #For compiling on mac only
 mac:
