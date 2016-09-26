@@ -197,11 +197,10 @@ void GameManager::run() {
                 if (event.key.keysym.sym == SDLK_ESCAPE) {
                     running = false;
                 }
-            } else if (event.type == SDL_KEYDOWN) {
-                inputHandler.handleKeyDown(event.key.keysym.sym);
             }
         }
 
+        inputHandler.pollKeys();
         aiHandler.handleAiCommands();
         aiHandler.handleAi(currentTime);
         locationHandler.handleLocationCommands(currentTime);

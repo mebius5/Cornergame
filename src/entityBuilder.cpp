@@ -22,7 +22,7 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
     SDL_FreeSurface(image);
 
     //Need to see parameter in future
-    hero->input = new InputComponent(.8f);
+    hero->input = new InputComponent(.6f);
     hero->input->insertKeyDown(SDLK_DOWN, new MoveDownCommand(hero));
     hero->input->insertKeyDown(SDLK_UP, new MoveUpCommand(hero));
     hero->input->insertKeyDown(SDLK_LEFT, new MoveLeftCommand(hero));
