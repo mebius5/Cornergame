@@ -17,8 +17,8 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
 
     hero->location = new LocationComponent(x, y, image->w, image->h,
                                            new PlaySoundCommand(chunk), NULL);
-    hero->art = new ArtComponent(SDL_CreateTextureFromSurface(this->renderer,
-                                                              image), 1);
+    hero->art = new StaticArtComponent(SDL_CreateTextureFromSurface(this->renderer,
+                                                                    image), 1);
     SDL_FreeSurface(image);
 
     //Need to see parameter in future
@@ -34,10 +34,15 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
 Entity* EntityBuilder::createEnemy(int x, int y) {
     Entity* enemy = new Entity(this->nextId++);
     SDL_Surface* image = this->loadImage("resources/enemy.png");
+    /***
     enemy->location = new LocationComponent(x, y, image->w, image->h, NULL,
                                             new ResetAiCommand(enemy));
-    enemy->art = new ArtComponent(SDL_CreateTextureFromSurface(this->renderer,
-                                                              image), 1);
+                                            ***/
+    enemy->location = new LocationComponent(x, y, 64, 64, NULL,
+                                            new ResetAiCommand(enemy));
+
+    enemy->art = new StaticArtComponent(SDL_CreateTextureFromSurface(this->renderer,
+                                                                     image), 1);
     SDL_FreeSurface(image);
 
     enemy->ai = new AiComponent(.2f);

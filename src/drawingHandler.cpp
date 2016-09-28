@@ -4,7 +4,7 @@ DrawingHandler::DrawingHandler(SDL_Renderer* renderer) :
         renderer(renderer) {
 }
 
-void DrawingHandler::draw(std::map<int, Entity*>& entityMap) {\
+void DrawingHandler::draw(std::map<int, Entity*>& entityMap, int dTime) {\
     std::map<int, Entity*>::const_iterator it;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {
         Entity* entity = it->second;
@@ -13,7 +13,7 @@ void DrawingHandler::draw(std::map<int, Entity*>& entityMap) {\
                               (int) entity->location->y,
                               entity->location->width,
                               entity->location->height };
-            SDL_RenderCopy(this->renderer, entity->art->texture, NULL, &rect);
+            SDL_RenderCopy(this->renderer, entity->art->getNextTexture(dTime), NULL, &rect);
         }
     }
 }

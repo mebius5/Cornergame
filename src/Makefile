@@ -3,7 +3,7 @@
 SRCFILES = \
 	aiComponent.cpp \
 	aiHandler.cpp \
-	artComponent.cpp \
+	animatedArtComponent.cpp \
 	collisionHandler.cpp \
 	command.cpp \
 	drawingHandler.cpp \
@@ -16,6 +16,7 @@ SRCFILES = \
 	locationComponent.cpp \
 	physicsComponent.cpp \
 	soundHandler.cpp \
+	staticArtComponent.cpp \
 	statsComponent.cpp
 
 CXX = g++

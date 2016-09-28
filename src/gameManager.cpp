@@ -26,8 +26,8 @@ SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH) {
 
 GameManager::GameManager() :
         title("<GAME NAME>"),
-        width(800),
-        height(600) {
+        width(1280),
+        height(720) {
 
     srand(time(NULL));
 }
@@ -210,7 +210,7 @@ void GameManager::run() {
         SDL_RenderClear(this->renderer);
         SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,
                          radToDeg(sin(time)), NULL, SDL_FLIP_NONE);
-        drawer.draw(entityMap);
+        drawer.draw(entityMap, dt);
         SDL_RenderPresent(this->renderer);
     }
 
