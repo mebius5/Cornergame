@@ -51,6 +51,7 @@ public:
 
 class PlayState : public State {
 private:
+    //Private variables
     DrawingHandler  * drawer;
     EntityBuilder * entityBuilder;
     InputHandler * inputHandler;
@@ -62,12 +63,16 @@ private:
     int windowH;
     SDL_Rect backgroundRect;
 
+    //Private methods
+    int center(int large, int small);
+    SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH)
+
 public:
+    //Public methods
     PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
               std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
               EntityBuilder * entityBuilder, InputHandler * inputHandler, LocationHandler * locationHandler,
               AiHandler * aiHandler, CollisionHandler * collisionHandler, SoundHandler * soundHandler);
-
     ~PlayState();
     void begin();
     void iterate(int dTime);

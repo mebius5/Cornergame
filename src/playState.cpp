@@ -1,10 +1,10 @@
 #include <state.h>
 
-int center(int large, int small) {
+int PlayState::center(int large, int small) {
     return (large / 2 - small / 2);
 }
 
-SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH) {
+SDL_Rect PlayState::centeredRect(int largeW, int largeH, int smallW, int smallH) {
     SDL_Rect rect = {
             center(largeW, smallW), center(largeH, smallH),
             smallW, smallH
@@ -61,10 +61,9 @@ void PlayState::begin() {
         SDL_FreeSurface(loadedImage);
     }
     this->texture = SDL_CreateTextureFromSurface(this->renderer, finalImage);
-    SDL_FreeSurface(finalImage);
-
     this->backgroundRect = centeredRect(this->windowW, this->windowH,
                                         finalImage->w, finalImage->h);
+    SDL_FreeSurface(finalImage);
 
     this->soundHandler->playBackgroundMusic("resources/abstract_tracking.xm");
 
