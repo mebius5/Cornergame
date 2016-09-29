@@ -8,21 +8,6 @@
  * This class initializes and closes SDL resources, and manages the game loop.
  */
 
-double radToDeg(float radians) {
-    return RAD_TO_DEG * radians;
-}
-
-int center(int large, int small) {
-    return (large / 2 - small / 2);
-}
-
-SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH) {
-    SDL_Rect rect = {
-            center(largeW, smallW), center(largeH, smallH),
-            smallW, smallH
-    };
-    return rect;
-}
 
 GameManager::GameManager() :
         title("<GAME NAME>"),
@@ -93,27 +78,6 @@ void GameManager::setup() {
 
 // Load the necessary assets
 void GameManager::load() {
-    // Load image
-    SDL_Surface* loadedImage = IMG_Load("resources/jhu-logo.png");
-    SDL_Surface* finalImage = NULL;
-    if (loadedImage == NULL) {
-        std::cerr << "Unable to load image! SDL_image Error: "
-                  << IMG_GetError() << std::endl;
-        return;
-    } else {
-        finalImage = SDL_ConvertSurface(loadedImage, loadedImage->format, 0);
-        if (finalImage == NULL) {
-            std::cerr << "Unable to optimize image! SDL Error: "
-                      << SDL_GetError() << std::endl;
-        }
-
-        //Get rid of old loaded surface
-        SDL_FreeSurface(loadedImage);
-    }
-    this->texWidth = finalImage->w;
-    this->texHeight = finalImage->h;
-    this->texture = SDL_CreateTextureFromSurface(this->renderer, finalImage);
-    SDL_FreeSurface(finalImage);
 
     // Load fonts
     this->font = TTF_OpenFont("resources/CaesarDressing-Regular.ttf", 30);
@@ -122,7 +86,6 @@ void GameManager::load() {
 // Cleanup the instance of SDL2
 void GameManager::cleanup() {
     TTF_CloseFont(this->font);
-    SDL_DestroyTexture(this->texture);
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
     Mix_CloseAudio();
@@ -131,7 +94,6 @@ void GameManager::cleanup() {
     SDL_Quit();
 
     //Set free pointers
-    this->texture = NULL;
     this->renderer = NULL;
     this->window = NULL;
 }
@@ -143,8 +105,8 @@ void GameManager::run() {
     float time = 0;
 
     SDL_Event event;
-    std::list<Command*> commandList;
-    std::map<int, Entity*> entityMap;
+    std::list<Command *> commandList;
+    std::map<int, Entity *> entityMap;
 
     DrawingHandler drawer(this->renderer);
     EntityBuilder entityBuilder(this->renderer);
@@ -154,68 +116,46 @@ void GameManager::run() {
     CollisionHandler collisionHandler(entityMap, commandList,
                                       this->width, this->height);
     SoundHandler soundHandler(commandList);
-    soundHandler.playBackgroundMusic("resources/abstract_tracking.xm");
 
-    SDL_Rect backgroundRect = centeredRect(this->width, this->height,
-                                           this->texWidth, this->texHeight);
+    State * currentState;
 
-    // Create hero entity
-    Entity* hero = entityBuilder.createHero(100, 100,
-                                            "resources/collision_alert.wav");
-    entityMap[hero->getId()] = hero;
+    //Initialize play state
+    PlayState playState(this->renderer, this->width, this->height,
+                        &commandList, &entityMap, &drawer,
+                        &entityBuilder, &inputHandler,
+                        &locationHandler, &aiHandler,
+                        &collisionHandler, &soundHandler);
 
-    //Create enemy entities
-    Entity * enemy1 = entityBuilder.createEnemy(350,150);
-    entityMap[enemy1->getId()] = enemy1;
-
-    Entity * enemy2 = entityBuilder.createEnemy(500,150);
-    entityMap[enemy2->getId()] = enemy2;
-
-    Entity * enemy3 = entityBuilder.createEnemy(650,150);
-    entityMap[enemy3->getId()] = enemy3;
-
-    Entity * enemy4 = entityBuilder.createEnemy(400,300);
-    entityMap[enemy4->getId()] = enemy4;
-
-    Entity * enemy5 = entityBuilder.createEnemy(600,300);
-    entityMap[enemy5->getId()] = enemy5;
+    currentState = & playState;
 
     while (running) {
-        int currentTime = SDL_GetTicks();
-        int dt = currentTime - lastTime;
-        time += dt/1000.0;
-        lastTime = currentTime;
 
-        if (time > TWO_PI) {
-            time -= TWO_PI;
-        }
 
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                running = false;
-            } else if (event.type == SDL_KEYUP) {
-                if (event.key.keysym.sym == SDLK_ESCAPE) {
+        currentState->begin();
+
+        while (running) {
+            int currentTime = SDL_GetTicks();
+            int dt = currentTime - lastTime;
+            time += dt / 1000.0;
+            lastTime = currentTime;
+
+            while (SDL_PollEvent(&event)) {
+                if (event.type == SDL_QUIT) {
                     running = false;
+                } else if (event.type == SDL_KEYUP) {
+                    if (event.key.keysym.sym == SDLK_ESCAPE) {
+                        running = false;
+                    }
                 }
             }
+
+            currentState->iterate(currentTime);
         }
 
-        inputHandler.pollKeys();
-        aiHandler.handleAiCommands();
-        aiHandler.handleAi(currentTime);
-        locationHandler.handleLocationCommands(currentTime);
-        collisionHandler.handleCollision();
-        soundHandler.handleSFX(currentTime);
-
-        SDL_RenderClear(this->renderer);
-        SDL_RenderCopyEx(this->renderer, this->texture, NULL, &backgroundRect,
-                         radToDeg(sin(time)), NULL, SDL_FLIP_NONE);
-        drawer.draw(entityMap, dt);
-        SDL_RenderPresent(this->renderer);
+        currentState->cleanup();
     }
 
-
-    // Release memory for Entities
+    // Release memory for Entities and Commands
     std::map<int, Entity*>::const_iterator it;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {
         delete it->second;      // delete Entity

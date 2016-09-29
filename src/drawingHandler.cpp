@@ -4,9 +4,9 @@ DrawingHandler::DrawingHandler(SDL_Renderer* renderer) :
         renderer(renderer) {
 }
 
-void DrawingHandler::draw(std::map<int, Entity*>& entityMap, int dTime) {\
+void DrawingHandler::draw(std::map<int, Entity*> *  entityMap, int dTime) {\
     std::map<int, Entity*>::const_iterator it;
-    for (it = entityMap.begin(); it != entityMap.end(); ++it) {
+    for (it = entityMap->begin(); it != entityMap->end(); ++it) {
         Entity* entity = it->second;
         if (entity->art && entity->location) {
             SDL_Rect rect = { (int) entity->location->x,

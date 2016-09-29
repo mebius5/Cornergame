@@ -18,17 +18,13 @@
 #include "locationHandler.h"
 #include "aiHandler.h"
 #include "collisionHandler.h"
+#include "state.h"
 
-#define TWOPI 2 * M_PI
-#define RAD_TO_DEG 180 / M_PI
 
 class GameManager {
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
-    SDL_Texture* texture;     // background texture
-    int texWidth;
-    int texHeight;
     TTF_Font* font;
 
     const char* title;
