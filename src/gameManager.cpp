@@ -78,14 +78,10 @@ void GameManager::setup() {
 
 // Load the necessary assets
 void GameManager::load() {
-
-    // Load fonts
-    this->font = TTF_OpenFont("resources/CaesarDressing-Regular.ttf", 30);
 }
 
 // Cleanup the instance of SDL2
 void GameManager::cleanup() {
-    TTF_CloseFont(this->font);
     SDL_DestroyRenderer(this->renderer);
     SDL_DestroyWindow(this->window);
     Mix_CloseAudio();
@@ -119,13 +115,19 @@ void GameManager::run() {
 
     State * currentState;
 
-    //Initialize play state
+    //Initialize states
+    StartState startState(this->renderer, this->width, this->height,
+                          &commandList, &entityMap, &drawer,
+                        &entityBuilder, &inputHandler,
+                        &locationHandler, &soundHandler);
+
     PlayState playState(this->renderer, this->width, this->height,
                         &commandList, &entityMap, &drawer,
                         &entityBuilder, &inputHandler,
                         &locationHandler, &aiHandler,
                         &collisionHandler, &soundHandler);
 
+    //currentState = & startState ;
     currentState = & playState;
 
     while (running) {

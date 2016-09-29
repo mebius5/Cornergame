@@ -1,17 +1,5 @@
 #include <state.h>
 
-int PlayState::center(int large, int small) {
-    return (large / 2 - small / 2);
-}
-
-SDL_Rect PlayState::centeredRect(int largeW, int largeH, int smallW, int smallH) {
-    SDL_Rect rect = {
-            center(largeW, smallW), center(largeH, smallH),
-            smallW, smallH
-    };
-    return rect;
-}
-
 PlayState::PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
                      std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
                      EntityBuilder * entityBuilder, InputHandler * inputHandler, LocationHandler * locationHandler, AiHandler * aiHandler,
@@ -32,7 +20,10 @@ PlayState::PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::lis
 
 
 PlayState::~PlayState() {
-    SDL_DestroyTexture(this->texture);
+    if(this->texture!=NULL){
+        SDL_DestroyTexture(this->texture);
+        this->texture = NULL;
+    }
     this->drawer = NULL;
     this->entityBuilder = NULL;
     this->inputHandler = NULL;
@@ -105,12 +96,8 @@ void PlayState::iterate(int dTime) {
 }
 
 void PlayState::cleanup() {
-    SDL_DestroyTexture(this->texture);
-    this->drawer = NULL;
-    this->entityBuilder = NULL;
-    this->inputHandler = NULL;
-    this->locationHandler = NULL;
-    this->aiHandler = NULL;
-    this->collisionHandler = NULL;
-    this->soundHandler = NULL;
+    if(this->texture!=NULL){
+        SDL_DestroyTexture(this->texture);
+        this->texture = NULL;
+    }
 }

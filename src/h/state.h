@@ -3,6 +3,7 @@
 #ifndef CORNERGAME_STATE_H
 #define CORNERGAME_STATE_H
 
+#include <SDL_ttf.h>
 #include "drawingHandler.h"
 #include "entityBuilder.h"
 #include "inputHandler.h"
@@ -13,12 +14,15 @@
 
 class State {
 protected:
-    SDL_Texture * texture;
+    State ** state;
     SDL_Renderer * renderer;
-    std::map<int, Entity*> * entityMap;
+    SDL_Texture * texture;
     std::list<Command*> * commandList;
+    std::map<int, Entity*> * entityMap;
 public:
     virtual ~State(){};
+    int center(int large, int small);
+    SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
     virtual void begin()=0;
     virtual void iterate(int dTime)=0;
     virtual void cleanup()=0;
@@ -26,14 +30,25 @@ public:
 
 class StartState : public State {
 private:
+    TTF_Font* font;
     DrawingHandler  * drawer;
     EntityBuilder * entityBuilder;
     InputHandler * inputHandler;
     LocationHandler * locationHandler;
     SoundHandler * soundHandler;
+    SDL_Rect textRect;
+    int width;
+    int height;
+
 public:
-    StartState();
+    StartState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
+    std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
+    EntityBuilder * entityBuilder, InputHandler * inputHandler, LocationHandler * locationHandler,
+            SoundHandler * soundHandler);
     ~StartState();
+    void begin();
+    void iterate(int dTime);
+    void cleanup();
 };
 
 
@@ -62,10 +77,6 @@ private:
     int windowW;
     int windowH;
     SDL_Rect backgroundRect;
-
-    //Private methods
-    int center(int large, int small);
-    SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
 
 public:
     //Public methods

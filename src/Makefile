@@ -17,6 +17,8 @@ SRCFILES = \
 	playState.cpp \
 	physicsComponent.cpp \
 	soundHandler.cpp \
+	startState.cpp \
+	state.cpp \
 	staticArtComponent.cpp \
 	statsComponent.cpp
 

@@ -25,7 +25,6 @@ class GameManager {
 private:
     SDL_Window* window;
     SDL_Renderer* renderer;
-    TTF_Font* font;
 
     const char* title;
     const int width;
