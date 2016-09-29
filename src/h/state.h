@@ -65,7 +65,7 @@ private:
 
     //Private methods
     int center(int large, int small);
-    SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH)
+    SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
 
 public:
     //Public methods
