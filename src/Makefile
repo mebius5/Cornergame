@@ -4,6 +4,7 @@ SRCFILES = \
 	aiComponent.cpp \
 	aiHandler.cpp \
 	animatedArtComponent.cpp \
+	collisionComponent.cpp \
 	collisionHandler.cpp \
 	command.cpp \
 	drawingHandler.cpp \
@@ -12,8 +13,6 @@ SRCFILES = \
 	gameManager.cpp \
 	inputComponent.cpp \
 	inputHandler.cpp \
-	locationHandler.cpp \
-	locationComponent.cpp \
 	playState.cpp \
 	physicsComponent.cpp \
 	soundHandler.cpp \

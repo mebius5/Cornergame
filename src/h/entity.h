@@ -3,27 +3,37 @@
 
 #include "artComponent.h"
 #include "inputComponent.h"
-#include "locationComponent.h"
+#include "collisionComponent.h"
 #include "physicsComponent.h"
 #include "statsComponent.h"
 #include "aiComponent.h"
 
 class InputComponent;   // forward declared for circular dependency
 class AiComponent;
-class LocationComponent;
+class CollisionComponent;
 
 class Entity {
 private:
     int id;
+
 public:
-    LocationComponent* location;
+    float x;
+    float y;
+    int width;
+    int height;
+    float xVelocity;
+    float yVelocity;
+    float xAccel;
+    float yAccel;
+
+    CollisionComponent* collision;
     StatsComponent* stats;
     PhysicsComponent* physics;
     ArtComponent* art;
     InputComponent* input;
     AiComponent* ai;
 
-    Entity(int id);
+    Entity(int id, float x, float y, int w, int h);
     ~Entity();
     int getId();
 };

@@ -6,8 +6,8 @@ EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
 }
 
 Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
-    Entity* hero = new Entity(this->nextId++);
     SDL_Surface* image = this->loadImage("resources/hero.png");
+    Entity* hero = new Entity(this->nextId++, x, y, image->w, image->h);
 
     Mix_Chunk* chunk = Mix_LoadWAV(collisionSfxFile);
     if (!chunk) {
@@ -15,10 +15,10 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
         return NULL;
     }
 
-    hero->location = new LocationComponent(x, y, image->w, image->h,
-                                           new PlaySoundCommand(chunk), NULL);
-    hero->art = new StaticArtComponent(SDL_CreateTextureFromSurface(this->renderer,
-                                                                    image), 1);
+    hero->collision = new CollisionComponent(new PlaySoundCommand(chunk), NULL);
+    hero->art = new StaticArtComponent(
+        SDL_CreateTextureFromSurface(this->renderer, image), 1);
+
     SDL_FreeSurface(image);
 
     //Need to see parameter in future
@@ -32,17 +32,13 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
 }
 
 Entity* EntityBuilder::createEnemy(int x, int y) {
-    Entity* enemy = new Entity(this->nextId++);
     SDL_Surface* image = this->loadImage("resources/enemy.png");
-    /***
-    enemy->location = new LocationComponent(x, y, image->w, image->h, NULL,
-                                            new ResetAiCommand(enemy));
-                                            ***/
-    enemy->location = new LocationComponent(x, y, 64, 64, NULL,
-                                            new ResetAiCommand(enemy));
+    Entity* enemy = new Entity(this->nextId++, x, y, 64, 64);
 
-    enemy->art = new StaticArtComponent(SDL_CreateTextureFromSurface(this->renderer,
-                                                                     image), 1);
+    enemy->collision = new CollisionComponent(NULL, new ResetAiCommand(enemy));
+    enemy->art = new StaticArtComponent(
+        SDL_CreateTextureFromSurface(this->renderer, image), 1);
+
     SDL_FreeSurface(image);
 
     enemy->ai = new AiComponent(.2f);

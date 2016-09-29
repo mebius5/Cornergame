@@ -89,3 +89,7 @@ separate commandLists?
 separate componentLists?
 merge AI with input kinda? (see gameProgrammingPatterns article)
 make sure abstract base classes are right for components
+
+move location and velocity/accel into Entity
+make Component classes virtual
+make base Component class with Entity

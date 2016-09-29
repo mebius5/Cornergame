@@ -15,7 +15,6 @@
 #include "entityBuilder.h"
 #include "inputHandler.h"
 #include "soundHandler.h"
-#include "locationHandler.h"
 #include "aiHandler.h"
 #include "collisionHandler.h"
 #include "state.h"

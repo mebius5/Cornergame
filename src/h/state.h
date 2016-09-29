@@ -1,5 +1,3 @@
-
-
 #ifndef CORNERGAME_STATE_H
 #define CORNERGAME_STATE_H
 
@@ -8,7 +6,6 @@
 #include "entityBuilder.h"
 #include "inputHandler.h"
 #include "aiHandler.h"
-#include "locationHandler.h"
 #include "collisionHandler.h"
 #include "soundHandler.h"
 
@@ -31,10 +28,9 @@ public:
 class StartState : public State {
 private:
     TTF_Font* font;
-    DrawingHandler  * drawer;
+    DrawingHandler * drawer;
     EntityBuilder * entityBuilder;
     InputHandler * inputHandler;
-    LocationHandler * locationHandler;
     SoundHandler * soundHandler;
     SDL_Rect textRect;
     int width;
@@ -43,7 +39,7 @@ private:
 public:
     StartState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
     std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
-    EntityBuilder * entityBuilder, InputHandler * inputHandler, LocationHandler * locationHandler,
+    EntityBuilder * entityBuilder, InputHandler * inputHandler,
             SoundHandler * soundHandler);
     ~StartState();
     void begin();
@@ -57,7 +53,6 @@ private:
     DrawingHandler  * drawer;
     EntityBuilder * entityBuilder;
     InputHandler * inputHandler;
-    LocationHandler * locationHandler;
     SoundHandler * soundHandler;
 public:
     MenuState();
@@ -70,7 +65,6 @@ private:
     DrawingHandler  * drawer;
     EntityBuilder * entityBuilder;
     InputHandler * inputHandler;
-    LocationHandler * locationHandler;
     AiHandler * aiHandler;
     CollisionHandler * collisionHandler;
     SoundHandler * soundHandler;
@@ -82,7 +76,7 @@ public:
     //Public methods
     PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
               std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
-              EntityBuilder * entityBuilder, InputHandler * inputHandler, LocationHandler * locationHandler,
+              EntityBuilder * entityBuilder, InputHandler * inputHandler,
               AiHandler * aiHandler, CollisionHandler * collisionHandler, SoundHandler * soundHandler);
     ~PlayState();
     void begin();
@@ -96,7 +90,6 @@ private:
     DrawingHandler  * drawer;
     EntityBuilder * entityBuilder;
     InputHandler * inputHandler;
-    LocationHandler * locationHandler;
     SoundHandler * soundHandler;
 public:
     HighscoreState();

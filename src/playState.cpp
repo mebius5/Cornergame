@@ -2,7 +2,7 @@
 
 PlayState::PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
                      std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
-                     EntityBuilder * entityBuilder, InputHandler * inputHandler, LocationHandler * locationHandler, AiHandler * aiHandler,
+                     EntityBuilder * entityBuilder, InputHandler * inputHandler, AiHandler * aiHandler,
                      CollisionHandler * collisionHandler, SoundHandler * soundHandler) {
     this->renderer = renderer;
     this->windowW = windowW;
@@ -12,10 +12,10 @@ PlayState::PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::lis
     this->drawer = drawingHandler;
     this->entityBuilder = entityBuilder;
     this->inputHandler = inputHandler;
-    this->locationHandler = locationHandler;
     this->aiHandler = aiHandler;
     this->collisionHandler = collisionHandler;
     this->soundHandler = soundHandler;
+    this->texture = NULL;
 }
 
 
@@ -27,7 +27,6 @@ PlayState::~PlayState() {
     this->drawer = NULL;
     this->entityBuilder = NULL;
     this->inputHandler = NULL;
-    this->locationHandler = NULL;
     this->aiHandler = NULL;
     this->collisionHandler = NULL;
     this->soundHandler = NULL;
@@ -85,8 +84,7 @@ void PlayState::iterate(int dTime) {
     inputHandler->pollKeys();
     aiHandler->handleAiCommands();
     aiHandler->handleAi(dTime);
-    locationHandler->handleLocationCommands(dTime);
-    collisionHandler->handleCollision();
+    collisionHandler->handleCollisions();
     soundHandler->handleSFX(dTime);
 
     SDL_RenderClear(this->renderer);

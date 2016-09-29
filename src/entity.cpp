@@ -1,8 +1,16 @@
 #include "entity.h"
 
-Entity::Entity(int id) :
+Entity::Entity(int id, float x, float y, int w, int h) :
         id(id),
-        location(NULL),
+        x(x),
+        y(y),
+        width(w),
+        height(h),
+        xVelocity(0.0f),
+        yVelocity(0.0f),
+        xAccel(0.0f),
+        yAccel(0.0f),
+        collision(NULL),
         stats(NULL),
         physics(NULL),
         art(NULL),
@@ -11,8 +19,8 @@ Entity::Entity(int id) :
 }
 
 Entity::~Entity() {
-    if (this->location)
-        delete this->location;
+    if (this->collision)
+        delete this->collision;
     if (this->stats)
         delete this->stats;
     if (this->physics)

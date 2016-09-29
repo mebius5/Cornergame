@@ -108,7 +108,6 @@ void GameManager::run() {
     EntityBuilder entityBuilder(this->renderer);
     InputHandler inputHandler(entityMap, commandList);
     AiHandler aiHandler(entityMap, commandList);
-    LocationHandler locationHandler(commandList);
     CollisionHandler collisionHandler(entityMap, commandList,
                                       this->width, this->height);
     SoundHandler soundHandler(commandList);
@@ -118,21 +117,16 @@ void GameManager::run() {
     //Initialize states
     StartState startState(this->renderer, this->width, this->height,
                           &commandList, &entityMap, &drawer,
-                        &entityBuilder, &inputHandler,
-                        &locationHandler, &soundHandler);
+                        &entityBuilder, &inputHandler, &soundHandler);
 
     PlayState playState(this->renderer, this->width, this->height,
                         &commandList, &entityMap, &drawer,
-                        &entityBuilder, &inputHandler,
-                        &locationHandler, &aiHandler,
+                        &entityBuilder, &inputHandler, &aiHandler,
                         &collisionHandler, &soundHandler);
 
-    //currentState = & startState ;
-    currentState = & playState;
+    currentState = &playState;      // Need to start at start state eventually
 
     while (running) {
-
-
         currentState->begin();
 
         while (running) {
@@ -165,6 +159,10 @@ void GameManager::run() {
     entityMap.clear();
 
     commandList.clear();
+
+    //for (;;) {
+    //    int i = 0;
+    //}
 }
 
 int main(void) {

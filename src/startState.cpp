@@ -3,7 +3,7 @@
 
 StartState::StartState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
                        std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
-                       EntityBuilder * entityBuilder, InputHandler * inputHandler, LocationHandler * locationHandler,
+                       EntityBuilder * entityBuilder, InputHandler * inputHandler,
                        SoundHandler * soundHandler){
     this->width = windowW;
     this->height = windowH;
@@ -13,17 +13,18 @@ StartState::StartState(SDL_Renderer * renderer, int windowW, int windowH, std::l
     this->drawer = drawingHandler;
     this->entityBuilder = entityBuilder;
     this->inputHandler = inputHandler;
-    this->locationHandler = locationHandler;
     this->soundHandler = soundHandler;
+    this->texture = NULL;
+    this->font = NULL;
 }
 
 StartState::~StartState() {
 
-    if(this->texture!=NULL){
+    if(this->texture){
         SDL_DestroyTexture(this->texture);
         this->texture = NULL;
     }
-    if(this->font !=NULL){
+    if(this->font){
         TTF_CloseFont(this->font);
         this->font = NULL;
     }
@@ -31,7 +32,6 @@ StartState::~StartState() {
     this->drawer = NULL;
     this->entityBuilder = NULL;
     this->inputHandler = NULL;
-    this->locationHandler = NULL;
     this->soundHandler = NULL;
 }
 
@@ -40,7 +40,13 @@ void StartState::begin() {
     this->font = TTF_OpenFont("resources/CaesarDressing-Regular.ttf", 30);
     SDL_Color color={255, 255, 255, 255};
     SDL_Surface* textSurf = TTF_RenderUTF8_Blended(font, "CornerGame", color);
+    if (textSurf == NULL) {
+        std::cerr << "Unable to load text surface! SDL_image Error: "
+                  << IMG_GetError() << std::endl;
+        return;
+    }
     this->texture = SDL_CreateTextureFromSurface(renderer, textSurf);
+    SDL_FreeSurface(textSurf);
     this->textRect = centeredRect(this->width, this->height, 200, 500);
 }
 
