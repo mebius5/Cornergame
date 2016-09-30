@@ -18,16 +18,9 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
     hero->collision = new CollisionComponent(new PlaySoundCommand(chunk), NULL);
     hero->art = new StaticArtComponent(
         SDL_CreateTextureFromSurface(this->renderer, image), 1);
+    hero->input = new InputComponent(hero);
 
     SDL_FreeSurface(image);
-
-    //Need to see parameter in future
-    hero->input = new InputComponent(.6f);
-    hero->input->insertKeyDown(SDLK_DOWN, new MoveDownCommand(hero));
-    hero->input->insertKeyDown(SDLK_UP, new MoveUpCommand(hero));
-    hero->input->insertKeyDown(SDLK_LEFT, new MoveLeftCommand(hero));
-    hero->input->insertKeyDown(SDLK_RIGHT, new MoveRightCommand(hero));
-
     return hero;
 }
 
@@ -38,15 +31,9 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
     enemy->collision = new CollisionComponent(NULL, new ResetAiCommand(enemy));
     enemy->art = new StaticArtComponent(
         SDL_CreateTextureFromSurface(this->renderer, image), 1);
+    enemy->ai = new AiComponent(enemy);
 
     SDL_FreeSurface(image);
-
-    enemy->ai = new AiComponent(.2f);
-    enemy->ai->newBehavior(new MoveDownCommand(enemy));
-    enemy->ai->newBehavior(new MoveUpCommand(enemy));
-    enemy->ai->newBehavior(new MoveLeftCommand(enemy));
-    enemy->ai->newBehavior(new MoveRightCommand(enemy));
-
     return enemy;
 }
 

@@ -9,16 +9,16 @@
 class SoundHandler {
 private:
     std::list<Command*>& commandList;
-    int prevTime;                 // last time a sound was played
+    int timeElapsed;               // time passed since a sound was played
     Mix_Music* backgroundMusic;
     int lastChannelUsedForSFX;
     Mix_Music* loadMusic(const char* filename);
-    void playSFX(Mix_Chunk* sfxChunk, int rawtime);
+    void playSFX(Mix_Chunk* sfxChunk);
 public:
     SoundHandler(std::list<Command*>& commandList);
     ~SoundHandler();
     void playBackgroundMusic(const char* filename);
-    void handleSFX(int rawtime);
+    void handleSFX(int dt);
 };
 
 #endif //CORNERGAME_SOUND_HANDLER_H

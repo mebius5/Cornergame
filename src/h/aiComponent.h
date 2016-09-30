@@ -1,26 +1,20 @@
 #ifndef CORNERGAME_AI_COMPONENT_H
 #define CORNERGAME_AI_COMPONENT_H
 
-#include <vector>
-#include <math.h>
-#include "command.h"
+#include "entity.h"
 
-class Command;          // forward declared for circular dependency
+class Entity;
 
 class AiComponent {
 private:
-    std::vector<Command*> commands;
-    int lastGenTime;            // last time a command was generated
-    Command* lastGenCommand;    // last command that was generated
-public:
+    Entity* entity;
+    int timeElapsed;            // time passed since a behavior was generated
     float speed;
 
-    AiComponent(float speed);
-    ~AiComponent();
-
-    void newBehavior(Command* command);
-    Command* generateBehavior(int rawtime);
-    void resetTimer();
+public:
+    AiComponent(Entity* entity);
+    void updateLocation(int dt);
+    void resetAi();
 };
 
-#endif //CORNERGAME_AI_COMPONENT_H
+#endif

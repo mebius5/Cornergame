@@ -4,19 +4,23 @@
 #include <SDL_keycode.h>
 #include <map>
 #include "command.h"
+#include "entity.h"
 
-class Command;          // forward declared for circular dependency
+class Entity;
 
 class InputComponent {
+private:
+    Entity* entity;
+    float accelRate;
+    float maxVelocity;
+    float velocityDecay;
+
+    float boundVelocity(float velocity);
 public:
-    std::map<SDL_Keycode, Command*> onKeyDown;
-    float speed;
-
-    InputComponent(float speed);
-    ~InputComponent();
-
-    void insertKeyDown(SDL_Keycode keycode, Command* command);
-    Command* getKeyDownCmd(SDL_Keycode);
+    InputComponent(Entity* entity);
+    void keyDown(SDL_Keycode keycode);
+    void keyUp(SDL_Keycode keycode);
+    void updateLocation(int dt);
 };
 
-#endif //CORNERGAME_INPUT_COMPONENT_H
+#endif

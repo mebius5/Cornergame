@@ -2,7 +2,7 @@
 
 SoundHandler::SoundHandler(std::list<Command*>& cmdList) :
         commandList(cmdList),
-        prevTime(0) {
+        timeElapsed(150) {
 }
 
 SoundHandler::~SoundHandler() {
@@ -28,12 +28,11 @@ void SoundHandler::playBackgroundMusic(const char* filename) {
     Mix_PlayMusic(this->backgroundMusic, -1);
 }
 
-void SoundHandler::playSFX(Mix_Chunk* sfxChunk, int rawtime) {
-    int timeDiff = rawtime - this->prevTime;
-    if (timeDiff < 150) {      // Don't play too often!
+void SoundHandler::playSFX(Mix_Chunk* sfxChunk) {
+    if (this->timeElapsed < 150) {      // Don't play too often!
         return;
     }
-    this->prevTime = rawtime;
+    this->timeElapsed = 0;
 
     if (Mix_Playing(this->lastChannelUsedForSFX))
         Mix_HaltChannel(this->lastChannelUsedForSFX);
@@ -46,12 +45,13 @@ void SoundHandler::playSFX(Mix_Chunk* sfxChunk, int rawtime) {
     }
 }
 
-void SoundHandler::handleSFX(int rawtime) {
+void SoundHandler::handleSFX(int dt) {
+    this->timeElapsed += dt;
     std::list<Command *>::const_iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end();) {
         Command* c = *it;
         if (PlaySoundCommand* sCmd = dynamic_cast<PlaySoundCommand*>(c)) {
-            playSFX(sCmd->sfxChunk, rawtime);
+            playSFX(sCmd->sfxChunk);
             it = this->commandList.erase(it);
         } else {
             ++it;

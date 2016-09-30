@@ -1,36 +1,25 @@
 #include "aiComponent.h"
 
-AiComponent::AiComponent(float speed) :
-        lastGenTime(-600),
-        lastGenCommand(NULL),
-        speed(speed) {
-}
-
-AiComponent::~AiComponent() {
-    std::vector<Command *>::const_iterator it;
-    for (it = this->commands.begin(); it != this->commands.end(); ++it){
-        delete *it;
-    }
-    this->commands.clear();
-}
-
-void AiComponent::newBehavior(Command *command) {
-    this->commands.push_back(command);
+AiComponent::AiComponent(Entity* entity) :
+    entity(entity),
+    timeElapsed(1500),
+    speed(.1f) {
 }
 
 // picks a behavior at random, and keeps it until timer resets
-Command* AiComponent::generateBehavior(int rawtime) {
-    int timeDiff = rawtime - this->lastGenTime;
-    if (timeDiff >= 600) {
-        int random = rand() % this->commands.size();
-        this->lastGenCommand = this->commands[random];
-        this->lastGenTime = rawtime;
+void AiComponent::updateLocation(int dt) {
+    this->timeElapsed += dt;
+    if (this->timeElapsed >= 1500) {
+        this->entity->xVelocity = (rand() % 3 - 1) * speed; // pick 1, 0 or -1
+        this->entity->yVelocity = (rand() % 3 - 1) * speed; //  for scaling x, y
+        this->timeElapsed = 0;
     }
 
-    return this->lastGenCommand;
+    this->entity->x += this->entity->xVelocity * dt;
+    this->entity->y += this->entity->yVelocity * dt;
 }
 
 // force the entity to pick a new behavior
-void AiComponent::resetTimer() {
-    this->lastGenTime = 100.0f;
+void AiComponent::resetAi() {
+    this->timeElapsed = 1500;
 }

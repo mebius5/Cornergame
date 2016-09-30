@@ -8,11 +8,10 @@
  * This class initializes and closes SDL resources, and manages the game loop.
  */
 
-
 GameManager::GameManager() :
-        title("<GAME NAME>"),
-        width(1280),
-        height(720) {
+    title("<GAME NAME>"),
+    width(1280),
+    height(720) {
 
     srand(time(NULL));
 }
@@ -96,11 +95,6 @@ void GameManager::cleanup() {
 
 // Run the actual program
 void GameManager::run() {
-    bool running = true;
-    float lastTime = 0;
-    float time = 0;
-
-    SDL_Event event;
     std::list<Command *> commandList;
     std::map<int, Entity *> entityMap;
 
@@ -126,30 +120,9 @@ void GameManager::run() {
 
     currentState = &playState;      // Need to start at start state eventually
 
-    while (running) {
-        currentState->begin();
-
-        while (running) {
-            int currentTime = SDL_GetTicks();
-            int dt = currentTime - lastTime;
-            time += dt / 1000.0;
-            lastTime = currentTime;
-
-            while (SDL_PollEvent(&event)) {
-                if (event.type == SDL_QUIT) {
-                    running = false;
-                } else if (event.type == SDL_KEYUP) {
-                    if (event.key.keysym.sym == SDLK_ESCAPE) {
-                        running = false;
-                    }
-                }
-            }
-
-            currentState->iterate(currentTime);
-        }
-
-        currentState->cleanup();
-    }
+    currentState->begin();
+    currentState->run();
+    currentState->cleanup();
 
     // Release memory for Entities and Commands
     std::map<int, Entity*>::const_iterator it;
@@ -159,10 +132,6 @@ void GameManager::run() {
     entityMap.clear();
 
     commandList.clear();
-
-    //for (;;) {
-    //    int i = 0;
-    //}
 }
 
 int main(void) {

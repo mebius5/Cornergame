@@ -2,7 +2,7 @@
 #define CORNERGAME_INPUT_HANDLER_H
 
 #include <SDL.h>
-#include <SDL_keycode.h>
+#include <SDL_events.h>
 #include <map>
 #include <list>
 #include "entity.h"
@@ -14,8 +14,8 @@ private:
     const Uint8* keystate;   // ptr to SDL's internal scancode keyboard states
 public:
     InputHandler(std::map<int, Entity*>& entMap, std::list<Command*>& cmdList);
-    void handleKeyDown(SDL_Keycode event);
-    void pollKeys();
+    void handleEvent(SDL_Event& event);
+    void update(int dt);
 };
 
-#endif //CORNERGAME_INPUT_HANDLER_H
+#endif

@@ -7,24 +7,23 @@ InputHandler::InputHandler(std::map<int, Entity*>& entMap,
         keystate(SDL_GetKeyboardState(NULL)) {
 }
 
-void InputHandler::pollKeys() {
-    if (this->keystate[SDL_SCANCODE_LEFT])
-        this->handleKeyDown(SDLK_LEFT);
-    if (this->keystate[SDL_SCANCODE_RIGHT])
-        this->handleKeyDown(SDLK_RIGHT);
-    if (this->keystate[SDL_SCANCODE_UP])
-        this->handleKeyDown(SDLK_UP);
-    if (this->keystate[SDL_SCANCODE_DOWN])
-        this->handleKeyDown(SDLK_DOWN);
-}
-
-void InputHandler::handleKeyDown(SDL_Keycode keycode) {
+void InputHandler::handleEvent(SDL_Event& event) {
     std::map<int, Entity*>::const_iterator it;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {
-        if (it->second->input){
-            Command* c = it->second->input->getKeyDownCmd(keycode);
-            if (c)
-                this->commandList.push_back(c);
+        if (it->second->input) {
+            if (event.type == SDL_KEYUP)
+                it->second->input->keyUp(event.key.keysym.sym);
+            else if (event.type == SDL_KEYDOWN)
+                it->second->input->keyDown(event.key.keysym.sym);
+        }
+    }
+}
+
+void InputHandler::update(int dt) {
+    std::map<int, Entity*>::const_iterator it;
+    for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it) {
+        if (it->second->input) {
+            it->second->input->updateLocation(dt);
         }
     }
 }

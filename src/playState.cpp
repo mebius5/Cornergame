@@ -80,17 +80,41 @@ void PlayState::begin() {
     this->entityMap->operator[](enemy5->getId()) = enemy5;
 }
 
-void PlayState::iterate(int dTime) {
-    inputHandler->pollKeys();
-    aiHandler->handleAiCommands();
-    aiHandler->handleAi(dTime);
-    collisionHandler->handleCollisions();
-    soundHandler->handleSFX(dTime);
+void PlayState::run() {
+    bool running = true;
+    float lastTime = SDL_GetTicks();
 
-    SDL_RenderClear(this->renderer);
-    SDL_RenderCopy(this->renderer, this->texture, NULL,&this->backgroundRect);
-    drawer->draw(this->entityMap,dTime);
-    SDL_RenderPresent(this->renderer);
+    while (running) {
+        int currentTime = SDL_GetTicks();
+        int dt = currentTime - lastTime;
+        lastTime = currentTime;
+        SDL_Event event;
+
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_QUIT) {
+                return;
+            } else if (event.type == SDL_KEYUP) {
+                if (event.key.keysym.sym == SDLK_ESCAPE) {
+                    return;
+                } else {
+                    inputHandler->handleEvent(event);
+                }
+            } else {
+                inputHandler->handleEvent(event);
+            }
+        }
+
+        aiHandler->handleAiCommands();
+        aiHandler->update(dt);
+        inputHandler->update(dt);
+        collisionHandler->handleCollisions();
+        soundHandler->handleSFX(dt);
+
+        SDL_RenderClear(this->renderer);
+        SDL_RenderCopy(this->renderer, this->texture, NULL,&this->backgroundRect);
+        drawer->draw(this->entityMap, dt);
+        SDL_RenderPresent(this->renderer);
+    }
 }
 
 void PlayState::cleanup() {

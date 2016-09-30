@@ -8,14 +8,13 @@
 #include "statsComponent.h"
 #include "aiComponent.h"
 
-class InputComponent;   // forward declared for circular dependency
+class CollisionComponent;       // forward declared for circular dependency
 class AiComponent;
-class CollisionComponent;
+class InputComponent;
 
 class Entity {
 private:
     int id;
-
 public:
     float x;
     float y;

@@ -12,34 +12,6 @@ public:
     virtual ~Command();
 };
 
-// A command to be handled by the location calculator
-class LocationCommand : public Command {
-protected:
-    LocationCommand(Entity* entity);
-public:
-    Entity* entity; //the entity to move;
-};
-
-class MoveLeftCommand : public LocationCommand {
-public:
-    MoveLeftCommand(Entity * entity);
-};
-
-class MoveRightCommand : public LocationCommand {
-public:
-    MoveRightCommand(Entity * entity);
-};
-
-class MoveUpCommand : public LocationCommand {
-public:
-    MoveUpCommand(Entity * entity);
-};
-
-class MoveDownCommand : public LocationCommand {
-public:
-    MoveDownCommand(Entity * entity);
-};
-
 class SoundCommand : public Command {
 
 };
@@ -51,16 +23,14 @@ public:
     ~PlaySoundCommand();
 };
 
-class AiCommand : public Command {
-protected:
-    AiCommand(Entity* entity);
+class InputCommand : public Command {
 public:
     Entity* entity;
 };
 
-class ResetAiCommand : public AiCommand {
+class ResetAiCommand : public InputCommand {
 public:
     ResetAiCommand(Entity* entity);
 };
 
-#endif //CORNERGAME_COMMAND_H
+#endif

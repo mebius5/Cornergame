@@ -20,9 +20,9 @@ public:
     virtual ~State(){};
     int center(int large, int small);
     SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
-    virtual void begin()=0;
-    virtual void iterate(int dTime)=0;
-    virtual void cleanup()=0;
+    virtual void begin() = 0;
+    virtual void run() = 0;
+    virtual void cleanup() = 0;
 };
 
 class StartState : public State {
@@ -43,7 +43,7 @@ public:
             SoundHandler * soundHandler);
     ~StartState();
     void begin();
-    void iterate(int dTime);
+    void run();
     void cleanup();
 };
 
@@ -80,7 +80,7 @@ public:
               AiHandler * aiHandler, CollisionHandler * collisionHandler, SoundHandler * soundHandler);
     ~PlayState();
     void begin();
-    void iterate(int dTime);
+    void run();
     void cleanup();
 };
 

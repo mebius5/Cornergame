@@ -50,11 +50,13 @@ void StartState::begin() {
     this->textRect = centeredRect(this->width, this->height, 200, 500);
 }
 
-void StartState::iterate(int dTime) {
-    SDL_RenderClear(this->renderer);
-    SDL_RenderCopy(this->renderer, this->texture, NULL,&this->textRect);
-    drawer->draw(this->entityMap,dTime);
-    SDL_RenderPresent(this->renderer);
+void StartState::run() {
+    for (;;) {
+        SDL_RenderClear(this->renderer);
+        SDL_RenderCopy(this->renderer, this->texture, NULL,&this->textRect);
+        drawer->draw(this->entityMap, 5);       //TODO: add timing (dt)
+        SDL_RenderPresent(this->renderer);
+    }
 }
 
 void StartState::cleanup() {
