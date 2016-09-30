@@ -9,7 +9,7 @@ private:
     SDL_Renderer* renderer;
 public:
     DrawingHandler(SDL_Renderer* renderer);
-    void draw(std::map<int, Entity*> * entityMap, int dTime);
+    void draw(std::map<int, Entity*>& entityMap, int dTime);
 };
 
-#endif //CORNERGAME_DRAWING_HANDLER_H
+#endif

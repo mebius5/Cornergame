@@ -1,15 +1,13 @@
-
 #include "state.h"
 
-StartState::StartState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
-                       std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
+StartState::StartState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> commandList,
+                     std::map<int, Entity*>& entityMap, DrawingHandler * drawingHandler,
                        EntityBuilder * entityBuilder, InputHandler * inputHandler,
-                       SoundHandler * soundHandler){
+                       SoundHandler * soundHandler) :
+    State(commandList, entityMap) {
+    this->renderer = renderer;
     this->width = windowW;
     this->height = windowH;
-    this->renderer = renderer;
-    this->commandList = commandList;
-    this->entityMap = entityMap;
     this->drawer = drawingHandler;
     this->entityBuilder = entityBuilder;
     this->inputHandler = inputHandler;
@@ -19,20 +17,10 @@ StartState::StartState(SDL_Renderer * renderer, int windowW, int windowH, std::l
 }
 
 StartState::~StartState() {
-
-    if(this->texture){
+    if (this->texture)
         SDL_DestroyTexture(this->texture);
-        this->texture = NULL;
-    }
-    if(this->font){
+    if (this->font)
         TTF_CloseFont(this->font);
-        this->font = NULL;
-    }
-
-    this->drawer = NULL;
-    this->entityBuilder = NULL;
-    this->inputHandler = NULL;
-    this->soundHandler = NULL;
 }
 
 void StartState::begin() {
@@ -60,11 +48,11 @@ void StartState::run() {
 }
 
 void StartState::cleanup() {
-    if(this->texture!=NULL){
+    if (this->texture) {
         SDL_DestroyTexture(this->texture);
         this->texture = NULL;
     }
-    if(this->font !=NULL){
+    if (this->font) {
         TTF_CloseFont(this->font);
         this->font = NULL;
     }

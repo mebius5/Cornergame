@@ -14,7 +14,7 @@ private:
     const int width;
     const int height;
     bool detectOverlap(Entity* entity1, Entity* entity2);
-    void handleBorderCollision(Entity *entity);
+    void handleBorderCollision(Entity* entity);
 public:
     CollisionHandler(std::map<int, Entity*>& entityMap,
                      std::list<Command*>& commandList,

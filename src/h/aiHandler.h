@@ -16,4 +16,4 @@ public:
     void handleAiCommands();
 };
 
-#endif //CORNERGAME_AI_HANDLER_H
+#endif

@@ -1,14 +1,13 @@
 #include <state.h>
 
-PlayState::PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
-                     std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
+PlayState::PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> commandList,
+                     std::map<int, Entity*>& entityMap, DrawingHandler * drawingHandler,
                      EntityBuilder * entityBuilder, InputHandler * inputHandler, AiHandler * aiHandler,
-                     CollisionHandler * collisionHandler, SoundHandler * soundHandler) {
+                     CollisionHandler * collisionHandler, SoundHandler * soundHandler) :
+    State(commandList, entityMap) {
     this->renderer = renderer;
     this->windowW = windowW;
     this->windowH = windowH;
-    this->commandList = commandList;
-    this->entityMap = entityMap;
     this->drawer = drawingHandler;
     this->entityBuilder = entityBuilder;
     this->inputHandler = inputHandler;
@@ -18,18 +17,9 @@ PlayState::PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::lis
     this->texture = NULL;
 }
 
-
 PlayState::~PlayState() {
-    if(this->texture!=NULL){
+    if (this->texture)
         SDL_DestroyTexture(this->texture);
-        this->texture = NULL;
-    }
-    this->drawer = NULL;
-    this->entityBuilder = NULL;
-    this->inputHandler = NULL;
-    this->aiHandler = NULL;
-    this->collisionHandler = NULL;
-    this->soundHandler = NULL;
 }
 
 void PlayState::begin() {
@@ -61,23 +51,23 @@ void PlayState::begin() {
     Entity* hero = this->entityBuilder->createHero(100, 100,
                                                    "resources/collision_alert.wav");
 
-    this->entityMap->operator[](hero->getId()) = hero;
+    this->entityMap.operator[](hero->getId()) = hero;
 
     //Create enemy entities
     Entity * enemy1 = this->entityBuilder->createEnemy(350,150);
-    this->entityMap->operator[](enemy1->getId()) = enemy1;
+    this->entityMap.operator[](enemy1->getId()) = enemy1;
 
     Entity * enemy2 = this->entityBuilder->createEnemy(500,150);
-    this->entityMap->operator[](enemy2->getId()) = enemy2;
+    this->entityMap.operator[](enemy2->getId()) = enemy2;
 
     Entity * enemy3 = this->entityBuilder->createEnemy(650,150);
-    this->entityMap->operator[](enemy3->getId()) = enemy3;
+    this->entityMap.operator[](enemy3->getId()) = enemy3;
 
     Entity * enemy4 = this->entityBuilder->createEnemy(400,300);
-    this->entityMap->operator[](enemy4->getId()) = enemy4;
+    this->entityMap.operator[](enemy4->getId()) = enemy4;
 
     Entity * enemy5 = this->entityBuilder->createEnemy(600,300);
-    this->entityMap->operator[](enemy5->getId()) = enemy5;
+    this->entityMap.operator[](enemy5->getId()) = enemy5;
 }
 
 void PlayState::run() {
@@ -111,14 +101,14 @@ void PlayState::run() {
         soundHandler->handleSFX(dt);
 
         SDL_RenderClear(this->renderer);
-        SDL_RenderCopy(this->renderer, this->texture, NULL,&this->backgroundRect);
+        SDL_RenderCopy(this->renderer, this->texture, NULL, &this->backgroundRect);
         drawer->draw(this->entityMap, dt);
         SDL_RenderPresent(this->renderer);
     }
 }
 
 void PlayState::cleanup() {
-    if(this->texture!=NULL){
+    if (this->texture) {
         SDL_DestroyTexture(this->texture);
         this->texture = NULL;
     }

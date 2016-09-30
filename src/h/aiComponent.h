@@ -8,7 +8,7 @@ class Entity;
 class AiComponent {
 private:
     Entity* entity;
-    int timeElapsed;            // time passed since a behavior was generated
+    int timeElapsed;      // time passed since a behavior was generated
     float speed;
 
 public:

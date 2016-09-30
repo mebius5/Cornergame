@@ -14,10 +14,11 @@ protected:
     State ** state;
     SDL_Renderer * renderer;
     SDL_Texture * texture;
-    std::list<Command*> * commandList;
-    std::map<int, Entity*> * entityMap;
+    std::list<Command*>& commandList;
+    std::map<int, Entity*>& entityMap;
 public:
-    virtual ~State(){};
+    State(std::list<Command*>& commandList, std::map<int, Entity*>& entityMap);
+    virtual ~State() { };
     int center(int large, int small);
     SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
     virtual void begin() = 0;
@@ -37,8 +38,10 @@ private:
     int height;
 
 public:
-    StartState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
-    std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
+    StartState(SDL_Renderer * renderer, int windowW, int windowH,
+        std::list<Command*> commandList,
+                             std::map<int, Entity*>& entityMap,
+            DrawingHandler * drawingHandler,
     EntityBuilder * entityBuilder, InputHandler * inputHandler,
             SoundHandler * soundHandler);
     ~StartState();
@@ -50,7 +53,7 @@ public:
 
 class MenuState: public State {
 private:
-    DrawingHandler  * drawer;
+    DrawingHandler * drawer;
     EntityBuilder * entityBuilder;
     InputHandler * inputHandler;
     SoundHandler * soundHandler;
@@ -61,8 +64,7 @@ public:
 
 class PlayState : public State {
 private:
-    //Private variables
-    DrawingHandler  * drawer;
+    DrawingHandler * drawer;
     EntityBuilder * entityBuilder;
     InputHandler * inputHandler;
     AiHandler * aiHandler;
@@ -74,8 +76,9 @@ private:
 
 public:
     //Public methods
-    PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> * commandList,
-              std::map<int, Entity*> * entityMap, DrawingHandler * drawingHandler,
+    PlayState(SDL_Renderer * renderer, int windowW, int windowH,
+        std::list<Command*> commandList,
+                             std::map<int, Entity*>& entityMap,DrawingHandler * drawingHandler,
               EntityBuilder * entityBuilder, InputHandler * inputHandler,
               AiHandler * aiHandler, CollisionHandler * collisionHandler, SoundHandler * soundHandler);
     ~PlayState();
@@ -87,7 +90,7 @@ public:
 
 class HighscoreState : public State {
 private:
-    DrawingHandler  * drawer;
+    DrawingHandler * drawer;
     EntityBuilder * entityBuilder;
     InputHandler * inputHandler;
     SoundHandler * soundHandler;

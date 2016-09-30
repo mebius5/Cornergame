@@ -3,7 +3,7 @@
 SRCFILES = \
 	aiComponent.cpp \
 	aiHandler.cpp \
-	animatedArtComponent.cpp \
+	animationComponent.cpp \
 	collisionComponent.cpp \
 	collisionHandler.cpp \
 	command.cpp \

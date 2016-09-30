@@ -110,11 +110,11 @@ void GameManager::run() {
 
     //Initialize states
     StartState startState(this->renderer, this->width, this->height,
-                          &commandList, &entityMap, &drawer,
+                          commandList, entityMap, &drawer,
                         &entityBuilder, &inputHandler, &soundHandler);
 
     PlayState playState(this->renderer, this->width, this->height,
-                        &commandList, &entityMap, &drawer,
+                        commandList, entityMap, &drawer,
                         &entityBuilder, &inputHandler, &aiHandler,
                         &collisionHandler, &soundHandler);
 
@@ -124,13 +124,11 @@ void GameManager::run() {
     currentState->run();
     currentState->cleanup();
 
-    // Release memory for Entities and Commands
     std::map<int, Entity*>::const_iterator it;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {
-        delete it->second;      // delete Entity
+        delete it->second;      // delete Entities from map
     }
     entityMap.clear();
-
     commandList.clear();
 }
 
