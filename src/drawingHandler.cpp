@@ -1,12 +1,13 @@
 #include "drawingHandler.h"
 
-DrawingHandler::DrawingHandler(SDL_Renderer* renderer) :
-    renderer(renderer) {
+DrawingHandler::DrawingHandler(SDL_Renderer* r, std::map<int, Entity*>& map) :
+    renderer(r),
+    entityMap(map) {
 }
 
-void DrawingHandler::draw(std::map<int, Entity*>& entityMap, int dt) {\
+void DrawingHandler::draw(int dt) {
     std::map<int, Entity*>::const_iterator it;
-    for (it = entityMap.begin(); it != entityMap.end(); ++it) {
+    for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it) {
         Entity* entity = it->second;
         if (entity->art) {
             SDL_Rect rect = { (int) entity->x,

@@ -16,7 +16,7 @@ class Entity {
 private:
     int id;
 public:
-    float x;
+    float x;                    // coordinates of top left corner
     float y;
     int width;
     int height;
@@ -37,4 +37,4 @@ public:
     int getId();
 };
 
-#endif //CORNERGAME_ENTITY_H
+#endif

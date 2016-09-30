@@ -11,7 +11,6 @@ class InputHandler {
 private:
     std::map<int, Entity*>& entityMap;
     std::list<Command*>& commandList;
-    const Uint8* keystate;   // ptr to SDL's internal scancode keyboard states
 public:
     InputHandler(std::map<int, Entity*>& entMap, std::list<Command*>& cmdList);
     void handleEvent(SDL_Event& event);

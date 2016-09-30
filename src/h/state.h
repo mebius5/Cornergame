@@ -11,13 +11,13 @@
 
 class State {
 protected:
-    State ** state;
-    SDL_Renderer * renderer;
-    SDL_Texture * texture;
     std::list<Command*>& commandList;
     std::map<int, Entity*>& entityMap;
+    SDL_Renderer* renderer;
+    SDL_Texture* texture;
 public:
-    State(std::list<Command*>& commandList, std::map<int, Entity*>& entityMap);
+    State(std::list<Command*>& commandList, std::map<int, Entity*>& entityMap,
+          SDL_Renderer* renderer);
     virtual ~State() { };
     int center(int large, int small);
     SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
@@ -28,22 +28,20 @@ public:
 
 class StartState : public State {
 private:
+    int windowW;
+    int windowH;
+    EntityBuilder& entityBuilder;
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
     TTF_Font* font;
-    DrawingHandler * drawer;
-    EntityBuilder * entityBuilder;
-    InputHandler * inputHandler;
-    SoundHandler * soundHandler;
     SDL_Rect textRect;
-    int width;
-    int height;
 
 public:
-    StartState(SDL_Renderer * renderer, int windowW, int windowH,
-        std::list<Command*> commandList,
-                             std::map<int, Entity*>& entityMap,
-            DrawingHandler * drawingHandler,
-    EntityBuilder * entityBuilder, InputHandler * inputHandler,
-            SoundHandler * soundHandler);
+    StartState(int windowW, int windowH, std::list<Command*>& commandList,
+               std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
+               EntityBuilder& entityBuilder, DrawingHandler& drawingHandler,
+               InputHandler& inputHandler, SoundHandler& soundHandler);
     ~StartState();
     void begin();
     void run();
@@ -53,10 +51,10 @@ public:
 
 class MenuState: public State {
 private:
-    DrawingHandler * drawer;
-    EntityBuilder * entityBuilder;
-    InputHandler * inputHandler;
-    SoundHandler * soundHandler;
+    EntityBuilder& entityBuilder;
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
 public:
     MenuState();
     ~MenuState();
@@ -64,23 +62,22 @@ public:
 
 class PlayState : public State {
 private:
-    DrawingHandler * drawer;
-    EntityBuilder * entityBuilder;
-    InputHandler * inputHandler;
-    AiHandler * aiHandler;
-    CollisionHandler * collisionHandler;
-    SoundHandler * soundHandler;
     int windowW;
     int windowH;
+    EntityBuilder& entityBuilder;
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
+    AiHandler& aiHandler;
+    CollisionHandler& collisionHandler;
     SDL_Rect backgroundRect;
 
 public:
-    //Public methods
-    PlayState(SDL_Renderer * renderer, int windowW, int windowH,
-        std::list<Command*> commandList,
-                             std::map<int, Entity*>& entityMap,DrawingHandler * drawingHandler,
-              EntityBuilder * entityBuilder, InputHandler * inputHandler,
-              AiHandler * aiHandler, CollisionHandler * collisionHandler, SoundHandler * soundHandler);
+    PlayState(int windowW, int windowH, std::list<Command*>& cmdList,
+              std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
+              EntityBuilder& entityBuilder, DrawingHandler& drawingHandler,
+              InputHandler& inputHandler, SoundHandler& soundHandler,
+              AiHandler& aiHandler, CollisionHandler& collisionHandler);
     ~PlayState();
     void begin();
     void run();
@@ -90,13 +87,13 @@ public:
 
 class HighscoreState : public State {
 private:
-    DrawingHandler * drawer;
-    EntityBuilder * entityBuilder;
-    InputHandler * inputHandler;
-    SoundHandler * soundHandler;
+    EntityBuilder& entityBuilder;
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
 public:
     HighscoreState();
     ~HighscoreState();
 };
 
-#endif //CORNERGAME_STATE_H
+#endif

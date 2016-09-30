@@ -7,9 +7,10 @@
 class DrawingHandler {
 private:
     SDL_Renderer* renderer;
+    std::map<int, Entity*>& entityMap;
 public:
-    DrawingHandler(SDL_Renderer* renderer);
-    void draw(std::map<int, Entity*>& entityMap, int dTime);
+    DrawingHandler(SDL_Renderer* renderer, std::map<int, Entity*>& entityMap);
+    void draw(int dt);
 };
 
 #endif

@@ -3,10 +3,10 @@
 CollisionHandler::CollisionHandler(std::map<int, Entity*>& entityMap,
                                    std::list<Command*>& commandList,
                                    const int w, const int h) :
-        entityMap(entityMap),
-        commandList(commandList),
-        width(w),
-        height(h) {
+    entityMap(entityMap),
+    commandList(commandList),
+    width(w),
+    height(h) {
 }
 
 void CollisionHandler::handleCollisions(){
@@ -28,11 +28,11 @@ void CollisionHandler::handleCollisions(){
             }
         }
 
-        this->handleBorderCollision(e1);
+        this->detectBorderCollision(e1);
     }
 }
 
-void CollisionHandler::handleBorderCollision(Entity *entity){
+void CollisionHandler::detectBorderCollision(Entity *entity){
     if (entity->collision) {
         Command* collisionCmd = entity->collision->onBorderCollision;
         if (entity->x < 0) {

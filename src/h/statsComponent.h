@@ -6,4 +6,4 @@ public:
     StatsComponent();
 };
 
-#endif //CORNERGAME_STATS_COMPONENT_H
+#endif

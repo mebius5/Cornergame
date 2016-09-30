@@ -98,8 +98,8 @@ void GameManager::run() {
     std::list<Command *> commandList;
     std::map<int, Entity *> entityMap;
 
-    DrawingHandler drawer(this->renderer);
     EntityBuilder entityBuilder(this->renderer);
+    DrawingHandler drawingHandler(this->renderer, entityMap);
     InputHandler inputHandler(entityMap, commandList);
     AiHandler aiHandler(entityMap, commandList);
     CollisionHandler collisionHandler(entityMap, commandList,
@@ -109,16 +109,16 @@ void GameManager::run() {
     State * currentState;
 
     //Initialize states
-    StartState startState(this->renderer, this->width, this->height,
-                          commandList, entityMap, &drawer,
-                        &entityBuilder, &inputHandler, &soundHandler);
+    StartState startState(this->width, this->height, commandList, entityMap,
+                          this->renderer, entityBuilder, drawingHandler,
+                          inputHandler, soundHandler);
 
-    PlayState playState(this->renderer, this->width, this->height,
-                        commandList, entityMap, &drawer,
-                        &entityBuilder, &inputHandler, &aiHandler,
-                        &collisionHandler, &soundHandler);
+    PlayState playState(this->width, this->height, commandList, entityMap,
+                        this->renderer, entityBuilder, drawingHandler,
+                        inputHandler, soundHandler, aiHandler,
+                        collisionHandler);
 
-    currentState = &playState;      // Need to start at start state eventually
+    currentState = &playState;      // TODO: Start at startState
 
     currentState->begin();
     currentState->run();

@@ -85,14 +85,9 @@ leaks?
 background generation to DrawingHandler
 add const to stuff
 rule of three
-separate commandLists?
+separate commandLists? -> structure to do this?
 separate componentLists?
 make sure abstract base classes are right for components
-
+reset input on border collision (LocationHandler?)
 make Component classes virtual
 check TODOs in code
-
-Reformating:
-excess/missing spaces
-initializer lists to 4 spaces
-.h should have no comment at end

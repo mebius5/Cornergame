@@ -6,4 +6,4 @@ public:
     PhysicsComponent();
 };
 
-#endif //CORNERGAME_PHYSICS_COMPONENT_H
+#endif

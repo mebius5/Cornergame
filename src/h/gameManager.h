@@ -5,7 +5,6 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
-#include <math.h>
 #include <list>
 #include <map>
 #include <iostream>
@@ -18,7 +17,6 @@
 #include "aiHandler.h"
 #include "collisionHandler.h"
 #include "state.h"
-
 
 class GameManager {
 private:
@@ -37,4 +35,4 @@ public:
     void cleanup();
 };
 
-#endif //CORNERGAME_GAME_MANAGER_H
+#endif

@@ -1,19 +1,17 @@
 #include "state.h"
 
-StartState::StartState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> commandList,
-                     std::map<int, Entity*>& entityMap, DrawingHandler * drawingHandler,
-                       EntityBuilder * entityBuilder, InputHandler * inputHandler,
-                       SoundHandler * soundHandler) :
-    State(commandList, entityMap) {
-    this->renderer = renderer;
-    this->width = windowW;
-    this->height = windowH;
-    this->drawer = drawingHandler;
-    this->entityBuilder = entityBuilder;
-    this->inputHandler = inputHandler;
-    this->soundHandler = soundHandler;
-    this->texture = NULL;
-    this->font = NULL;
+StartState::StartState(int windowW, int windowH, std::list<Command*>& cmdList,
+                       std::map<int, Entity*>& entMap, SDL_Renderer* renderer,
+                       EntityBuilder& entBuilder, DrawingHandler& drawer,
+                       InputHandler& inputHandler, SoundHandler& soundHandler) :
+    State(cmdList, entMap, renderer),
+    windowW(windowW),
+    windowH(windowH),
+    entityBuilder(entBuilder),
+    drawingHandler(drawer),
+    inputHandler(inputHandler),
+    soundHandler(soundHandler),
+    font(NULL) {
 }
 
 StartState::~StartState() {
@@ -33,16 +31,17 @@ void StartState::begin() {
                   << IMG_GetError() << std::endl;
         return;
     }
+
     this->texture = SDL_CreateTextureFromSurface(renderer, textSurf);
     SDL_FreeSurface(textSurf);
-    this->textRect = centeredRect(this->width, this->height, 200, 500);
+    this->textRect = centeredRect(this->windowW, this->windowH, 200, 500);
 }
 
 void StartState::run() {
     for (;;) {
         SDL_RenderClear(this->renderer);
         SDL_RenderCopy(this->renderer, this->texture, NULL,&this->textRect);
-        drawer->draw(this->entityMap, 5);       //TODO: add timing (dt)
+        this->drawingHandler.draw(5);       //TODO: add timing (dt)
         SDL_RenderPresent(this->renderer);
     }
 }

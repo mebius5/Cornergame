@@ -17,4 +17,4 @@ public:
     Entity* createEnemy(int x, int y);
 };
 
-#endif //CORNERGAME_ENTITY_BUILDER_H
+#endif

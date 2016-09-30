@@ -1,8 +1,8 @@
 #include "soundHandler.h"
 
 SoundHandler::SoundHandler(std::list<Command*>& cmdList) :
-        commandList(cmdList),
-        timeElapsed(150) {
+    commandList(cmdList),
+    timeElapsed(150) {
 }
 
 SoundHandler::~SoundHandler() {
@@ -38,7 +38,7 @@ void SoundHandler::playSFX(Mix_Chunk* sfxChunk) {
         Mix_HaltChannel(this->lastChannelUsedForSFX);
 
     this->lastChannelUsedForSFX=Mix_PlayChannel(-1, sfxChunk, 0);
-    if(this->lastChannelUsedForSFX==-1) {
+    if (this->lastChannelUsedForSFX==-1) {
         std::cerr << "Mix_PlayChannel: " << Mix_GetError() << std::endl;
         // may be critical error, or maybe just no channels were free.
         // you could allocated another channel in that case...

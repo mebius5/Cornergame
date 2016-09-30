@@ -1,20 +1,19 @@
 #include <state.h>
 
-PlayState::PlayState(SDL_Renderer * renderer, int windowW, int windowH, std::list<Command*> commandList,
-                     std::map<int, Entity*>& entityMap, DrawingHandler * drawingHandler,
-                     EntityBuilder * entityBuilder, InputHandler * inputHandler, AiHandler * aiHandler,
-                     CollisionHandler * collisionHandler, SoundHandler * soundHandler) :
-    State(commandList, entityMap) {
-    this->renderer = renderer;
-    this->windowW = windowW;
-    this->windowH = windowH;
-    this->drawer = drawingHandler;
-    this->entityBuilder = entityBuilder;
-    this->inputHandler = inputHandler;
-    this->aiHandler = aiHandler;
-    this->collisionHandler = collisionHandler;
-    this->soundHandler = soundHandler;
-    this->texture = NULL;
+PlayState::PlayState(int windowW, int windowH, std::list<Command*>& cmdList,
+                     std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
+                     EntityBuilder& entBuilder, DrawingHandler& drawingHandler,
+                     InputHandler& inputHandler, SoundHandler& soundHandler,
+                     AiHandler& aiHandler, CollisionHandler& collisionHandler) :
+    State(cmdList, entityMap, renderer),
+    windowW(windowW),
+    windowH(windowH),
+    entityBuilder(entBuilder),
+    drawingHandler(drawingHandler),
+    inputHandler(inputHandler),
+    soundHandler(soundHandler),
+    aiHandler(aiHandler),
+    collisionHandler(collisionHandler) {
 }
 
 PlayState::~PlayState() {
@@ -45,28 +44,26 @@ void PlayState::begin() {
                                         finalImage->w, finalImage->h);
     SDL_FreeSurface(finalImage);
 
-    this->soundHandler->playBackgroundMusic("resources/abstract_tracking.xm");
+    this->soundHandler.playBackgroundMusic("resources/abstract_tracking.xm");
 
-    // Create hero entity
-    Entity* hero = this->entityBuilder->createHero(100, 100,
-                                                   "resources/collision_alert.wav");
-
+    // Create entities
+    Entity* hero = this->entityBuilder.createHero(100, 100,
+                                            "resources/collision_alert.wav");
     this->entityMap.operator[](hero->getId()) = hero;
 
-    //Create enemy entities
-    Entity * enemy1 = this->entityBuilder->createEnemy(350,150);
+    Entity* enemy1 = this->entityBuilder.createEnemy(350,150);
     this->entityMap.operator[](enemy1->getId()) = enemy1;
 
-    Entity * enemy2 = this->entityBuilder->createEnemy(500,150);
+    Entity* enemy2 = this->entityBuilder.createEnemy(500,150);
     this->entityMap.operator[](enemy2->getId()) = enemy2;
 
-    Entity * enemy3 = this->entityBuilder->createEnemy(650,150);
+    Entity* enemy3 = this->entityBuilder.createEnemy(650,150);
     this->entityMap.operator[](enemy3->getId()) = enemy3;
 
-    Entity * enemy4 = this->entityBuilder->createEnemy(400,300);
+    Entity* enemy4 = this->entityBuilder.createEnemy(400,300);
     this->entityMap.operator[](enemy4->getId()) = enemy4;
 
-    Entity * enemy5 = this->entityBuilder->createEnemy(600,300);
+    Entity* enemy5 = this->entityBuilder.createEnemy(600,300);
     this->entityMap.operator[](enemy5->getId()) = enemy5;
 }
 
@@ -84,25 +81,24 @@ void PlayState::run() {
             if (event.type == SDL_QUIT) {
                 return;
             } else if (event.type == SDL_KEYUP) {
-                if (event.key.keysym.sym == SDLK_ESCAPE) {
+                if (event.key.keysym.sym == SDLK_ESCAPE)
                     return;
-                } else {
-                    inputHandler->handleEvent(event);
-                }
+                else
+                    this->inputHandler.handleEvent(event);
             } else {
-                inputHandler->handleEvent(event);
+                this->inputHandler.handleEvent(event);
             }
         }
 
-        aiHandler->handleAiCommands();
-        aiHandler->update(dt);
-        inputHandler->update(dt);
-        collisionHandler->handleCollisions();
-        soundHandler->handleSFX(dt);
+        this->aiHandler.handleAiCommands();
+        this->aiHandler.update(dt);
+        this->inputHandler.update(dt);
+        this->collisionHandler.handleCollisions();
+        this->soundHandler.handleSFX(dt);
 
         SDL_RenderClear(this->renderer);
         SDL_RenderCopy(this->renderer, this->texture, NULL, &this->backgroundRect);
-        drawer->draw(this->entityMap, dt);
+        this->drawingHandler.draw(dt);
         SDL_RenderPresent(this->renderer);
     }
 }

@@ -3,7 +3,6 @@
 
 #include <SDL_keycode.h>
 #include <map>
-#include "command.h"
 #include "entity.h"
 
 class Entity;

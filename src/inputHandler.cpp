@@ -3,8 +3,7 @@
 InputHandler::InputHandler(std::map<int, Entity*>& entMap,
                            std::list<Command*>& cmdList) :
         entityMap(entMap),
-        commandList(cmdList),
-        keystate(SDL_GetKeyboardState(NULL)) {
+        commandList(cmdList) {
 }
 
 void InputHandler::handleEvent(SDL_Event& event) {

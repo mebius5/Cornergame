@@ -21,4 +21,4 @@ public:
     void handleSFX(int dt);
 };
 
-#endif //CORNERGAME_SOUND_HANDLER_H
+#endif

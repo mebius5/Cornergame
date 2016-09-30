@@ -5,7 +5,7 @@ Command::~Command() {
 }
 
 PlaySoundCommand::PlaySoundCommand(Mix_Chunk* sfxChunk) :
-        sfxChunk(sfxChunk) {
+    sfxChunk(sfxChunk) {
 }
 
 PlaySoundCommand::~PlaySoundCommand() {

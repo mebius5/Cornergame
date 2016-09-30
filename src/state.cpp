@@ -1,10 +1,12 @@
 #include "state.h"
 
-State::State(std::list<Command*>& commandList, std::map<int, Entity*>& entityMap) :
-    commandList(commandList),
-    entityMap(entityMap) {
+State::State(std::list<Command*>& cmdList, std::map<int, Entity*>& entityMap,
+             SDL_Renderer* renderer) :
+    commandList(cmdList),
+    entityMap(entityMap),
+    renderer(renderer),
+    texture(NULL) {
 }
-
 
 int State::center(int large, int small) {
     return (large / 2 - small / 2);
