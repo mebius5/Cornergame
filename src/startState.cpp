@@ -4,13 +4,12 @@ StartState::StartState(int windowW, int windowH, std::list<Command*>& cmdList,
                        std::map<int, Entity*>& entMap, SDL_Renderer* renderer,
                        EntityBuilder& entBuilder, DrawingHandler& drawer,
                        InputHandler& inputHandler, SoundHandler& soundHandler) :
-    State(cmdList, entMap, renderer),
-    windowW(windowW),
-    windowH(windowH),
+    State(cmdList, entMap, renderer, windowW, windowH),
     entityBuilder(entBuilder),
     drawingHandler(drawer),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
+    texture(NULL),
     font(NULL) {
 }
 
@@ -34,7 +33,7 @@ void StartState::begin() {
 
     this->texture = SDL_CreateTextureFromSurface(renderer, textSurf);
     SDL_FreeSurface(textSurf);
-    this->textRect = centeredRect(this->windowW, this->windowH, 200, 500);
+    this->textRect = centeredRect(this->windowW, this->windowH, 200, 800);
 }
 
 void StartState::run() {

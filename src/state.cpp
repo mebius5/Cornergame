@@ -1,11 +1,12 @@
 #include "state.h"
 
 State::State(std::list<Command*>& cmdList, std::map<int, Entity*>& entityMap,
-             SDL_Renderer* renderer) :
+             SDL_Renderer* renderer, int windowW, int windowH) :
     commandList(cmdList),
     entityMap(entityMap),
     renderer(renderer),
-    texture(NULL) {
+    windowW(windowW),
+    windowH(windowH) {
 }
 
 int State::center(int large, int small) {

@@ -37,6 +37,14 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
     return enemy;
 }
 
+Entity * EntityBuilder::createBackground(const char * filename, int width, int height) {
+    SDL_Surface * image = this->loadImage(filename);
+    Entity * background = new Entity(this->nextId++, 0, 0, width, height);
+    background->art = new StaticArtComponent(SDL_CreateTextureFromSurface(this->renderer, image),0);
+    SDL_FreeSurface(image);
+    return background;
+}
+
 // Surface must be freed when done!
 SDL_Surface* EntityBuilder::loadImage(const char* filename) {
     SDL_Surface* image = IMG_Load(filename);
@@ -55,3 +63,5 @@ SDL_Surface* EntityBuilder::loadImage(const char* filename) {
     }
     return finalImage;
 }
+
+

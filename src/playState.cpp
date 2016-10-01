@@ -5,9 +5,7 @@ PlayState::PlayState(int windowW, int windowH, std::list<Command*>& cmdList,
                      EntityBuilder& entBuilder, DrawingHandler& drawingHandler,
                      InputHandler& inputHandler, SoundHandler& soundHandler,
                      AiHandler& aiHandler, CollisionHandler& collisionHandler) :
-    State(cmdList, entityMap, renderer),
-    windowW(windowW),
-    windowH(windowH),
+    State(cmdList, entityMap, renderer, windowW, windowH),
     entityBuilder(entBuilder),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
@@ -17,36 +15,18 @@ PlayState::PlayState(int windowW, int windowH, std::list<Command*>& cmdList,
 }
 
 PlayState::~PlayState() {
-    if (this->texture)
-        SDL_DestroyTexture(this->texture);
 }
 
 void PlayState::begin() {
-    // Load image
-    SDL_Surface* loadedImage = IMG_Load("resources/jhu-logo.png");
-    SDL_Surface* finalImage = NULL;
-    if (loadedImage == NULL) {
-        std::cerr << "Unable to load image! SDL_image Error: "
-                  << IMG_GetError() << std::endl;
-        return;
-    } else {
-        finalImage = SDL_ConvertSurface(loadedImage, loadedImage->format, 0);
-        if (finalImage == NULL) {
-            std::cerr << "Unable to optimize image! SDL Error: "
-                      << SDL_GetError() << std::endl;
-        }
-
-        //Get rid of old loaded surface
-        SDL_FreeSurface(loadedImage);
-    }
-    this->texture = SDL_CreateTextureFromSurface(this->renderer, finalImage);
-    this->backgroundRect = centeredRect(this->windowW, this->windowH,
-                                        finalImage->w, finalImage->h);
-    SDL_FreeSurface(finalImage);
-
+    //Play background music
     this->soundHandler.playBackgroundMusic("resources/abstract_tracking.xm");
 
     // Create entities
+
+    Entity * background = this->entityBuilder.createBackground("resources/jhu-logo.png",
+                                                               this->windowW, this->windowH);
+    this->entityMap.operator[](background->getId()) = background;
+
     Entity* hero = this->entityBuilder.createHero(100, 100,
                                             "resources/collision_alert.wav");
     this->entityMap.operator[](hero->getId()) = hero;
@@ -97,15 +77,13 @@ void PlayState::run() {
         this->soundHandler.handleSFX(dt);
 
         SDL_RenderClear(this->renderer);
-        SDL_RenderCopy(this->renderer, this->texture, NULL, &this->backgroundRect);
+
         this->drawingHandler.draw(dt);
+
         SDL_RenderPresent(this->renderer);
     }
 }
 
 void PlayState::cleanup() {
-    if (this->texture) {
-        SDL_DestroyTexture(this->texture);
-        this->texture = NULL;
-    }
+
 }

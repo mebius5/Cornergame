@@ -11,13 +11,14 @@
 
 class State {
 protected:
+    int windowW;
+    int windowH;
     std::list<Command*>& commandList;
     std::map<int, Entity*>& entityMap;
     SDL_Renderer* renderer;
-    SDL_Texture* texture;
 public:
     State(std::list<Command*>& commandList, std::map<int, Entity*>& entityMap,
-          SDL_Renderer* renderer);
+          SDL_Renderer* renderer, int windowW, int windowH);
     virtual ~State() { };
     int center(int large, int small);
     SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
@@ -28,12 +29,11 @@ public:
 
 class StartState : public State {
 private:
-    int windowW;
-    int windowH;
     EntityBuilder& entityBuilder;
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
+    SDL_Texture * texture;
     TTF_Font* font;
     SDL_Rect textRect;
 
@@ -62,15 +62,12 @@ public:
 
 class PlayState : public State {
 private:
-    int windowW;
-    int windowH;
     EntityBuilder& entityBuilder;
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
     AiHandler& aiHandler;
     CollisionHandler& collisionHandler;
-    SDL_Rect backgroundRect;
 
 public:
     PlayState(int windowW, int windowH, std::list<Command*>& cmdList,

@@ -5,6 +5,7 @@
 
 class ArtComponent {
 public:
+    const static int MAXLAYERS = 1;
     int layer;
     virtual ~ArtComponent() { };
     virtual SDL_Texture* getNextTexture(int dt) = 0;
