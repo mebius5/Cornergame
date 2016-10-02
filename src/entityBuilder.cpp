@@ -1,4 +1,3 @@
-#include <SDL_ttf.h>
 #include "entityBuilder.h"
 
 EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
@@ -46,11 +45,11 @@ Entity * EntityBuilder::createBackground(const char * filename, int width, int h
     return background;
 }
 
-Entity * EntityBuilder::createFadeInText(const char * fontName,
-                         const char * text,
-                         int fontSize,
-                         int r, int g, int b, int initialAlpha,
-                                        int windowW, int windowH) {
+Entity * EntityBuilder::createCenteredFadeInText(const char *fontName,
+                                                 const char *text,
+                                                 int fontSize,
+                                                 int r, int g, int b, int initialAlpha,
+                                                 int windowW, int windowH) {
     SDL_Surface * textSurface = this->loadFont(fontName, text, fontSize, r, g, b, initialAlpha);
     int x = (windowW/2 - textSurface->w/2);
     int y = (windowH/2 - textSurface->h/2);

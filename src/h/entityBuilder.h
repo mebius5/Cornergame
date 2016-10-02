@@ -3,6 +3,7 @@
 
 #include <SDL_image.h>
 #include <SDL_mixer.h>
+#include <SDL_ttf.h>
 #include <iostream>
 #include "entity.h"
 
@@ -20,11 +21,11 @@ public:
     Entity* createHero(int x, int y, const char* collisionSfxFile);
     Entity* createEnemy(int x, int y);
     Entity* createBackground(const char * filename, int width, int height);
-    Entity * createFadeInText(const char * fontName,
-                              const char * text,
-                              int fontSize,
-                              int r, int g, int b, int initialAlpha,
-                              int windowW, int windowH);
+    Entity * createCenteredFadeInText(const char *fontName,
+                                      const char *text,
+                                      int fontSize,
+                                      int r, int g, int b, int initialAlpha,
+                                      int windowW, int windowH);
 };
 
 #endif
