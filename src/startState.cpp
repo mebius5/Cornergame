@@ -23,6 +23,8 @@ StartState::~StartState() {
 }
 
 void StartState::begin() {
+    // play background music
+    this->soundHandler.playBackgroundMusic("music/mega_destruction_titlescreen.xm");
 
     // Load fonts
     this->font = TTF_OpenFont("resources/CaesarDressing-Regular.ttf", 100);

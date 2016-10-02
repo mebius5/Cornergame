@@ -19,7 +19,7 @@ PlayState::~PlayState() {
 
 void PlayState::begin() {
     //Play background music
-    this->soundHandler.playBackgroundMusic("resources/abstract_tracking.xm");
+    this->soundHandler.playBackgroundMusic("music/cabin_fever_playscreen.xm");
 
     // Create entities
 
