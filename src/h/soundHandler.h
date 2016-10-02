@@ -18,6 +18,7 @@ public:
     SoundHandler(std::list<Command*>& commandList);
     ~SoundHandler();
     void playBackgroundMusic(const char* filename);
+    void stopBackgroundMusic();
     void handleSFX(int dt);
 };
 
