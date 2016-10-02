@@ -39,8 +39,8 @@ public:
     TextFadeInComponent(SDL_Renderer * renderer, SDL_Surface * surface, int layer, int initialAlpha);
     ~TextFadeInComponent();
     SDL_Texture * getNextTexture(int dt);
-    void SelectMenuItem();
-    void DeSelectMenuItem();
+    void selectMenuItem();
+    void deSelectMenuItem();
 };
 
 #endif
