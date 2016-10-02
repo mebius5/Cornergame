@@ -16,6 +16,7 @@
 #include "soundHandler.h"
 #include "aiHandler.h"
 #include "collisionHandler.h"
+#include "controlHandler.h"
 #include "state.h"
 
 class GameManager {

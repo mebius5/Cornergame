@@ -7,6 +7,7 @@ SRCFILES = \
 	collisionComponent.cpp \
 	collisionHandler.cpp \
 	command.cpp \
+	controlHandler.cpp \
 	drawingHandler.cpp \
 	entity.cpp \
 	entityBuilder.cpp \

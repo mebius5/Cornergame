@@ -84,8 +84,6 @@ TODOS
 leaks?
 add const to stuff, add static to stuff
 rule of three
-
-TONIGHT:
 separate commandLists -> structure to do this?
 separate componentLists
 controlHandler

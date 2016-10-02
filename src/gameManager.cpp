@@ -88,7 +88,6 @@ void GameManager::cleanup() {
     TTF_Quit();
     SDL_Quit();
 
-    //Set free pointers
     this->renderer = NULL;
     this->window = NULL;
 }
@@ -98,6 +97,7 @@ void GameManager::run() {
     std::list<Command *> commandList;
     std::map<int, Entity *> entityMap;
 
+    // Initialize handlers
     EntityBuilder entityBuilder(this->renderer);
     DrawingHandler drawingHandler(this->renderer, entityMap);
     InputHandler inputHandler(entityMap, commandList);
@@ -105,30 +105,31 @@ void GameManager::run() {
     CollisionHandler collisionHandler(entityMap, commandList,
                                       this->width, this->height);
     SoundHandler soundHandler(commandList);
-
-    State * currentState;
+    ControlHandler controlHandler(commandList);
 
     //Initialize states
     StartState startState(this->width, this->height, commandList, entityMap,
                           this->renderer, entityBuilder, drawingHandler,
-                          inputHandler, soundHandler);
+                          inputHandler, soundHandler, controlHandler);
 
     MenuState menuState(this->width, this->height, commandList, entityMap,
-                          this->renderer, entityBuilder, drawingHandler,
-                          inputHandler, soundHandler);
+                        this->renderer, entityBuilder, drawingHandler,
+                        inputHandler, soundHandler, controlHandler);
 
     PlayState playState(this->width, this->height, commandList, entityMap,
                         this->renderer, entityBuilder, drawingHandler,
                         inputHandler, soundHandler, aiHandler,
-                        collisionHandler);
+                        collisionHandler, controlHandler);
 
-    HighscoreState highscoreState(this->width, this->height, commandList, entityMap,
-                                  this->renderer, entityBuilder, drawingHandler,
-                                  inputHandler, soundHandler);
+    HighscoreState highscoreState(this->width, this->height, commandList,
+                                  entityMap, this->renderer, entityBuilder,
+                                  drawingHandler, inputHandler, soundHandler,
+                                  controlHandler);
 
 
-    currentState = &startState;      // TODO: Start at startState
+    State* currentState = &startState;
     State::StateEnum nextState;
+
     do {
         currentState->begin();
         nextState = currentState->run();

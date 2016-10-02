@@ -33,4 +33,14 @@ public:
     ResetAiCommand(Entity* entity);
 };
 
+class ControlCommand : public Command {
+
+};
+
+class SwitchStateCommand : public ControlCommand {
+public:
+    int newState;
+    SwitchStateCommand(int newState);
+};
+
 #endif

@@ -2,13 +2,14 @@
 
 SoundHandler::SoundHandler(std::list<Command*>& cmdList) :
     commandList(cmdList),
-    timeElapsed(150) {
+    timeElapsed(150),
+    lastChannelUsedForSFX(0) {
 }
 
 SoundHandler::~SoundHandler() {
-    stopBackgroundMusic();
     if (Mix_Playing(this->lastChannelUsedForSFX))
         Mix_HaltChannel(this->lastChannelUsedForSFX);
+    this->stopBackgroundMusic();
 }
 
 Mix_Music* SoundHandler::loadMusic(const char* filename) {
@@ -22,7 +23,7 @@ Mix_Music* SoundHandler::loadMusic(const char* filename) {
 
 void SoundHandler::playBackgroundMusic(const char* filename) {
     this->backgroundMusic = loadMusic(filename);
-    if(backgroundMusic){
+    if (this->backgroundMusic) {
         Mix_PlayMusic(this->backgroundMusic, -1);
     }
 }
@@ -36,9 +37,8 @@ void SoundHandler::stopBackgroundMusic() {
 }
 
 void SoundHandler::playSFX(Mix_Chunk* sfxChunk) {
-    if (this->timeElapsed < 150) {      // Don't play too often!
+    if (this->timeElapsed < 150)      // Don't play too often!
         return;
-    }
     this->timeElapsed = 0;
 
     if (Mix_Playing(this->lastChannelUsedForSFX))

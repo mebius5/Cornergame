@@ -16,3 +16,7 @@ PlaySoundCommand::~PlaySoundCommand() {
 ResetAiCommand::ResetAiCommand(Entity* entity) {
     this->entity = entity;
 }
+
+SwitchStateCommand::SwitchStateCommand(int newState) :
+    newState(newState) {
+}

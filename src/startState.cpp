@@ -3,12 +3,14 @@
 StartState::StartState(int windowW, int windowH, std::list<Command*>& cmdList,
                        std::map<int, Entity*>& entMap, SDL_Renderer* renderer,
                        EntityBuilder& entBuilder, DrawingHandler& drawer,
-                       InputHandler& inputHandler, SoundHandler& soundHandler) :
+                       InputHandler& inputHandler, SoundHandler& soundHandler,
+                       ControlHandler& controlHandler) :
     State(cmdList, entMap, renderer, windowW, windowH),
     entityBuilder(entBuilder),
     drawingHandler(drawer),
     inputHandler(inputHandler),
-    soundHandler(soundHandler) {
+    soundHandler(soundHandler),
+    controlHandler(controlHandler) {
 }
 
 StartState::~StartState() {
@@ -18,9 +20,10 @@ void StartState::begin() {
     // play background music
     this->soundHandler.playBackgroundMusic("music/mega_destruction_titlescreen.xm");
 
-    Entity * mainText = entityBuilder.createCenteredFadeInText("resources/CaesarDressing-Regular.ttf", "CornerGame",
-                                                               100,
-                                                               255, 255, 255, 0, this->windowW, this->windowH);
+    Entity * mainText = entityBuilder.createCenteredFadeInText(
+                        "resources/CaesarDressing-Regular.ttf", "CornerGame",
+                        100,
+                        255, 255, 255, 0, this->windowW, this->windowH);
     entityMap.operator[](mainText->getId())= mainText;
 }
 
@@ -34,33 +37,18 @@ State::StateEnum StartState::run() {
         int dt = currentTime - lastTime;
         lastTime = currentTime;
         milliSecElapsed += dt;
-        SDL_Event event;
 
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                return State::StateEnum::QUIT;
-            } else if (event.type == SDL_KEYUP) {
-                if (event.key.keysym.sym == SDLK_ESCAPE){
-                    return State::StateEnum::QUIT;
-                } else
-                    this->inputHandler.handleEvent(event);
-            } else {
-                this->inputHandler.handleEvent(event);
-            }
-        }
-
+        this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
-        this->soundHandler.handleSFX(dt);
-
-        SDL_RenderClear(this->renderer);
-
+        this->soundHandler.handleSFX(dt);;
         this->drawingHandler.draw(dt);
 
-        SDL_RenderPresent(this->renderer);
+        int nextState = this->controlHandler.handleStateCommands();
+        if (nextState)
+            return (State::StateEnum)nextState;
 
-        if(milliSecElapsed>=10000){ //Return menu after 10 sec
+        if (milliSecElapsed>=10000)    //Return menu after 10 sec
             break;
-        }
     }
     return State::StateEnum::MENU;
 }

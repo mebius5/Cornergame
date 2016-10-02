@@ -11,9 +11,10 @@ class InputHandler {
 private:
     std::map<int, Entity*>& entityMap;
     std::list<Command*>& commandList;
+    SwitchStateCommand quitCommand;
 public:
     InputHandler(std::map<int, Entity*>& entMap, std::list<Command*>& cmdList);
-    void handleEvent(SDL_Event& event);
+    void handleEvents();
     void update(int dt);
 };
 

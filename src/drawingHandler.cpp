@@ -6,6 +6,7 @@ DrawingHandler::DrawingHandler(SDL_Renderer* r, std::map<int, Entity*>& map) :
 }
 
 void DrawingHandler::draw(int dt) {
+    SDL_RenderClear(this->renderer);
     std::map<int, Entity*>::const_iterator it;
     for (int i = 0; i<=ArtComponent::MAXLAYERS;i++){
         for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it) {
@@ -20,4 +21,5 @@ void DrawingHandler::draw(int dt) {
             }
         }
     }
+    SDL_RenderPresent(this->renderer);
 }

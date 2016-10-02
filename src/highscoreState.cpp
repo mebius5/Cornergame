@@ -3,12 +3,14 @@
 HighscoreState::HighscoreState(int windowW, int windowH, std::list<Command*>& cmdList,
                        std::map<int, Entity*>& entMap, SDL_Renderer* renderer,
                        EntityBuilder& entBuilder, DrawingHandler& drawer,
-                       InputHandler& inputHandler, SoundHandler& soundHandler) :
+                       InputHandler& inputHandler, SoundHandler& soundHandler,
+                       ControlHandler& controlHandler) :
     State(cmdList, entMap, renderer, windowW, windowH),
     entityBuilder(entBuilder),
     drawingHandler(drawer),
     inputHandler(inputHandler),
-    soundHandler(soundHandler) {
+    soundHandler(soundHandler),
+    controlHandler(controlHandler) {
 }
 
 HighscoreState::~HighscoreState() {
@@ -32,29 +34,15 @@ State::StateEnum HighscoreState::run() {
         int currentTime = SDL_GetTicks();
         int dt = currentTime - lastTime;
         lastTime = currentTime;
-        SDL_Event event;
 
-        while (SDL_PollEvent(&event)) {
-            if (event.type == SDL_QUIT) {
-                return State::StateEnum::QUIT;
-            } else if (event.type == SDL_KEYUP) {
-                if (event.key.keysym.sym == SDLK_ESCAPE){
-                    return State::StateEnum::QUIT;
-                } else
-                    this->inputHandler.handleEvent(event);
-            } else {
-                this->inputHandler.handleEvent(event);
-            }
-        }
-
+        this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
         this->soundHandler.handleSFX(dt);
-
-        SDL_RenderClear(this->renderer);
-
         this->drawingHandler.draw(dt);
 
-        SDL_RenderPresent(this->renderer);
+        int nextState = this->controlHandler.handleStateCommands();
+        if (nextState)
+            return (State::StateEnum)nextState;
     }
 
     return State::StateEnum::MENU;
