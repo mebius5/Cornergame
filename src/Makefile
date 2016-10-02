@@ -11,6 +11,7 @@ SRCFILES = \
 	entity.cpp \
 	entityBuilder.cpp \
 	gameManager.cpp \
+    highscoreState.cpp \
 	inputComponent.cpp \
 	inputHandler.cpp \
 	playState.cpp \
