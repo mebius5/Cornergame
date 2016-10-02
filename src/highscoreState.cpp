@@ -79,6 +79,7 @@ void HighscoreState::run() {
 }
 
 void HighscoreState::cleanup() {
+    this->soundHandler.stopBackgroundMusic();
 
     if (this->texture) {
         SDL_DestroyTexture(this->texture);

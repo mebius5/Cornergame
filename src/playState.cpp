@@ -85,5 +85,5 @@ void PlayState::run() {
 }
 
 void PlayState::cleanup() {
-
+    this->soundHandler.stopBackgroundMusic();
 }

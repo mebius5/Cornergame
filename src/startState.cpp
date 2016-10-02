@@ -79,6 +79,7 @@ void StartState::run() {
 }
 
 void StartState::cleanup() {
+    this->soundHandler.stopBackgroundMusic();
 
     if (this->texture) {
         SDL_DestroyTexture(this->texture);
