@@ -18,7 +18,7 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
     hero->collision = new CollisionComponent(new PlaySoundCommand(chunk), NULL);
     hero->art = new AnimationComponent(
         SDL_CreateTextureFromSurface(this->renderer, image), image, 1);
-    hero->input = new InputComponent(hero);
+    hero->input = new HeroInputComponent(hero);
 
     SDL_FreeSurface(image);
     return hero;
