@@ -12,14 +12,18 @@ SRCFILES = \
 	entity.cpp \
 	entityBuilder.cpp \
 	gameManager.cpp \
+	heroInputComponent.cpp \
     highscoreState.cpp \
 	inputComponent.cpp \
 	inputHandler.cpp \
+	menuInputHandler.cpp \
 	menuState.cpp \
+	menuStateInputComponent.cpp \
 	playState.cpp \
 	physicsComponent.cpp \
 	soundHandler.cpp \
 	startState.cpp \
+	startStateInputComponent.cpp \
 	state.cpp \
 	staticArtComponent.cpp \
 	statsComponent.cpp \

@@ -38,7 +38,7 @@ Handlers (aka. Systems)
     for them.
 
 Components
-    ArtComponent, InputComponent, LocationComponent, PhysicsComponent,
+    ArtComponent, HeroInputComponent, LocationComponent, PhysicsComponent,
     StatsComponent, AiComponent
     These define certain types of behavior for an entity. Their fields are used
     to determine how handlers interact with them. Some components can run
@@ -89,3 +89,4 @@ separate componentLists
 controlHandler
 make sure abstract base classes are right for components
 make Component classes virtual
+move Enum to consts?...

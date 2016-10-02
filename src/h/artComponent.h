@@ -40,12 +40,15 @@ private:
     SDL_Surface * surface;
     SDL_Renderer * renderer;
     SDL_Texture * lastTexture;
-    double initialAlpha;
+    double alpha;
 public:
-    TextFadeInComponent(SDL_Renderer * renderer, SDL_Surface * surface, int layer, int initialAlpha);
+    TextFadeInComponent(SDL_Renderer * renderer, SDL_Surface * surface,
+                        int layer, int initialAlpha);
     ~TextFadeInComponent();
     SDL_Texture * getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
+    void selectMenuItem();
+    void deselectMenuItem();
 };
 
 #endif
