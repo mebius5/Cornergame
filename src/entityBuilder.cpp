@@ -24,7 +24,7 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
 
 Entity* EntityBuilder::createEnemy(int x, int y) {
     SDL_Surface* image = this->loadImage("spritesheets/lax.png");
-    Entity* enemy = new Entity(this->nextId++, x, y, (image->w)/4, (image->h)*2);
+    Entity* enemy = new Entity(this->nextId++, x, y, (image->w)/4, (image->h));
 
     enemy->collision = new CollisionComponent(NULL, new ResetAiCommand(enemy));
     enemy->art = new AnimationComponent(
