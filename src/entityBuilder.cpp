@@ -1,4 +1,3 @@
-#include <SDL_ttf.h>
 #include "entityBuilder.h"
 
 EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
