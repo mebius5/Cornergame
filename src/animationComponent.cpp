@@ -19,6 +19,7 @@ SDL_Texture* AnimationComponent::getNextTexture(int dt) {
 }
 
 SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
+    // if moving, use a walking animation, else idle
     // if moving left, start at middle of sheet
     int startpos = 0;
     if (this->entity->xVelocity < 0) {
@@ -28,7 +29,7 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
     timecount %= 1000;
     clip.x = (timecount / 250)*32 + startpos;
     clip.y = 0;
-    clip.w = (this->surface->w)/8;
-    clip.h = (this->surface->h);
+    clip.w = (this->surface->w) / 8;
+    clip.h = (this->surface->h) / 2;
     return &clip;
 }
