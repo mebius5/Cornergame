@@ -39,3 +39,7 @@ SDL_Texture * TextFadeInComponent::getNextTexture(int dt) {
     return this->lastTexture;
 }
 
+SDL_Rect* TextFadeInComponent::getNextSrcRect(int dt) {
+    return NULL;
+}
+

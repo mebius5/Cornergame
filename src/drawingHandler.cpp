@@ -17,7 +17,7 @@ void DrawingHandler::draw(int dt) {
                                   entity->width,
                                   entity->height };
                 SDL_RenderCopy(this->renderer, entity->art->getNextTexture(dt),
-                               NULL, &rect);
+                               entity->art->getNextSrcRect(dt), &rect);
             }
         }
     }

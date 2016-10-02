@@ -9,6 +9,7 @@ public:
     int layer;
     virtual ~ArtComponent() { };
     virtual SDL_Texture* getNextTexture(int dt) = 0;
+    virtual SDL_Rect* getNextSrcRect(int dt) = 0;
 };
 
 class StaticArtComponent : public ArtComponent {
@@ -18,15 +19,20 @@ public:
     StaticArtComponent(SDL_Texture* texture, int layer);
     ~StaticArtComponent();
     SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
 };
 
 class AnimationComponent : public ArtComponent {
 private:
     SDL_Texture* texture;
+    SDL_Surface* surface;
+    int timecount;
+    SDL_Rect clip;
 public:
-    AnimationComponent(SDL_Texture* texture, int layer);
+    AnimationComponent(SDL_Texture* texture, SDL_Surface* surface, int layer);
     ~AnimationComponent();
     SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
 };
 
 class TextFadeInComponent : public ArtComponent{
@@ -39,6 +45,7 @@ public:
     TextFadeInComponent(SDL_Renderer * renderer, SDL_Surface * surface, int layer, int initialAlpha);
     ~TextFadeInComponent();
     SDL_Texture * getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
 };
 
 #endif

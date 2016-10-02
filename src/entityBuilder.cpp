@@ -6,8 +6,8 @@ EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
 }
 
 Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
-    SDL_Surface* image = this->loadImage("resources/hero.png");
-    Entity* hero = new Entity(this->nextId++, x, y, image->w, image->h);
+    SDL_Surface* image = this->loadImage("spritesheets/lax.png");
+    Entity* hero = new Entity(this->nextId++, x, y, (image->w)/4, (image->h)*2);
 
     Mix_Chunk* chunk = Mix_LoadWAV(collisionSfxFile);
     if (!chunk) {
@@ -16,8 +16,8 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
     }
 
     hero->collision = new CollisionComponent(new PlaySoundCommand(chunk), NULL);
-    hero->art = new StaticArtComponent(
-        SDL_CreateTextureFromSurface(this->renderer, image), 1);
+    hero->art = new AnimationComponent(
+        SDL_CreateTextureFromSurface(this->renderer, image), image, 1);
     hero->input = new InputComponent(hero);
 
     SDL_FreeSurface(image);
