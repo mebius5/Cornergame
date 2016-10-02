@@ -2,22 +2,44 @@
 Cornerstone
 
 CONTRIBUTORS
-Akshay Srivatsan <ADD EMAIL>
+Akshay Srivatsan asrivat1@jhu.edu
 Andrew Zhu azhu8@jhu.edu
 Grady Xiao gxiao2@jhu.edu
 Pratyush Trivedi ptrived8@jhu.edu
 
-ASSIGNMENT 2 NOTES
-See the game-plan.txt file for part 1 of the assignment. The first part is what
-we submitted for assignment 1, but at the bottom are additions/revisions to the
-vision for this assignment.
-
-Note that the code files are within the src folder
+ASSIGNMENT 3 NOTES
+This readme details the backend for all new features in this assignment
 
 To compile and run, type the following:
 cd src/
 make
 ./gameManager
+
+SCREENS
+
+StartScreen
+- Currently has our game production logo that fades in from black
+- Also has our hero just walking to show progress and as something related
+    to the game
+- Switches to the menu screen in 10 secs
+
+MenuScreen
+- Has the options for play, adjust brightness, adjust volume, highscore, and quit
+- The texts fade in from black and is centered horizontally
+- Use SPACE to select options (currently SPACE is disabled for adjust
+    brightness and adjust volume)
+
+PlayScreen
+- Has the game play
+- Pressing Q will bring you back to the main menu.
+
+HighscoreScreen
+- Shows the highscore (fade in from black)
+- Proceeds to the menu screen after 5 secs
+- Pressing Q will bring you back to the main menu.
+
+Press ESC at any time to quit the game. You can also select QUIT from the main
+    menu.
 
 CLASS STRUCTURE
 
@@ -27,22 +49,20 @@ Entity
     EntityBuilder is responsible for creating and destroying entities.
 
 Handlers (aka. Systems)
-    CollisionHandler, DrawingHandler, InputHandler, AiHandler
-    LocationHandler, SoundHandler
     These objects handle entities, performing various functions depending on
     the entity's components. For example, the LocationHandler will look at
     each entity's current LocationComponent and PhysicsComponent to calculate
     where the entity should move to. Once these calculations are made, the
     Handler will update that Entity's LocationComponent and PhysicsComponent.
     Handlers can emit commands if they want another Handler to do something
-    for them.
+    for them. ControlHandler is new, and handles changing states.
 
 Components
-    ArtComponent, HeroInputComponent, LocationComponent, PhysicsComponent,
-    StatsComponent, AiComponent
     These define certain types of behavior for an entity. Their fields are used
     to determine how handlers interact with them. Some components can run
     complex functions to tell their handlers exactly what to do with them.
+    The original components are now going to serve as base classes, so each
+    type of component implements the same methods with inheritance.
 
 Commands
     These are used to by Handlers to communicate with each other. Each handler
@@ -52,53 +72,23 @@ GameManager
     The game manager maintains the game loop, all entities, and all commands.
     It is also responsible for startup and shutdown of the game.
 
-The class structure seems a bit unwieldy, but it should make it easier to
-add new features in the end. All objects are defined by their components, so
-certain aspects that are the same between different characters can use the
-same components (ex. different skins for characters, different sound effects,
-but everything else the same). Also, each Handler only has to worry about
-a certain subset of the components, and can operate based on whether an entity
-has that subset, not worrying about anything else. Future iterations will
-probably create subclasses of the components to add more elaborate details.
+GAMEPLAY
 
-FEATURES
+You are now a dude in a blue shirt. Maybe a TA? You are trying to dodge the
+LAX bros who wander in a more sophisticated manner than last time. They now
+independently pick a X and Y direction, so they can move diagonally. Your player
+is also more sophisticated: you can accelerate in any direction. Hitting a wall
+will reset your corresponding velocity direction. There is also some friction
+so you will come to a stop if you stop inputting.
 
-Your hero is the black box! You are trying to dodge the 5 red devils, who each
-pick a random cardinal direction to move in for a while. If they hit a wall,
-they will pick a new direction. They also pick a new direction every so often.
-If your hero gets hit, an alarm noise will play. That's it for now!
+If your hero gets hit, an alarm noise will play.
 
-Hit ESC to quit the game.
 
 QUIRKS
-- we currently use the keydown event to determine how to move, which is why
-    your hero will move a little bit when first hitting an arrow key, but then
-    move faster while that arrow key is pressed. We should probably move to
-    using SDL_getKeyboardState() at some for more fluid movement.
 - no game name yet!
-
-Handy command to compile a single file:
-g++ -std=c++11 -Wall -Wextra -Wpedantic -O2 -c -Ih -I/usr/local/include/SDL2 -L/usr/local/lib -lSDL2_ttf -lSDL2_mixer -lSDL2_image -lSDL2 <FILENAME.cpp>
-
-
-SCREENS
-
-StartScreen
-- Currently has our game production logo that fades in from black
-- Also has our hero just walking to show progress and as something related to the game
-- Switches to the menu screen in 10 secs
-
-MenuScreen
-- Has the options for play, adjust brightness, adjust volume, highscore, and quit
-- The texts fade in from black and is centered horizontally
-- Use SPACE to select options (currently SPACE is disabled for adjust brightness and adjust volume)
-
-PlayScreen
-- Has the game play
-
-HighscoreScreen
-- Shows the highscore (fade in from black)
-- Proceeds to the menu screen after 5 secs
+- crashing into walls resets your velocity to 0, but there is sometimes a lag
+    when you try to move again in the opposite direction?
+- idle state sometimes changes directions
 
 TODOS
 leaks?
