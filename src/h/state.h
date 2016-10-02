@@ -9,6 +9,8 @@
 #include "collisionHandler.h"
 #include "soundHandler.h"
 
+enum StateEnum {QUIT, START, PLAY, MENU, HIGHSCORE};
+
 class State {
 protected:
     int windowW;
@@ -23,7 +25,7 @@ public:
     int center(int large, int small);
     SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
     virtual void begin() = 0;
-    virtual void run() = 0;
+    virtual StateEnum run() = 0;
     virtual void cleanup() = 0;
 };
 
@@ -40,7 +42,7 @@ public:
                InputHandler& inputHandler, SoundHandler& soundHandler);
     ~StartState();
     void begin();
-    void run();
+    StateEnum run();
     void cleanup();
 };
 
@@ -73,7 +75,7 @@ public:
               AiHandler& aiHandler, CollisionHandler& collisionHandler);
     ~PlayState();
     void begin();
-    void run();
+    StateEnum run();
     void cleanup();
 };
 
@@ -94,7 +96,7 @@ public:
                    InputHandler& inputHandler, SoundHandler& soundHandler);
     ~HighscoreState();
     void begin();
-    void run();
+    StateEnum run();
     void cleanup();
 };
 

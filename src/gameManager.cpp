@@ -123,10 +123,27 @@ void GameManager::run() {
                                   inputHandler, soundHandler);
 
     currentState = &playState;      // TODO: Start at startState
+    StateEnum nextState;
+    do {
+        currentState->begin();
+        nextState = currentState->run();
+        currentState->cleanup();
 
-    currentState->begin();
-    currentState->run();
-    currentState->cleanup();
+        switch (nextState) {
+        case PLAY:
+            currentState = &playState;
+            break;
+        case HIGHSCORE:
+            currentState = &highscoreState;
+            break;
+        case START:
+            currentState = &startState;
+            break;
+        case MENU:
+            // currentState = &menuState;
+            break;
+        }
+    } while(nextState != QUIT);
 
     std::map<int, Entity*>::const_iterator it;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {

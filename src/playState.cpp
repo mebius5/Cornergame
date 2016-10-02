@@ -47,7 +47,7 @@ void PlayState::begin() {
     this->entityMap.operator[](enemy5->getId()) = enemy5;
 }
 
-void PlayState::run() {
+StateEnum PlayState::run() {
     bool running = true;
     float lastTime = SDL_GetTicks();
 
@@ -59,10 +59,10 @@ void PlayState::run() {
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
-                return;
+                return QUIT;
             } else if (event.type == SDL_KEYUP) {
                 if (event.key.keysym.sym == SDLK_ESCAPE)
-                    return;
+                    return QUIT;
                 else
                     this->inputHandler.handleEvent(event);
             } else {
@@ -82,6 +82,8 @@ void PlayState::run() {
 
         SDL_RenderPresent(this->renderer);
     }
+
+    return HIGHSCORE;
 }
 
 void PlayState::cleanup() {
