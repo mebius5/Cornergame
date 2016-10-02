@@ -38,7 +38,7 @@ Handlers (aka. Systems)
     for them.
 
 Components
-    ArtComponent, InputComponent, LocationComponent, PhysicsComponent,
+    ArtComponent, HeroInputComponent, LocationComponent, PhysicsComponent,
     StatsComponent, AiComponent
     These define certain types of behavior for an entity. Their fields are used
     to determine how handlers interact with them. Some components can run

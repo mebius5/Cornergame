@@ -18,7 +18,7 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
     hero->collision = new CollisionComponent(new PlaySoundCommand(chunk), NULL);
     hero->art = new StaticArtComponent(
         SDL_CreateTextureFromSurface(this->renderer, image), 1);
-    hero->input = new InputComponent(hero);
+    hero->input = new HeroInputComponent(hero);
 
     SDL_FreeSurface(image);
     return hero;
@@ -55,6 +55,8 @@ Entity * EntityBuilder::createCenteredFadeInText(const char *fontName,
     int y = (windowH/2 - textSurface->h/2);
     Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(this->renderer, textSurface, 1, initialAlpha);
+    fadeInText->input = new HeroInputComponent(fadeInText);
+
     return fadeInText;
 }
 
