@@ -113,6 +113,10 @@ void GameManager::run() {
                           this->renderer, entityBuilder, drawingHandler,
                           inputHandler, soundHandler);
 
+    MenuState menuState(this->width, this->height, commandList, entityMap,
+                          this->renderer, entityBuilder, drawingHandler,
+                          inputHandler, soundHandler);
+
     PlayState playState(this->width, this->height, commandList, entityMap,
                         this->renderer, entityBuilder, drawingHandler,
                         inputHandler, soundHandler, aiHandler,
@@ -122,7 +126,8 @@ void GameManager::run() {
                                   this->renderer, entityBuilder, drawingHandler,
                                   inputHandler, soundHandler);
 
-    currentState = &playState;      // TODO: Start at startState
+
+    currentState = &startState;      // TODO: Start at startState
     StateEnum nextState;
     do {
         currentState->begin();
@@ -140,7 +145,7 @@ void GameManager::run() {
             currentState = &startState;
             break;
         case MENU:
-            // currentState = &menuState;
+            currentState = &menuState;
             break;
         }
     } while(nextState != QUIT);

@@ -1,30 +1,30 @@
 #include "state.h"
 
-StartState::StartState(int windowW, int windowH, std::list<Command*>& cmdList,
+MenuState::MenuState(int windowW, int windowH, std::list<Command*>& cmdList,
                        std::map<int, Entity*>& entMap, SDL_Renderer* renderer,
                        EntityBuilder& entBuilder, DrawingHandler& drawer,
                        InputHandler& inputHandler, SoundHandler& soundHandler) :
-    State(cmdList, entMap, renderer, windowW, windowH),
-    entityBuilder(entBuilder),
-    drawingHandler(drawer),
-    inputHandler(inputHandler),
-    soundHandler(soundHandler) {
+        State(cmdList, entMap, renderer, windowW, windowH),
+        entityBuilder(entBuilder),
+        drawingHandler(drawer),
+        inputHandler(inputHandler),
+        soundHandler(soundHandler) {
 }
 
-StartState::~StartState() {
+MenuState::~MenuState() {
 }
 
-void StartState::begin() {
+void MenuState::begin() {
     // play background music
-    this->soundHandler.playBackgroundMusic("music/mega_destruction_titlescreen.xm");
+    this->soundHandler.playBackgroundMusic("music/a_winter_kiss_menu.xm");
 
-    Entity * mainText = entityBuilder.createCenteredFadeInText("resources/CaesarDressing-Regular.ttf", "CornerGame",
+    Entity * mainText = entityBuilder.createCenteredFadeInText("resources/CaesarDressing-Regular.ttf", "Menu",
                                                                100,
                                                                255, 255, 255, 0, this->windowW, this->windowH);
     entityMap.operator[](mainText->getId())= mainText;
 }
 
-StateEnum StartState::run() {
+StateEnum MenuState::run() {
     bool running = true;
     float lastTime = SDL_GetTicks();
     int milliSecElapsed = 0;
@@ -58,14 +58,14 @@ StateEnum StartState::run() {
 
         SDL_RenderPresent(this->renderer);
 
-        if(milliSecElapsed>=10000){ //Return menu after 10 sec
+        if(milliSecElapsed>=10000){ //Return menu after 10000
             break;
         }
     }
-    return MENU;
+    return PLAY;
 }
 
-void StartState::cleanup() {
+void MenuState::cleanup() {
     std::map<int, Entity*>::const_iterator it;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {
         delete it->second;      // delete Entities from map

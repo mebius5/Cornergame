@@ -87,5 +87,12 @@ StateEnum PlayState::run() {
 }
 
 void PlayState::cleanup() {
+    std::map<int, Entity*>::const_iterator it;
+    for (it = entityMap.begin(); it != entityMap.end(); ++it) {
+        delete it->second;      // delete Entities from map
+    }
+    entityMap.clear();
+    commandList.clear();
+
     this->soundHandler.stopBackgroundMusic();
 }

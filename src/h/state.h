@@ -47,15 +47,21 @@ public:
 };
 
 
-class MenuState: public State {
+class MenuState : public State {
 private:
     EntityBuilder& entityBuilder;
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
 public:
-    MenuState();
+    MenuState(int windowW, int windowH, std::list<Command*>& commandList,
+               std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
+               EntityBuilder& entityBuilder, DrawingHandler& drawingHandler,
+               InputHandler& inputHandler, SoundHandler& soundHandler);
     ~MenuState();
+    void begin();
+    StateEnum run();
+    void cleanup();
 };
 
 class PlayState : public State {
@@ -86,9 +92,6 @@ private:
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
-    SDL_Texture * texture;
-    TTF_Font* font;
-    SDL_Rect textRect;
 public:
     HighscoreState(int windowW, int windowH, std::list<Command*>& commandList,
                    std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
