@@ -10,7 +10,7 @@
 
 class CollisionComponent;       // forward declared for circular dependency
 class AiComponent;
-class HeroInputComponent;
+class InputComponent;
 
 class Entity {
 private:
