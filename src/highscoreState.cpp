@@ -24,7 +24,7 @@ void HighscoreState::begin() {
     entityMap.operator[](mainText->getId())= mainText;
 }
 
-StateEnum HighscoreState::run() {
+State::StateEnum HighscoreState::run() {
     bool running = true;
     float lastTime = SDL_GetTicks();
 
@@ -36,10 +36,10 @@ StateEnum HighscoreState::run() {
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
-                return QUIT;
+                return State::StateEnum::QUIT;
             } else if (event.type == SDL_KEYUP) {
                 if (event.key.keysym.sym == SDLK_ESCAPE){
-                    return QUIT;
+                    return State::StateEnum::QUIT;
                 } else
                     this->inputHandler.handleEvent(event);
             } else {
@@ -57,7 +57,7 @@ StateEnum HighscoreState::run() {
         SDL_RenderPresent(this->renderer);
     }
 
-    return MENU;
+    return State::StateEnum::MENU;
 }
 
 void HighscoreState::cleanup() {

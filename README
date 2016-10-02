@@ -82,11 +82,12 @@ g++ -std=c++11 -Wall -Wextra -Wpedantic -O2 -c -Ih -I/usr/local/include/SDL2 -L/
 
 TODOS
 leaks?
-background generation to DrawingHandler
-add const to stuff
+add const to stuff, add static to stuff
 rule of three
-separate commandLists? -> structure to do this?
-separate componentLists?
+
+TONIGHT:
+separate commandLists -> structure to do this?
+separate componentLists
+controlHandler
 make sure abstract base classes are right for components
 make Component classes virtual
-check TODOs in code

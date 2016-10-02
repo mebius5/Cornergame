@@ -37,7 +37,7 @@ void MenuState::begin() {
     entityMap.operator[](quitText->getId())= quitText;
 }
 
-StateEnum MenuState::run() {
+State::StateEnum MenuState::run() {
     bool running = true;
     float lastTime = SDL_GetTicks();
     int milliSecElapsed = 0;
@@ -51,10 +51,10 @@ StateEnum MenuState::run() {
 
         while (SDL_PollEvent(&event)) {
             if (event.type == SDL_QUIT) {
-                return QUIT;
+                return State::StateEnum::QUIT;
             } else if (event.type == SDL_KEYUP) {
                 if (event.key.keysym.sym == SDLK_ESCAPE){
-                    return QUIT;
+                    return State::StateEnum::QUIT;
                 } else
                     this->inputHandler.handleEvent(event);
             } else {
@@ -75,7 +75,7 @@ StateEnum MenuState::run() {
             break;
         }
     }
-    return PLAY;
+    return State::StateEnum::PLAY;
 }
 
 void MenuState::cleanup() {
