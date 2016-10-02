@@ -23,36 +23,41 @@ void MenuState::begin() {
     Entity * playText = entityBuilder.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Play",
             80,
-            255, 255, 255, 0, this->windowW, 100);
+            255, 255, 255, 0, this->windowW, 100,
+            0, 5, 3);
     entityMap.operator[](playText->getId())= playText;
 
     Entity * brightText = entityBuilder.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Adjust Visual Brightness",
             80,
-            255, 255, 255, 0, this->windowW, 200);
+            255, 255, 255, 0, this->windowW, 200,
+            1, 5, 0);
     entityMap.operator[](brightText->getId())= brightText;
 
     Entity * audioText = entityBuilder.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Adjust Audio Volume",
             80,
-            255, 255, 255, 0, this->windowW, 300);
+            255, 255, 255, 0, this->windowW, 300,
+            2, 5, 0);
     entityMap.operator[](audioText->getId())= audioText;
 
     Entity * highText = entityBuilder.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Highscore",
             80,
-            255, 255, 255, 0, this->windowW, 400);
+            255, 255, 255, 0, this->windowW, 400,
+            3, 5, 5);
     entityMap.operator[](highText->getId())= highText;
 
     Entity * quitText = entityBuilder.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Quit",
             80,
-            255, 255, 255, 0, this->windowW, 500);
+            255, 255, 255, 0, this->windowW, 500,
+            4, 5, 1);
     entityMap.operator[](quitText->getId())= quitText;
 }
 
 State::StateEnum MenuState::run() {
-    MenuInputHandler inputHandler(this->entityMap, this->commandList);
+    //MenuInputHandler inputHandler(this->entityMap, this->commandList);
     bool running = true;
     float lastTime = SDL_GetTicks();
     int milliSecElapsed = 0;
@@ -63,7 +68,7 @@ State::StateEnum MenuState::run() {
         lastTime = currentTime;
         milliSecElapsed += dt;
 
-        inputHandler.handleEvents();
+        this->inputHandler.handleEvents();
         //inputHandler.update(dt);
         this->soundHandler.handleSFX(dt);
         this->drawingHandler.draw(dt);
@@ -72,6 +77,8 @@ State::StateEnum MenuState::run() {
         if (nextState)
             return (State::StateEnum)nextState;
     }
+
+    return State::StateEnum::QUIT;
 }
 
 void MenuState::cleanup() {

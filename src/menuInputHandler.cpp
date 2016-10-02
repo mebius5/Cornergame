@@ -12,10 +12,7 @@ MenuInputHandler::MenuInputHandler(std::map<int, Entity*>& entityMap,
 void MenuInputHandler::handleEvents() {
     std::map<int, Entity*>::const_iterator it;
     SDL_Event event;
-    TextFadeInComponent* artComp = NULL;
-    TextFadeInComponent* artComp2 = NULL;
-    TextFadeInComponent* artComp3 = NULL;
-    TextFadeInComponent* artComp4 = NULL;
+    Command* cmd = NULL;
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
@@ -26,37 +23,14 @@ void MenuInputHandler::handleEvents() {
             case SDLK_ESCAPE:
                 this->commandList.push_back(&this->quitCommand);
                 return;
-
-            case SDLK_UP:
-                artComp = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 2]->art);
-                artComp->deselectMenuItem();
-                this->selected = (this->selected-1)%5;
-                if (this->selected < 0)
-                    this->selected += 5;
-                artComp2 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 2]->art);
-                artComp2->selectMenuItem();
-                break;
-            case SDLK_DOWN:
-                artComp3 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 2]->art);
-                artComp3->deselectMenuItem();
-                this->selected = (this->selected+1)%5;
-                artComp4 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 2]->art);
-                artComp4->selectMenuItem();
-                break;
-            case SDLK_SPACE:
-                switch(selected+2){
-                    case 2:
-                        this->commandList.push_back(&this->switchToPlay);
-                        return;
-                    case 5:
-                        this->commandList.push_back(&this->switchToHighscore);
-                        return;
-                    case 6:
-                        this->commandList.push_back(&this->quitCommand);
-                        return;;
-                    default:
-                        break;
+            default:
+                for (it = entityMap.begin(); it != entityMap.end(); ++it) {
+                    if (it->second->input)
+                        cmd = it->second->input->keyDown(event.key.keysym.sym);
+                    if (cmd)
+                        this->commandList.push_back(cmd);
                 }
+                break;
             }
         }
     }

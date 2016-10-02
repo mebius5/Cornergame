@@ -51,7 +51,7 @@ Entity * EntityBuilder::createCenteredFadeInText(const char *fontName,
     int y = (windowH/2 - textSurface->h/2);
     Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(this->renderer, textSurface, 1, initialAlpha);
-    fadeInText->input = new StartStateInputComponent(fadeInText);
+    fadeInText->input = new StartScreenInputComponent(fadeInText);
     return fadeInText;
 }
 
@@ -59,12 +59,19 @@ Entity * EntityBuilder::createHorizontallyCenteredFadeInText(const char *fontNam
                                                  const char *text,
                                                  int fontSize,
                                                  int r, int g, int b, int initialAlpha,
-                                                 int windowW, int yPos) {
+                                                 int windowW, int yPos,
+                                                 int index, int numOptions, int nextState) {
     SDL_Surface * textSurface = this->loadFont(fontName, text, fontSize, r, g, b, initialAlpha);
     int x = (windowW/2 - textSurface->w/2);
     Entity * fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(this->renderer, textSurface, 1, initialAlpha);
-    fadeInText->input = new MenuStateInputComponent(fadeInText);
+    SwitchStateCommand* nextStateCmd = NULL;
+    if (nextState)
+        nextStateCmd = new SwitchStateCommand(nextState);
+    fadeInText->input = new MenuOptionInputComponent(fadeInText, index, numOptions,
+                                                     new SelectMenuOptionCommand(fadeInText),
+                                                     new DeselectMenuOptionCommand(fadeInText),
+                                                     nextStateCmd);
     return fadeInText;
 }
 
@@ -105,5 +112,3 @@ SDL_Surface* EntityBuilder::loadImage(const char* filename) {
     }
     return finalImage;
 }
-
-
