@@ -80,6 +80,26 @@ QUIRKS
 Handy command to compile a single file:
 g++ -std=c++11 -Wall -Wextra -Wpedantic -O2 -c -Ih -I/usr/local/include/SDL2 -L/usr/local/lib -lSDL2_ttf -lSDL2_mixer -lSDL2_image -lSDL2 <FILENAME.cpp>
 
+
+SCREENS
+
+StartScreen
+- Currently has our game production logo that fades in from black
+- Also has our hero just walking to show progress and as something related to the game
+- Switches to the menu screen in 10 secs
+
+MenuScreen
+- Has the options for play, adjust brightness, adjust volume, highscore, and quit
+- The texts fade in from black and is centered horizontally
+- Use SPACE to select options (currently SPACE is disabled for adjust brightness and adjust volume)
+
+PlayScreen
+- Has the game play
+
+HighscoreScreen
+- Shows the highscore (fade in from black)
+- Proceeds to the menu screen after 5 secs
+
 TODOS
 leaks?
 add const to stuff, add static to stuff

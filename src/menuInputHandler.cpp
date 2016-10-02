@@ -14,6 +14,9 @@ void MenuInputHandler::handleEvents() {
     SDL_Event event;
     Command* cmd = NULL;
 
+    //artComp = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 2]->art);
+    //artComp->selectMenuItem();
+
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
             this->commandList.push_back(&this->quitCommand);

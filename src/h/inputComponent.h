@@ -28,7 +28,7 @@ private:
     float boundVelocity(float velocity);
 
 public:
-    HeroInputComponent(Entity * entity);
+    HeroInputComponent(Entity* entity);
     ~HeroInputComponent();
     Command* keyDown(SDL_Keycode keycode);
     Command* keyUp(SDL_Keycode keycode);
@@ -37,7 +37,7 @@ public:
 
 class StartScreenInputComponent : public InputComponent {
 public:
-    StartScreenInputComponent(Entity * entity);
+    StartScreenInputComponent(Entity* entity);
     ~StartScreenInputComponent();
     Command* keyDown(SDL_Keycode keycode);
     Command* keyUp(SDL_Keycode keycode);
