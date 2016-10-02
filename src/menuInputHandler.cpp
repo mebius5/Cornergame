@@ -28,30 +28,30 @@ void MenuInputHandler::handleEvents() {
                 return;
 
             case SDLK_UP:
-                artComp = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 1]->art);
+                artComp = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 2]->art);
                 artComp->deselectMenuItem();
                 this->selected = (this->selected-1)%5;
                 if (this->selected < 0)
                     this->selected += 5;
-                artComp2 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 1]->art);
+                artComp2 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 2]->art);
                 artComp2->selectMenuItem();
                 break;
             case SDLK_DOWN:
-                artComp3 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 1]->art);
+                artComp3 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 2]->art);
                 artComp3->deselectMenuItem();
                 this->selected = (this->selected+1)%5;
-                artComp4 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 1]->art);
+                artComp4 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 2]->art);
                 artComp4->selectMenuItem();
                 break;
             case SDLK_SPACE:
-                switch(selected+1){
-                    case 1:
+                switch(selected+2){
+                    case 2:
                         this->commandList.push_back(&this->switchToPlay);
                         return;
-                    case 4:
+                    case 5:
                         this->commandList.push_back(&this->switchToHighscore);
                         return;
-                    case 5:
+                    case 6:
                         this->commandList.push_back(&this->quitCommand);
                         return;;
                     default:
