@@ -118,6 +118,10 @@ void GameManager::run() {
                         inputHandler, soundHandler, aiHandler,
                         collisionHandler);
 
+    HighscoreState highscoreState(this->width, this->height, commandList, entityMap,
+                                  this->renderer, entityBuilder, drawingHandler,
+                                  inputHandler, soundHandler);
+
     currentState = &playState;      // TODO: Start at startState
 
     currentState->begin();

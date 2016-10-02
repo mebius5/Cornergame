@@ -88,9 +88,18 @@ private:
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
+    SDL_Texture * texture;
+    TTF_Font* font;
+    SDL_Rect textRect;
 public:
-    HighscoreState();
+    HighscoreState(int windowW, int windowH, std::list<Command*>& commandList,
+                   std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
+                   EntityBuilder& entityBuilder, DrawingHandler& drawingHandler,
+                   InputHandler& inputHandler, SoundHandler& soundHandler);
     ~HighscoreState();
+    void begin();
+    void run();
+    void cleanup();
 };
 
 #endif
