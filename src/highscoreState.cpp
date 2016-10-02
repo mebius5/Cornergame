@@ -8,42 +8,22 @@ HighscoreState::HighscoreState(int windowW, int windowH, std::list<Command*>& cm
     entityBuilder(entBuilder),
     drawingHandler(drawer),
     inputHandler(inputHandler),
-    soundHandler(soundHandler),
-    texture(NULL),
-    font(NULL) {
+    soundHandler(soundHandler) {
 }
 
 HighscoreState::~HighscoreState() {
-    /***
-    if (this->texture)
-        SDL_DestroyTexture(this->texture);
-    if (this->font)
-        TTF_CloseFont(this->font);
-        ***/
 }
 
 void HighscoreState::begin() {
     // play background music
     this->soundHandler.playBackgroundMusic("music/ambient_starfield_highscore.xm");
 
-    // Load fonts
-    this->font = TTF_OpenFont("resources/CaesarDressing-Regular.ttf", 100);
-    SDL_Color color={255, 255, 255, 255};
-    SDL_Surface* textSurf = TTF_RenderUTF8_Blended(font, "High Scores", color);
-    if (textSurf == NULL) {
-        std::cerr << "Unable to load text surface! SDL_image Error: "
-                  << IMG_GetError() << std::endl;
-        return;
-    }
-    SDL_SetSurfaceAlphaMod(textSurf, 128);
-
-    this->texture = SDL_CreateTextureFromSurface(renderer, textSurf);
-    this->textRect = centeredRect(this->windowW, this->windowH, textSurf->w, textSurf->h);
-    SDL_FreeSurface(textSurf);
+    Entity * mainText = entityBuilder.createFadeInText("resources/CaesarDressing-Regular.ttf", "High Scores:", 100,
+    255, 255, 255, 0, this->windowW, this->windowH);
+    entityMap.operator[](mainText->getId())= mainText;
 }
 
 void HighscoreState::run() {
-
     bool running = true;
     float lastTime = SDL_GetTicks();
 
@@ -57,9 +37,9 @@ void HighscoreState::run() {
             if (event.type == SDL_QUIT) {
                 return;
             } else if (event.type == SDL_KEYUP) {
-                if (event.key.keysym.sym == SDLK_ESCAPE)
+                if (event.key.keysym.sym == SDLK_ESCAPE){
                     return;
-                else
+                } else
                     this->inputHandler.handleEvent(event);
             } else {
                 this->inputHandler.handleEvent(event);
@@ -70,7 +50,7 @@ void HighscoreState::run() {
         this->soundHandler.handleSFX(dt);
 
         SDL_RenderClear(this->renderer);
-        SDL_RenderCopy(this->renderer, this->texture, NULL,&this->textRect);
+
         this->drawingHandler.draw(dt);
 
         SDL_RenderPresent(this->renderer);
@@ -80,14 +60,4 @@ void HighscoreState::run() {
 
 void HighscoreState::cleanup() {
     this->soundHandler.stopBackgroundMusic();
-
-    if (this->texture) {
-        SDL_DestroyTexture(this->texture);
-        this->texture = NULL;
-    }
-    if (this->font) {
-        TTF_CloseFont(this->font);
-        this->font = NULL;
-    }
-
 }
