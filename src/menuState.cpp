@@ -71,11 +71,7 @@ State::StateEnum MenuState::run() {
         int nextState = this->controlHandler.handleStateCommands();
         if (nextState)
             return (State::StateEnum)nextState;
-
-        if (milliSecElapsed>=10000)  //Return menu after 10000
-            break;
     }
-    return State::StateEnum::PLAY;
 }
 
 void MenuState::cleanup() {
