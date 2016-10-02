@@ -51,7 +51,7 @@ Entity * EntityBuilder::createCenteredFadeInText(const char *fontName,
     int y = (windowH/2 - textSurface->h/2);
     Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(this->renderer, textSurface, 1, initialAlpha);
-    fadeInText->input = new StartStateInputComponent(fadeInText);
+    fadeInText->input = new StartScreenInputComponent(fadeInText);
     return fadeInText;
 }
 

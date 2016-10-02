@@ -34,10 +34,10 @@ public:
     void updateLocation(int dt);
 };
 
-class StartStateInputComponent: public InputComponent {
+class StartScreenInputComponent: public InputComponent {
 public:
-    StartStateInputComponent(Entity * entity);
-    ~StartStateInputComponent();
+    StartScreenInputComponent(Entity * entity);
+    ~StartScreenInputComponent();
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
     void updateLocation(int dt);
