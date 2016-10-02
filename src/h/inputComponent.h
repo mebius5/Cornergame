@@ -37,7 +37,7 @@ public:
 class StartStateInputComponent: public InputComponent {
 public:
     StartStateInputComponent(Entity * entity);
-    ~StartStateInputComponent(){};
+    ~StartStateInputComponent();
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
     void updateLocation(int dt);
@@ -46,7 +46,7 @@ public:
 class MenuStateInputComponent: public InputComponent {
 public:
     MenuStateInputComponent(Entity * entity);
-    ~MenuStateInputComponent(){};
+    ~MenuStateInputComponent();
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
     void updateLocation(int dt);

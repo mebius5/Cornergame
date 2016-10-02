@@ -29,7 +29,7 @@ public:
     StatsComponent* stats;
     PhysicsComponent* physics;
     ArtComponent* art;
-    HeroInputComponent* input;
+    InputComponent* input;
     AiComponent* ai;
 
     Entity(int id, float x, float y, int w, int h);

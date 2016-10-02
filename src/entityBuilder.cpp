@@ -55,8 +55,7 @@ Entity * EntityBuilder::createCenteredFadeInText(const char *fontName,
     int y = (windowH/2 - textSurface->h/2);
     Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(this->renderer, textSurface, 1, initialAlpha);
-    fadeInText->input = new HeroInputComponent(fadeInText);
-
+    fadeInText->input = new StartStateInputComponent(fadeInText);
     return fadeInText;
 }
 
@@ -69,6 +68,7 @@ Entity * EntityBuilder::createHorizontallyCenteredFadeInText(const char *fontNam
     int x = (windowW/2 - textSurface->w/2);
     Entity * fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(this->renderer, textSurface, 1, initialAlpha);
+    fadeInText->input = new MenuStateInputComponent(fadeInText);
     return fadeInText;
 }
 

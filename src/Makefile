@@ -17,10 +17,12 @@ SRCFILES = \
 	inputComponent.cpp \
 	inputHandler.cpp \
 	menuState.cpp \
+	menuSateInputComponent.cpp \
 	playState.cpp \
 	physicsComponent.cpp \
 	soundHandler.cpp \
 	startState.cpp \
+	startStateInputComponent.cpp \
 	state.cpp \
 	staticArtComponent.cpp \
 	statsComponent.cpp \
