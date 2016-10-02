@@ -110,3 +110,4 @@ controlHandler
 make sure abstract base classes are right for components
 make Component classes virtual
 move Enum to consts?...
+Component has a passCommand() method?

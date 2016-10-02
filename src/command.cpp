@@ -20,3 +20,11 @@ ResetAiCommand::ResetAiCommand(Entity* entity) {
 SwitchStateCommand::SwitchStateCommand(int newState) :
     newState(newState) {
 }
+
+SelectMenuOptionCommand::SelectMenuOptionCommand(Entity* entity) {
+    this->entity = entity;
+}
+
+DeselectMenuOptionCommand::DeselectMenuOptionCommand(Entity* entity) {
+    this->entity = entity;
+}

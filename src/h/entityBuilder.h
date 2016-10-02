@@ -30,7 +30,8 @@ public:
                                       const char *text,
                                       int fontSize,
                                       int r, int g, int b, int initialAlpha,
-                                      int windowW, int yPos);
+                                      int windowW, int yPos,
+                                      int index, int numOptions, int nextState);
 };
 
 #endif

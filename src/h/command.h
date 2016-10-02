@@ -33,6 +33,21 @@ public:
     ResetAiCommand(Entity* entity);
 };
 
+class ArtCommand : public Command {
+public:
+    Entity* entity;
+};
+
+class SelectMenuOptionCommand : public ArtCommand {
+public:
+    SelectMenuOptionCommand(Entity* entity);
+};
+
+class DeselectMenuOptionCommand : public ArtCommand {
+public:
+    DeselectMenuOptionCommand(Entity* entity);
+};
+
 class ControlCommand : public Command {
 
 };

@@ -5,6 +5,7 @@
 #include <map>
 #include "entity.h"
 
+class Command;
 class Entity;
 
 class InputComponent {
@@ -14,8 +15,8 @@ protected:
 public:
     InputComponent(Entity * entity);
     virtual ~InputComponent(){};
-    virtual void keyDown(SDL_Keycode keycode)=0;
-    virtual void keyUp(SDL_Keycode keycode)=0;
+    virtual Command* keyDown(SDL_Keycode keycode)=0;
+    virtual Command* keyUp(SDL_Keycode keycode)=0;
     virtual void updateLocation(int dt)=0;
 };
 
@@ -27,28 +28,38 @@ private:
     float boundVelocity(float velocity);
 
 public:
-    HeroInputComponent(Entity * entity);
+    HeroInputComponent(Entity* entity);
     ~HeroInputComponent();
-    void keyDown(SDL_Keycode keycode);
-    void keyUp(SDL_Keycode keycode);
+    Command* keyDown(SDL_Keycode keycode);
+    Command* keyUp(SDL_Keycode keycode);
     void updateLocation(int dt);
 };
 
-class StartScreenInputComponent: public InputComponent {
+class StartScreenInputComponent : public InputComponent {
 public:
-    StartScreenInputComponent(Entity * entity);
+    StartScreenInputComponent(Entity* entity);
     ~StartScreenInputComponent();
-    void keyDown(SDL_Keycode keycode);
-    void keyUp(SDL_Keycode keycode);
+    Command* keyDown(SDL_Keycode keycode);
+    Command* keyUp(SDL_Keycode keycode);
     void updateLocation(int dt);
 };
 
-class MenuStateInputComponent: public InputComponent {
+class MenuOptionInputComponent : public InputComponent {
+private:
+    int index;                  // index of this menu option
+    int numOptions;             // total number of menu options
+    int currIndex;              // currently selected menu option
+    bool selected;              // is this option selected
+    Command* selectCommand;     // command to fire on select
+    Command* deselectCommand;   // command to fire on deselect
+    Command* nextStateCommand;  // when space pressed, fire if selected
 public:
-    MenuStateInputComponent(Entity * entity);
-    ~MenuStateInputComponent();
-    void keyDown(SDL_Keycode keycode);
-    void keyUp(SDL_Keycode keycode);
+    MenuOptionInputComponent(Entity *entity, int index, int numOptions,
+                             Command* selectCommand, Command* deselectCommand,
+                             Command* nextStateCommand);
+    ~MenuOptionInputComponent();
+    Command* keyDown(SDL_Keycode keycode);
+    Command* keyUp(SDL_Keycode keycode);
     void updateLocation(int dt);
 };
 

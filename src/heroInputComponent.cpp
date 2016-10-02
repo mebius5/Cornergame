@@ -19,7 +19,7 @@ float HeroInputComponent::boundVelocity(float velocity) {
     return velocity;
 }
 
-void HeroInputComponent::keyDown(SDL_Keycode keycode) {
+Command* HeroInputComponent::keyDown(SDL_Keycode keycode) {
     switch (keycode) {
         case SDLK_UP:
             this->entity->yAccel = -1 * this->accelRate;
@@ -33,9 +33,10 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
         case SDLK_RIGHT:
             this->entity->xAccel = this->accelRate;
     }
+    return NULL;
 }
 
-void HeroInputComponent::keyUp(SDL_Keycode keycode) {
+Command* HeroInputComponent::keyUp(SDL_Keycode keycode) {
     switch (keycode) {
         case SDLK_UP:
         case SDLK_DOWN:
@@ -45,6 +46,7 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
         case SDLK_RIGHT:
             this->entity->xAccel = 0;
     }
+    return NULL;
 }
 
 void HeroInputComponent::updateLocation(int dt) {

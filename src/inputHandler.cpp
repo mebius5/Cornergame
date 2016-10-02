@@ -11,6 +11,7 @@ InputHandler::InputHandler(std::map<int, Entity*>& entityMap,
 void InputHandler::handleEvents() {
     std::map<int, Entity*>::const_iterator it;
     SDL_Event event;
+    Command* cmd;
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT || (event.type == SDL_KEYUP
@@ -27,9 +28,11 @@ void InputHandler::handleEvents() {
         for (it = entityMap.begin(); it != entityMap.end(); ++it) {
             if (it->second->input) {
                 if (event.type == SDL_KEYUP)
-                    it->second->input->keyUp(event.key.keysym.sym);
+                    cmd = it->second->input->keyUp(event.key.keysym.sym);
                 else if (event.type == SDL_KEYDOWN)
-                    it->second->input->keyDown(event.key.keysym.sym);
+                    cmd = it->second->input->keyDown(event.key.keysym.sym);
+                if (cmd)
+                    this->commandList.push_back(cmd);
             }
         }
     }
