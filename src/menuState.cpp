@@ -51,6 +51,7 @@ State::StateEnum MenuState::run() {
         milliSecElapsed += dt;
 
         this->inputHandler.handleEvents();
+
         this->inputHandler.update(dt);
         this->soundHandler.handleSFX(dt);
         this->drawingHandler.draw(dt);

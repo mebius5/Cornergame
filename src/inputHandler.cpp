@@ -1,7 +1,7 @@
 #include "inputHandler.h"
 
-InputHandler::InputHandler(std::map<int, Entity*>& entMap,
-                           std::list<Command*>& cmdList) :
+InputHandler::InputHandler(std::map<int, Entity*>& entityMap,
+                           std::list<Command*>& commandList) :
         entityMap(entMap),
         commandList(cmdList),
         quitCommand(1) {    // return QUIT

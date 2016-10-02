@@ -14,8 +14,17 @@ private:
     SwitchStateCommand quitCommand;
 public:
     InputHandler(std::map<int, Entity*>& entMap, std::list<Command*>& cmdList);
-    void handleEvents();
+    virtual void handleEvents();
     void update(int dt);
+};
+
+class MenuInputHandler {
+private:
+    SwitchStateCommand switchToPlay;
+    SwitchStateCommand switchToHighscore;
+public:
+    MenuInputHandler(std::map<int, Entity*>& ent, std::list<Command*>& cmdList);
+    void handleEvents();
 };
 
 #endif
