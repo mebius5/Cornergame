@@ -1,5 +1,4 @@
 #include "inputHandler.h"
-#include <iostream>
 
 MenuInputHandler::MenuInputHandler(std::map<int, Entity*>& entityMap,
                                    std::list<Command*>& commandList) :

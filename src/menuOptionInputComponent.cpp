@@ -42,7 +42,10 @@ Command* MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
             this->currIndex = 0;
         break;
     case SDLK_SPACE:
-        return this->nextStateCommand;
+        if (this->selected && this->nextStateCommand)
+            return this->nextStateCommand;
+        else
+            return NULL;
     default:
         return NULL;
     }
