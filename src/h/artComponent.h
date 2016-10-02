@@ -29,4 +29,16 @@ public:
     SDL_Texture* getNextTexture(int dt);
 };
 
+class TextFadeInComponent : public ArtComponent{
+private:
+    SDL_Surface * surface;
+    SDL_Renderer * renderer;
+    SDL_Texture * lastTexture;
+    double initialAlpha;
+public:
+    TextFadeInComponent(SDL_Renderer * renderer, SDL_Surface * surface, int layer, int initialAlpha);
+    ~TextFadeInComponent();
+    SDL_Texture * getNextTexture(int dt);
+};
+
 #endif
