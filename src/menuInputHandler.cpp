@@ -1,4 +1,5 @@
 #include "inputHandler.h"
+#include <iostream>
 
 MenuInputHandler::MenuInputHandler(std::map<int, Entity*>& entityMap,
                                    std::list<Command*>& commandList) :
@@ -30,6 +31,8 @@ void MenuInputHandler::handleEvents() {
                 artComp = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 1]->art);
                 artComp->deselectMenuItem();
                 this->selected = (this->selected-1)%5;
+                if (this->selected < 0)
+                    this->selected += 5;
                 artComp2 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 1]->art);
                 artComp2->selectMenuItem();
                 break;
