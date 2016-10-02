@@ -2,11 +2,11 @@
 
 State::State(std::list<Command*>& cmdList, std::map<int, Entity*>& entityMap,
              SDL_Renderer* renderer, int windowW, int windowH) :
-    commandList(cmdList),
-    entityMap(entityMap),
-    renderer(renderer),
-    windowW(windowW),
-    windowH(windowH) {
+        windowW(windowW),
+        windowH(windowH),
+        commandList(cmdList),
+        entityMap(entityMap),
+        renderer(renderer) {
 }
 
 int State::center(int large, int small) {
@@ -15,8 +15,8 @@ int State::center(int large, int small) {
 
 SDL_Rect State::centeredRect(int largeW, int largeH, int smallW, int smallH) {
     SDL_Rect rect = {
-        center(largeW, smallW), center(largeH, smallH),
-        smallW, smallH
+            center(largeW, smallW), center(largeH, smallH),
+            smallW, smallH
     };
     return rect;
 }

@@ -20,7 +20,8 @@ SRCFILES = \
 	startState.cpp \
 	state.cpp \
 	staticArtComponent.cpp \
-	statsComponent.cpp
+	statsComponent.cpp \
+	textFadeInComponent.cpp
 
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall -Wextra -Wpedantic -O2

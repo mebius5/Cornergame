@@ -33,10 +33,6 @@ private:
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
-    SDL_Texture * texture;
-    TTF_Font* font;
-    SDL_Rect textRect;
-
 public:
     StartState(int windowW, int windowH, std::list<Command*>& commandList,
                std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
