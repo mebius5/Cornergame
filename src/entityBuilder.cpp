@@ -58,6 +58,18 @@ Entity * EntityBuilder::createCenteredFadeInText(const char *fontName,
     return fadeInText;
 }
 
+Entity * EntityBuilder::createHorizontallyCenteredFadeInText(const char *fontName,
+                                                 const char *text,
+                                                 int fontSize,
+                                                 int r, int g, int b, int initialAlpha,
+                                                 int windowW, int yPos) {
+    SDL_Surface * textSurface = this->loadFont(fontName, text, fontSize, r, g, b, initialAlpha);
+    int x = (windowW/2 - textSurface->w/2);
+    Entity * fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h);
+    fadeInText->art = new TextFadeInComponent(this->renderer, textSurface, 1, initialAlpha);
+    return fadeInText;
+}
+
 SDL_Surface* EntityBuilder::loadFont(const char * fontName,
                       const char * text,
                       int fontSize,

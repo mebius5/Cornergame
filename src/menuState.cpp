@@ -1,9 +1,9 @@
 #include "state.h"
 
 MenuState::MenuState(int windowW, int windowH, std::list<Command*>& cmdList,
-                       std::map<int, Entity*>& entMap, SDL_Renderer* renderer,
-                       EntityBuilder& entBuilder, DrawingHandler& drawer,
-                       InputHandler& inputHandler, SoundHandler& soundHandler) :
+                     std::map<int, Entity*>& entMap, SDL_Renderer* renderer,
+                     EntityBuilder& entBuilder, DrawingHandler& drawer,
+                     InputHandler& inputHandler, SoundHandler& soundHandler) :
         State(cmdList, entMap, renderer, windowW, windowH),
         entityBuilder(entBuilder),
         drawingHandler(drawer),
@@ -18,10 +18,23 @@ void MenuState::begin() {
     // play background music
     this->soundHandler.playBackgroundMusic("music/a_winter_kiss_menu.xm");
 
-    Entity * mainText = entityBuilder.createCenteredFadeInText("resources/CaesarDressing-Regular.ttf", "Menu",
-                                                               100,
-                                                               255, 255, 255, 0, this->windowW, this->windowH);
-    entityMap.operator[](mainText->getId())= mainText;
+    Entity * playText = entityBuilder.createHorizontallyCenteredFadeInText(
+            "resources/CaesarDressing-Regular.ttf", "Play",
+            100,
+            255, 255, 255, 0, this->windowW, 100);
+    entityMap.operator[](playText->getId())= playText;
+
+    Entity * highText = entityBuilder.createHorizontallyCenteredFadeInText(
+            "resources/CaesarDressing-Regular.ttf", "Highscore",
+            100,
+            255, 255, 255, 0, this->windowW, 300);
+    entityMap.operator[](highText->getId())= highText;
+
+    Entity * quitText = entityBuilder.createHorizontallyCenteredFadeInText(
+            "resources/CaesarDressing-Regular.ttf", "Quit",
+            100,
+            255, 255, 255, 0, this->windowW, 500);
+    entityMap.operator[](quitText->getId())= quitText;
 }
 
 StateEnum MenuState::run() {
