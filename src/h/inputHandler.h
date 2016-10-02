@@ -12,6 +12,7 @@ protected:
     std::map<int, Entity*>& entityMap;
     std::list<Command*>& commandList;
     SwitchStateCommand quitCommand;
+    SwitchStateCommand switchToMenu;
 public:
     InputHandler(std::map<int, Entity*>& entMap, std::list<Command*>& cmdList);
     virtual void handleEvents();

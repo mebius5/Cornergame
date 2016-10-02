@@ -4,7 +4,8 @@ InputHandler::InputHandler(std::map<int, Entity*>& entityMap,
                            std::list<Command*>& commandList) :
         entityMap(entityMap),
         commandList(commandList),
-        quitCommand(1) {    // return QUIT
+        quitCommand(1), // return QUIT
+        switchToMenu(4) {    // return MENU
 }
 
 void InputHandler::handleEvents() {
@@ -16,6 +17,11 @@ void InputHandler::handleEvents() {
         if (event.type == SDL_QUIT || (event.type == SDL_KEYUP
                     && event.key.keysym.sym == SDLK_ESCAPE)) {
             this->commandList.push_back(&this->quitCommand);
+            return;
+        }
+
+        if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_q) {
+            this->commandList.push_back(&this->switchToMenu);
             return;
         }
 

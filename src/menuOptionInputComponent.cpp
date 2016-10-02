@@ -13,6 +13,10 @@ MenuOptionInputComponent::MenuOptionInputComponent(Entity *entity, int index,
         selectCommand(selectCommand),
         deselectCommand(deselectCommand),
         nextStateCommand(nextStateCmd) {
+            if (index == currIndex) {
+                TextFadeInComponent* artComp = dynamic_cast<TextFadeInComponent*>(this->entity->art);
+                artComp->selectMenuItem();
+            }
 }
 
 MenuOptionInputComponent::~MenuOptionInputComponent() {
@@ -51,7 +55,7 @@ Command* MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
     }
 
     // Check if we need to select ourself or deselect ourself
-    TextFadeInComponent* artComp = dynamic_cast<TextFadeInComponent*>(this->entity->art);;
+    TextFadeInComponent* artComp = dynamic_cast<TextFadeInComponent*>(this->entity->art);
     if (this->selected) {
         this->selected = false;
         artComp->deselectMenuItem();
