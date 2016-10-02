@@ -7,7 +7,7 @@ EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
 
 Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
     SDL_Surface* image = this->loadImage("spritesheets/hero.png");
-    Entity* hero = new Entity(this->nextId++, x, y, (image->w)/4, (image->h)*2);
+    Entity* hero = new Entity(this->nextId++, x, y, (image->w)/4, (image->h));
 
     Mix_Chunk* chunk = Mix_LoadWAV(collisionSfxFile);
     if (!chunk) {

@@ -29,11 +29,13 @@ void HighscoreState::begin() {
 State::StateEnum HighscoreState::run() {
     bool running = true;
     float lastTime = SDL_GetTicks();
+    int timeElapsed = 0;
 
     while (running) {
         int currentTime = SDL_GetTicks();
         int dt = currentTime - lastTime;
         lastTime = currentTime;
+        timeElapsed+=dt;
 
         this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
@@ -43,6 +45,10 @@ State::StateEnum HighscoreState::run() {
         int nextState = this->controlHandler.handleStateCommands();
         if (nextState)
             return (State::StateEnum)nextState;
+
+        if(timeElapsed>5000){ //Return to MENU screen after 5 secs
+            break;
+        }
     }
 
     return State::StateEnum::MENU;
