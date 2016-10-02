@@ -2,6 +2,9 @@
 #define CORNERGAME_ART_COMPONENT_H
 
 #include <SDL_render.h>
+#include "entity.h"
+
+class Entity;
 
 class ArtComponent {
 public:
@@ -28,8 +31,9 @@ private:
     SDL_Surface* surface;
     int timecount;
     SDL_Rect clip;
+    Entity * entity;
 public:
-    AnimationComponent(SDL_Texture* texture, SDL_Surface* surface, int layer);
+    AnimationComponent(SDL_Texture* texture, SDL_Surface* surface, int layer, Entity* entity);
     ~AnimationComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);

@@ -17,7 +17,7 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
 
     hero->collision = new CollisionComponent(new PlaySoundCommand(chunk), NULL);
     hero->art = new AnimationComponent(
-        SDL_CreateTextureFromSurface(this->renderer, image), image, 1);
+        SDL_CreateTextureFromSurface(this->renderer, image), image, 1, hero);
     hero->input = new HeroInputComponent(hero);
     return hero;
 }
@@ -28,7 +28,7 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
 
     enemy->collision = new CollisionComponent(NULL, new ResetAiCommand(enemy));
     enemy->art = new AnimationComponent(
-        SDL_CreateTextureFromSurface(this->renderer, image), image, 1);
+        SDL_CreateTextureFromSurface(this->renderer, image), image, 1, enemy);
     enemy->ai = new AiComponent(enemy);
     return enemy;
 }
