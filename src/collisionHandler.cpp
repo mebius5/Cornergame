@@ -37,24 +37,28 @@ void CollisionHandler::detectBorderCollision(Entity *entity){
         Command* collisionCmd = entity->collision->onBorderCollision;
         if (entity->x < 0) {
             entity->x = 0;
+            entity->xVelocity = 0.0f;
             if (collisionCmd)
                 this->commandList.push_back(collisionCmd);
         }
 
         if (entity->x + entity->width > this->width) {
             entity->x = this->width - entity->width;
+            entity->xVelocity = 0.0f;
             if (collisionCmd)
                 this->commandList.push_back(collisionCmd);
         }
 
         if (entity->y < 0) {
             entity->y = 0;
+            entity->yVelocity = 0.0f;
             if (collisionCmd)
                 this->commandList.push_back(collisionCmd);
         }
 
         if (entity->y + entity->height > this->height) {
             entity->y = this->height - entity->width;
+            entity->yVelocity = 0.0f;
             if (collisionCmd)
                 this->commandList.push_back(collisionCmd);
         }

@@ -88,6 +88,5 @@ rule of three
 separate commandLists? -> structure to do this?
 separate componentLists?
 make sure abstract base classes are right for components
-reset input on border collision (LocationHandler?)
 make Component classes virtual
 check TODOs in code
