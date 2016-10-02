@@ -15,6 +15,9 @@ StartState::~StartState() {
 }
 
 void StartState::begin() {
+    // play background music
+    this->soundHandler.playBackgroundMusic("music/mega_destruction_titlescreen.xm");
+
     Entity * mainText = entityBuilder.createFadeInText("resources/CaesarDressing-Regular.ttf", "CornerGame", 100,
     255, 255, 255, 0, this->windowW, this->windowH);
     entityMap.operator[](mainText->getId())= mainText;
@@ -56,4 +59,5 @@ void StartState::run() {
 }
 
 void StartState::cleanup() {
+    this->soundHandler.stopBackgroundMusic();
 }
