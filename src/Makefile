@@ -23,7 +23,7 @@ SRCFILES = \
 	physicsComponent.cpp \
 	soundHandler.cpp \
 	startState.cpp \
-	startStateInputComponent.cpp \
+	startScreenInputComponent.cpp \
 	state.cpp \
 	staticArtComponent.cpp \
 	statsComponent.cpp \
