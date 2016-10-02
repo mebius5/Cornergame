@@ -18,8 +18,9 @@ void HighscoreState::begin() {
     // play background music
     this->soundHandler.playBackgroundMusic("music/ambient_starfield_highscore.xm");
 
-    Entity * mainText = entityBuilder.createFadeInText("resources/CaesarDressing-Regular.ttf", "High Scores:", 100,
-    255, 255, 255, 0, this->windowW, this->windowH);
+    Entity * mainText = entityBuilder.createCenteredFadeInText("resources/CaesarDressing-Regular.ttf", "High Scores:",
+                                                               100,
+                                                               255, 255, 255, 0, this->windowW, this->windowH);
     entityMap.operator[](mainText->getId())= mainText;
 }
 
