@@ -22,19 +22,31 @@ void MenuState::begin() {
 
     Entity * playText = entityBuilder.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Play",
-            100,
+            80,
             255, 255, 255, 0, this->windowW, 100);
     entityMap.operator[](playText->getId())= playText;
 
+    Entity * brightText = entityBuilder.createHorizontallyCenteredFadeInText(
+            "resources/CaesarDressing-Regular.ttf", "Adjust Visual Brightness",
+            80,
+            255, 255, 255, 0, this->windowW, 200);
+    entityMap.operator[](brightText->getId())= brightText;
+
+    Entity * audioText = entityBuilder.createHorizontallyCenteredFadeInText(
+            "resources/CaesarDressing-Regular.ttf", "Adjust Audio Volume",
+            80,
+            255, 255, 255, 0, this->windowW, 300);
+    entityMap.operator[](audioText->getId())= audioText;
+
     Entity * highText = entityBuilder.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Highscore",
-            100,
-            255, 255, 255, 0, this->windowW, 300);
+            80,
+            255, 255, 255, 0, this->windowW, 400);
     entityMap.operator[](highText->getId())= highText;
 
     Entity * quitText = entityBuilder.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Quit",
-            100,
+            80,
             255, 255, 255, 0, this->windowW, 500);
     entityMap.operator[](quitText->getId())= quitText;
 }
