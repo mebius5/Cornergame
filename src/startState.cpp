@@ -50,7 +50,7 @@ State::StateEnum StartState::run() {
         this->drawingHandler.draw(dt);
 
         int nextState = this->controlHandler.handleStateCommands();
-        if (nextState)
+        if (nextState != NONE && nextState != MENU)
             return (State::StateEnum)nextState;
 
         if (milliSecElapsed>=10000)    //Return menu after 10 sec

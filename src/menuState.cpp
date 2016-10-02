@@ -74,7 +74,7 @@ State::StateEnum MenuState::run() {
         this->drawingHandler.draw(dt);
 
         int nextState = this->controlHandler.handleStateCommands();
-        if (nextState)
+        if (nextState != NONE && nextState != MENU)
             return (State::StateEnum)nextState;
     }
 
@@ -89,5 +89,5 @@ void MenuState::cleanup() {
     entityMap.clear();
     commandList.clear();
 
-    this->soundHandler.stopBackgroundMusic();
+   this->soundHandler.stopBackgroundMusic();
 }
