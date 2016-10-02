@@ -41,6 +41,15 @@ HighscoreScreen
 Press ESC at any time to quit the game. You can also select QUIT from the main
     menu.
 
+ANIMATION
+The hero and the enemy each have an AnimationComponent that will update
+their sprites. If the character is moving at a velocity of more than 0.01,
+we cycle through a four frame walking animation in the direction they are facing.
+These frames are stored in the top row of the spritesheet. If the character is not
+moving, we cycle through a two frame idle animation which is in the second row
+of the spritesheet.
+
+
 CLASS STRUCTURE
 
 Entity
