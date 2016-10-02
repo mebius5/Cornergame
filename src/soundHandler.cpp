@@ -25,7 +25,9 @@ Mix_Music* SoundHandler::loadMusic(const char* filename) {
 
 void SoundHandler::playBackgroundMusic(const char* filename) {
     this->backgroundMusic = loadMusic(filename);
-    Mix_PlayMusic(this->backgroundMusic, -1);
+    if(backgroundMusic){
+        Mix_PlayMusic(this->backgroundMusic, -1);
+    }
 }
 
 void SoundHandler::playSFX(Mix_Chunk* sfxChunk) {
