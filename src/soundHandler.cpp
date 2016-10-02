@@ -6,10 +6,7 @@ SoundHandler::SoundHandler(std::list<Command*>& cmdList) :
 }
 
 SoundHandler::~SoundHandler() {
-    if (this->backgroundMusic)
-        Mix_FreeMusic(this->backgroundMusic);
-    this->backgroundMusic = NULL;
-
+    stopBackgroundMusic();
     if (Mix_Playing(this->lastChannelUsedForSFX))
         Mix_HaltChannel(this->lastChannelUsedForSFX);
 }
@@ -33,6 +30,8 @@ void SoundHandler::playBackgroundMusic(const char* filename) {
 void SoundHandler::stopBackgroundMusic() {
     if (this->backgroundMusic) {
         Mix_HaltMusic();
+        Mix_FreeMusic(this->backgroundMusic);
+        this->backgroundMusic= NULL;
     }
 }
 
