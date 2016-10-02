@@ -44,7 +44,19 @@ void MenuInputHandler::handleEvents() {
                 artComp4->selectMenuItem();
                 break;
             case SDLK_SPACE:
-                break;
+                switch(selected+1){
+                    case 1:
+                        this->commandList.push_back(&this->switchToPlay);
+                        return;
+                    case 4:
+                        this->commandList.push_back(&this->switchToHighscore);
+                        return;
+                    case 5:
+                        this->commandList.push_back(&this->quitCommand);
+                        return;;
+                    default:
+                        break;
+                }
             }
         }
     }
