@@ -38,6 +38,11 @@ SDL_Texture * TextFadeInComponent::getNextTexture(int dt) {
     return this->lastTexture;
 }
 
+
+SDL_Rect* TextFadeInComponent::getNextSrcRect(int dt) {
+    return NULL;
+}
+
 void TextFadeInComponent::selectMenuItem() {
     SDL_SetSurfaceColorMod(this->surface, (Uint8) 255, (Uint8)0, (Uint8) 0);
 }

@@ -25,6 +25,12 @@ void StartState::begin() {
                         100,
                         255, 255, 255, 0, this->windowW, this->windowH);
     entityMap.operator[](mainText->getId())= mainText;
+
+
+    Entity* hero = this->entityBuilder.createHero(500, 500,
+                                                  "resources/collision_alert.wav");
+    this->entityMap.operator[](hero->getId()) = hero;
+
 }
 
 State::StateEnum StartState::run() {
