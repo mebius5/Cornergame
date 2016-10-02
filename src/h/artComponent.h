@@ -40,6 +40,8 @@ public:
                         int layer, int initialAlpha);
     ~TextFadeInComponent();
     SDL_Texture * getNextTexture(int dt);
+    void selectMenuItem();
+    void deselectMenuItem();
 };
 
 #endif

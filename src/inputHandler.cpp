@@ -2,8 +2,8 @@
 
 InputHandler::InputHandler(std::map<int, Entity*>& entityMap,
                            std::list<Command*>& commandList) :
-        entityMap(entMap),
-        commandList(cmdList),
+        entityMap(entityMap),
+        commandList(commandList),
         quitCommand(1) {    // return QUIT
 }
 

@@ -8,7 +8,7 @@
 #include "entity.h"
 
 class InputHandler {
-private:
+protected:
     std::map<int, Entity*>& entityMap;
     std::list<Command*>& commandList;
     SwitchStateCommand quitCommand;
@@ -18,10 +18,11 @@ public:
     void update(int dt);
 };
 
-class MenuInputHandler {
+class MenuInputHandler : public InputHandler {
 private:
     SwitchStateCommand switchToPlay;
     SwitchStateCommand switchToHighscore;
+    int selected;
 public:
     MenuInputHandler(std::map<int, Entity*>& ent, std::list<Command*>& cmdList);
     void handleEvents();

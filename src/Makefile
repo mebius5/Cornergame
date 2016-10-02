@@ -16,8 +16,9 @@ SRCFILES = \
     highscoreState.cpp \
 	inputComponent.cpp \
 	inputHandler.cpp \
+	menuInputHandler.cpp \
 	menuState.cpp \
-	menuSateInputComponent.cpp \
+	menuStateInputComponent.cpp \
 	playState.cpp \
 	physicsComponent.cpp \
 	soundHandler.cpp \

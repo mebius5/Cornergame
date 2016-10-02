@@ -40,6 +40,7 @@ void MenuState::begin() {
 }
 
 State::StateEnum MenuState::run() {
+    MenuInputHandler inputHandler(this->entityMap, this->commandList);
     bool running = true;
     float lastTime = SDL_GetTicks();
     int milliSecElapsed = 0;
@@ -50,9 +51,8 @@ State::StateEnum MenuState::run() {
         lastTime = currentTime;
         milliSecElapsed += dt;
 
-        this->inputHandler.handleEvents();
-
-        this->inputHandler.update(dt);
+        inputHandler.handleEvents();
+        //inputHandler.update(dt);
         this->soundHandler.handleSFX(dt);
         this->drawingHandler.draw(dt);
 

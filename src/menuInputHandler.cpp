@@ -2,7 +2,7 @@
 
 MenuInputHandler::MenuInputHandler(std::map<int, Entity*>& entityMap,
                                    std::list<Command*>& commandList) :
-        InputHandler(entMap, cmdList),
+        InputHandler(entityMap, commandList),
         switchToPlay(3),
         switchToHighscore(5),
         selected(0) {
@@ -11,6 +11,10 @@ MenuInputHandler::MenuInputHandler(std::map<int, Entity*>& entityMap,
 void MenuInputHandler::handleEvents() {
     std::map<int, Entity*>::const_iterator it;
     SDL_Event event;
+    TextFadeInComponent* artComp = NULL;
+    TextFadeInComponent* artComp2 = NULL;
+    TextFadeInComponent* artComp3 = NULL;
+    TextFadeInComponent* artComp4 = NULL;
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT) {
@@ -23,25 +27,22 @@ void MenuInputHandler::handleEvents() {
                 return;
 
             case SDLK_UP:
-                this->entityMap[this->selected + 1].deselectMenuItem();
-                this->selected = (this->selected-1)%3
-                this->entityMap[this->selected + 1].selectMenuItem();
+                artComp = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 1]->art);
+                artComp->deselectMenuItem();
+                this->selected = (this->selected-1)%5;
+                artComp2 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 1]->art);
+                artComp2->selectMenuItem();
                 break;
             case SDLK_DOWN:
-                this->entityMap[this->selected + 1].deselectMenuItem();
-                this->selected = (this->selected+1)%3
-                this->entityMap[this->selected + 1].selectMenuItem();
+                artComp3 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 1]->art);
+                artComp3->deselectMenuItem();
+                this->selected = (this->selected+1)%5;
+                artComp4 = dynamic_cast<TextFadeInComponent*>(this->entityMap[this->selected + 1]->art);
+                artComp4->selectMenuItem();
+                break;
+            case SDLK_SPACE:
                 break;
             }
-        }
-    }
-}
-
-void InputHandler::update(int dt) {
-    std::map<int, Entity*>::const_iterator it;
-    for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it) {
-        if (it->second->input) {
-            it->second->input->updateLocation(dt);
         }
     }
 }
