@@ -23,6 +23,8 @@ HighscoreState::~HighscoreState() {
 }
 
 void HighscoreState::begin() {
+    // play background music
+    this->soundHandler.playBackgroundMusic("music/ambient_starfield_highscore.xm");
 
     // Load fonts
     this->font = TTF_OpenFont("resources/CaesarDressing-Regular.ttf", 100);
@@ -77,6 +79,7 @@ void HighscoreState::run() {
 }
 
 void HighscoreState::cleanup() {
+    this->soundHandler.stopBackgroundMusic();
 
     if (this->texture) {
         SDL_DestroyTexture(this->texture);

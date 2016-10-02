@@ -30,6 +30,12 @@ void SoundHandler::playBackgroundMusic(const char* filename) {
     }
 }
 
+void SoundHandler::stopBackgroundMusic() {
+    if (this->backgroundMusic) {
+        Mix_HaltMusic();
+    }
+}
+
 void SoundHandler::playSFX(Mix_Chunk* sfxChunk) {
     if (this->timeElapsed < 150) {      // Don't play too often!
         return;
