@@ -35,8 +35,8 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         clip.x = (timecount / 250) * 32 + startpos;
         clip.y = 0;
     } else {
-        clip.x = 0;
-        clip.y = (timecount / 500) * 32;
+        clip.x = (timecount / 500) * 32;
+        clip.y = 32;
     }
     clip.w = (this->surface->w) / 8;
     clip.h = (this->surface->h) / 2;
