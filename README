@@ -24,7 +24,8 @@ StartScreen
 - Switches to the menu screen in 10 secs
 
 MenuScreen
-- Has the options for play, adjust brightness, adjust volume, highscore, and quit
+- Has the options for play, adjust brightness, adjust volume, highscore, and
+    quit
 - The texts fade in from black and is centered horizontally
 - Use SPACE to select options (currently SPACE is disabled for adjust
     brightness and adjust volume)
@@ -44,10 +45,10 @@ Press ESC at any time to quit the game. You can also select QUIT from the main
 ANIMATION
 The hero and the enemy each have an AnimationComponent that will update
 their sprites. If the character is moving at a velocity of more than 0.01,
-we cycle through a four frame walking animation in the direction they are facing.
-These frames are stored in the top row of the spritesheet. If the character is not
-moving, we cycle through a two frame idle animation which is in the second row
-of the spritesheet.
+we cycle through a four frame walking animation in the direction they are
+facing. These frames are stored in the top row of the spritesheet. If the
+character is not moving, we cycle through a two frame idle animation which is
+in the second row of the spritesheet.
 
 
 CLASS STRUCTURE
@@ -105,12 +106,7 @@ rule of three
 separate commandLists -> structure to do this?
 separate componentLists
 ability to return multiple commands at once?
-make sure abstract base classes are right for components
-make Component classes virtual
-Component has a passCommand() method?
 
-Remove Command's dependency on Entity
-onCollision takes in an entity, and is a called method.
 SoundHandler needs a map from filename to SFX, so sound commands can be
     deleted at will
 Deleter for entities, needs to wait a round for all commands to execute?

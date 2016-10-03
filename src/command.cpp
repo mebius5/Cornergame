@@ -15,18 +15,6 @@ PlaySoundCommand::~PlaySoundCommand() {
     }
 }
 
-ResetAiCommand::ResetAiCommand(Entity* entity) {
-    this->entity = entity;
-}
-
 SwitchStateCommand::SwitchStateCommand(StateEnum newState) :
     newState(newState) {
-}
-
-SelectMenuOptionCommand::SelectMenuOptionCommand(Entity* entity) {
-    this->entity = entity;
-}
-
-DeselectMenuOptionCommand::DeselectMenuOptionCommand(Entity* entity) {
-    this->entity = entity;
 }

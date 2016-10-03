@@ -5,8 +5,6 @@
 #include "entity.h"
 #include "component.h"
 
-class Entity;
-
 class ArtComponent : public Component {
 public:
     const static int MAXLAYERS = 1;
@@ -35,26 +33,28 @@ private:
     int timecount;
     SDL_Rect clip;
 public:
-    AnimationComponent(SDL_Texture* texture, int surfaceW, int surfaceH, int layer, Entity* entity);
+    AnimationComponent(SDL_Texture* texture, int surfaceW, int surfaceH,
+                       int layer, Entity* entity);
     ~AnimationComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
 
-class TextFadeInComponent : public ArtComponent{
+class TextFadeInComponent : public ArtComponent {
 private:
-    SDL_Surface * surface;
-    SDL_Renderer * renderer;
-    SDL_Texture * lastTexture;
+    SDL_Surface* surface;
+    SDL_Renderer* renderer;
+    SDL_Texture* lastTexture;
     double alpha;
-public:
-    TextFadeInComponent(SDL_Renderer * renderer, SDL_Surface * surface,
-                        int layer, int initialAlpha);
-    ~TextFadeInComponent();
-    SDL_Texture * getNextTexture(int dt);
-    SDL_Rect* getNextSrcRect(int dt);
     void selectMenuItem();
     void deselectMenuItem();
+public:
+    TextFadeInComponent(SDL_Renderer* renderer, SDL_Surface* surface,
+                        int layer, int initialAlpha);
+    ~TextFadeInComponent();
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+    void passCommand(Command* command);
 };
 
 #endif

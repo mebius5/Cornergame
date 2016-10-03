@@ -1,18 +1,19 @@
 # <GAME NAME> Makefile
 
 SRCFILES = \
-	aiComponent.cpp \
 	aiHandler.cpp \
 	animationComponent.cpp \
-	collisionComponent.cpp \
 	collisionHandler.cpp \
 	command.cpp \
 	component.cpp \
 	controlHandler.cpp \
 	drawingHandler.cpp \
+	enemyAiComponent.cpp \
+	enemyCollisionComponent.cpp \
 	entity.cpp \
 	entityBuilder.cpp \
 	gameManager.cpp \
+	heroCollisionComponent.cpp \
 	heroInputComponent.cpp \
     highscoreState.cpp \
 	inputHandler.cpp \

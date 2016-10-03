@@ -6,9 +6,6 @@
 #include "entity.h"
 #include "component.h"
 
-class Command;
-class Entity;
-
 class InputComponent : public Component {
 public:
     InputComponent(Entity* entity);

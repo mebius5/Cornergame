@@ -50,3 +50,10 @@ void TextFadeInComponent::selectMenuItem() {
 void TextFadeInComponent::deselectMenuItem() {
     SDL_SetSurfaceColorMod(this->surface, (Uint8) 255, (Uint8)255, (Uint8) 255);
 }
+
+void TextFadeInComponent::passCommand(Command* command) {
+    if (dynamic_cast<SelectMenuOptionCommand*>(command))
+        this->selectMenuItem();
+    else if (dynamic_cast<DeselectMenuOptionCommand*>(command))
+        this->deselectMenuItem();
+}

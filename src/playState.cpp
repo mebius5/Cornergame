@@ -55,8 +55,7 @@ StateEnum PlayState::run() {
         int dt = currentTime - lastTime;
         lastTime = currentTime;
 
-        this->aiHandler.handleAiCommands();
-        this->aiHandler.update(dt);
+        this->aiHandler.updateAi(dt);
         this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
         this->collisionHandler.handleCollisions();

@@ -15,9 +15,9 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
             std::cerr << "Failed to load chunk: " << Mix_GetError() << std::endl;
             return NULL;
         }
-        hero->collision = new CollisionComponent(new PlaySoundCommand(chunk), NULL);
+        hero->collision = new HeroCollisionComponent(new PlaySoundCommand(chunk));
     } else
-        hero->collision = new CollisionComponent(NULL, NULL);
+        hero->collision = new HeroCollisionComponent(NULL);
 
     hero->art = new AnimationComponent(
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1, hero);
@@ -30,11 +30,11 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
     SDL_Surface* image = this->loadImage("spritesheets/lax.png");
     Entity* enemy = new Entity(this->nextId++, x, y, (image->w)/4, (image->h));
 
-    enemy->collision = new CollisionComponent(NULL, new ResetAiCommand(enemy));
+    enemy->collision = new EnemyCollisionComponent(enemy, new ResetAiCommand());
     enemy->art = new AnimationComponent(
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1, enemy);
     SDL_FreeSurface(image);
-    enemy->ai = new AiComponent(enemy);
+    enemy->ai = new EnemyAiComponent(enemy);
     return enemy;
 }
 
@@ -74,8 +74,8 @@ Entity * EntityBuilder::createHorizontallyCenteredFadeInText(const char *fontNam
     if (nextState)
         nextStateCmd = new SwitchStateCommand(nextState);
     fadeInText->input = new MenuOptionInputComponent(fadeInText, index, numOptions,
-                                                     new SelectMenuOptionCommand(fadeInText),
-                                                     new DeselectMenuOptionCommand(fadeInText),
+                                                     new SelectMenuOptionCommand(),
+                                                     new DeselectMenuOptionCommand(),
                                                      nextStateCmd);
     return fadeInText;
 }

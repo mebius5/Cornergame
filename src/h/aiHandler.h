@@ -12,8 +12,7 @@ private:
 
 public:
     AiHandler(std::map<int, Entity*>& entityMap, std::list<Command*>& cmdList);
-    void update(int dt);
-    void handleAiCommands();
+    void updateAi(int dt);
 };
 
 #endif

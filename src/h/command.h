@@ -3,9 +3,6 @@
 
 #include <SDL_mixer.h>
 #include "enums.h"
-#include "entity.h"
-
-class Entity;           // forward declared for circular dependency
 
 class Command {
 public:
@@ -13,9 +10,8 @@ public:
     virtual ~Command();
 };
 
-class SoundCommand : public Command {
-
-};
+/* SOUND COMMANDS */
+class SoundCommand : public Command { };
 
 class PlaySoundCommand : public SoundCommand {
 public:
@@ -24,34 +20,17 @@ public:
     ~PlaySoundCommand();
 };
 
-class InputCommand : public Command {
-public:
-    Entity* entity;
-};
+/* INPUT COMMANDS */
+class InputCommand : public Command { };
+class ResetAiCommand : public InputCommand { };
 
-class ResetAiCommand : public InputCommand {
-public:
-    ResetAiCommand(Entity* entity);
-};
+/* ART COMMANDS */
+class ArtCommand : public Command { };
+class SelectMenuOptionCommand : public ArtCommand { };
+class DeselectMenuOptionCommand : public ArtCommand { };
 
-class ArtCommand : public Command {
-public:
-    Entity* entity;
-};
-
-class SelectMenuOptionCommand : public ArtCommand {
-public:
-    SelectMenuOptionCommand(Entity* entity);
-};
-
-class DeselectMenuOptionCommand : public ArtCommand {
-public:
-    DeselectMenuOptionCommand(Entity* entity);
-};
-
-class ControlCommand : public Command {
-
-};
+/* CONTROL COMMANDS */
+class ControlCommand : public Command { };
 
 class SwitchStateCommand : public ControlCommand {
 public:

@@ -14,25 +14,24 @@ void InputHandler::handleEvents() {
     Command* cmd = NULL;
 
     while (SDL_PollEvent(&event)) {
-        if (event.type == SDL_QUIT || (event.type == SDL_KEYUP
-                    && event.key.keysym.sym == SDLK_ESCAPE)) {
+        if (event.type == SDL_QUIT)
             this->commandList.push_back(&this->quitCommand);
+        else if (event.type != SDL_KEYUP && event.type != SDL_KEYDOWN)
             return;
-        }
-
-        if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_q) {
+        else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
+            this->commandList.push_back(&this->quitCommand);
+        else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_q)
             this->commandList.push_back(&this->switchToMenu);
-            return;
-        }
-
-        for (it = entityMap.begin(); it != entityMap.end(); ++it) {
-            if (it->second->input) {
-                if (event.type == SDL_KEYUP)
-                    cmd = it->second->input->keyUp(event.key.keysym.sym);
-                else if (event.type == SDL_KEYDOWN)
-                    cmd = it->second->input->keyDown(event.key.keysym.sym);
-                if (cmd)
-                    this->commandList.push_back(cmd);
+        else {
+            for (it = entityMap.begin(); it != entityMap.end(); ++it) {
+                if (it->second->input) {
+                    if (event.type == SDL_KEYUP)
+                        cmd = it->second->input->keyUp(event.key.keysym.sym);
+                    else   // if type == SDL_KEYDOWN
+                        cmd = it->second->input->keyDown(event.key.keysym.sym);
+                    if (cmd)
+                        this->commandList.push_back(cmd);
+                }
             }
         }
     }

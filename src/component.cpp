@@ -13,9 +13,17 @@ void Component::passCommand(Command* /*command*/) {
 
 }
 
+AiComponent::AiComponent(Entity* entity) :
+    Component(entity) {
+}
+
 ArtComponent::ArtComponent(Entity* entity, int layer) :
     Component(entity),
     layer(layer) {
+}
+
+CollisionComponent::CollisionComponent(Entity* entity) :
+    Component(entity) {
 }
 
 InputComponent::InputComponent(Entity* entity) :
@@ -29,5 +37,3 @@ PhysicsComponent::PhysicsComponent() :
 StatsComponent::StatsComponent() :
     Component(NULL) {
 }
-
-//TODO: move other 2 components here after creating abstract base classes!

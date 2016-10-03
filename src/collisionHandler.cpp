@@ -12,18 +12,19 @@ CollisionHandler::CollisionHandler(std::map<int, Entity*>& entityMap,
 void CollisionHandler::handleCollisions(){
     std::map<int, Entity*>::const_iterator it;
     std::map<int, Entity*>::const_iterator it2;
+    Command* collisionCmd = NULL;
     for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it) {
         Entity* e1 = it->second;
         if (e1->collision) {
-            Command* collisionCmd1 = e1->collision->onEntityCollision;
             for (it2 = std::next(it, 1); it2 != entityMap.end(); ++it2) {
                 Entity* e2 = it2->second;
                 if (e1 != e2 && e2->collision && detectOverlap(e1, e2)) {
-                    Command* collisionCmd2 = e2->collision->onEntityCollision;
-                    if (collisionCmd1)
-                        this->commandList.push_back(collisionCmd1);
-                    if (collisionCmd2)
-                        this->commandList.push_back(collisionCmd2);
+                    collisionCmd = e1->collision->onEntityCollision(e2);
+                    if (collisionCmd)
+                        this->commandList.push_back(collisionCmd);
+                    collisionCmd = e2->collision->onEntityCollision(e1);
+                    if (collisionCmd)
+                        this->commandList.push_back(collisionCmd);
                 }
             }
         }
@@ -32,12 +33,13 @@ void CollisionHandler::handleCollisions(){
     }
 }
 
-void CollisionHandler::detectBorderCollision(Entity *entity){
+void CollisionHandler::detectBorderCollision(Entity *entity) {
+    Command* collisionCmd = NULL;
     if (entity->collision) {
-        Command* collisionCmd = entity->collision->onBorderCollision;
         if (entity->x < 0) {
             entity->x = 0;
             entity->xVelocity = 0.0f;
+            collisionCmd = entity->collision->onBorderCollision();
             if (collisionCmd)
                 this->commandList.push_back(collisionCmd);
         }
@@ -45,6 +47,7 @@ void CollisionHandler::detectBorderCollision(Entity *entity){
         if (entity->x + entity->width > this->width) {
             entity->x = this->width - entity->width;
             entity->xVelocity = 0.0f;
+            collisionCmd = entity->collision->onBorderCollision();
             if (collisionCmd)
                 this->commandList.push_back(collisionCmd);
         }
@@ -52,6 +55,7 @@ void CollisionHandler::detectBorderCollision(Entity *entity){
         if (entity->y < 0) {
             entity->y = 0;
             entity->yVelocity = 0.0f;
+            collisionCmd = entity->collision->onBorderCollision();
             if (collisionCmd)
                 this->commandList.push_back(collisionCmd);
         }
@@ -59,6 +63,7 @@ void CollisionHandler::detectBorderCollision(Entity *entity){
         if (entity->y + entity->height > this->height) {
             entity->y = this->height - entity->width;
             entity->yVelocity = 0.0f;
+            collisionCmd = entity->collision->onBorderCollision();
             if (collisionCmd)
                 this->commandList.push_back(collisionCmd);
         }

@@ -12,11 +12,8 @@ MenuOptionInputComponent::MenuOptionInputComponent(Entity *entity, int index,
     deselectCommand(deselectCommand),
     nextStateCommand(nextStateCmd) {
 
-    if (index == currIndex) {
-        TextFadeInComponent* artComp =
-            dynamic_cast<TextFadeInComponent*>(this->entity->art);
-        artComp->selectMenuItem();
-    }
+    if (index == currIndex)
+        this->entity->art->passCommand(this->selectCommand);
 }
 
 MenuOptionInputComponent::~MenuOptionInputComponent() {
@@ -46,7 +43,7 @@ Command* MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
             this->currIndex = 0;
         break;
     case SDLK_SPACE:
-        if (this->selected && this->nextStateCommand)
+        if (this->nextStateCommand && this->selected)
             return this->nextStateCommand;
         else
             return NULL;
@@ -55,14 +52,12 @@ Command* MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
     }
 
     // Check if we need to select ourself or deselect ourself
-    TextFadeInComponent* artComp =
-            dynamic_cast<TextFadeInComponent*>(this->entity->art);
     if (this->selected) {
         this->selected = false;
-        artComp->deselectMenuItem();
+        this->entity->art->passCommand(this->deselectCommand);
     } else if (this->currIndex == this->index) {
         this->selected = true;
-        artComp->selectMenuItem();
+        this->entity->art->passCommand(this->selectCommand);
     }
     return NULL;
 }

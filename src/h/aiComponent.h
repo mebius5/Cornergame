@@ -4,17 +4,23 @@
 #include "entity.h"
 #include "component.h"
 
-class Entity;
-
 class AiComponent : public Component {
+protected:
+    virtual void resetAi() = 0;
+public:
+    AiComponent(Entity* entity);
+    virtual void updateLocation(int dt) = 0;
+};
+
+class EnemyAiComponent : public AiComponent {
 private:
     int timeElapsed;      // time passed since a behavior was generated
     float speed;
-
-public:
-    AiComponent(Entity* entity);
-    void updateLocation(int dt);
     void resetAi();
+public:
+    EnemyAiComponent(Entity* entity);
+    void updateLocation(int dt);
+    void passCommand(Command* command);
 };
 
 #endif

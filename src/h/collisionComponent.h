@@ -3,17 +3,36 @@
 
 #include "entity.h"
 #include "component.h"
-#include "command.h"
-
-class Command;          // forward declared for circular dependency
 
 class CollisionComponent : public Component {
 public:
-    Command* onEntityCollision;
-    Command* onBorderCollision;
+    CollisionComponent(Entity* entity);
+    virtual ~CollisionComponent() { };
 
-    CollisionComponent(Command* onEntityCollision, Command* onBorderCollision);
-    ~CollisionComponent();
+    virtual Command* onEntityCollision(Entity* other) = 0;
+    virtual Command* onBorderCollision() = 0;
+};
+
+class HeroCollisionComponent : public CollisionComponent {
+private:
+    Command* entityCollisionCommand;
+public:
+    HeroCollisionComponent(Command* entityCollCmd);
+    ~HeroCollisionComponent();
+
+    Command* onEntityCollision(Entity* other);
+    Command* onBorderCollision();
+};
+
+class EnemyCollisionComponent : public CollisionComponent {
+private:
+    Command* borderCollisionCommand;
+public:
+    EnemyCollisionComponent(Entity* entity, Command* borderCollCmd);
+    ~EnemyCollisionComponent();
+
+    Command* onEntityCollision(Entity* other);
+    Command* onBorderCollision();
 };
 
 #endif

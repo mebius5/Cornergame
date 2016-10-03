@@ -1,13 +1,13 @@
 #include "aiComponent.h"
 
-AiComponent::AiComponent(Entity* entity) :
-    Component(entity),
+EnemyAiComponent::EnemyAiComponent(Entity* entity) :
+    AiComponent(entity),
     timeElapsed(1500),
     speed(.1f) {
 }
 
 // picks a behavior at random, and keeps it until timer resets
-void AiComponent::updateLocation(int dt) {
+void EnemyAiComponent::updateLocation(int dt) {
     this->timeElapsed += dt;
     if (this->timeElapsed >= 1500) {
         this->entity->xVelocity = (rand() % 3 - 1) * speed; // pick 1, 0 or -1
@@ -20,6 +20,11 @@ void AiComponent::updateLocation(int dt) {
 }
 
 // force the entity to pick a new behavior
-void AiComponent::resetAi() {
+void EnemyAiComponent::resetAi() {
     this->timeElapsed = 1500;
+}
+
+void EnemyAiComponent::passCommand(Command* command) {
+    if (dynamic_cast<ResetAiCommand*>(command))
+        this->resetAi();
 }
