@@ -3,13 +3,15 @@
 
 #include <SDL_render.h>
 #include "entity.h"
+#include "component.h"
 
 class Entity;
 
-class ArtComponent {
+class ArtComponent : public Component {
 public:
     const static int MAXLAYERS = 1;
     int layer;
+    ArtComponent(Entity* entity, int layer);
     virtual ~ArtComponent() { };
     virtual SDL_Texture* getNextTexture(int dt) = 0;
     virtual SDL_Rect* getNextSrcRect(int dt) = 0;
@@ -28,7 +30,6 @@ public:
 class AnimationComponent : public ArtComponent {
 private:
     SDL_Texture* texture;
-    Entity * entity;
     int surfaceW;
     int surfaceH;
     int timecount;

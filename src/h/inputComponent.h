@@ -4,14 +4,12 @@
 #include <SDL_keycode.h>
 #include <map>
 #include "entity.h"
+#include "component.h"
 
 class Command;
 class Entity;
 
-class InputComponent {
-protected:
-    Entity * entity;
-
+class InputComponent : public Component {
 public:
     InputComponent(Entity* entity);
     virtual ~InputComponent(){};

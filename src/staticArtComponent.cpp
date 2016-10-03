@@ -1,8 +1,8 @@
 #include "artComponent.h"
 
 StaticArtComponent::StaticArtComponent(SDL_Texture* texture, int layer) :
+    ArtComponent(NULL, layer),
     texture(texture) {
-    this->layer = layer;
 }
 
 StaticArtComponent::~StaticArtComponent() {

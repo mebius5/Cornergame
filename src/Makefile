@@ -7,6 +7,7 @@ SRCFILES = \
 	collisionComponent.cpp \
 	collisionHandler.cpp \
 	command.cpp \
+	component.cpp \
 	controlHandler.cpp \
 	drawingHandler.cpp \
 	entity.cpp \
@@ -14,17 +15,14 @@ SRCFILES = \
 	gameManager.cpp \
 	heroInputComponent.cpp \
     highscoreState.cpp \
-	inputComponent.cpp \
 	inputHandler.cpp \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
-	physicsComponent.cpp \
 	playState.cpp \
 	soundHandler.cpp \
 	startState.cpp \
 	state.cpp \
 	staticArtComponent.cpp \
-	statsComponent.cpp \
 	textFadeInComponent.cpp
 
 CXX = g++

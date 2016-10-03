@@ -1,7 +1,9 @@
 #ifndef CORNERGAME_PHYSICS_COMPONENT_H
 #define CORNERGAME_PHYSICS_COMPONENT_H
 
-class PhysicsComponent {
+#include "component.h"
+
+class PhysicsComponent : public Component{
 public:
     PhysicsComponent();
 };

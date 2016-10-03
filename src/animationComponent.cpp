@@ -4,13 +4,12 @@
 
 AnimationComponent::AnimationComponent(SDL_Texture* texture, int surfaceW,
                                        int surfaceH, int layer, Entity* entity):
+    ArtComponent(entity, layer),
     texture(texture),
-    entity(entity){
-    this->surfaceW = surfaceW;
-    this->surfaceH = surfaceH;
-    this->layer = layer;
-    timecount = 0;
-    clip = {0,0,0,0};
+    surfaceW(surfaceW),
+    surfaceH(surfaceH),
+    timecount(0),
+    clip({0,0,0,0}) {
 }
 
 AnimationComponent::~AnimationComponent() {

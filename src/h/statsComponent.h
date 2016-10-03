@@ -1,7 +1,9 @@
 #ifndef CORNERGAME_STATS_COMPONENT_H
 #define CORNERGAME_STATS_COMPONENT_H
 
-class StatsComponent {
+#include "component.h"
+
+class StatsComponent : public Component {
 public:
     StatsComponent();
 };

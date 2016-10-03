@@ -104,6 +104,13 @@ leaks?
 rule of three
 separate commandLists -> structure to do this?
 separate componentLists
+ability to return multiple commands at once?
 make sure abstract base classes are right for components
 make Component classes virtual
 Component has a passCommand() method?
+
+Remove Command's dependency on Entity
+onCollision takes in an entity, and is a called method.
+SoundHandler needs a map from filename to SFX, so sound commands can be
+    deleted at will
+Deleter for entities, needs to wait a round for all commands to execute?

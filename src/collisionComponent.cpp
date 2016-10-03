@@ -1,6 +1,7 @@
 #include "collisionComponent.h"
 
 CollisionComponent::CollisionComponent(Command* onEntity, Command* onBorder) :
+    Component(NULL),
     onEntityCollision(onEntity),
     onBorderCollision(onBorder) {
 }

@@ -1,7 +1,7 @@
 #include "aiComponent.h"
 
 AiComponent::AiComponent(Entity* entity) :
-    entity(entity),
+    Component(entity),
     timeElapsed(1500),
     speed(.1f) {
 }
