@@ -9,13 +9,16 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
     SDL_Surface* image = this->loadImage("spritesheets/hero.png");
     Entity* hero = new Entity(this->nextId++, x, y, (image->w)/4, (image->h));
 
-    Mix_Chunk* chunk = Mix_LoadWAV(collisionSfxFile);
-    if (!chunk) {
-        std::cerr << "Unable to load chunk: " << Mix_GetError() << std::endl;
-        return NULL;
-    }
+    if (collisionSfxFile) {
+        Mix_Chunk* chunk = Mix_LoadWAV(collisionSfxFile);
+        if (!chunk) {
+            std::cerr << "Failed to load chunk: " << Mix_GetError() << std::endl;
+            return NULL;
+        }
+        hero->collision = new CollisionComponent(new PlaySoundCommand(chunk), NULL);
+    } else
+        hero->collision = new CollisionComponent(NULL, NULL);
 
-    hero->collision = new CollisionComponent(new PlaySoundCommand(chunk), NULL);
     hero->art = new AnimationComponent(
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1, hero);
     SDL_FreeSurface(image);
@@ -53,7 +56,7 @@ Entity * EntityBuilder::createCenteredFadeInText(const char *fontName,
     int y = (windowH/2 - textSurface->h/2);
     Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(this->renderer, textSurface, 1, initialAlpha);
-    fadeInText->input = new StartScreenInputComponent(fadeInText);
+    //fadeInText->input = new StartScreenInputComponent(fadeInText);
     return fadeInText;
 }
 
@@ -62,7 +65,7 @@ Entity * EntityBuilder::createHorizontallyCenteredFadeInText(const char *fontNam
                                                  int fontSize,
                                                  int r, int g, int b, int initialAlpha,
                                                  int windowW, int yPos,
-                                                 int index, int numOptions, int nextState) {
+                                                 int index, int numOptions, StateEnum nextState) {
     SDL_Surface * textSurface = this->loadFont(fontName, text, fontSize, r, g, b, initialAlpha);
     int x = (windowW/2 - textSurface->w/2);
     Entity * fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h);

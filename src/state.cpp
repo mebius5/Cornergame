@@ -15,7 +15,7 @@ int State::center(int large, int small) {
 
 SDL_Rect State::centeredRect(int largeW, int largeH, int smallW, int smallH) {
     SDL_Rect rect = {
-            center(largeW, smallW), center(largeH, smallH),
+            State::center(largeW, smallW), State::center(largeH, smallH),
             smallW, smallH
     };
     return rect;

@@ -118,8 +118,8 @@ void GameManager::run() {
 
     PlayState playState(this->width, this->height, commandList, entityMap,
                         this->renderer, entityBuilder, drawingHandler,
-                        inputHandler, soundHandler, aiHandler,
-                        collisionHandler, controlHandler);
+                        inputHandler, soundHandler, controlHandler, aiHandler,
+                        collisionHandler);
 
     HighscoreState highscoreState(this->width, this->height, commandList,
                                   entityMap, this->renderer, entityBuilder,
@@ -128,7 +128,7 @@ void GameManager::run() {
 
 
     State* currentState = &startState;
-    State::StateEnum nextState;
+    StateEnum nextState;
 
     do {
         currentState->begin();
@@ -136,19 +136,19 @@ void GameManager::run() {
         currentState->cleanup();
 
         switch (nextState) {
-        case State::StateEnum::PLAY:
+        case STATE_PLAY:
             currentState = &playState;
             break;
-        case State::StateEnum::HIGHSCORE:
+        case STATE_HIGHSCORE:
             currentState = &highscoreState;
             break;
-        case State::StateEnum::MENU:
+        case STATE_MENU:
             currentState = &menuState;
             break;
         default:
             break;
         }
-    } while (nextState != State::StateEnum::QUIT);
+    } while (nextState != STATE_QUIT);
 
     std::map<int, Entity*>::const_iterator it;
     for (it = entityMap.begin(); it != entityMap.end(); ++it) {

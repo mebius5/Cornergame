@@ -19,7 +19,7 @@ ResetAiCommand::ResetAiCommand(Entity* entity) {
     this->entity = entity;
 }
 
-SwitchStateCommand::SwitchStateCommand(int newState) :
+SwitchStateCommand::SwitchStateCommand(StateEnum newState) :
     newState(newState) {
 }
 

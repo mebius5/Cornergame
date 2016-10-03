@@ -12,10 +12,10 @@ StaticArtComponent::~StaticArtComponent() {
     }
 }
 
-SDL_Texture* StaticArtComponent::getNextTexture(int dt) {
+SDL_Texture* StaticArtComponent::getNextTexture(int /*dt*/) {
     return this->texture;
 }
 
-SDL_Rect* StaticArtComponent::getNextSrcRect(int dt) {
+SDL_Rect* StaticArtComponent::getNextSrcRect(int /*dt*/) {
     return NULL;
 }

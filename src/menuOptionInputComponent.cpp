@@ -1,22 +1,22 @@
 #include "inputComponent.h"
 
 MenuOptionInputComponent::MenuOptionInputComponent(Entity *entity, int index,
-                                                   int numOptions,
-                                                   Command* selectCommand,
-                                                   Command* deselectCommand,
-                                                   Command* nextStateCmd) :
-        InputComponent(entity),
-        index(index),
-        numOptions(numOptions),
-        currIndex(0),
-        selected(index == 0),
-        selectCommand(selectCommand),
-        deselectCommand(deselectCommand),
-        nextStateCommand(nextStateCmd) {
-            if (index == currIndex) {
-                TextFadeInComponent* artComp = dynamic_cast<TextFadeInComponent*>(this->entity->art);
-                artComp->selectMenuItem();
-            }
+                            int numOptions, Command* selectCommand,
+                            Command* deselectCommand, Command* nextStateCmd) :
+    InputComponent(entity),
+    index(index),
+    numOptions(numOptions),
+    currIndex(0),
+    selected(index == 0),
+    selectCommand(selectCommand),
+    deselectCommand(deselectCommand),
+    nextStateCommand(nextStateCmd) {
+
+    if (index == currIndex) {
+        TextFadeInComponent* artComp =
+            dynamic_cast<TextFadeInComponent*>(this->entity->art);
+        artComp->selectMenuItem();
+    }
 }
 
 MenuOptionInputComponent::~MenuOptionInputComponent() {
@@ -28,7 +28,7 @@ MenuOptionInputComponent::~MenuOptionInputComponent() {
         delete this->nextStateCommand;
 }
 
-Command* MenuOptionInputComponent::keyUp(SDL_Keycode keycode) {
+Command* MenuOptionInputComponent::keyUp(SDL_Keycode /*keycode*/) {
     return NULL;
 }
 
@@ -55,7 +55,8 @@ Command* MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
     }
 
     // Check if we need to select ourself or deselect ourself
-    TextFadeInComponent* artComp = dynamic_cast<TextFadeInComponent*>(this->entity->art);
+    TextFadeInComponent* artComp =
+            dynamic_cast<TextFadeInComponent*>(this->entity->art);
     if (this->selected) {
         this->selected = false;
         artComp->deselectMenuItem();
@@ -66,6 +67,6 @@ Command* MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
     return NULL;
 }
 
-void MenuOptionInputComponent::updateLocation(int dt) {
+void MenuOptionInputComponent::updateLocation(int /*dt*/) {
 
 }

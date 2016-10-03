@@ -2,10 +2,10 @@
 
 InputHandler::InputHandler(std::map<int, Entity*>& entityMap,
                            std::list<Command*>& commandList) :
-        entityMap(entityMap),
-        commandList(commandList),
-        quitCommand(1), // return QUIT
-        switchToMenu(4) {    // return MENU
+    entityMap(entityMap),
+    commandList(commandList),
+    quitCommand(STATE_QUIT),
+    switchToMenu(STATE_MENU) {
 }
 
 void InputHandler::handleEvents() {

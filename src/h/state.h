@@ -9,6 +9,7 @@
 #include "collisionHandler.h"
 #include "soundHandler.h"
 #include "controlHandler.h"
+#include "enums.h"
 
 class State {
 protected:
@@ -18,15 +19,13 @@ protected:
     std::map<int, Entity*>& entityMap;
     SDL_Renderer* renderer;
 public:
-    enum StateEnum {NONE, QUIT, START, PLAY, MENU, HIGHSCORE};
-
     State(std::list<Command*>& commandList, std::map<int, Entity*>& entityMap,
           SDL_Renderer* renderer, int windowW, int windowH);
     virtual ~State() { };
-    int center(int large, int small);
-    SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
+    static int center(int large, int small);
+    static SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
     virtual void begin() = 0;
-    virtual State::StateEnum run() = 0;
+    virtual StateEnum run() = 0;
     virtual void cleanup() = 0;
 };
 
@@ -45,7 +44,7 @@ public:
                ControlHandler& controlHandler);
     ~StartState();
     void begin();
-    State::StateEnum run();
+    StateEnum run();
     void cleanup();
 };
 
@@ -65,7 +64,7 @@ public:
                ControlHandler& controlHandler);
     ~MenuState();
     void begin();
-    State::StateEnum run();
+    StateEnum run();
     void cleanup();
 };
 
@@ -75,19 +74,19 @@ private:
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
+    ControlHandler& controlHandler;
     AiHandler& aiHandler;
     CollisionHandler& collisionHandler;
-    ControlHandler& controlHandler;
 public:
     PlayState(int windowW, int windowH, std::list<Command*>& cmdList,
               std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
               EntityBuilder& entityBuilder, DrawingHandler& drawingHandler,
               InputHandler& inputHandler, SoundHandler& soundHandler,
-              AiHandler& aiHandler, CollisionHandler& collisionHandler,
-              ControlHandler& controlHandler);
+              ControlHandler& controlHandler, AiHandler& aiHandler,
+              CollisionHandler& collisionHandler);
     ~PlayState();
     void begin();
-    State::StateEnum run();
+    StateEnum run();
     void cleanup();
 };
 
@@ -107,7 +106,7 @@ public:
                    ControlHandler& controlHandler);
     ~HighscoreState();
     void begin();
-    State::StateEnum run();
+    StateEnum run();
     void cleanup();
 };
 

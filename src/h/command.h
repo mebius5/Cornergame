@@ -2,6 +2,7 @@
 #define CORNERGAME_COMMAND_H
 
 #include <SDL_mixer.h>
+#include "enums.h"
 #include "entity.h"
 
 class Entity;           // forward declared for circular dependency
@@ -54,8 +55,8 @@ class ControlCommand : public Command {
 
 class SwitchStateCommand : public ControlCommand {
 public:
-    int newState;
-    SwitchStateCommand(int newState);
+    StateEnum newState;
+    SwitchStateCommand(StateEnum newState);
 };
 
 #endif

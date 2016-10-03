@@ -5,6 +5,7 @@
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <iostream>
+#include "enums.h"
 #include "entity.h"
 
 class EntityBuilder {
@@ -31,7 +32,8 @@ public:
                                       int fontSize,
                                       int r, int g, int b, int initialAlpha,
                                       int windowW, int yPos,
-                                      int index, int numOptions, int nextState);
+                                      int index, int numOptions,
+                                      StateEnum nextState);
 };
 
 #endif

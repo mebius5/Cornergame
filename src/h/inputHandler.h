@@ -19,14 +19,4 @@ public:
     void update(int dt);
 };
 
-class MenuInputHandler : public InputHandler {
-private:
-    SwitchStateCommand switchToPlay;
-    SwitchStateCommand switchToHighscore;
-    int selected;
-public:
-    MenuInputHandler(std::map<int, Entity*>& ent, std::list<Command*>& cmdList);
-    void handleEvents();
-};
-
 #endif

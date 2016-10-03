@@ -17,16 +17,15 @@ HighscoreState::~HighscoreState() {
 }
 
 void HighscoreState::begin() {
-    // play background music
     this->soundHandler.playBackgroundMusic("music/ambient_starfield_highscore.xm");
 
-    Entity * mainText = entityBuilder.createCenteredFadeInText("resources/CaesarDressing-Regular.ttf", "High Scores:",
-                                                               100,
-                                                               255, 255, 255, 0, this->windowW, this->windowH);
-    entityMap.operator[](mainText->getId())= mainText;
+    Entity* mainText = entityBuilder.createCenteredFadeInText(
+                       "resources/CaesarDressing-Regular.ttf", "High Scores:",
+                       100, 255, 255, 255, 0, this->windowW, this->windowH);
+    this->entityMap[mainText->getId()] = mainText;
 }
 
-State::StateEnum HighscoreState::run() {
+StateEnum HighscoreState::run() {
     bool running = true;
     float lastTime = SDL_GetTicks();
     int timeElapsed = 0;
@@ -42,16 +41,16 @@ State::StateEnum HighscoreState::run() {
         this->soundHandler.handleSFX(dt);
         this->drawingHandler.draw(dt);
 
-        int nextState = this->controlHandler.handleStateCommands();
+        StateEnum nextState = this->controlHandler.handleStateCommands();
         if (nextState)
-            return (State::StateEnum)nextState;
+            return nextState;
 
         if(timeElapsed>5000){ //Return to MENU screen after 5 secs
             break;
         }
     }
 
-    return State::StateEnum::MENU;
+    return STATE_MENU;
 }
 
 void HighscoreState::cleanup() {

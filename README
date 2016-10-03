@@ -101,12 +101,9 @@ QUIRKS
 
 TODOS
 leaks?
-add const to stuff, add static to stuff
 rule of three
 separate commandLists -> structure to do this?
 separate componentLists
-controlHandler
 make sure abstract base classes are right for components
 make Component classes virtual
-move Enum to consts?...
 Component has a passCommand() method?

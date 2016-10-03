@@ -16,14 +16,12 @@ SRCFILES = \
     highscoreState.cpp \
 	inputComponent.cpp \
 	inputHandler.cpp \
-	menuInputHandler.cpp \
-	menuState.cpp \
 	menuOptionInputComponent.cpp \
-	playState.cpp \
+	menuState.cpp \
 	physicsComponent.cpp \
+	playState.cpp \
 	soundHandler.cpp \
 	startState.cpp \
-	startScreenInputComponent.cpp \
 	state.cpp \
 	staticArtComponent.cpp \
 	statsComponent.cpp \

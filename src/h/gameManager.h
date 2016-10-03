@@ -10,6 +10,7 @@
 #include <iostream>
 #include "command.h"
 #include "entity.h"
+#include "enums.h"
 #include "drawingHandler.h"
 #include "entityBuilder.h"
 #include "inputHandler.h"

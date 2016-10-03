@@ -17,23 +17,20 @@ StartState::~StartState() {
 }
 
 void StartState::begin() {
-    // play background music
     this->soundHandler.playBackgroundMusic("music/mega_destruction_titlescreen.xm");
 
     Entity * mainText = entityBuilder.createCenteredFadeInText(
                         "resources/CaesarDressing-Regular.ttf", "CornerGame",
                         100,
                         255, 255, 255, 0, this->windowW, this->windowH);
-    entityMap.operator[](mainText->getId())= mainText;
+    this->entityMap[mainText->getId()] = mainText;
 
 
-    Entity* hero = this->entityBuilder.createHero(500, 500,
-                                                  "resources/collision_alert.wav");
-    this->entityMap.operator[](hero->getId()) = hero;
-
+    Entity* hero = this->entityBuilder.createHero(500, 500, NULL);
+    this->entityMap[hero->getId()] = hero;
 }
 
-State::StateEnum StartState::run() {
+StateEnum StartState::run() {
     bool running = true;
     float lastTime = SDL_GetTicks();
     int milliSecElapsed = 0;
@@ -46,17 +43,17 @@ State::StateEnum StartState::run() {
 
         this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
-        this->soundHandler.handleSFX(dt);;
+        this->soundHandler.handleSFX(dt);
         this->drawingHandler.draw(dt);
 
-        int nextState = this->controlHandler.handleStateCommands();
-        if (nextState != NONE && nextState != MENU)
-            return (State::StateEnum)nextState;
+        StateEnum nextState = this->controlHandler.handleStateCommands();
+        if (nextState != STATE_NONE)
+            return nextState;
 
         if (milliSecElapsed>=10000)    //Return menu after 10 sec
             break;
     }
-    return State::StateEnum::MENU;
+    return STATE_MENU;
 }
 
 void StartState::cleanup() {

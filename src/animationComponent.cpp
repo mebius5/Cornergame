@@ -2,7 +2,8 @@
 #include <iostream>
 #include <math.h>
 
-AnimationComponent::AnimationComponent(SDL_Texture* texture, int surfaceW, int surfaceH, int layer, Entity * entity) :
+AnimationComponent::AnimationComponent(SDL_Texture* texture, int surfaceW,
+                                       int surfaceH, int layer, Entity* entity):
     texture(texture),
     entity(entity){
     this->surfaceW = surfaceW;
@@ -20,7 +21,7 @@ AnimationComponent::~AnimationComponent() {
     this->entity = NULL;
 }
 
-SDL_Texture* AnimationComponent::getNextTexture(int dt) {
+SDL_Texture* AnimationComponent::getNextTexture(int /*dt*/) {
     return this->texture;
 }
 

@@ -4,52 +4,49 @@ PlayState::PlayState(int windowW, int windowH, std::list<Command*>& cmdList,
                      std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
                      EntityBuilder& entBuilder, DrawingHandler& drawingHandler,
                      InputHandler& inputHandler, SoundHandler& soundHandler,
-                     AiHandler& aiHandler, CollisionHandler& collisionHandler,
-                     ControlHandler& controlHandler) :
+                     ControlHandler& controlHandler, AiHandler& aiHandler,
+                     CollisionHandler& collisionHandler) :
     State(cmdList, entityMap, renderer, windowW, windowH),
     entityBuilder(entBuilder),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
+    controlHandler(controlHandler),
     aiHandler(aiHandler),
-    collisionHandler(collisionHandler),
-    controlHandler(controlHandler) {
+    collisionHandler(collisionHandler) {
 }
 
 PlayState::~PlayState() {
 }
 
 void PlayState::begin() {
-    //Play background music
     this->soundHandler.playBackgroundMusic("music/cabin_fever_playscreen.xm");
 
     // Create entities
-
     Entity * background = this->entityBuilder.createBackground("resources/jhu-logo.png",
                                                                this->windowW, this->windowH);
-    this->entityMap.operator[](background->getId()) = background;
+    this->entityMap[background->getId()] = background;
 
-    Entity* hero = this->entityBuilder.createHero(100, 100,
-                                            "resources/collision_alert.wav");
-    this->entityMap.operator[](hero->getId()) = hero;
+    Entity* hero = this->entityBuilder.createHero(100, 100, "resources/collision_alert.wav");
+    this->entityMap[hero->getId()] = hero;
 
-    Entity* enemy1 = this->entityBuilder.createEnemy(350,150);
-    this->entityMap.operator[](enemy1->getId()) = enemy1;
+    Entity* enemy1 = this->entityBuilder.createEnemy(350, 150);
+    this->entityMap[enemy1->getId()] = enemy1;
 
-    Entity* enemy2 = this->entityBuilder.createEnemy(500,150);
-    this->entityMap.operator[](enemy2->getId()) = enemy2;
+    Entity* enemy2 = this->entityBuilder.createEnemy(500, 150);
+    this->entityMap[enemy2->getId()] = enemy2;
 
-    Entity* enemy3 = this->entityBuilder.createEnemy(650,150);
-    this->entityMap.operator[](enemy3->getId()) = enemy3;
+    Entity* enemy3 = this->entityBuilder.createEnemy(650, 150);
+    this->entityMap[enemy3->getId()] = enemy3;
 
-    Entity* enemy4 = this->entityBuilder.createEnemy(400,300);
-    this->entityMap.operator[](enemy4->getId()) = enemy4;
+    Entity* enemy4 = this->entityBuilder.createEnemy(400, 300);
+    this->entityMap[enemy4->getId()] = enemy4;
 
-    Entity* enemy5 = this->entityBuilder.createEnemy(600,300);
-    this->entityMap.operator[](enemy5->getId()) = enemy5;
+    Entity* enemy5 = this->entityBuilder.createEnemy(600, 300);
+    this->entityMap[enemy5->getId()] = enemy5;
 }
 
-State::StateEnum PlayState::run() {
+StateEnum PlayState::run() {
     bool running = true;
     float lastTime = SDL_GetTicks();
 
@@ -66,12 +63,12 @@ State::StateEnum PlayState::run() {
         this->soundHandler.handleSFX(dt);
         this->drawingHandler.draw(dt);
 
-        int nextState = this->controlHandler.handleStateCommands();
+        StateEnum nextState = this->controlHandler.handleStateCommands();
         if (nextState)
-            return (State::StateEnum)nextState;
+            return nextState;
     }
 
-    return State::StateEnum::HIGHSCORE;
+    return STATE_HIGHSCORE;
 }
 
 void PlayState::cleanup() {

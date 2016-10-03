@@ -35,12 +35,11 @@ SDL_Texture * TextFadeInComponent::getNextTexture(int dt) {
     }
 
     this->lastTexture = SDL_CreateTextureFromSurface(this->renderer,this->surface);
-
     return this->lastTexture;
 }
 
 
-SDL_Rect* TextFadeInComponent::getNextSrcRect(int dt) {
+SDL_Rect* TextFadeInComponent::getNextSrcRect(int /*dt*/) {
     return NULL;
 }
 

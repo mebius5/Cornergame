@@ -13,11 +13,11 @@ protected:
     Entity * entity;
 
 public:
-    InputComponent(Entity * entity);
+    InputComponent(Entity* entity);
     virtual ~InputComponent(){};
-    virtual Command* keyDown(SDL_Keycode keycode)=0;
-    virtual Command* keyUp(SDL_Keycode keycode)=0;
-    virtual void updateLocation(int dt)=0;
+    virtual Command* keyDown(SDL_Keycode keycode) = 0;
+    virtual Command* keyUp(SDL_Keycode keycode) = 0;
+    virtual void updateLocation(int dt) = 0;
 };
 
 class HeroInputComponent: public InputComponent {
@@ -35,14 +35,14 @@ public:
     void updateLocation(int dt);
 };
 
-class StartScreenInputComponent : public InputComponent {
-public:
-    StartScreenInputComponent(Entity* entity);
-    ~StartScreenInputComponent();
-    Command* keyDown(SDL_Keycode keycode);
-    Command* keyUp(SDL_Keycode keycode);
-    void updateLocation(int dt);
-};
+// class StartScreenInputComponent : public InputComponent {
+// public:
+//     StartScreenInputComponent(Entity* entity);
+//     ~StartScreenInputComponent();
+//     Command* keyDown(SDL_Keycode keycode);
+//     Command* keyUp(SDL_Keycode keycode);
+//     void updateLocation(int dt);
+// };
 
 class MenuOptionInputComponent : public InputComponent {
 private:
@@ -54,7 +54,7 @@ private:
     Command* deselectCommand;   // command to fire on deselect
     Command* nextStateCommand;  // when space pressed, fire if selected
 public:
-    MenuOptionInputComponent(Entity *entity, int index, int numOptions,
+    MenuOptionInputComponent(Entity* entity, int index, int numOptions,
                              Command* selectCommand, Command* deselectCommand,
                              Command* nextStateCommand);
     ~MenuOptionInputComponent();
