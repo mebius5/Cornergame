@@ -8,8 +8,8 @@ AnimationComponent::AnimationComponent(SDL_Texture* texture, int surfaceW,
     texture(texture),
     surfaceW(surfaceW),
     surfaceH(surfaceH),
-    timecount(0),
-    clip({0,0,0,0}) {
+    timecount(0) {
+    this->clip = {0,0,0,0};
 }
 
 AnimationComponent::~AnimationComponent() {
