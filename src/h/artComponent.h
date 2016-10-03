@@ -28,12 +28,13 @@ public:
 class AnimationComponent : public ArtComponent {
 private:
     SDL_Texture* texture;
-    SDL_Surface* surface;
+    Entity * entity;
+    int surfaceW;
+    int surfaceH;
     int timecount;
     SDL_Rect clip;
-    Entity * entity;
 public:
-    AnimationComponent(SDL_Texture* texture, SDL_Surface* surface, int layer, Entity* entity);
+    AnimationComponent(SDL_Texture* texture, int surfaceW, int surfaceH, int layer, Entity* entity);
     ~AnimationComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);

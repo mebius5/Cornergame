@@ -9,8 +9,10 @@ PlaySoundCommand::PlaySoundCommand(Mix_Chunk* sfxChunk) :
 }
 
 PlaySoundCommand::~PlaySoundCommand() {
-    Mix_FreeChunk(this->sfxChunk);
-    this->sfxChunk = NULL;
+    if(this->sfxChunk){
+        Mix_FreeChunk(this->sfxChunk);
+        this->sfxChunk = NULL;
+    }
 }
 
 ResetAiCommand::ResetAiCommand(Entity* entity) {

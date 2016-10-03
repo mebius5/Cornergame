@@ -57,7 +57,9 @@ void SoundHandler::handleSFX(int dt) {
     std::list<Command *>::const_iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end();) {
         Command* c = *it;
+        //std::cerr<<"Here"<<std::endl;
         if (PlaySoundCommand* sCmd = dynamic_cast<PlaySoundCommand*>(c)) {
+            //std::cerr<<"Here"<<std::endl;
             playSFX(sCmd->sfxChunk);
             it = this->commandList.erase(it);
         } else {

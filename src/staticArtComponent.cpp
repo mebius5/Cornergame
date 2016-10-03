@@ -6,7 +6,10 @@ StaticArtComponent::StaticArtComponent(SDL_Texture* texture, int layer) :
 }
 
 StaticArtComponent::~StaticArtComponent() {
-    SDL_DestroyTexture(this->texture);
+    if(this->texture){
+        SDL_DestroyTexture(this->texture);
+        this->texture = NULL;
+    }
 }
 
 SDL_Texture* StaticArtComponent::getNextTexture(int dt) {

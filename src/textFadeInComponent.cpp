@@ -19,6 +19,7 @@ TextFadeInComponent::~TextFadeInComponent() {
         SDL_DestroyTexture(this->lastTexture);
         this->lastTexture=NULL;
     }
+    this->renderer = NULL;
 }
 
 /* Need to destroy texture after use */

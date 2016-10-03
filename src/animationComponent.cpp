@@ -2,17 +2,22 @@
 #include <iostream>
 #include <math.h>
 
-AnimationComponent::AnimationComponent(SDL_Texture* texture, SDL_Surface* surface, int layer, Entity * entity) :
+AnimationComponent::AnimationComponent(SDL_Texture* texture, int surfaceW, int surfaceH, int layer, Entity * entity) :
     texture(texture),
-    surface(surface) {
+    entity(entity){
+    this->surfaceW = surfaceW;
+    this->surfaceH = surfaceH;
     this->layer = layer;
     timecount = 0;
     clip = {0,0,0,0};
-    this->entity = entity;
 }
 
 AnimationComponent::~AnimationComponent() {
-    SDL_DestroyTexture(this->texture);
+    if(this->texture){
+        SDL_DestroyTexture(this->texture);
+        this->texture = NULL;
+    }
+    this->entity = NULL;
 }
 
 SDL_Texture* AnimationComponent::getNextTexture(int dt) {
@@ -38,7 +43,7 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         clip.x = (timecount / 500) * 32;
         clip.y = 32;
     }
-    clip.w = (this->surface->w) / 8;
-    clip.h = (this->surface->h) / 2;
+    clip.w = (this->surfaceW) / 8;
+    clip.h = (this->surfaceH) / 2;
     return &clip;
 }
