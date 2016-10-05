@@ -20,6 +20,7 @@ SRCFILES = \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
 	playState.cpp \
+    scoreComponent.cpp \
 	soundHandler.cpp \
 	startState.cpp \
 	state.cpp \

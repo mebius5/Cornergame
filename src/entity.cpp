@@ -11,7 +11,7 @@ Entity::Entity(int id, float x, float y, int w, int h) :
     xAccel(0.0f),
     yAccel(0.0f),
     collision(NULL),
-    stats(NULL),
+    score(NULL),
     physics(NULL),
     art(NULL),
     input(NULL),
@@ -21,8 +21,8 @@ Entity::Entity(int id, float x, float y, int w, int h) :
 Entity::~Entity() {
     if (this->collision)
         delete this->collision;
-    if (this->stats)
-        delete this->stats;
+    if (this->score)
+        delete this->score;
     if (this->physics)
         delete this->physics;
     if (this->art)

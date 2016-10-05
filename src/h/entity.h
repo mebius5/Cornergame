@@ -5,13 +5,14 @@
 #include "inputComponent.h"
 #include "collisionComponent.h"
 #include "physicsComponent.h"
-#include "statsComponent.h"
+#include "scoreComponent.h"
 #include "aiComponent.h"
 
 class CollisionComponent;       // forward declared for circular dependency
 class AiComponent;
 class InputComponent;
 class ArtComponent;
+class ScoreComponent;
 
 class Entity {
 private:
@@ -27,7 +28,7 @@ public:
     float yAccel;
 
     CollisionComponent* collision;
-    StatsComponent* stats;
+    ScoreComponent* score;
     PhysicsComponent* physics;
     ArtComponent* art;
     InputComponent* input;
