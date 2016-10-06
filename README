@@ -100,13 +100,18 @@ QUIRKS
     when you try to move again in the opposite direction?
 - idle state sometimes changes directions
 
+TL;DR
+- stuff!
+
 TODOS
 leaks?
 rule of three
-separate commandLists -> structure to do this?
+Create CommandBus -> give to Components
 separate componentLists
 ability to return multiple commands at once?
 
 SoundHandler needs a map from filename to SFX, so sound commands can be
     deleted at will
 Deleter for entities, needs to wait a round for all commands to execute?
+loadFont in entityBuilder?
+Remove commands between components.
