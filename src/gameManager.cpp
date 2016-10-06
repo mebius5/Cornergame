@@ -75,10 +75,6 @@ void GameManager::setup() {
     }
 }
 
-// Load the necessary assets
-void GameManager::load() {
-}
-
 // Cleanup the instance of SDL2
 void GameManager::cleanup() {
     SDL_DestroyRenderer(this->renderer);
@@ -94,9 +90,10 @@ void GameManager::cleanup() {
 
 // Run the actual program
 void GameManager::run() {
-    std::list<Command *> commandList;
+    // Initialization
+    std::list<Command*> commandList;
+    Component::setCommandList(&commandList);
 
-    // Initialize handlers
     EntityManager entityMgr(this->renderer);
     DrawingHandler drawingHandler(entityMgr.artComponents, this->renderer);
     InputHandler inputHandler(entityMgr.inputComponents, commandList);
@@ -106,7 +103,6 @@ void GameManager::run() {
     SoundHandler soundHandler(commandList);
     ControlHandler controlHandler(commandList);
 
-    //Initialize states
     StartState startState(this->width, this->height, entityMgr, commandList,
                           this->renderer, drawingHandler, inputHandler,
                           soundHandler, controlHandler);
@@ -124,7 +120,7 @@ void GameManager::run() {
                                   commandList, this->renderer, drawingHandler,
                                   inputHandler, soundHandler, controlHandler);
 
-
+    // State loop
     State* currentState = &startState;
     StateEnum nextState;
 
@@ -148,6 +144,7 @@ void GameManager::run() {
         }
     } while (nextState != STATE_QUIT);
 
+    // Cleanup Entities and Commands
     entityMgr.clear();
     commandList.clear();
 }
@@ -155,7 +152,6 @@ void GameManager::run() {
 int main(void) {
     GameManager manager;
     manager.setup();
-    manager.load();
     manager.run();
     manager.cleanup();
 }

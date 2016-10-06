@@ -6,7 +6,6 @@
 
 class Command {
 public:
-    int id;
     virtual ~Command();
 };
 

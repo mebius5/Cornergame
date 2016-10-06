@@ -32,7 +32,6 @@ private:
 public:
     GameManager();
     void setup();
-    void load();
     void run();
     void cleanup();
 };
