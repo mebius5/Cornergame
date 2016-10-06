@@ -19,9 +19,10 @@ private:
                           int r, int g, int b, int initialAlpha);
 public:
     EntityBuilder(SDL_Renderer* renderer);
-    Entity* createHero(int x, int y, const char* collisionSfxFile);
-    Entity* createEnemy(int x, int y);
-    Entity* createBackground(const char * filename, int width, int height);
+    Entity * createHero(int x, int y, const char* collisionSfxFile);
+    Entity * createEnemy(int x, int y);
+    Entity * createBackground(const char * filename, int width, int height);
+    Entity * createHealthBar(int x, int y, int width, int height, Entity * owner);
     Entity * createCenteredFadeInText(const char *fontName,
                                       const char *text,
                                       int fontSize,

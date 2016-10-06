@@ -2,12 +2,13 @@
 #define CORNERGAME_ART_COMPONENT_H
 
 #include <SDL_render.h>
+#include <iostream>
 #include "entity.h"
 #include "component.h"
 
 class ArtComponent : public Component {
 public:
-    const static int MAXLAYERS = 1;
+    const static int MAXLAYERS = 2;
     int layer;
     ArtComponent(Entity* entity, int layer);
     virtual ~ArtComponent() { };
@@ -55,6 +56,19 @@ public:
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
     void passCommand(Command* command);
+};
+
+class HealthBarArtComponent: public ArtComponent {
+private:
+    SDL_Texture * texture;
+    SDL_Rect clip;
+    float width;
+    int height;
+public:
+    HealthBarArtComponent(SDL_Texture *texture, Entity *owner, int layer, float width, int height);
+    ~HealthBarArtComponent();
+    SDL_Texture * getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
 };
 
 #endif

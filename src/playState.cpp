@@ -44,6 +44,9 @@ void PlayState::begin() {
 
     Entity* enemy5 = this->entityBuilder.createEnemy(600, 300);
     this->entityMap[enemy5->getId()] = enemy5;
+
+    Entity * healthBar = this->entityBuilder.createHealthBar(100, 600, 200, 50, hero);
+    this->entityMap[healthBar->getId()] = healthBar;
 }
 
 StateEnum PlayState::run() {
