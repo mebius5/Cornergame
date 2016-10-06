@@ -8,9 +8,8 @@ class Entity;
 class Command;
 
 class Component {
-protected:
-    Entity* entity;
 public:
+    Entity* entity;
     Component(Entity* entity);
     virtual ~Component() { };
     virtual void passCommand(Command* command);

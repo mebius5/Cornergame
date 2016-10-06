@@ -6,10 +6,11 @@
 
 class DrawingHandler {
 private:
+    std::map<int, ArtComponent*>& componentMap;
     SDL_Renderer* renderer;
-    std::map<int, Entity*>& entityMap;
 public:
-    DrawingHandler(SDL_Renderer* renderer, std::map<int, Entity*>& entityMap);
+    DrawingHandler(std::map<int, ArtComponent*>& componentMap,
+                   SDL_Renderer* renderer);
     void draw(int dt);
 };
 

@@ -1,23 +1,25 @@
 #include "drawingHandler.h"
 
-DrawingHandler::DrawingHandler(SDL_Renderer* r, std::map<int, Entity*>& map) :
-    renderer(r),
-    entityMap(map) {
+DrawingHandler::DrawingHandler(std::map<int, ArtComponent*>& componentMap,
+                               SDL_Renderer* renderer) :
+    componentMap(componentMap),
+    renderer(renderer) {
 }
 
 void DrawingHandler::draw(int dt) {
     SDL_RenderClear(this->renderer);
-    std::map<int, Entity*>::const_iterator it;
-    for (int i = 0; i<=ArtComponent::MAXLAYERS;i++){
-        for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it) {
-            Entity* entity = it->second;
-            if (entity->art&&entity->art->layer==i) {
+    std::map<int, ArtComponent*>::const_iterator it;
+    for (int i = 0; i <= ArtComponent::MAXLAYER; i++) {
+        for (it = this->componentMap.begin(); it != this->componentMap.end(); ++it) {
+            ArtComponent* artComp = it->second;
+            Entity* entity = artComp->entity;
+            if (artComp->layer == i) {
                 SDL_Rect rect = { (int) entity->x,
                                   (int) entity->y,
                                   entity->width,
                                   entity->height };
-                SDL_RenderCopy(this->renderer, entity->art->getNextTexture(dt),
-                               entity->art->getNextSrcRect(dt), &rect);
+                SDL_RenderCopy(this->renderer, artComp->getNextTexture(dt),
+                               artComp->getNextSrcRect(dt), &rect);
             }
         }
     }

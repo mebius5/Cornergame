@@ -11,7 +11,7 @@
 
 class ArtComponent : public Component {
 public:
-    const static int MAXLAYERS = 2;
+    const static int MAXLAYER = 2;
     int layer;
     ArtComponent(Entity* entity, int layer);
     virtual ~ArtComponent() { };

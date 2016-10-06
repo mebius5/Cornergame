@@ -98,12 +98,12 @@ void GameManager::run() {
     std::map<int, Entity *> entityMap;
 
     // Initialize handlers
-    EntityBuilder entityBuilder(this->renderer);
-    DrawingHandler drawingHandler(this->renderer, entityMap);
-    InputHandler inputHandler(entityMap, commandList);
-    AiHandler aiHandler(entityMap, commandList);
-    CollisionHandler collisionHandler(entityMap, commandList,
-                                      this->width, this->height);
+    EntityManager entityMgr(this->renderer);
+    DrawingHandler drawingHandler(entityMgr.artComponents, this->renderer);
+    InputHandler inputHandler(entityMgr.inputComponents, commandList);
+    AiHandler aiHandler(entityMgr.aiComponents, commandList);
+    CollisionHandler collisionHandler(entityMgr.collisionComponents,
+                                      commandList, this->width, this->height);
     SoundHandler soundHandler(commandList);
     ControlHandler controlHandler(commandList);
 

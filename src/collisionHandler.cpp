@@ -1,35 +1,33 @@
 #include "collisionHandler.h"
 
-CollisionHandler::CollisionHandler(std::map<int, Entity*>& entityMap,
+CollisionHandler::CollisionHandler(std::map<int, CollisionComponent*>& compMap,
                                    std::list<Command*>& commandList,
                                    const int w, const int h) :
-    entityMap(entityMap),
+    componentMap(compMap),
     commandList(commandList),
     width(w),
     height(h) {
 }
 
 void CollisionHandler::handleCollisions(){
-    std::map<int, Entity*>::const_iterator it;
-    std::map<int, Entity*>::const_iterator it2;
+    std::map<int, CollisionComponent*>::const_iterator it;
+    std::map<int, CollisionComponent*>::const_iterator it2;
     Command* collisionCmd = NULL;
-    for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it) {
-        Entity* e1 = it->second;
-        if (e1->collision) {
-            for (it2 = std::next(it, 1); it2 != entityMap.end(); ++it2) {
-                Entity* e2 = it2->second;
-                if (e1 != e2 && e2->collision && detectOverlap(e1, e2)) {
-                    collisionCmd = e1->collision->onEntityCollision(e2);
-                    if (collisionCmd)
-                        this->commandList.push_back(collisionCmd);
-                    collisionCmd = e2->collision->onEntityCollision(e1);
-                    if (collisionCmd)
-                        this->commandList.push_back(collisionCmd);
-                }
+    for (it = this->componentMap.begin(); it != this->componentMap.end(); ++it){
+        CollisionComponent* comp1 = it->second;
+        for (it2 = std::next(it, 1); it2 != this->componentMap.end(); ++it2) {
+            CollisionComponent* comp2 = it2->second;
+            if (comp1 != comp2 && detectOverlap(comp1->entity, comp2->entity)) {
+                collisionCmd = comp1->onEntityCollision(comp2->entity);
+                if (collisionCmd)
+                    this->commandList.push_back(collisionCmd);
+                collisionCmd = comp2->onEntityCollision(comp1->entity);
+                if (collisionCmd)
+                    this->commandList.push_back(collisionCmd);
             }
         }
 
-        this->detectBorderCollision(e1);
+        this->detectBorderCollision(comp1->entity);
     }
 }
 

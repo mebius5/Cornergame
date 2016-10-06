@@ -7,11 +7,12 @@
 
 class AiHandler {
 private:
-    std::map<int, Entity*>& entityMap;
+    std::map<int, AiComponent*>& componentMap;
     std::list<Command*>& commandList;
 
 public:
-    AiHandler(std::map<int, Entity*>& entityMap, std::list<Command*>& cmdList);
+    AiHandler(std::map<int, AiComponent*>& componentMap,
+              std::list<Command*>& commandList);
     void updateAi(int dt);
 };
 

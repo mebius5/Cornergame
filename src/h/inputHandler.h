@@ -9,12 +9,13 @@
 
 class InputHandler {
 protected:
-    std::map<int, Entity*>& entityMap;
+    std::map<int, InputComponent*>& componentMap;
     std::list<Command*>& commandList;
     SwitchStateCommand quitCommand;
     SwitchStateCommand switchToMenu;
 public:
-    InputHandler(std::map<int, Entity*>& entMap, std::list<Command*>& cmdList);
+    InputHandler(std::map<int, InputComponent*>& componentMap,
+                 std::list<Command*>& commandList);
     virtual void handleEvents();
     void update(int dt);
 };

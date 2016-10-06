@@ -9,7 +9,7 @@
 class InputComponent : public Component {
 public:
     InputComponent(Entity* entity);
-    virtual ~InputComponent(){};
+    virtual ~InputComponent() { };
     virtual Command* keyDown(SDL_Keycode keycode) = 0;
     virtual Command* keyUp(SDL_Keycode keycode) = 0;
     virtual void updateLocation(int dt) = 0;

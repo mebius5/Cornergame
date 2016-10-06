@@ -12,7 +12,7 @@
 #include "entity.h"
 #include "enums.h"
 #include "drawingHandler.h"
-#include "entityBuilder.h"
+#include "entityManager.h"
 #include "inputHandler.h"
 #include "soundHandler.h"
 #include "aiHandler.h"
