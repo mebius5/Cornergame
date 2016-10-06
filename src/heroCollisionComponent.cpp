@@ -12,12 +12,11 @@ HeroCollisionComponent::~HeroCollisionComponent() {
         delete this->entityCollisionCommand;
 }
 
-Command* HeroCollisionComponent::onEntityCollision(Entity* /*other*/) {
+void HeroCollisionComponent::onEntityCollision(Entity* /*other*/) {
     this->entity->score->addScore(100);
     this->entity->health->takeDamage(10);
-    return this->entityCollisionCommand;
+    Component::commandList->push_back(this->entityCollisionCommand);
 }
 
-Command* HeroCollisionComponent::onBorderCollision() {
-    return NULL;
+void HeroCollisionComponent::onBorderCollision() {
 }

@@ -106,12 +106,11 @@ TL;DR
 TODOS
 leaks?
 rule of three
-Create CommandBus -> give to Components
-ability to return multiple commands at once?
 
 SoundHandler needs a map from filename to SFX, so sound commands can be
     deleted at will
-entityBuilder deletion waits properly?
 loadFont in entityBuilder?
+
+Move handlers to namespaces
 
 Change owner pointer in Art components to ownerHealth/ownerScore

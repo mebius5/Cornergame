@@ -19,11 +19,10 @@ MenuOptionInputComponent::~MenuOptionInputComponent() {
         delete this->nextStateCommand;
 }
 
-Command* MenuOptionInputComponent::keyUp(SDL_Keycode /*keycode*/) {
-    return NULL;
+void MenuOptionInputComponent::keyUp(SDL_Keycode /*keycode*/) {
 }
 
-Command* MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
+void MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
     // Check if up arrow or down arrow was pressed
     switch (keycode) {
     case SDLK_UP:
@@ -38,11 +37,10 @@ Command* MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
         break;
     case SDLK_SPACE:
         if (this->nextStateCommand && this->selected)
-            return this->nextStateCommand;
-        else
-            return NULL;
+            Component::commandList->push_back(this->nextStateCommand);
+        return;
     default:
-        return NULL;
+        return;
     }
 
     // Check if we need to select ourself or deselect ourself
@@ -54,7 +52,6 @@ Command* MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
         this->selected = true;
         art->selectMenuItem();
     }
-    return NULL;
 }
 
 void MenuOptionInputComponent::updateLocation(int /*dt*/) {

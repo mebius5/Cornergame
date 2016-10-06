@@ -97,9 +97,9 @@ void GameManager::run() {
     EntityManager entityMgr(this->renderer);
     DrawingHandler drawingHandler(entityMgr.artComponents, this->renderer);
     InputHandler inputHandler(entityMgr.inputComponents, commandList);
-    AiHandler aiHandler(entityMgr.aiComponents, commandList);
+    AiHandler aiHandler(entityMgr.aiComponents);
     CollisionHandler collisionHandler(entityMgr.collisionComponents,
-                                      commandList, this->width, this->height);
+                                      this->width, this->height);
     SoundHandler soundHandler(commandList);
     ControlHandler controlHandler(commandList);
 

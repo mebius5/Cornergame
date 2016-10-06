@@ -41,6 +41,7 @@ void EntityManager::deleteEntity(Entity* entity) {
     this->physicsComponents.erase(id);
     this->healthComponents.erase(id);
     this->scoreComponents.erase(id);
+    this->deletionQueue.push(entity);
 }
 
 void EntityManager::deleteEntity(int id) {
@@ -54,7 +55,7 @@ void EntityManager::cleanupEntities() {
         delete entity;
     }
 
-    this->numCleanable = this->deletionQueue.size() - this->numCleanable;
+    this->numCleanable = this->deletionQueue.size();
 }
 
 void EntityManager::clear() {

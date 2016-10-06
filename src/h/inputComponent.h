@@ -10,8 +10,8 @@ class InputComponent : public Component {
 public:
     InputComponent(Entity* entity);
     virtual ~InputComponent() { };
-    virtual Command* keyDown(SDL_Keycode keycode) = 0;
-    virtual Command* keyUp(SDL_Keycode keycode) = 0;
+    virtual void keyDown(SDL_Keycode keycode) = 0;
+    virtual void keyUp(SDL_Keycode keycode) = 0;
     virtual void updateLocation(int dt) = 0;
 };
 
@@ -25,8 +25,8 @@ private:
 public:
     HeroInputComponent(Entity* entity);
     ~HeroInputComponent();
-    Command* keyDown(SDL_Keycode keycode);
-    Command* keyUp(SDL_Keycode keycode);
+    void keyDown(SDL_Keycode keycode);
+    void keyUp(SDL_Keycode keycode);
     void updateLocation(int dt);
 };
 
@@ -34,8 +34,8 @@ public:
 // public:
 //     StartScreenInputComponent(Entity* entity);
 //     ~StartScreenInputComponent();
-//     Command* keyDown(SDL_Keycode keycode);
-//     Command* keyUp(SDL_Keycode keycode);
+//     void keyDown(SDL_Keycode keycode);
+//     void keyUp(SDL_Keycode keycode);
 //     void updateLocation(int dt);
 // };
 
@@ -50,8 +50,8 @@ public:
     MenuOptionInputComponent(Entity* entity, int index, int numOptions,
                              Command* nextStateCommand);
     ~MenuOptionInputComponent();
-    Command* keyDown(SDL_Keycode keycode);
-    Command* keyUp(SDL_Keycode keycode);
+    void keyDown(SDL_Keycode keycode);
+    void keyUp(SDL_Keycode keycode);
     void updateLocation(int dt);
 };
 

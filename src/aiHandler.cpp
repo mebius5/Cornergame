@@ -1,9 +1,7 @@
 #include "aiHandler.h"
 
-AiHandler::AiHandler(std::map<int, AiComponent*>& componentMap,
-                     std::list<Command*>& commandList) :
-    componentMap(componentMap),
-    commandList(commandList) {
+AiHandler::AiHandler(std::map<int, AiComponent*>& componentMap) :
+    componentMap(componentMap) {
 }
 
 void AiHandler::updateAi(int dt) {

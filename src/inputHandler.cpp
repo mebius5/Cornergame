@@ -11,7 +11,6 @@ InputHandler::InputHandler(std::map<int, InputComponent*>& componentMap,
 void InputHandler::handleEvents() {
     std::map<int, InputComponent*>::const_iterator it;
     SDL_Event event;
-    Command* cmd = NULL;
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT)
@@ -25,11 +24,9 @@ void InputHandler::handleEvents() {
         else {
             for (it = this->componentMap.begin(); it != this->componentMap.end(); ++it) {
                 if (event.type == SDL_KEYUP)
-                    cmd = it->second->keyUp(event.key.keysym.sym);
+                    it->second->keyUp(event.key.keysym.sym);
                 else   // if type == SDL_KEYDOWN
-                    cmd = it->second->keyDown(event.key.keysym.sym);
-                if (cmd)
-                    this->commandList.push_back(cmd);
+                    it->second->keyDown(event.key.keysym.sym);
             }
         }
     }

@@ -11,12 +11,12 @@ StartScreenInputComponent::~StartScreenInputComponent() {
     this->entity = NULL;
 }
 
-Command* StartScreenInputComponent::keyUp(SDL_Keycode /*keycode*/) {
-    return NULL;
+void StartScreenInputComponent::keyUp(SDL_Keycode /*keycode*/) {
+
 }
 
-Command* StartScreenInputComponent::keyDown(SDL_Keycode /*keycode*/) {
-    return NULL;
+void StartScreenInputComponent::keyDown(SDL_Keycode /*keycode*/) {
+
 }
 
 void StartScreenInputComponent::updateLocation(int /*dt*/) {

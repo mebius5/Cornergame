@@ -9,8 +9,8 @@ public:
     CollisionComponent(Entity* entity);
     virtual ~CollisionComponent() { };
 
-    virtual Command* onEntityCollision(Entity* other) = 0;
-    virtual Command* onBorderCollision() = 0;
+    virtual void onEntityCollision(Entity* other) = 0;
+    virtual void onBorderCollision() = 0;
 };
 
 class HeroCollisionComponent : public CollisionComponent {
@@ -20,15 +20,15 @@ public:
     HeroCollisionComponent(Entity* entity, Command* entityCollisionCmd);
     ~HeroCollisionComponent();
 
-    Command* onEntityCollision(Entity* other);
-    Command* onBorderCollision();
+    void onEntityCollision(Entity* other);
+    void onBorderCollision();
 };
 
 class EnemyCollisionComponent : public CollisionComponent {
 public:
     EnemyCollisionComponent(Entity* entity);
-    Command* onEntityCollision(Entity* other);
-    Command* onBorderCollision();
+    void onEntityCollision(Entity* other);
+    void onBorderCollision();
 };
 
 #endif

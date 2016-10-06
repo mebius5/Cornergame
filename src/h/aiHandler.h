@@ -8,11 +8,8 @@
 class AiHandler {
 private:
     std::map<int, AiComponent*>& componentMap;
-    std::list<Command*>& commandList;
-
 public:
-    AiHandler(std::map<int, AiComponent*>& componentMap,
-              std::list<Command*>& commandList);
+    AiHandler(std::map<int, AiComponent*>& componentMap);
     void updateAi(int dt);
 };
 
