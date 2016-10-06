@@ -5,7 +5,8 @@ HealthBarArtComponent::HealthBarArtComponent(SDL_Texture *texture,
     ArtComponent(owner, layer),
     texture(texture),
     width(width),
-    height(height)
+    height(height),
+    lastHealth(-1)
 {
     this->clip = {0,0,0,0};
 }
@@ -22,13 +23,14 @@ SDL_Texture * HealthBarArtComponent::getNextTexture(int) {
     return this->texture;
 }
 
-SDL_Rect * HealthBarArtComponent::getNextSrcRect(int dt) {
+SDL_Rect * HealthBarArtComponent::getNextSrcRect(int) {
 
-    float healthDifference = 100 - dt; //TODO: Need to get replace with hero health from entity health component
-
-    float positionAddition = width*(healthDifference/100);
-
-    this->clip = {0+(int)positionAddition, 0, (int) width, height};
+    if(this->lastHealth!=this->entity->health->getHealth()) {
+        this->lastHealth = this->entity->health->getHealth();
+        float healthDifference = this->entity->health->getMaxHealth() - this->lastHealth;
+        float positionAddition = width*(healthDifference/this->entity->health->getMaxHealth());
+        this->clip = {0+(int)positionAddition, 0, (int) width, height};
+    }
 
     return & this->clip;
 }

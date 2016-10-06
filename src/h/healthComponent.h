@@ -13,6 +13,7 @@ class HealthComponent : public Component {
         HealthComponent(Entity* entity, int maxHealth);
         ~HealthComponent();
         int getHealth();
+        int getMaxHealth();
         void takeDamage(int damage);
 };
 

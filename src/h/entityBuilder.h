@@ -23,6 +23,7 @@ public:
     Entity * createEnemy(int x, int y);
     Entity * createBackground(const char * filename, int width, int height);
     Entity * createHealthBar(int x, int y, int width, int height, Entity * owner);
+    Entity * createScoreBox(int x, int y, Entity * owner);
     Entity * createCenteredFadeInText(const char *fontName,
                                       const char *text,
                                       int fontSize,

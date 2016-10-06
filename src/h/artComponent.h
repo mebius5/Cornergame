@@ -2,9 +2,12 @@
 #define CORNERGAME_ART_COMPONENT_H
 
 #include <SDL_render.h>
-#include <iostream>
+#include <SDL_ttf.h>
+#include <string>
 #include "entity.h"
 #include "component.h"
+#include <iostream>
+
 
 class ArtComponent : public Component {
 public:
@@ -64,9 +67,28 @@ private:
     SDL_Rect clip;
     float width;
     int height;
+    int lastHealth;
 public:
     HealthBarArtComponent(SDL_Texture *texture, Entity *owner, int layer, float width, int height);
     ~HealthBarArtComponent();
+    SDL_Texture * getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+};
+
+class ScoreTextArtComponent: public ArtComponent{
+private:
+    Entity * owner;
+    SDL_Renderer * renderer;
+    SDL_Texture * lastTexture;
+    int lastScore;
+
+    SDL_Surface* loadFont(const char * fontName,
+                          const char * text,
+                          int fontSize,
+                          int r, int g, int b);
+public:
+    ScoreTextArtComponent(SDL_Renderer * renderer, Entity * scoreBox, Entity * owner, int layer);
+    ~ScoreTextArtComponent();
     SDL_Texture * getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };

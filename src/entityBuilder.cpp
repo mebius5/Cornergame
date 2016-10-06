@@ -66,6 +66,12 @@ Entity * EntityBuilder::createHealthBar(int x, int y, int width, int height, Ent
     return healthBar;
 }
 
+Entity * EntityBuilder::createScoreBox(int x, int y, Entity * owner){
+    Entity * scoreBox = new Entity(this->nextId++, x, y, 100, 100);
+    scoreBox->art = new ScoreTextArtComponent(this->renderer, scoreBox, owner, 2);
+    return scoreBox;
+}
+
 Entity * EntityBuilder::createCenteredFadeInText(const char *fontName,
                                                  const char *text,
                                                  int fontSize,
@@ -109,8 +115,8 @@ SDL_Surface* EntityBuilder::loadFont(const char * fontName,
     SDL_Surface* textSurf = TTF_RenderUTF8_Blended(font, text, color);
     TTF_CloseFont(font);
     if (textSurf == NULL) {
-        std::cerr << "Unable to load text surface! SDL_image Error: "
-                  << IMG_GetError() << std::endl;
+        std::cerr << "Unable to load font! TTF font Error: "
+                  << TTF_GetError() << std::endl;
         return NULL;
     }
     if(textSurf){
