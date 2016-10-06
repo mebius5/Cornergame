@@ -1,13 +1,11 @@
 #include "state.h"
 
-HighscoreState::HighscoreState(int windowW, int windowH, std::list<Command*>& cmdList,
-                       std::map<int, Entity*>& entMap, SDL_Renderer* renderer,
-                       EntityBuilder& entBuilder, DrawingHandler& drawer,
-                       InputHandler& inputHandler, SoundHandler& soundHandler,
-                       ControlHandler& controlHandler) :
-    State(cmdList, entMap, renderer, windowW, windowH),
-    entityBuilder(entBuilder),
-    drawingHandler(drawer),
+HighscoreState::HighscoreState(int windowW, int windowH, EntityManager& entMgr,
+                std::list<Command*>& commandList, SDL_Renderer* renderer,
+                DrawingHandler& drawingHandler, InputHandler& inputHandler,
+                SoundHandler& soundHandler, ControlHandler& controlHandler) :
+    State(entMgr, commandList, renderer, windowW, windowH),
+    drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
     controlHandler(controlHandler) {
@@ -19,10 +17,9 @@ HighscoreState::~HighscoreState() {
 void HighscoreState::begin() {
     this->soundHandler.playBackgroundMusic("music/ambient_starfield_highscore.xm");
 
-    Entity* mainText = entityBuilder.createCenteredFadeInText(
+    this->entityManager.createCenteredFadeInText(
                        "resources/CaesarDressing-Regular.ttf", "High Scores:",
                        100, 255, 255, 255, 0, this->windowW, this->windowH);
-    this->entityMap[mainText->getId()] = mainText;
 }
 
 StateEnum HighscoreState::run() {
@@ -45,7 +42,7 @@ StateEnum HighscoreState::run() {
         if (nextState)
             return nextState;
 
-        if(timeElapsed>5000){ //Return to MENU screen after 5 secs
+        if (timeElapsed > 5000){   //Return to MENU screen after 5 secs
             break;
         }
     }
@@ -54,12 +51,7 @@ StateEnum HighscoreState::run() {
 }
 
 void HighscoreState::cleanup() {
-    std::map<int, Entity*>::const_iterator it;
-    for (it = entityMap.begin(); it != entityMap.end(); ++it) {
-        delete it->second;      // delete Entities from map
-    }
-    entityMap.clear();
-    commandList.clear();
-
+    this->entityManager.clear();
+    this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
 }

@@ -2,8 +2,8 @@
 #include <iostream>
 #include <math.h>
 
-AnimationComponent::AnimationComponent(SDL_Texture* texture, int surfaceW,
-                                       int surfaceH, int layer, Entity* entity):
+AnimationComponent::AnimationComponent(Entity* entity, SDL_Texture* texture,
+                                       int surfaceW, int surfaceH, int layer):
     ArtComponent(entity, layer),
     texture(texture),
     surfaceW(surfaceW),

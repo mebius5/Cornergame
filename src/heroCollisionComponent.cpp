@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-HeroCollisionComponent::HeroCollisionComponent(Command* onEntity, Entity* entity) :
-    CollisionComponent(entity),
+HeroCollisionComponent::HeroCollisionComponent(Entity* ent, Command* onEntity) :
+    CollisionComponent(ent),
     entityCollisionCommand(onEntity) {
 }
 

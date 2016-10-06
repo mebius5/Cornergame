@@ -72,32 +72,37 @@ void EntityManager::clear() {
 }
 
 /* Entity Creation Methods */
-void EntityManager::createHero(int x, int y, const char* collisionSfxFile) {
+Entity* EntityManager::createHero(int x, int y, const char* collisionSfxFile) {
     Entity* entity = this->entityBuilder.createHero(x, y, collisionSfxFile);
     this->addEntity(entity);
+    return entity;
 }
 
-void EntityManager::createEnemy(int x, int y) {
+Entity* EntityManager::createEnemy(int x, int y) {
     Entity* entity = this->entityBuilder.createEnemy(x, y);
     this->addEntity(entity);
+    return entity;
 }
 
-void EntityManager::createBackground(const char* filename, int w, int h) {
+Entity* EntityManager::createBackground(const char* filename, int w, int h) {
     Entity* entity = this->entityBuilder.createBackground(filename, w, h);
     this->addEntity(entity);
+    return entity;
 }
 
-void EntityManager::createHealthBar(int x, int y, int width, int height, Entity* owner) {
+Entity* EntityManager::createHealthBar(int x, int y, int width, int height, Entity* owner) {
     Entity* entity = this->entityBuilder.createHealthBar(x, y, width, height, owner);
     this->addEntity(entity);
+    return entity;
 }
 
-void EntityManager::createScoreBox(int x, int y, Entity* owner) {
+Entity* EntityManager::createScoreBox(int x, int y, Entity* owner) {
     Entity* entity = this->entityBuilder.createScoreBox(x, y, owner);
     this->addEntity(entity);
+    return entity;
 }
 
-void EntityManager::createCenteredFadeInText(const char* fontName,
+Entity* EntityManager::createCenteredFadeInText(const char* fontName,
                         const char* text, int fontSize, int r, int g, int b,
                         int initialAlpha, int windowW, int windowH) {
 
@@ -105,9 +110,10 @@ void EntityManager::createCenteredFadeInText(const char* fontName,
                             text, fontSize, r, g, b,
                             initialAlpha, windowW, windowH);
     this->addEntity(entity);
+    return entity;
 }
 
-void EntityManager::createHorizontallyCenteredFadeInText(const char* fontName,
+Entity* EntityManager::createHorizontallyCenteredFadeInText(const char* fontName,
                                                  const char* text,
                                                  int fontSize,
                                                  int r, int g, int b, int initialAlpha,
@@ -117,4 +123,5 @@ void EntityManager::createHorizontallyCenteredFadeInText(const char* fontName,
         fontName, text, fontSize, r, g, b, initialAlpha,
         windowW, yPos, index, numOptions, nextState);
     this->addEntity(entity);
+    return entity;
 }

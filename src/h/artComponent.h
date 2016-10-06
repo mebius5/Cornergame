@@ -23,7 +23,7 @@ class StaticArtComponent : public ArtComponent {
 private:
     SDL_Texture* texture;
 public:
-    StaticArtComponent(SDL_Texture* texture, int layer);
+    StaticArtComponent(Entity* entity, SDL_Texture* texture, int layer);
     ~StaticArtComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
@@ -37,8 +37,8 @@ private:
     int timecount;
     SDL_Rect clip;
 public:
-    AnimationComponent(SDL_Texture* texture, int surfaceW, int surfaceH,
-                       int layer, Entity* entity);
+    AnimationComponent(Entity* entity, SDL_Texture* texture, int surfaceW,
+                       int surfaceH, int layer);
     ~AnimationComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
@@ -53,8 +53,8 @@ private:
     void selectMenuItem();
     void deselectMenuItem();
 public:
-    TextFadeInComponent(SDL_Renderer* renderer, SDL_Surface* surface,
-                        int layer, int initialAlpha);
+    TextFadeInComponent(Entity* entity, SDL_Renderer* renderer,
+                        SDL_Surface* surface, int layer, int initialAlpha);
     ~TextFadeInComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
@@ -63,13 +63,15 @@ public:
 
 class HealthBarArtComponent: public ArtComponent {
 private:
-    SDL_Texture * texture;
+    SDL_Texture* texture;
     SDL_Rect clip;
+    Entity* owner;
     float width;
     int height;
     int lastHealth;
 public:
-    HealthBarArtComponent(SDL_Texture *texture, Entity *owner, int layer, float width, int height);
+    HealthBarArtComponent(Entity* entity, SDL_Texture *texture, Entity *owner,
+                          int layer, float width, int height);
     ~HealthBarArtComponent();
     SDL_Texture * getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
@@ -87,7 +89,8 @@ private:
                           int fontSize,
                           int r, int g, int b);
 public:
-    ScoreTextArtComponent(SDL_Renderer * renderer, Entity * scoreBox, Entity * owner, int layer);
+    ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer, Entity* owner,
+                          int layer);
     ~ScoreTextArtComponent();
     SDL_Texture * getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);

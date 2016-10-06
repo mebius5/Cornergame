@@ -3,7 +3,7 @@
 
 #include <SDL_ttf.h>
 #include "drawingHandler.h"
-#include "entityBuilder.h"
+#include "entityManager.h"
 #include "inputHandler.h"
 #include "aiHandler.h"
 #include "collisionHandler.h"
@@ -15,11 +15,11 @@ class State {
 protected:
     int windowW;
     int windowH;
+    EntityManager& entityManager;
     std::list<Command*>& commandList;
-    std::map<int, Entity*>& entityMap;
     SDL_Renderer* renderer;
 public:
-    State(std::list<Command*>& commandList, std::map<int, Entity*>& entityMap,
+    State(EntityManager& entityManager, std::list<Command*>& commandList,
           SDL_Renderer* renderer, int windowW, int windowH);
     virtual ~State() { };
     static int center(int large, int small);
@@ -31,17 +31,15 @@ public:
 
 class StartState : public State {
 private:
-    EntityBuilder& entityBuilder;
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
     ControlHandler& controlHandler;
 public:
-    StartState(int windowW, int windowH, std::list<Command*>& commandList,
-               std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
-               EntityBuilder& entityBuilder, DrawingHandler& drawingHandler,
-               InputHandler& inputHandler, SoundHandler& soundHandler,
-               ControlHandler& controlHandler);
+    StartState(int windowW, int windowH, EntityManager& entityManager,
+               std::list<Command*>& commandList, SDL_Renderer* renderer,
+               DrawingHandler& drawingHandler, InputHandler& inputHandler,
+               SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~StartState();
     void begin();
     StateEnum run();
@@ -51,17 +49,15 @@ public:
 
 class MenuState : public State {
 private:
-    EntityBuilder& entityBuilder;
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
     ControlHandler& controlHandler;
 public:
-    MenuState(int windowW, int windowH, std::list<Command*>& commandList,
-               std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
-               EntityBuilder& entityBuilder, DrawingHandler& drawingHandler,
-               InputHandler& inputHandler, SoundHandler& soundHandler,
-               ControlHandler& controlHandler);
+    MenuState(int windowW, int windowH, EntityManager& entityManager,
+              std::list<Command*>& commandList, SDL_Renderer* renderer,
+              DrawingHandler& drawingHandler, InputHandler& inputHandler,
+              SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~MenuState();
     void begin();
     StateEnum run();
@@ -70,7 +66,6 @@ public:
 
 class PlayState : public State {
 private:
-    EntityBuilder& entityBuilder;
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
@@ -78,12 +73,11 @@ private:
     AiHandler& aiHandler;
     CollisionHandler& collisionHandler;
 public:
-    PlayState(int windowW, int windowH, std::list<Command*>& cmdList,
-              std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
-              EntityBuilder& entityBuilder, DrawingHandler& drawingHandler,
-              InputHandler& inputHandler, SoundHandler& soundHandler,
-              ControlHandler& controlHandler, AiHandler& aiHandler,
-              CollisionHandler& collisionHandler);
+    PlayState(int windowW, int windowH, EntityManager& entityManager,
+              std::list<Command*>& commandList, SDL_Renderer* renderer,
+              DrawingHandler& drawingHandler, InputHandler& inputHandler,
+              SoundHandler& soundHandler, ControlHandler& controlHandler,
+              AiHandler& aiHandler, CollisionHandler& collisionHandler);
     ~PlayState();
     void begin();
     StateEnum run();
@@ -93,17 +87,15 @@ public:
 
 class HighscoreState : public State {
 private:
-    EntityBuilder& entityBuilder;
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
     ControlHandler& controlHandler;
 public:
-    HighscoreState(int windowW, int windowH, std::list<Command*>& commandList,
-                   std::map<int, Entity*>& entityMap, SDL_Renderer* renderer,
-                   EntityBuilder& entityBuilder, DrawingHandler& drawingHandler,
-                   InputHandler& inputHandler, SoundHandler& soundHandler,
-                   ControlHandler& controlHandler);
+    HighscoreState(int windowW, int windowH, EntityManager& entityManager,
+                   std::list<Command*>& commandList, SDL_Renderer* renderer,
+                   DrawingHandler& drawingHandler, InputHandler& inputHandler,
+                   SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~HighscoreState();
     void begin();
     StateEnum run();

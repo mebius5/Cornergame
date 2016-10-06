@@ -12,6 +12,7 @@ SRCFILES = \
 	enemyCollisionComponent.cpp \
 	entity.cpp \
 	entityBuilder.cpp \
+	entityManager.cpp \
 	gameManager.cpp \
     healthComponent.cpp \
 	healthBarArtComponent.cpp \

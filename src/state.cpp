@@ -1,12 +1,12 @@
 #include "state.h"
 
-State::State(std::list<Command*>& cmdList, std::map<int, Entity*>& entityMap,
+State::State(EntityManager& entityManager, std::list<Command*>& cmdList,
              SDL_Renderer* renderer, int windowW, int windowH) :
-        windowW(windowW),
-        windowH(windowH),
-        commandList(cmdList),
-        entityMap(entityMap),
-        renderer(renderer) {
+    windowW(windowW),
+    windowH(windowH),
+    entityManager(entityManager),
+    commandList(cmdList),
+    renderer(renderer) {
 }
 
 int State::center(int large, int small) {

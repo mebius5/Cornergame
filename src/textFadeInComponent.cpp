@@ -1,9 +1,9 @@
 #include "artComponent.h"
 
-TextFadeInComponent::TextFadeInComponent(SDL_Renderer *renderer,
+TextFadeInComponent::TextFadeInComponent(Entity* entity, SDL_Renderer *renderer,
                                          SDL_Surface *surface,
                                          int layer, int initialAlpha):
-    ArtComponent(NULL, layer),
+    ArtComponent(entity, layer),
     surface(surface),
     renderer(renderer),
     lastTexture(NULL),

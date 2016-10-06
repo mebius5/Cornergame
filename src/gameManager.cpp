@@ -95,7 +95,6 @@ void GameManager::cleanup() {
 // Run the actual program
 void GameManager::run() {
     std::list<Command *> commandList;
-    std::map<int, Entity *> entityMap;
 
     // Initialize handlers
     EntityManager entityMgr(this->renderer);
@@ -108,23 +107,22 @@ void GameManager::run() {
     ControlHandler controlHandler(commandList);
 
     //Initialize states
-    StartState startState(this->width, this->height, commandList, entityMap,
-                          this->renderer, entityBuilder, drawingHandler,
-                          inputHandler, soundHandler, controlHandler);
+    StartState startState(this->width, this->height, entityMgr, commandList,
+                          this->renderer, drawingHandler, inputHandler,
+                          soundHandler, controlHandler);
 
-    MenuState menuState(this->width, this->height, commandList, entityMap,
-                        this->renderer, entityBuilder, drawingHandler,
-                        inputHandler, soundHandler, controlHandler);
+    MenuState menuState(this->width, this->height, entityMgr, commandList,
+                        this->renderer, drawingHandler, inputHandler,
+                        soundHandler, controlHandler);
 
-    PlayState playState(this->width, this->height, commandList, entityMap,
-                        this->renderer, entityBuilder, drawingHandler,
-                        inputHandler, soundHandler, controlHandler, aiHandler,
+    PlayState playState(this->width, this->height, entityMgr, commandList,
+                        this->renderer, drawingHandler, inputHandler,
+                        soundHandler, controlHandler, aiHandler,
                         collisionHandler);
 
-    HighscoreState highscoreState(this->width, this->height, commandList,
-                                  entityMap, this->renderer, entityBuilder,
-                                  drawingHandler, inputHandler, soundHandler,
-                                  controlHandler);
+    HighscoreState highscoreState(this->width, this->height, entityMgr,
+                                  commandList, this->renderer, drawingHandler,
+                                  inputHandler, soundHandler, controlHandler);
 
 
     State* currentState = &startState;
@@ -150,11 +148,7 @@ void GameManager::run() {
         }
     } while (nextState != STATE_QUIT);
 
-    std::map<int, Entity*>::const_iterator it;
-    for (it = entityMap.begin(); it != entityMap.end(); ++it) {
-        delete it->second;      // delete Entities from map
-    }
-    entityMap.clear();
+    entityMgr.clear();
     commandList.clear();
 }
 

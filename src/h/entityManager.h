@@ -29,18 +29,18 @@ public:
     void cleanupEntities();
     void clear();
 
-    void createHero(int x, int y, const char* collisionSfxFile);
-    void createEnemy(int x, int y);
-    void createBackground(const char * filename, int width, int height);
+    Entity* createHero(int x, int y, const char* collisionSfxFile);
+    Entity* createEnemy(int x, int y);
+    Entity* createBackground(const char * filename, int width, int height);
 
-    void createHealthBar(int x, int y, int width, int height, Entity* owner);
-    void createScoreBox(int x, int y, Entity* owner);
+    Entity* createHealthBar(int x, int y, int width, int height, Entity* owner);
+    Entity* createScoreBox(int x, int y, Entity* owner);
 
-    void createCenteredFadeInText(const char *fontName,
+    Entity* createCenteredFadeInText(const char *fontName,
                             const char *text, int fontSize, int r, int g, int b,
                             int initialAlpha, int windowW, int windowH);
 
-    void createHorizontallyCenteredFadeInText(const char *fontName,
+    Entity* createHorizontallyCenteredFadeInText(const char *fontName,
                                              const char *text,
                                              int fontSize,
                                              int r, int g, int b, int initialAlpha,

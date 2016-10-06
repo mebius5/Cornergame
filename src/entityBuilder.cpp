@@ -15,12 +15,12 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
             std::cerr << "Failed to load chunk: " << Mix_GetError() << std::endl;
             return NULL;
         }
-        hero->collision = new HeroCollisionComponent(new PlaySoundCommand(chunk), hero);
+        hero->collision = new HeroCollisionComponent(hero, new PlaySoundCommand(chunk));
     } else
-        hero->collision = new HeroCollisionComponent(NULL, hero);
+        hero->collision = new HeroCollisionComponent(hero, NULL);
 
-    hero->art = new AnimationComponent(
-        SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1, hero);
+    hero->art = new AnimationComponent(hero,
+        SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1);
     SDL_FreeSurface(image);
     hero->input = new HeroInputComponent(hero);
     hero->score = new ScoreComponent(hero);
@@ -33,8 +33,8 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
     Entity* enemy = new Entity(this->nextId++, x, y, (image->w)/4, (image->h));
 
     enemy->collision = new EnemyCollisionComponent(enemy, new ResetAiCommand());
-    enemy->art = new AnimationComponent(
-        SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1, enemy);
+    enemy->art = new AnimationComponent(enemy,
+        SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1);
     SDL_FreeSurface(image);
     enemy->ai = new EnemyAiComponent(enemy);
     enemy->health = new HealthComponent(enemy, 200);
@@ -44,7 +44,8 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
 Entity * EntityBuilder::createBackground(const char * filename, int width, int height) {
     SDL_Surface * image = this->loadImage(filename);
     Entity * background = new Entity(this->nextId++, 0, 0, width, height);
-    background->art = new StaticArtComponent(SDL_CreateTextureFromSurface(this->renderer, image),0);
+    background->art = new StaticArtComponent(background,
+            SDL_CreateTextureFromSurface(this->renderer, image), 0);
     SDL_FreeSurface(image);
     return background;
 }
@@ -61,14 +62,14 @@ Entity * EntityBuilder::createHealthBar(int x, int y, int width, int height, Ent
     SDL_Texture * texture = SDL_CreateTextureFromSurface(this->renderer, tempSurface);
     SDL_FreeSurface(tempSurface);
 
-    healthBar->art = new HealthBarArtComponent(texture, owner, 2, width, height);
+    healthBar->art = new HealthBarArtComponent(healthBar, texture, owner, 2, width, height);
 
     return healthBar;
 }
 
 Entity * EntityBuilder::createScoreBox(int x, int y, Entity * owner){
     Entity * scoreBox = new Entity(this->nextId++, x, y, 100, 100);
-    scoreBox->art = new ScoreTextArtComponent(this->renderer, scoreBox, owner, 2);
+    scoreBox->art = new ScoreTextArtComponent(scoreBox, this->renderer, owner, 2);
     return scoreBox;
 }
 
@@ -81,7 +82,7 @@ Entity * EntityBuilder::createCenteredFadeInText(const char *fontName,
     int x = (windowW/2 - textSurface->w/2);
     int y = (windowH/2 - textSurface->h/2);
     Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h);
-    fadeInText->art = new TextFadeInComponent(this->renderer, textSurface, 1, initialAlpha);
+    fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
     //fadeInText->input = new StartScreenInputComponent(fadeInText);
     return fadeInText;
 }
@@ -95,7 +96,7 @@ Entity * EntityBuilder::createHorizontallyCenteredFadeInText(const char *fontNam
     SDL_Surface * textSurface = this->loadFont(fontName, text, fontSize, r, g, b, initialAlpha);
     int x = (windowW/2 - textSurface->w/2);
     Entity * fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h);
-    fadeInText->art = new TextFadeInComponent(this->renderer, textSurface, 1, initialAlpha);
+    fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
     SwitchStateCommand* nextStateCmd = NULL;
     if (nextState)
         nextStateCmd = new SwitchStateCommand(nextState);

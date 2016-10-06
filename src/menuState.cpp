@@ -1,13 +1,11 @@
 #include "state.h"
 
-MenuState::MenuState(int windowW, int windowH, std::list<Command*>& cmdList,
-                     std::map<int, Entity*>& entMap, SDL_Renderer* renderer,
-                     EntityBuilder& entBuilder, DrawingHandler& drawer,
-                     InputHandler& inputHandler, SoundHandler& soundHandler,
-                     ControlHandler& controlHandler) :
-    State(cmdList, entMap, renderer, windowW, windowH),
-    entityBuilder(entBuilder),
-    drawingHandler(drawer),
+MenuState::MenuState(int windowW, int windowH, EntityManager& entityManager,
+                std::list<Command*>& commandList, SDL_Renderer* renderer,
+                DrawingHandler& drawingHandler, InputHandler& inputHandler,
+                SoundHandler& soundHandler, ControlHandler& controlHandler) :
+    State(entityManager, commandList, renderer, windowW, windowH),
+    drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
     controlHandler(controlHandler) {
@@ -19,40 +17,35 @@ MenuState::~MenuState() {
 void MenuState::begin() {
     this->soundHandler.playBackgroundMusic("music/a_winter_kiss_menu.xm");
 
-    Entity * playText = entityBuilder.createHorizontallyCenteredFadeInText(
+    this->entityManager.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Play",
             80,
             255, 255, 255, 0, this->windowW, 100,
             0, 5, STATE_PLAY);
-    this->entityMap[playText->getId()] = playText;
 
-    Entity * brightText = entityBuilder.createHorizontallyCenteredFadeInText(
+    this->entityManager.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Adjust Visual Brightness",
             80,
             255, 255, 255, 0, this->windowW, 200,
             1, 5, STATE_NONE);
-    this->entityMap[brightText->getId()] = brightText;
 
-    Entity * audioText = entityBuilder.createHorizontallyCenteredFadeInText(
+    this->entityManager.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Adjust Audio Volume",
             80,
             255, 255, 255, 0, this->windowW, 300,
             2, 5, STATE_NONE);
-    this->entityMap[audioText->getId()] = audioText;
 
-    Entity * scoreText = entityBuilder.createHorizontallyCenteredFadeInText(
+    this->entityManager.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Highscore",
             80,
             255, 255, 255, 0, this->windowW, 400,
             3, 5, STATE_HIGHSCORE);
-    this->entityMap[scoreText->getId()] = scoreText;
 
-    Entity * quitText = entityBuilder.createHorizontallyCenteredFadeInText(
+    this->entityManager.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Quit",
             80,
             255, 255, 255, 0, this->windowW, 500,
             4, 5, STATE_QUIT);
-    this->entityMap[quitText->getId()] = quitText;
 }
 
 StateEnum MenuState::run() {
@@ -80,12 +73,7 @@ StateEnum MenuState::run() {
 }
 
 void MenuState::cleanup() {
-    std::map<int, Entity*>::const_iterator it;
-    for (it = entityMap.begin(); it != entityMap.end(); ++it) {
-        delete it->second;      // delete Entities from map
-    }
-    entityMap.clear();
-    commandList.clear();
-
-   this->soundHandler.stopBackgroundMusic();
+    this->entityManager.clear();
+    this->commandList.clear();
+    this->soundHandler.stopBackgroundMusic();
 }

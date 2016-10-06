@@ -1,10 +1,11 @@
 #include "artComponent.h"
 
 
-ScoreTextArtComponent::ScoreTextArtComponent(SDL_Renderer * renderder, Entity * scoreBox, Entity *owner, int layer):
-    ArtComponent(scoreBox, layer),
+ScoreTextArtComponent::ScoreTextArtComponent(Entity* entity,
+                               SDL_Renderer* renderer, Entity *owner, int layer):
+    ArtComponent(entity, layer),
     owner(owner),
-    renderer(renderder),
+    renderer(renderer),
     lastTexture(NULL),
     lastScore(-1){
 
