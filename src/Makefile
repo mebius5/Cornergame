@@ -14,6 +14,7 @@ SRCFILES = \
 	entityBuilder.cpp \
 	gameManager.cpp \
     healthComponent.cpp \
+	healthBarArtComponent.cpp \
 	heroCollisionComponent.cpp \
 	heroInputComponent.cpp \
     highscoreState.cpp \

@@ -47,6 +47,23 @@ Entity * EntityBuilder::createBackground(const char * filename, int width, int h
     return background;
 }
 
+Entity * EntityBuilder::createHealthBar(int x, int y, int width, int height, Entity * owner){
+    Entity * healthBar = new Entity(this->nextId++, x, y, width, height);
+
+    SDL_Surface * tempSurface = SDL_CreateRGBSurface(0, width*2, height, 32, 0, 0, 0, 0);
+    SDL_Rect tempRect = {0,0,width,height};
+    SDL_FillRect(tempSurface, &tempRect, SDL_MapRGB(tempSurface->format, 0, 255, 0));
+    tempRect = {width,0, width, height};
+    SDL_FillRect(tempSurface, &tempRect, SDL_MapRGB(tempSurface->format, 255, 0, 0));
+
+    SDL_Texture * texture = SDL_CreateTextureFromSurface(this->renderer, tempSurface);
+    SDL_FreeSurface(tempSurface);
+
+    healthBar->art = new HealthBarArtComponent(texture, owner, 2, width, height);
+
+    return healthBar;
+}
+
 Entity * EntityBuilder::createCenteredFadeInText(const char *fontName,
                                                  const char *text,
                                                  int fontSize,
