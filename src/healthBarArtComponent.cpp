@@ -22,10 +22,9 @@ SDL_Texture * HealthBarArtComponent::getNextTexture(int) {
     return this->texture;
 }
 
-SDL_Rect * HealthBarArtComponent::getNextSrcRect(int) {
-    int heroHealth = 50; //TODO: Need to get this from entity health component
+SDL_Rect * HealthBarArtComponent::getNextSrcRect(int dt) {
 
-    float healthDifference = 100 - heroHealth;
+    float healthDifference = 100 - dt; //TODO: Need to get replace with hero health from entity health component
 
     float positionAddition = width*(healthDifference/100);
 
