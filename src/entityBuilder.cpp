@@ -24,6 +24,7 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
     SDL_FreeSurface(image);
     hero->input = new HeroInputComponent(hero);
     hero->score = new ScoreComponent(hero);
+    hero->health = new HealthComponent(hero, 300);
     return hero;
 }
 
@@ -36,6 +37,7 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1, enemy);
     SDL_FreeSurface(image);
     enemy->ai = new EnemyAiComponent(enemy);
+    enemy->health = new HealthComponent(enemy, 200);
     return enemy;
 }
 

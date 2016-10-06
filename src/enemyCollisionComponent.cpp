@@ -11,6 +11,7 @@ EnemyCollisionComponent::~EnemyCollisionComponent() {
 }
 
 Command* EnemyCollisionComponent::onEntityCollision(Entity* /*other*/) {
+    this->entity->health->takeDamage(50);
     return NULL;
 }
 

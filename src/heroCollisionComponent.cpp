@@ -14,7 +14,7 @@ HeroCollisionComponent::~HeroCollisionComponent() {
 
 Command* HeroCollisionComponent::onEntityCollision(Entity* /*other*/) {
     this->entity->score->addScore(100);
-    std::cout << this->entity->score->getScore() << std::endl;
+    this->entity->health->takeDamage(10);
     return this->entityCollisionCommand;
 }
 
