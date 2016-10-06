@@ -20,15 +20,6 @@ public:
     ~PlaySoundCommand();
 };
 
-/* INPUT COMMANDS */
-class InputCommand : public Command { };
-class ResetAiCommand : public InputCommand { };
-
-/* ART COMMANDS */
-class ArtCommand : public Command { };
-class SelectMenuOptionCommand : public ArtCommand { };
-class DeselectMenuOptionCommand : public ArtCommand { };
-
 /* CONTROL COMMANDS */
 class ControlCommand : public Command { };
 

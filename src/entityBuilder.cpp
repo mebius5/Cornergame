@@ -32,7 +32,7 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
     SDL_Surface* image = this->loadImage("spritesheets/lax.png");
     Entity* enemy = new Entity(this->nextId++, x, y, (image->w)/4, (image->h));
 
-    enemy->collision = new EnemyCollisionComponent(enemy, new ResetAiCommand());
+    enemy->collision = new EnemyCollisionComponent(enemy);
     enemy->art = new AnimationComponent(enemy,
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1);
     SDL_FreeSurface(image);
@@ -100,10 +100,7 @@ Entity * EntityBuilder::createHorizontallyCenteredFadeInText(const char *fontNam
     SwitchStateCommand* nextStateCmd = NULL;
     if (nextState)
         nextStateCmd = new SwitchStateCommand(nextState);
-    fadeInText->input = new MenuOptionInputComponent(fadeInText, index, numOptions,
-                                                     new SelectMenuOptionCommand(),
-                                                     new DeselectMenuOptionCommand(),
-                                                     nextStateCmd);
+    fadeInText->input = new MenuOptionInputComponent(fadeInText, index, numOptions, nextStateCmd);
     return fadeInText;
 }
 

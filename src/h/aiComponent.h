@@ -5,10 +5,9 @@
 #include "component.h"
 
 class AiComponent : public Component {
-protected:
-    virtual void resetAi() = 0;
 public:
     AiComponent(Entity* entity);
+    virtual void resetAi() = 0;
     virtual void updateLocation(int dt) = 0;
 };
 
@@ -20,7 +19,6 @@ private:
 public:
     EnemyAiComponent(Entity* entity);
     void updateLocation(int dt);
-    void passCommand(Command* command);
 };
 
 #endif

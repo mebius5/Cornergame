@@ -12,7 +12,6 @@ public:
     Entity* entity;
     Component(Entity* entity);
     virtual ~Component() { };
-    virtual void passCommand(Command* command);
 };
 
 #endif

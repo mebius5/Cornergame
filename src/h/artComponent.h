@@ -50,15 +50,15 @@ private:
     SDL_Renderer* renderer;
     SDL_Texture* lastTexture;
     double alpha;
-    void selectMenuItem();
-    void deselectMenuItem();
 public:
     TextFadeInComponent(Entity* entity, SDL_Renderer* renderer,
                         SDL_Surface* surface, int layer, int initialAlpha);
     ~TextFadeInComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
-    void passCommand(Command* command);
+
+    void selectMenuItem();
+    void deselectMenuItem();
 };
 
 class HealthBarArtComponent: public ArtComponent {

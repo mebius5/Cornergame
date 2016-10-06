@@ -45,12 +45,9 @@ private:
     int numOptions;             // total number of menu options
     int currIndex;              // currently selected menu option
     bool selected;              // is this option selected
-    Command* selectCommand;     // command to fire on select
-    Command* deselectCommand;   // command to fire on deselect
     Command* nextStateCommand;  // when space pressed, fire if selected
 public:
     MenuOptionInputComponent(Entity* entity, int index, int numOptions,
-                             Command* selectCommand, Command* deselectCommand,
                              Command* nextStateCommand);
     ~MenuOptionInputComponent();
     Command* keyDown(SDL_Keycode keycode);

@@ -1,13 +1,7 @@
 #include "collisionComponent.h"
 
-EnemyCollisionComponent::EnemyCollisionComponent(Entity* ent, Command* cmd) :
-    CollisionComponent(ent),
-    borderCollisionCommand(cmd) {
-}
-
-EnemyCollisionComponent::~EnemyCollisionComponent() {
-    if (this->borderCollisionCommand)
-        delete this->borderCollisionCommand;
+EnemyCollisionComponent::EnemyCollisionComponent(Entity* entity) :
+    CollisionComponent(entity) {
 }
 
 Command* EnemyCollisionComponent::onEntityCollision(Entity* /*other*/) {
@@ -16,6 +10,6 @@ Command* EnemyCollisionComponent::onEntityCollision(Entity* /*other*/) {
 }
 
 Command* EnemyCollisionComponent::onBorderCollision() {
-    this->entity->ai->passCommand(this->borderCollisionCommand);
+    this->entity->ai->resetAi();
     return NULL;
 }

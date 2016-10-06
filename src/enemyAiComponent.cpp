@@ -23,8 +23,3 @@ void EnemyAiComponent::updateLocation(int dt) {
 void EnemyAiComponent::resetAi() {
     this->timeElapsed = 1500;
 }
-
-void EnemyAiComponent::passCommand(Command* command) {
-    if (dynamic_cast<ResetAiCommand*>(command))
-        this->resetAi();
-}

@@ -1,26 +1,20 @@
 #include "inputComponent.h"
 
 MenuOptionInputComponent::MenuOptionInputComponent(Entity *entity, int index,
-                            int numOptions, Command* selectCommand,
-                            Command* deselectCommand, Command* nextStateCmd) :
+                            int numOptions, Command* nextStateCmd) :
     InputComponent(entity),
     index(index),
     numOptions(numOptions),
     currIndex(0),
     selected(index == 0),
-    selectCommand(selectCommand),
-    deselectCommand(deselectCommand),
     nextStateCommand(nextStateCmd) {
 
+    TextFadeInComponent* art = static_cast<TextFadeInComponent*>(entity->art);
     if (index == currIndex)
-        this->entity->art->passCommand(this->selectCommand);
+        art->selectMenuItem();
 }
 
 MenuOptionInputComponent::~MenuOptionInputComponent() {
-    if (this->selectCommand)
-        delete this->selectCommand;
-    if (this->deselectCommand)
-        delete this->deselectCommand;
     if (this->nextStateCommand)
         delete this->nextStateCommand;
 }
@@ -52,12 +46,13 @@ Command* MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
     }
 
     // Check if we need to select ourself or deselect ourself
+    TextFadeInComponent* art = static_cast<TextFadeInComponent*>(this->entity->art);
     if (this->selected) {
         this->selected = false;
-        this->entity->art->passCommand(this->deselectCommand);
+        art->deselectMenuItem();
     } else if (this->currIndex == this->index) {
         this->selected = true;
-        this->entity->art->passCommand(this->selectCommand);
+        art->selectMenuItem();
     }
     return NULL;
 }

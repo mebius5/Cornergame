@@ -8,10 +8,6 @@ Component::Component(Entity* entity) :
     entity(entity) {
 }
 
-void Component::passCommand(Command* /*command*/) {
-
-}
-
 AiComponent::AiComponent(Entity* entity) :
     Component(entity) {
 }
