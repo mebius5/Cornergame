@@ -7,12 +7,14 @@
 #include "physicsComponent.h"
 #include "scoreComponent.h"
 #include "aiComponent.h"
+#include "healthComponent.h"
 
 class CollisionComponent;       // forward declared for circular dependency
 class AiComponent;
 class InputComponent;
 class ArtComponent;
 class ScoreComponent;
+class HealthComponent;
 
 class Entity {
 private:
@@ -33,6 +35,7 @@ public:
     ArtComponent* art;
     InputComponent* input;
     AiComponent* ai;
+    HealthComponent* health;
 
     Entity(int id, float x, float y, int w, int h);
     ~Entity();

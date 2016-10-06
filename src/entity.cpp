@@ -15,7 +15,8 @@ Entity::Entity(int id, float x, float y, int w, int h) :
     physics(NULL),
     art(NULL),
     input(NULL),
-    ai(NULL) {
+    ai(NULL),
+    health(NULL) {
 }
 
 Entity::~Entity() {
@@ -31,6 +32,8 @@ Entity::~Entity() {
         delete this->input;
     if (this->ai)
         delete this->ai;
+    if (this->health)
+        delete this->health;
 }
 
 int Entity::getId() {
