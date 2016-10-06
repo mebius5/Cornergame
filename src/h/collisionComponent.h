@@ -17,7 +17,7 @@ class HeroCollisionComponent : public CollisionComponent {
 private:
     Command* entityCollisionCommand;
 public:
-    HeroCollisionComponent(Command* entityCollCmd);
+    HeroCollisionComponent(Command* entityCollCmd, Entity* entity);
     ~HeroCollisionComponent();
 
     Command* onEntityCollision(Entity* other);

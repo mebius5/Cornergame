@@ -13,6 +13,7 @@ class ScoreComponent : public Component {
         ScoreComponent(Entity* entity);
         ~ScoreComponent();
         void addScore(int scoreIncrease);
+        int getScore();
         void resetScore();
         void setMultiplier(float multiplier);
 };

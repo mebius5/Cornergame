@@ -15,14 +15,15 @@ Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
             std::cerr << "Failed to load chunk: " << Mix_GetError() << std::endl;
             return NULL;
         }
-        hero->collision = new HeroCollisionComponent(new PlaySoundCommand(chunk));
+        hero->collision = new HeroCollisionComponent(new PlaySoundCommand(chunk), hero);
     } else
-        hero->collision = new HeroCollisionComponent(NULL);
+        hero->collision = new HeroCollisionComponent(NULL, hero);
 
     hero->art = new AnimationComponent(
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1, hero);
     SDL_FreeSurface(image);
     hero->input = new HeroInputComponent(hero);
+    hero->score = new ScoreComponent(hero);
     return hero;
 }
 

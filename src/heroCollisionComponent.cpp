@@ -1,7 +1,9 @@
 #include "collisionComponent.h"
 
-HeroCollisionComponent::HeroCollisionComponent(Command* onEntity) :
-    CollisionComponent(NULL),
+#include <iostream>
+
+HeroCollisionComponent::HeroCollisionComponent(Command* onEntity, Entity* entity) :
+    CollisionComponent(entity),
     entityCollisionCommand(onEntity) {
 }
 
@@ -11,6 +13,8 @@ HeroCollisionComponent::~HeroCollisionComponent() {
 }
 
 Command* HeroCollisionComponent::onEntityCollision(Entity* /*other*/) {
+    this->entity->score->addScore(100);
+    std::cout << this->entity->score->getScore() << std::endl;
     return this->entityCollisionCommand;
 }
 
