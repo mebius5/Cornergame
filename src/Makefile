@@ -32,7 +32,7 @@ SRCFILES = \
 	textFadeInComponent.cpp
 
 CXX = g++
-CXXFLAGS = -std=c++11 -Wall -Wextra -Wpedantic -O2
+CXXFLAGS = -std=c++11 -Wall -Wextra -Wpedantic
 CXXFLAGS += `pkg-config --cflags sdl2 SDL2_mixer SDL2_image SDL2_ttf`
 LDFLAGS += `pkg-config --libs sdl2 SDL2_mixer SDL2_image SDL2_ttf`
 MACFLAGS = -I/usr/local/include/SDL2 -L/usr/local/lib -lSDL2_ttf -lSDL2_mixer \
@@ -44,10 +44,13 @@ TARGET = gameManager
 all: $(TARGET)
 
 $(TARGET): $(SRCFILES)
-	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) $(INCLUDE) $(LDFLAGS)
+	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) -O2 $(INCLUDE) $(LDFLAGS)
 
 debug: $(SRCFILES)
-	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) -g $(INCLUDE) $(LDFLAGS)
+	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) -g -O0 $(INCLUDE) $(LDFLAGS)
+
+valgrind: $(SRCFILES)
+	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) -g -O2 $(INCLUDE) $(LDFLAGS)
 
 clean:
 	$(RM) $(TARGET) *.o

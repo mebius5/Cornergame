@@ -13,39 +13,47 @@ EntityManager::~EntityManager() {
 /* Entity Insertion and Deletion */
 void EntityManager::addEntity(Entity* entity) {
     int id = entity->getId();
-    this->entities[id] = entity;
+    this->entityMap[id] = entity;
 
     if (entity->ai)
-        this->aiComponents[id] = entity->ai;
+        this->aiComponents.push_back(entity->ai);
     if (entity->art)
-        this->artComponents[id] = entity->art;
+        this->artComponents.push_back(entity->art);
     if (entity->collision)
-        this->collisionComponents[id] = entity->collision;
+        this->collisionComponents.push_back(entity->collision);
     if (entity->input)
-        this->inputComponents[id] = entity->input;
+        this->inputComponents.push_back(entity->input);
     if (entity->physics)
-        this->physicsComponents[id] = entity->physics;
+        this->physicsComponents.push_back(entity->physics);
     if (entity->health)
-        this->healthComponents[id] = entity->health;
+        this->healthComponents.push_back(entity->health);
     if (entity->score)
-        this->scoreComponents[id] = entity->score;
+        this->scoreComponents.push_back(entity->score);
 }
 
 void EntityManager::deleteEntity(Entity* entity) {
     int id = entity->getId();
-    this->entities.erase(id);
-    this->aiComponents.erase(id);
-    this->artComponents.erase(id);
-    this->collisionComponents.erase(id);
-    this->inputComponents.erase(id);
-    this->physicsComponents.erase(id);
-    this->healthComponents.erase(id);
-    this->scoreComponents.erase(id);
+    this->entityMap.erase(id);
     this->deletionQueue.push(entity);
+
+    if (entity->ai)
+        entity->ai->invalidate();
+    if (entity->art)
+        entity->art->invalidate();
+    if (entity->collision)
+        entity->collision->invalidate();
+    if (entity->input)
+        entity->input->invalidate();
+    if (entity->physics)
+        entity->physics->invalidate();
+    if (entity->health)
+        entity->health->invalidate();
+    if (entity->score)
+        entity->score->invalidate();
 }
 
 void EntityManager::deleteEntity(int id) {
-    this->deleteEntity(this->entities[id]);
+    this->deleteEntity(this->entityMap[id]);
 }
 
 void EntityManager::cleanupEntities() {
@@ -59,10 +67,10 @@ void EntityManager::cleanupEntities() {
 }
 
 void EntityManager::clear() {
-    std::map<int, Entity*>::const_iterator it;
-    for (it = this->entities.begin(); it != this->entities.end(); ++it)
+    std::unordered_map<int, Entity*>::const_iterator it;
+    for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it)
         delete it->second;      // delete all Entities from map
-    this->entities.clear();
+    this->entityMap.clear();
     this->aiComponents.clear();
     this->artComponents.clear();
     this->collisionComponents.clear();

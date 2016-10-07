@@ -1,54 +1,64 @@
 #include "collisionHandler.h"
 
-CollisionHandler::CollisionHandler(std::map<int, CollisionComponent*>& compMap,
+CollisionHandler::CollisionHandler(std::vector<CollisionComponent*>& compList,
                                    const int w, const int h) :
-    componentMap(compMap),
+    componentList(compList),
     width(w),
     height(h) {
 }
 
+void CollisionHandler::removeInvalidComponents() {
+    std::vector<CollisionComponent*>::iterator it;
+    for (it = this->componentList.begin(); it != this->componentList.end(); ) {
+        if (!(*it)->isValid()) {
+            *it = this->componentList.back();
+            this->componentList.pop_back();
+        } else
+            ++it;
+    }
+}
+
 void CollisionHandler::handleCollisions() {
-    std::map<int, CollisionComponent*>::const_iterator it;
-    std::map<int, CollisionComponent*>::const_iterator it2;
-    for (it = this->componentMap.begin(); it != this->componentMap.end(); ++it){
-        CollisionComponent* comp1 = it->second;
-        for (it2 = std::next(it, 1); it2 != this->componentMap.end(); ++it2) {
-            CollisionComponent* comp2 = it2->second;
-            if (comp1 != comp2 && detectOverlap(comp1->entity, comp2->entity)) {
+    this->removeInvalidComponents();
+
+    std::vector<CollisionComponent*>::const_iterator it;
+    std::vector<CollisionComponent*>::const_iterator it2;
+    for (it = this->componentList.begin(); it != this->componentList.end(); ++it) {
+        CollisionComponent* comp1 = *it;
+        this->detectBorderCollision(comp1->entity);
+        for (it2 = std::next(it, 1); it2 != this->componentList.end(); ++it2) {
+            CollisionComponent* comp2 = *it2;
+            if (detectOverlap(comp1->entity, comp2->entity)) {
                 comp1->onEntityCollision(comp2->entity);
                 comp2->onEntityCollision(comp1->entity);
             }
         }
-
-        this->detectBorderCollision(comp1->entity);
     }
+}
+
+void CollisionHandler::borderBoundX(Entity* entity, float boundValue) {
+    entity->x = boundValue;
+    entity->xVelocity = 0.0f;
+    entity->collision->onBorderCollision();
+}
+
+void CollisionHandler::borderBoundY(Entity* entity, float boundValue) {
+    entity->y = boundValue;
+    entity->yVelocity = 0.0f;
+    entity->collision->onBorderCollision();
 }
 
 void CollisionHandler::detectBorderCollision(Entity *entity) {
     if (entity->collision) {
-        if (entity->x < 0) {
-            entity->x = 0;
-            entity->xVelocity = 0.0f;
-            entity->collision->onBorderCollision();
-        }
+        if (entity->x < 0)
+            this->borderBoundX(entity, 0.0f);
+        else if (entity->x + entity->width > this->width)
+            this->borderBoundX(entity, this->width - entity->width);
 
-        if (entity->x + entity->width > this->width) {
-            entity->x = this->width - entity->width;
-            entity->xVelocity = 0.0f;
-            entity->collision->onBorderCollision();
-        }
-
-        if (entity->y < 0) {
-            entity->y = 0;
-            entity->yVelocity = 0.0f;
-            entity->collision->onBorderCollision();
-        }
-
-        if (entity->y + entity->height > this->height) {
-            entity->y = this->height - entity->width;
-            entity->yVelocity = 0.0f;
-            entity->collision->onBorderCollision();
-        }
+        if (entity->y < 0)
+            this->borderBoundY(entity, 0.0f);
+        else if (entity->y + entity->height > this->height)
+            this->borderBoundY(entity, this->height - entity->height);
     }
 }
 

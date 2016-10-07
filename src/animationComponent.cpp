@@ -1,6 +1,4 @@
 #include "artComponent.h"
-#include <iostream>
-#include <math.h>
 
 AnimationComponent::AnimationComponent(Entity* entity, SDL_Texture* texture,
                                        int surfaceW, int surfaceH, int layer):

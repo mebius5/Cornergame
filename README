@@ -104,11 +104,12 @@ TL;DR
 - stuff!
 
 TODOS
-leaks?
+valgrind!
 rule of three
+verify deletion was implemented properly w/ vectors!
 loadFont in entityBuilder?
-
-Move handlers to namespaces
-USE UNORDERED_MAP OR VECTORS!
+Move handlers to namespaces?
+Move texture deletion to entityBuilder -> pool textures like music
+make commandList a vector -> unorderedVector?
 
 Change owner pointer in Art components to ownerHealth/ownerScore

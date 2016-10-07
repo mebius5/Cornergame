@@ -2,32 +2,33 @@
 #define CORNERGAME_ENTITY_MANAGER_H
 
 #include <queue>
-#include <map>
+#include <unordered_map>
+#include <vector>
 #include "entityBuilder.h"
 
 class EntityManager {
 private:
+    std::unordered_map<int, Entity*> entityMap;
     EntityBuilder entityBuilder;
     std::queue<Entity*> deletionQueue;  // Entities waiting to be deleted
     int numCleanable;                   // # of entities ready for deletion
 public:
-    std::map<int, Entity*> entities;
-    std::map<int, AiComponent*> aiComponents;
-    std::map<int, ArtComponent*> artComponents;
-    std::map<int, CollisionComponent*> collisionComponents;
-    std::map<int, InputComponent*> inputComponents;
-    std::map<int, PhysicsComponent*> physicsComponents;
-    std::map<int, HealthComponent*> healthComponents;
-    std::map<int, ScoreComponent*> scoreComponents;
+    std::vector<AiComponent*> aiComponents;
+    std::vector<ArtComponent*> artComponents;
+    std::vector<CollisionComponent*> collisionComponents;
+    std::vector<InputComponent*> inputComponents;
+    std::vector<PhysicsComponent*> physicsComponents;
+    std::vector<HealthComponent*> healthComponents;
+    std::vector<ScoreComponent*> scoreComponents;
 
     EntityManager(SDL_Renderer* renderer);
     ~EntityManager();
 
-    void addEntity(Entity* entity);
-    void deleteEntity(int id);
-    void deleteEntity(Entity* entity);
-    void cleanupEntities();
-    void clear();
+    void addEntity(Entity* entity);     // add entity/components to map/vectors
+    void deleteEntity(int id);          // put entity on queue for deletion on
+    void deleteEntity(Entity* entity);  //  next round (allows commands to run)
+    void cleanupEntities();             // delete entities when ready
+    void clear();                       // delete all entities
 
     Entity* createHero(int x, int y, SfxEnum sfxType);
     Entity* createEnemy(int x, int y);

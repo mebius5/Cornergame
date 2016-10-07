@@ -4,6 +4,7 @@
 #include <SDL_render.h>
 #include <SDL_ttf.h>
 #include <string>
+#include <math.h>
 #include <iostream>
 #include "entity.h"
 #include "component.h"

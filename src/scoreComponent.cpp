@@ -1,7 +1,5 @@
 #include "scoreComponent.h"
 
-#include <iostream>
-
 ScoreComponent::ScoreComponent(Entity * entity):
     Component(entity),
     score(0),

@@ -1,15 +1,14 @@
 #ifndef CORNERGAME_AI_HANDLER_H
 #define CORNERGAME_AI_HANDLER_H
 
-#include <list>
-#include <map>
+#include <vector>
 #include "entity.h"
 
 class AiHandler {
 private:
-    std::map<int, AiComponent*>& componentMap;
+    std::vector<AiComponent*>& componentList;
 public:
-    AiHandler(std::map<int, AiComponent*>& componentMap);
+    AiHandler(std::vector<AiComponent*>& componentList);
     void updateAi(int dt);
 };
 

@@ -1,15 +1,15 @@
 #ifndef CORNERGAME_DRAWING_HANDLER_H
 #define CORNERGAME_DRAWING_HANDLER_H
 
-#include <map>
+#include <vector>
 #include "entity.h"
 
 class DrawingHandler {
 private:
-    std::map<int, ArtComponent*>& componentMap;
+    std::vector<ArtComponent*>& componentList;
     SDL_Renderer* renderer;
 public:
-    DrawingHandler(std::map<int, ArtComponent*>& componentMap,
+    DrawingHandler(std::vector<ArtComponent*>& componentList,
                    SDL_Renderer* renderer);
     void draw(int dt);
 };

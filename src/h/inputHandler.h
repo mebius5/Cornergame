@@ -3,18 +3,18 @@
 
 #include <SDL.h>
 #include <SDL_events.h>
-#include <map>
 #include <list>
+#include <vector>
 #include "entity.h"
 
 class InputHandler {
 protected:
-    std::map<int, InputComponent*>& componentMap;
+    std::vector<InputComponent*>& componentList;
     std::list<Command*>& commandList;
     SwitchStateCommand quitCommand;
     SwitchStateCommand switchToMenu;
 public:
-    InputHandler(std::map<int, InputComponent*>& componentMap,
+    InputHandler(std::vector<InputComponent*>& componentList,
                  std::list<Command*>& commandList);
     virtual void handleEvents();
     void update(int dt);

@@ -8,7 +8,16 @@
 std::list<Command*>* Component::commandList = NULL;
 
 Component::Component(Entity* entity) :
+    valid(true),
     entity(entity) {
+}
+
+void Component::invalidate() {
+    this->valid = false;
+}
+
+bool Component::isValid() {
+    return this->valid;
 }
 
 void Component::setCommandList(std::list<Command*>* commandListPtr) {
