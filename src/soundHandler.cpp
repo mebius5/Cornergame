@@ -2,65 +2,83 @@
 
 SoundHandler::SoundHandler(std::list<Command*>& cmdList) :
     commandList(cmdList),
+    sfxMap(5),             // initialized to 5 positions. Expand if needed!
+    musicMap(5),
     timeElapsed(150),
-    lastChannelUsedForSFX(0) {
+    lastChannelUsedForSfx(0) {
 }
 
 SoundHandler::~SoundHandler() {
-    if (Mix_Playing(this->lastChannelUsedForSFX))
-        Mix_HaltChannel(this->lastChannelUsedForSFX);
+    if (Mix_Playing(this->lastChannelUsedForSfx))
+        Mix_HaltChannel(this->lastChannelUsedForSfx);
     this->stopBackgroundMusic();
+    this->freeMusic();
+    this->freeSfx();
 }
 
-Mix_Music* SoundHandler::loadMusic(const char* filename) {
-    //Load backgroundMusic
+void SoundHandler::loadMusic(const char* filename, MusicEnum musicType) {
     Mix_Music* music = Mix_LoadMUS(filename);
-    if (!music) {
+    if (!music)
         std::cerr << "Unable to load music: " << SDL_GetError() << std::endl;
-    }
-    return music;
+    this->musicMap[musicType] = music;
 }
 
-void SoundHandler::playBackgroundMusic(const char* filename) {
-    this->backgroundMusic = loadMusic(filename);
-    if (this->backgroundMusic) {
-        Mix_PlayMusic(this->backgroundMusic, -1);
+void SoundHandler::loadSfx(const char* filename, SfxEnum sfxType) {
+    Mix_Chunk* chunk = Mix_LoadWAV(filename);
+    if (!chunk)
+        std::cerr << "Failed to load chunk: " << Mix_GetError() << std::endl;
+    this->sfxMap[sfxType] = chunk;
+}
+
+void SoundHandler::freeMusic() {
+    std::vector<Mix_Music*>::const_iterator it;
+    for (it = this->musicMap.begin(); it != this->musicMap.end(); ++it) {
+        if (*it)
+            Mix_FreeMusic(*it);
     }
+    this->musicMap.clear();
+}
+
+void SoundHandler::freeSfx() {
+    std::vector<Mix_Chunk*>::const_iterator it;
+    for (it = this->sfxMap.begin(); it != this->sfxMap.end(); ++it) {
+        if (*it)
+            Mix_FreeChunk(*it);
+    }
+    this->sfxMap.clear();
+}
+
+void SoundHandler::playBackgroundMusic(MusicEnum music) {
+    Mix_PlayMusic(this->musicMap[music], -1);
 }
 
 void SoundHandler::stopBackgroundMusic() {
-    if (this->backgroundMusic) {
-        Mix_HaltMusic();
-        Mix_FreeMusic(this->backgroundMusic);
-        this->backgroundMusic= NULL;
-    }
+    Mix_HaltMusic();
 }
 
-void SoundHandler::playSFX(Mix_Chunk* sfxChunk) {
+void SoundHandler::playSfx(SfxEnum sfxType) {
     if (this->timeElapsed < 150)      // Don't play too often!
         return;
     this->timeElapsed = 0;
 
-    if (Mix_Playing(this->lastChannelUsedForSFX))
-        Mix_HaltChannel(this->lastChannelUsedForSFX);
+    if (Mix_Playing(this->lastChannelUsedForSfx))
+        Mix_HaltChannel(this->lastChannelUsedForSfx);
 
-    this->lastChannelUsedForSFX=Mix_PlayChannel(-1, sfxChunk, 0);
-    if (this->lastChannelUsedForSFX==-1) {
+    this->lastChannelUsedForSfx = Mix_PlayChannel(-1, this->sfxMap[sfxType], 0);
+    if (this->lastChannelUsedForSfx == -1) {
         std::cerr << "Mix_PlayChannel: " << Mix_GetError() << std::endl;
         // may be critical error, or maybe just no channels were free.
         // you could allocated another channel in that case...
     }
 }
 
-void SoundHandler::handleSFX(int dt) {
+void SoundHandler::handleSfx(int dt) {
     this->timeElapsed += dt;
-    std::list<Command *>::const_iterator it;
-    for (it = this->commandList.begin(); it != this->commandList.end();) {
+    std::list<Command*>::const_iterator it;
+    for (it = this->commandList.begin(); it != this->commandList.end(); ) {
         Command* c = *it;
-        //std::cerr<<"Here"<<std::endl;
         if (PlaySoundCommand* sCmd = dynamic_cast<PlaySoundCommand*>(c)) {
-            //std::cerr<<"Here"<<std::endl;
-            playSFX(sCmd->sfxChunk);
+            this->playSfx(sCmd->sfxType);
             it = this->commandList.erase(it);
         } else {
             ++it;

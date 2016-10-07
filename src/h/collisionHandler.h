@@ -1,9 +1,9 @@
 #ifndef CORNERGAME_COLLISION_HANDLER_H
 #define CORNERGAME_COLLISION_HANDLER_H
 
-#include "collisionComponent.h"
 #include <list>
 #include <map>
+#include "collisionComponent.h"
 
 class CollisionHandler {
 private:

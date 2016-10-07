@@ -5,20 +5,14 @@ EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
     renderer(renderer) {
 }
 
-Entity* EntityBuilder::createHero(int x, int y, const char* collisionSfxFile) {
+Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType) {
     SDL_Surface* image = this->loadImage("spritesheets/hero.png");
     Entity* hero = new Entity(this->nextId++, x, y, (image->w)/4, (image->h));
 
-    if (collisionSfxFile) {
-        Mix_Chunk* chunk = Mix_LoadWAV(collisionSfxFile);
-        if (!chunk) {
-            std::cerr << "Failed to load chunk: " << Mix_GetError() << std::endl;
-            return NULL;
-        }
-        hero->collision = new HeroCollisionComponent(hero, new PlaySoundCommand(chunk));
-    } else
+    if (sfxType)        // if sfxType != SFX_NONE
+        hero->collision = new HeroCollisionComponent(hero, new PlaySoundCommand(sfxType));
+    else
         hero->collision = new HeroCollisionComponent(hero, NULL);
-
     hero->art = new AnimationComponent(hero,
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1);
     SDL_FreeSurface(image);

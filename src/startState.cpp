@@ -15,14 +15,14 @@ StartState::~StartState() {
 }
 
 void StartState::begin() {
-    this->soundHandler.playBackgroundMusic("music/mega_destruction_titlescreen.xm");
+    this->soundHandler.playBackgroundMusic(MUSIC_START);
 
     this->entityManager.createCenteredFadeInText(
                         "resources/CaesarDressing-Regular.ttf", "CornerGame",
                         100,
                         255, 255, 255, 0, this->windowW, this->windowH);
 
-    this->entityManager.createHero(500, 500, NULL);
+    this->entityManager.createHero(500, 500, SFX_NONE);
 }
 
 StateEnum StartState::run() {
@@ -38,7 +38,6 @@ StateEnum StartState::run() {
 
         this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
-        this->soundHandler.handleSFX(dt);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();

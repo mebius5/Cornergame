@@ -106,11 +106,9 @@ TL;DR
 TODOS
 leaks?
 rule of three
-
-SoundHandler needs a map from filename to SFX, so sound commands can be
-    deleted at will
 loadFont in entityBuilder?
 
 Move handlers to namespaces
+USE UNORDERED_MAP OR VECTORS!
 
 Change owner pointer in Art components to ownerHealth/ownerScore

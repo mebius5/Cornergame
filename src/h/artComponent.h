@@ -4,10 +4,9 @@
 #include <SDL_render.h>
 #include <SDL_ttf.h>
 #include <string>
+#include <iostream>
 #include "entity.h"
 #include "component.h"
-#include <iostream>
-
 
 class ArtComponent : public Component {
 public:

@@ -1,9 +1,9 @@
 #ifndef CORNERGAME_COMPONENT_H
 #define CORNERGAME_COMPONENT_H
 
+#include <list>
 #include "entity.h"
 #include "command.h"
-#include <list>
 
 class Entity;
 class Command;

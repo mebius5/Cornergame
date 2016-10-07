@@ -1,7 +1,5 @@
 #include "collisionComponent.h"
 
-#include <iostream>
-
 HeroCollisionComponent::HeroCollisionComponent(Entity* ent, Command* onEntity) :
     CollisionComponent(ent),
     entityCollisionCommand(onEntity) {

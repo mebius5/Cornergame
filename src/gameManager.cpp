@@ -106,19 +106,23 @@ void GameManager::run() {
     StartState startState(this->width, this->height, entityMgr, commandList,
                           this->renderer, drawingHandler, inputHandler,
                           soundHandler, controlHandler);
-
     MenuState menuState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler);
-
     PlayState playState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
                         collisionHandler);
-
     HighscoreState highscoreState(this->width, this->height, entityMgr,
                                   commandList, this->renderer, drawingHandler,
                                   inputHandler, soundHandler, controlHandler);
+
+    // Load music resources
+    soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);
+    soundHandler.loadMusic("music/a_winter_kiss_menu.xm", MUSIC_MENU);
+    soundHandler.loadMusic("music/cabin_fever_playscreen.xm", MUSIC_PLAY);
+    soundHandler.loadMusic("music/ambient_starfield_highscore.xm", MUSIC_HIGHSCORE);
+    soundHandler.loadSfx("resources/collision_alert.wav", SFX_ALERT);
 
     // State loop
     State* currentState = &startState;

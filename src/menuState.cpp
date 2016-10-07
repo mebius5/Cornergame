@@ -15,7 +15,7 @@ MenuState::~MenuState() {
 }
 
 void MenuState::begin() {
-    this->soundHandler.playBackgroundMusic("music/a_winter_kiss_menu.xm");
+    this->soundHandler.playBackgroundMusic(MUSIC_MENU);
 
     this->entityManager.createHorizontallyCenteredFadeInText(
             "resources/CaesarDressing-Regular.ttf", "Play",
@@ -60,8 +60,6 @@ StateEnum MenuState::run() {
         milliSecElapsed += dt;
 
         this->inputHandler.handleEvents();
-        //inputHandler.update(dt);
-        this->soundHandler.handleSFX(dt);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();

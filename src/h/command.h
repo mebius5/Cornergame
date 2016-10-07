@@ -6,23 +6,18 @@
 
 class Command {
 public:
-    virtual ~Command();
+    virtual ~Command() { };
 };
 
 /* SOUND COMMANDS */
-class SoundCommand : public Command { };
-
-class PlaySoundCommand : public SoundCommand {
+class PlaySoundCommand : public Command {
 public:
-    Mix_Chunk* sfxChunk;
-    PlaySoundCommand(Mix_Chunk* sfxChunk);
-    ~PlaySoundCommand();
+    SfxEnum sfxType;
+    PlaySoundCommand(SfxEnum sfxType);
 };
 
 /* CONTROL COMMANDS */
-class ControlCommand : public Command { };
-
-class SwitchStateCommand : public ControlCommand {
+class SwitchStateCommand : public Command {
 public:
     StateEnum newState;
     SwitchStateCommand(StateEnum newState);

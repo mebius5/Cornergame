@@ -18,14 +18,13 @@ PlayState::~PlayState() {
 }
 
 void PlayState::begin() {
-    this->soundHandler.playBackgroundMusic("music/cabin_fever_playscreen.xm");
+    this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
 
     // Create entities
     this->entityManager.createBackground("resources/jhu-logo.png",
                                          this->windowW, this->windowH);
 
-    Entity* hero = this->entityManager.createHero(100, 100,
-                                           "resources/collision_alert.wav");
+    Entity* hero = this->entityManager.createHero(100, 100, SFX_ALERT);
 
     this->entityManager.createEnemy(350, 150);
     this->entityManager.createEnemy(500, 150);
@@ -50,7 +49,7 @@ StateEnum PlayState::run() {
         this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
         this->collisionHandler.handleCollisions();
-        this->soundHandler.handleSFX(dt);
+        this->soundHandler.handleSfx(dt);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();

@@ -73,8 +73,8 @@ void EntityManager::clear() {
 }
 
 /* Entity Creation Methods */
-Entity* EntityManager::createHero(int x, int y, const char* collisionSfxFile) {
-    Entity* entity = this->entityBuilder.createHero(x, y, collisionSfxFile);
+Entity* EntityManager::createHero(int x, int y, SfxEnum sfxType) {
+    Entity* entity = this->entityBuilder.createHero(x, y, sfxType);
     this->addEntity(entity);
     return entity;
 }

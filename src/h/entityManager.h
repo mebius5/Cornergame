@@ -29,7 +29,7 @@ public:
     void cleanupEntities();
     void clear();
 
-    Entity* createHero(int x, int y, const char* collisionSfxFile);
+    Entity* createHero(int x, int y, SfxEnum sfxType);
     Entity* createEnemy(int x, int y);
     Entity* createBackground(const char * filename, int width, int height);
 

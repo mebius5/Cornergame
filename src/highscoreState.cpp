@@ -15,7 +15,7 @@ HighscoreState::~HighscoreState() {
 }
 
 void HighscoreState::begin() {
-    this->soundHandler.playBackgroundMusic("music/ambient_starfield_highscore.xm");
+    this->soundHandler.playBackgroundMusic(MUSIC_HIGHSCORE);
 
     this->entityManager.createCenteredFadeInText(
                        "resources/CaesarDressing-Regular.ttf", "High Scores:",
@@ -35,7 +35,6 @@ StateEnum HighscoreState::run() {
 
         this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
-        this->soundHandler.handleSFX(dt);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
