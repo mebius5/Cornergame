@@ -1,7 +1,7 @@
 #include "state.h"
 
 HighscoreState::HighscoreState(int windowW, int windowH, EntityManager& entMgr,
-                std::list<Command*>& commandList, SDL_Renderer* renderer,
+                std::vector<Command*>& commandList, SDL_Renderer* renderer,
                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
                 SoundHandler& soundHandler, ControlHandler& controlHandler) :
     State(entMgr, commandList, renderer, windowW, windowH),

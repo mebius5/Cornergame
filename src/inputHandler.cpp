@@ -1,7 +1,7 @@
 #include "inputHandler.h"
 
 InputHandler::InputHandler(std::vector<InputComponent*>& componentList,
-                           std::list<Command*>& commandList) :
+                           std::vector<Command*>& commandList) :
     componentList(componentList),
     commandList(commandList),
     quitCommand(STATE_QUIT),

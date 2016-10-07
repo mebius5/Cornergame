@@ -5,7 +5,7 @@
 #include <SDL_image.h>
 #include <SDL_ttf.h>
 #include <SDL_mixer.h>
-#include <list>
+#include <vector>
 #include <map>
 #include <iostream>
 #include "command.h"

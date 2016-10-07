@@ -1,6 +1,6 @@
 #include "soundHandler.h"
 
-SoundHandler::SoundHandler(std::list<Command*>& cmdList) :
+SoundHandler::SoundHandler(std::vector<Command*>& cmdList) :
     commandList(cmdList),
     sfxMap(5),             // initialized to 5 positions. Expand if needed!
     musicMap(5),
@@ -74,12 +74,12 @@ void SoundHandler::playSfx(SfxEnum sfxType) {
 
 void SoundHandler::handleSfx(int dt) {
     this->timeElapsed += dt;
-    std::list<Command*>::const_iterator it;
+    std::vector<Command*>::iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
-        Command* c = *it;
-        if (PlaySoundCommand* sCmd = dynamic_cast<PlaySoundCommand*>(c)) {
+        if (PlaySoundCommand* sCmd = dynamic_cast<PlaySoundCommand*>(*it)) {
             this->playSfx(sCmd->sfxType);
-            it = this->commandList.erase(it);
+            *it = this->commandList.back();
+            this->commandList.pop_back();
         } else {
             ++it;
         }

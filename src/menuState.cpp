@@ -1,7 +1,7 @@
 #include "state.h"
 
 MenuState::MenuState(int windowW, int windowH, EntityManager& entityManager,
-                std::list<Command*>& commandList, SDL_Renderer* renderer,
+                std::vector<Command*>& commandList, SDL_Renderer* renderer,
                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
                 SoundHandler& soundHandler, ControlHandler& controlHandler) :
     State(entityManager, commandList, renderer, windowW, windowH),

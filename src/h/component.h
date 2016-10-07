@@ -1,7 +1,7 @@
 #ifndef CORNERGAME_COMPONENT_H
 #define CORNERGAME_COMPONENT_H
 
-#include <list>
+#include <vector>
 #include "entity.h"
 #include "command.h"
 
@@ -10,7 +10,7 @@ class Command;
 
 class Component {
 protected:
-    static std::list<Command*>* commandList;
+    static std::vector<Command*>* commandList;
     bool valid;
 public:
     Entity* entity;
@@ -18,7 +18,7 @@ public:
     virtual ~Component() { };
     void invalidate();
     bool isValid();
-    static void setCommandList(std::list<Command*>* commandListPtr);
+    static void setCommandList(std::vector<Command*>* commandListPtr);
 };
 
 #endif

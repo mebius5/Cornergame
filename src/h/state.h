@@ -16,10 +16,10 @@ protected:
     int windowW;
     int windowH;
     EntityManager& entityManager;
-    std::list<Command*>& commandList;
+    std::vector<Command*>& commandList;
     SDL_Renderer* renderer;
 public:
-    State(EntityManager& entityManager, std::list<Command*>& commandList,
+    State(EntityManager& entityManager, std::vector<Command*>& commandList,
           SDL_Renderer* renderer, int windowW, int windowH);
     virtual ~State() { };
     static int center(int large, int small);
@@ -37,7 +37,7 @@ private:
     ControlHandler& controlHandler;
 public:
     StartState(int windowW, int windowH, EntityManager& entityManager,
-               std::list<Command*>& commandList, SDL_Renderer* renderer,
+               std::vector<Command*>& commandList, SDL_Renderer* renderer,
                DrawingHandler& drawingHandler, InputHandler& inputHandler,
                SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~StartState();
@@ -55,7 +55,7 @@ private:
     ControlHandler& controlHandler;
 public:
     MenuState(int windowW, int windowH, EntityManager& entityManager,
-              std::list<Command*>& commandList, SDL_Renderer* renderer,
+              std::vector<Command*>& commandList, SDL_Renderer* renderer,
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~MenuState();
@@ -74,7 +74,7 @@ private:
     CollisionHandler& collisionHandler;
 public:
     PlayState(int windowW, int windowH, EntityManager& entityManager,
-              std::list<Command*>& commandList, SDL_Renderer* renderer,
+              std::vector<Command*>& commandList, SDL_Renderer* renderer,
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler,
               AiHandler& aiHandler, CollisionHandler& collisionHandler);
@@ -93,7 +93,7 @@ private:
     ControlHandler& controlHandler;
 public:
     HighscoreState(int windowW, int windowH, EntityManager& entityManager,
-                   std::list<Command*>& commandList, SDL_Renderer* renderer,
+                   std::vector<Command*>& commandList, SDL_Renderer* renderer,
                    DrawingHandler& drawingHandler, InputHandler& inputHandler,
                    SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~HighscoreState();

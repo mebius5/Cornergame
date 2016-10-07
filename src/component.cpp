@@ -5,7 +5,7 @@
 #include "physicsComponent.h"
 #include "component.h"
 
-std::list<Command*>* Component::commandList = NULL;
+std::vector<Command*>* Component::commandList = NULL;
 
 Component::Component(Entity* entity) :
     valid(true),
@@ -20,7 +20,7 @@ bool Component::isValid() {
     return this->valid;
 }
 
-void Component::setCommandList(std::list<Command*>* commandListPtr) {
+void Component::setCommandList(std::vector<Command*>* commandListPtr) {
     Component::commandList = commandListPtr;
 }
 

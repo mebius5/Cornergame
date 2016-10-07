@@ -3,21 +3,20 @@
 
 #include <SDL_mixer.h>
 #include <iostream>
-#include <list>
 #include <vector>
 #include "command.h"
 #include "enums.h"
 
 class SoundHandler {
 private:
-    std::list<Command*>& commandList;
+    std::vector<Command*>& commandList;
     std::vector<Mix_Chunk*> sfxMap;
     std::vector<Mix_Music*> musicMap;
     int timeElapsed;               // time passed since a sound was played
     int lastChannelUsedForSfx;
     void playSfx(SfxEnum sfxType);
 public:
-    SoundHandler(std::list<Command*>& commandList);
+    SoundHandler(std::vector<Command*>& commandList);
     ~SoundHandler();
     void loadMusic(const char* filename, MusicEnum musicType);
     void loadSfx(const char* filename, SfxEnum sfxType);

@@ -91,7 +91,7 @@ void GameManager::cleanup() {
 // Run the actual program
 void GameManager::run() {
     // Initialization
-    std::list<Command*> commandList;
+    std::vector<Command*> commandList;
     Component::setCommandList(&commandList);
 
     EntityManager entityMgr(this->renderer);
