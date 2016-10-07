@@ -35,11 +35,13 @@ private:
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
     ControlHandler& controlHandler;
+    CollisionHandler& collisionHandler;
 public:
     StartState(int windowW, int windowH, EntityManager& entityManager,
                std::vector<Command*>& commandList, SDL_Renderer* renderer,
                DrawingHandler& drawingHandler, InputHandler& inputHandler,
-               SoundHandler& soundHandler, ControlHandler& controlHandler);
+               SoundHandler& soundHandler, ControlHandler& controlHandler,
+               CollisionHandler& collisionHandler);
     ~StartState();
     void begin();
     StateEnum run();

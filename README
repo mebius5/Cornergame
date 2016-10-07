@@ -107,9 +107,10 @@ TODOS
 valgrind!
 rule of three
 verify deletion was implemented properly w/ vectors!
+How to do terrain?
+Physics on characters?
 loadFont in entityBuilder?
 Move handlers to namespaces?
 Move texture deletion to entityBuilder -> pool textures like music
-make commandList a vector -> unorderedVector?
 
 Change owner pointer in Art components to ownerHealth/ownerScore

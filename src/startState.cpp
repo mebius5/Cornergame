@@ -3,12 +3,14 @@
 StartState::StartState(int windowW, int windowH, EntityManager& entityManager,
                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
-                SoundHandler& soundHandler, ControlHandler& controlHandler) :
+                SoundHandler& soundHandler, ControlHandler& controlHandler,
+                CollisionHandler& collisionHandler) :
     State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
-    controlHandler(controlHandler) {
+    controlHandler(controlHandler),
+    collisionHandler(collisionHandler) {
 }
 
 StartState::~StartState() {
@@ -38,6 +40,7 @@ StateEnum StartState::run() {
 
         this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
+        this->collisionHandler.handleCollisions();
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();

@@ -1,10 +1,11 @@
 #include "inputComponent.h"
 
 HeroInputComponent::HeroInputComponent(Entity* entity) :
-        InputComponent(entity),
-        accelRate(.001f),
-        maxVelocity(.4f),
-        velocityDecay(.95f) {
+    InputComponent(entity),
+    accelRate(.001f),
+    maxVelocity(.6f),
+    velocityDecay(.95f) {
+    this->entity->yAccel = .0017f;
 }
 
 HeroInputComponent::~HeroInputComponent() {
@@ -22,10 +23,14 @@ float HeroInputComponent::boundVelocity(float velocity) {
 void HeroInputComponent::keyDown(SDL_Keycode keycode) {
     switch (keycode) {
         case SDLK_UP:
-            this->entity->yAccel = -1 * this->accelRate;
+            if (this->entity->yVelocity == 0.0f) {
+                this->entity->yVelocity = -.6f;
+                this->entity->y -= 1.0f;
+            }
+            this->entity->yAccel = -1 * this->accelRate + .0017f;
             break;
         case SDLK_DOWN:
-            this->entity->yAccel = this->accelRate;
+            this->entity->yAccel = this->accelRate +.0017f;
             break;
         case SDLK_LEFT:
             this->entity->xAccel = -1 * this->accelRate;
@@ -39,7 +44,7 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
     switch (keycode) {
         case SDLK_UP:
         case SDLK_DOWN:
-            this->entity->yAccel = 0;
+            this->entity->yAccel = +.0017f;
             break;
         case SDLK_LEFT:
         case SDLK_RIGHT:

@@ -105,7 +105,7 @@ void GameManager::run() {
 
     StartState startState(this->width, this->height, entityMgr, commandList,
                           this->renderer, drawingHandler, inputHandler,
-                          soundHandler, controlHandler);
+                          soundHandler, controlHandler, collisionHandler);
     MenuState menuState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler);
