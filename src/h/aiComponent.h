@@ -15,9 +15,9 @@ class EnemyAiComponent : public AiComponent {
 private:
     int timeElapsed;      // time passed since a behavior was generated
     float speed;
-    void resetAi();
 public:
     EnemyAiComponent(Entity* entity);
+    void resetAi();
     void updateLocation(int dt);
 };
 

@@ -2,10 +2,9 @@
 
 MenuState::MenuState(int windowW, int windowH, EntityManager& entityManager,
                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
-                std::vector<Entity*>& savedEntities,
                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
                 SoundHandler& soundHandler, ControlHandler& controlHandler) :
-    State(entityManager, commandList, renderer, windowW, windowH, savedEntities),
+    State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
@@ -71,7 +70,7 @@ StateEnum MenuState::run() {
     return STATE_NONE;      // NOT REACHED
 }
 
-void MenuState::cleanup() {
+void MenuState::cleanup(StateEnum /*next*/) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();

@@ -18,7 +18,7 @@ Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType) {
     SDL_FreeSurface(image);
     hero->input = new HeroInputComponent(hero);
     hero->score = new ScoreComponent(hero);
-    hero->health = new HealthComponent(hero, 300);
+    hero->health = new HealthComponent(hero, 300, new SwitchStateCommand(STATE_RESULTS));
     return hero;
 }
 
@@ -31,7 +31,7 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1);
     SDL_FreeSurface(image);
     enemy->ai = new EnemyAiComponent(enemy);
-    enemy->health = new HealthComponent(enemy, 200);
+    enemy->health = new HealthComponent(enemy, 200, NULL);
     return enemy;
 }
 

@@ -5,17 +5,17 @@
 #include "component.h"
 
 class ScoreComponent : public Component {
-    private:
-        int score;
-        float multiplier;
+private:
+    int score;
+    float multiplier;
 
-    public:
-        ScoreComponent(Entity* entity);
-        ~ScoreComponent();
-        void addScore(int scoreIncrease);
-        int getScore();
-        void resetScore();
-        void setMultiplier(float multiplier);
+public:
+    ScoreComponent(Entity* entity);
+    ~ScoreComponent();
+    void addScore(int scoreIncrease);
+    int getScore();
+    void resetScore();
+    void setMultiplier(float multiplier);
 };
 
 #endif

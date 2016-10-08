@@ -1,18 +1,20 @@
 #include <state.h>
 
 PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
-                     std::vector<Command*>& commandList, SDL_Renderer* renderer,
-                     std::vector<Entity*>& savedEntities,
-                     DrawingHandler& drawingHandler, InputHandler& inputHandler,
-                     SoundHandler& soundHandler, ControlHandler& controlHandler,
-                     AiHandler& aiHandler, CollisionHandler& collisionHandler) :
-    State(entityManager, commandList, renderer, windowW, windowH, savedEntities),
+                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
+                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
+                 SoundHandler& soundHandler, ControlHandler& controlHandler,
+                 AiHandler& aiHandler, CollisionHandler& collisionHandler,
+                 ResultsState& resultsState, HighscoreState& highscoreState) :
+    State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
     controlHandler(controlHandler),
     aiHandler(aiHandler),
-    collisionHandler(collisionHandler) {
+    collisionHandler(collisionHandler),
+    resultsState(resultsState),
+    highscoreState(highscoreState) {
 }
 
 PlayState::~PlayState() {
@@ -25,7 +27,7 @@ void PlayState::begin() {
     this->entityManager.createBackground("resources/jhu-logo.png",
                                          this->windowW, this->windowH);
 
-    Entity* hero = this->entityManager.createHero(100, 100, SFX_ALERT);
+    this->hero = this->entityManager.createHero(100, 100, SFX_ALERT);
 
     this->entityManager.createEnemy(350, 150);
     this->entityManager.createEnemy(500, 150);
@@ -62,7 +64,11 @@ StateEnum PlayState::run() {
     return STATE_HIGHSCORE;
 }
 
-void PlayState::cleanup() {
+void PlayState::cleanup(StateEnum nextState) {
+    if (nextState == STATE_RESULTS) {  // if game complete, update other states
+        this->highscoreState.updateHighscores(this->hero);
+        this->resultsState.updateResults(this->hero);     //TODO: save sprite?
+    }
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();

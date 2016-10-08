@@ -18,17 +18,15 @@ protected:
     EntityManager& entityManager;
     std::vector<Command*>& commandList;
     SDL_Renderer* renderer;
-    std::vector<Entity*>& savedEntities;
 public:
     State(EntityManager& entityManager, std::vector<Command*>& commandList,
-          SDL_Renderer* renderer, int windowW, int windowH,
-          std::vector<Entity*>& savedEntities);
+          SDL_Renderer* renderer, int windowW, int windowH);
     virtual ~State() { };
     static int center(int large, int small);
     static SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
     virtual void begin() = 0;
     virtual StateEnum run() = 0;
-    virtual void cleanup() = 0;
+    virtual void cleanup(StateEnum nextState) = 0;
 };
 
 class StartState : public State {
@@ -41,14 +39,13 @@ private:
 public:
     StartState(int windowW, int windowH, EntityManager& entityManager,
                std::vector<Command*>& commandList, SDL_Renderer* renderer,
-               std::vector<Entity*>& savedEntities,
                DrawingHandler& drawingHandler, InputHandler& inputHandler,
                SoundHandler& soundHandler, ControlHandler& controlHandler,
                CollisionHandler& collisionHandler);
     ~StartState();
     void begin();
     StateEnum run();
-    void cleanup();
+    void cleanup(StateEnum next);
 };
 
 
@@ -61,13 +58,51 @@ private:
 public:
     MenuState(int windowW, int windowH, EntityManager& entityManager,
               std::vector<Command*>& commandList, SDL_Renderer* renderer,
-              std::vector<Entity*>& savedEntities,
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~MenuState();
     void begin();
     StateEnum run();
-    void cleanup();
+    void cleanup(StateEnum next);
+};
+
+class HighscoreState : public State {
+private:
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
+    ControlHandler& controlHandler;
+    int highscore;
+public:
+    HighscoreState(int windowW, int windowH, EntityManager& entityManager,
+                   std::vector<Command*>& commandList, SDL_Renderer* renderer,
+                   DrawingHandler& drawingHandler, InputHandler& inputHandler,
+                   SoundHandler& soundHandler, ControlHandler& controlHandler);
+    ~HighscoreState();
+    void begin();
+    StateEnum run();
+    void cleanup(StateEnum next);
+    void updateHighscores(Entity* hero);
+};
+
+class ResultsState : public State {
+private:
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
+    ControlHandler& controlHandler;
+    int score;
+    bool victory;
+public:
+    ResultsState(int windowW, int windowH, EntityManager& entityManager,
+                   std::vector<Command*>& commandList, SDL_Renderer* renderer,
+                   DrawingHandler& drawingHandler, InputHandler& inputHandler,
+                   SoundHandler& soundHandler, ControlHandler& controlHandler);
+    ~ResultsState();
+    void begin();
+    StateEnum run();
+    void cleanup(StateEnum next);
+    void updateResults(Entity* hero);
 };
 
 class PlayState : public State {
@@ -78,54 +113,20 @@ private:
     ControlHandler& controlHandler;
     AiHandler& aiHandler;
     CollisionHandler& collisionHandler;
+    ResultsState& resultsState;
+    HighscoreState& highscoreState;
+    Entity* hero;
 public:
     PlayState(int windowW, int windowH, EntityManager& entityManager,
               std::vector<Command*>& commandList, SDL_Renderer* renderer,
-              std::vector<Entity*>& savedEntities,
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler,
-              AiHandler& aiHandler, CollisionHandler& collisionHandler);
+              AiHandler& aiHandler, CollisionHandler& collisionHandler,
+              ResultsState& resultsState, HighscoreState& highscoreState);
     ~PlayState();
     void begin();
     StateEnum run();
-    void cleanup();
-};
-
-
-class HighscoreState : public State {
-private:
-    DrawingHandler& drawingHandler;
-    InputHandler& inputHandler;
-    SoundHandler& soundHandler;
-    ControlHandler& controlHandler;
-public:
-    HighscoreState(int windowW, int windowH, EntityManager& entityManager,
-                   std::vector<Command*>& commandList, SDL_Renderer* renderer,
-                   std::vector<Entity*>& savedEntities,
-                   DrawingHandler& drawingHandler, InputHandler& inputHandler,
-                   SoundHandler& soundHandler, ControlHandler& controlHandler);
-    ~HighscoreState();
-    void begin();
-    StateEnum run();
-    void cleanup();
-};
-
-class ResultsState : public State {
-private:
-    DrawingHandler& drawingHandler;
-    InputHandler& inputHandler;
-    SoundHandler& soundHandler;
-    ControlHandler& controlHandler;
-public:
-    ResultsState(int windowW, int windowH, EntityManager& entityManager,
-                   std::vector<Command*>& commandList, SDL_Renderer* renderer,
-                   std::vector<Entity*>& savedEntities,
-                   DrawingHandler& drawingHandler, InputHandler& inputHandler,
-                   SoundHandler& soundHandler, ControlHandler& controlHandler);
-    ~ResultsState();
-    void begin();
-    StateEnum run();
-    void cleanup();
+    void cleanup(StateEnum next);
 };
 
 #endif

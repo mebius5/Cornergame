@@ -2,11 +2,10 @@
 
 StartState::StartState(int windowW, int windowH, EntityManager& entityManager,
                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
-                std::vector<Entity*>& savedEntities,
                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
                 SoundHandler& soundHandler, ControlHandler& controlHandler,
                 CollisionHandler& collisionHandler) :
-    State(entityManager, commandList, renderer, windowW, windowH, savedEntities),
+    State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
@@ -54,7 +53,7 @@ StateEnum StartState::run() {
     return STATE_MENU;
 }
 
-void StartState::cleanup() {
+void StartState::cleanup(StateEnum /*next*/) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();

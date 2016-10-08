@@ -5,16 +5,16 @@
 #include "component.h"
 
 class HealthComponent : public Component {
-    private:
-        int health;
-        int maxHealth;
-
-    public:
-        HealthComponent(Entity* entity, int maxHealth);
-        ~HealthComponent();
-        int getHealth();
-        int getMaxHealth();
-        void takeDamage(int damage);
+private:
+    int health;
+    int maxHealth;
+    Command* onDeath;
+public:
+    HealthComponent(Entity* entity, int maxHealth, Command* onDeath);
+    ~HealthComponent();
+    int getHealth();
+    int getMaxHealth();
+    void takeDamage(int damage);
 };
 
 #endif

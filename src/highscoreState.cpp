@@ -2,14 +2,14 @@
 
 HighscoreState::HighscoreState(int windowW, int windowH, EntityManager& entMgr,
                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
-                std::vector<Entity*>& savedEntities,
                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
                 SoundHandler& soundHandler, ControlHandler& controlHandler) :
-    State(entMgr, commandList, renderer, windowW, windowH, savedEntities),
+    State(entMgr, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
-    controlHandler(controlHandler) {
+    controlHandler(controlHandler),
+    highscore(0) {
 }
 
 HighscoreState::~HighscoreState() {
@@ -17,9 +17,9 @@ HighscoreState::~HighscoreState() {
 
 void HighscoreState::begin() {
     this->soundHandler.playBackgroundMusic(MUSIC_HIGHSCORE);
-
+    std::string hsText = "High Score:\n" + std::to_string(this->highscore);
     this->entityManager.createCenteredFadeInText(
-                       "resources/CaesarDressing-Regular.ttf", "High Scores:",
+                       "resources/CaesarDressing-Regular.ttf", hsText.c_str(),
                        100, 255, 255, 255, 0, this->windowW, this->windowH);
 }
 
@@ -50,8 +50,13 @@ StateEnum HighscoreState::run() {
     return STATE_MENU;
 }
 
-void HighscoreState::cleanup() {
+void HighscoreState::cleanup(StateEnum /*next*/) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
+}
+
+void HighscoreState::updateHighscores(Entity* hero) {
+    if (hero->score->getScore() > this->highscore)
+        this->highscore = hero->score->getScore();
 }

@@ -2,14 +2,14 @@
 
 ResultsState::ResultsState(int windowW, int windowH, EntityManager& entMgr,
                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
-                std::vector<Entity*>& savedEntities,
                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
                 SoundHandler& soundHandler, ControlHandler& controlHandler) :
-    State(entMgr, commandList, renderer, windowW, windowH, savedEntities),
+    State(entMgr, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
-    controlHandler(controlHandler) {
+    controlHandler(controlHandler),
+    score(0) {
 }
 
 ResultsState::~ResultsState() {
@@ -18,9 +18,15 @@ ResultsState::~ResultsState() {
 void ResultsState::begin() {
     this->soundHandler.playBackgroundMusic(MUSIC_HIGHSCORE);
 
+    std::string resultString;
+    if (this->victory)
+        resultString = "Victory! Score: " + std::to_string(this->score);
+    else
+        resultString = "Defeat! Score: " + std::to_string(this->score);
+
     this->entityManager.createCenteredFadeInText(
-                       "resources/CaesarDressing-Regular.ttf", "Result:",
-                       100, 255, 255, 255, 0, this->windowW, this->windowH);
+                   "resources/CaesarDressing-Regular.ttf", resultString.c_str(),
+                   100, 255, 255, 255, 0, this->windowW, this->windowH);
 }
 
 StateEnum ResultsState::run() {
@@ -47,11 +53,19 @@ StateEnum ResultsState::run() {
         }
     }
 
-    return STATE_HIGHSCORE;
+    return STATE_MENU;
 }
 
-void ResultsState::cleanup() {
+void ResultsState::cleanup(StateEnum /*next*/) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
+}
+
+void ResultsState::updateResults(Entity* hero) {
+    if (hero->health->getHealth() <= 0)
+        this->victory = false;
+    else
+        this->victory = true;
+    this->score = hero->score->getScore();
 }
