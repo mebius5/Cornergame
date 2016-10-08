@@ -2,10 +2,11 @@
 
 StartState::StartState(int windowW, int windowH, EntityManager& entityManager,
                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
+                std::vector<Entity*>& savedEntities,
                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
                 SoundHandler& soundHandler, ControlHandler& controlHandler,
                 CollisionHandler& collisionHandler) :
-    State(entityManager, commandList, renderer, windowW, windowH),
+    State(entityManager, commandList, renderer, windowW, windowH, savedEntities),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),

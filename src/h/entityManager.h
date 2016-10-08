@@ -42,11 +42,11 @@ public:
                             int initialAlpha, int windowW, int windowH);
 
     Entity* createHorizontallyCenteredFadeInText(const char *fontName,
-                                             const char *text,
-                                             int fontSize,
-                                             int r, int g, int b, int initialAlpha,
-                                             int windowW, int yPos,
-                                             int index, int numOptions, StateEnum nextState);
+                            const char *text, int fontSize,
+                            int r, int g, int b, int initialAlpha,
+                            int windowW, int yPos,
+                            int index, int numOptions, StateEnum nextState);
+    Entity* createVictoryZone(int x, int y);
 };
 
 #endif

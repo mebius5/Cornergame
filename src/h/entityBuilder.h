@@ -36,6 +36,7 @@ public:
                                       int windowW, int yPos,
                                       int index, int numOptions,
                                       StateEnum nextState);
+    Entity* createVictoryZone(int x, int y);
 };
 
 #endif

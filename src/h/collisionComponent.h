@@ -31,4 +31,15 @@ public:
     void onBorderCollision();
 };
 
+class VictoryZoneCollisionComponent : public CollisionComponent {
+private:
+    Command* entityCollisionCommand;
+public:
+    VictoryZoneCollisionComponent(Entity* entity, Command* entityCollisionCmd);
+    ~VictoryZoneCollisionComponent();
+
+    void onEntityCollision(Entity* other);
+    void onBorderCollision();
+};
+
 #endif

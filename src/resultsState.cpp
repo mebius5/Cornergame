@@ -1,6 +1,6 @@
 #include "state.h"
 
-HighscoreState::HighscoreState(int windowW, int windowH, EntityManager& entMgr,
+ResultsState::ResultsState(int windowW, int windowH, EntityManager& entMgr,
                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
                 std::vector<Entity*>& savedEntities,
                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
@@ -12,18 +12,18 @@ HighscoreState::HighscoreState(int windowW, int windowH, EntityManager& entMgr,
     controlHandler(controlHandler) {
 }
 
-HighscoreState::~HighscoreState() {
+ResultsState::~ResultsState() {
 }
 
-void HighscoreState::begin() {
+void ResultsState::begin() {
     this->soundHandler.playBackgroundMusic(MUSIC_HIGHSCORE);
 
     this->entityManager.createCenteredFadeInText(
-                       "resources/CaesarDressing-Regular.ttf", "High Scores:",
+                       "resources/CaesarDressing-Regular.ttf", "Result:",
                        100, 255, 255, 255, 0, this->windowW, this->windowH);
 }
 
-StateEnum HighscoreState::run() {
+StateEnum ResultsState::run() {
     bool running = true;
     float lastTime = SDL_GetTicks();
     int timeElapsed = 0;
@@ -42,15 +42,15 @@ StateEnum HighscoreState::run() {
         if (nextState)
             return nextState;
 
-        if (timeElapsed > 5000){   //Return to MENU screen after 5 secs
+        if (timeElapsed > 5000) {   //Return to MENU screen after 5 secs
             break;
         }
     }
 
-    return STATE_MENU;
+    return STATE_HIGHSCORE;
 }
 
-void HighscoreState::cleanup() {
+void ResultsState::cleanup() {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();

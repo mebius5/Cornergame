@@ -93,6 +93,7 @@ void GameManager::run() {
     // Initialization
     std::vector<Command*> commandList;
     Component::setCommandList(&commandList);
+    std::vector<Entity*> savedEntities;
 
     EntityManager entityMgr(this->renderer);
     DrawingHandler drawingHandler(entityMgr.artComponents, this->renderer);
@@ -104,18 +105,21 @@ void GameManager::run() {
     ControlHandler controlHandler(commandList);
 
     StartState startState(this->width, this->height, entityMgr, commandList,
-                          this->renderer, drawingHandler, inputHandler,
-                          soundHandler, controlHandler, collisionHandler);
+                    this->renderer, savedEntities, drawingHandler, inputHandler,
+                    soundHandler, controlHandler, collisionHandler);
     MenuState menuState(this->width, this->height, entityMgr, commandList,
-                        this->renderer, drawingHandler, inputHandler,
-                        soundHandler, controlHandler);
+                    this->renderer, savedEntities, drawingHandler, inputHandler,
+                    soundHandler, controlHandler);
     PlayState playState(this->width, this->height, entityMgr, commandList,
-                        this->renderer, drawingHandler, inputHandler,
-                        soundHandler, controlHandler, aiHandler,
-                        collisionHandler);
+                    this->renderer, savedEntities, drawingHandler, inputHandler,
+                    soundHandler, controlHandler, aiHandler,
+                    collisionHandler);
     HighscoreState highscoreState(this->width, this->height, entityMgr,
-                                  commandList, this->renderer, drawingHandler,
-                                  inputHandler, soundHandler, controlHandler);
+                    commandList, this->renderer, savedEntities, drawingHandler,
+                    inputHandler, soundHandler, controlHandler);
+    ResultsState resultsState(this->width, this->height, entityMgr,
+                    commandList, this->renderer, savedEntities, drawingHandler,
+                    inputHandler, soundHandler, controlHandler);
 
     // Load music resources
     soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);
@@ -142,6 +146,9 @@ void GameManager::run() {
             break;
         case STATE_MENU:
             currentState = &menuState;
+            break;
+        case STATE_RESULTS:
+            currentState = &resultsState;
             break;
         default:
             break;

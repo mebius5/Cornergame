@@ -1,12 +1,14 @@
 #include "state.h"
 
 State::State(EntityManager& entityManager, std::vector<Command*>& cmdList,
-             SDL_Renderer* renderer, int windowW, int windowH) :
+             SDL_Renderer* renderer, int windowW, int windowH,
+             std::vector<Entity*>& savedEntities) :
     windowW(windowW),
     windowH(windowH),
     entityManager(entityManager),
     commandList(cmdList),
-    renderer(renderer) {
+    renderer(renderer),
+    savedEntities(savedEntities) {
 }
 
 int State::center(int large, int small) {

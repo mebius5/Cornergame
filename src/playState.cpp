@@ -2,10 +2,11 @@
 
 PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
                      std::vector<Command*>& commandList, SDL_Renderer* renderer,
+                     std::vector<Entity*>& savedEntities,
                      DrawingHandler& drawingHandler, InputHandler& inputHandler,
                      SoundHandler& soundHandler, ControlHandler& controlHandler,
                      AiHandler& aiHandler, CollisionHandler& collisionHandler) :
-    State(entityManager, commandList, renderer, windowW, windowH),
+    State(entityManager, commandList, renderer, windowW, windowH, savedEntities),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
@@ -34,6 +35,7 @@ void PlayState::begin() {
 
     this->entityManager.createHealthBar(100, 600, 200, 50, hero);
     this->entityManager.createScoreBox(1150, 600, hero);
+    this->entityManager.createVictoryZone(1150, 200);
 }
 
 StateEnum PlayState::run() {

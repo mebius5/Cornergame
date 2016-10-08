@@ -18,9 +18,11 @@ protected:
     EntityManager& entityManager;
     std::vector<Command*>& commandList;
     SDL_Renderer* renderer;
+    std::vector<Entity*>& savedEntities;
 public:
     State(EntityManager& entityManager, std::vector<Command*>& commandList,
-          SDL_Renderer* renderer, int windowW, int windowH);
+          SDL_Renderer* renderer, int windowW, int windowH,
+          std::vector<Entity*>& savedEntities);
     virtual ~State() { };
     static int center(int large, int small);
     static SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
@@ -39,6 +41,7 @@ private:
 public:
     StartState(int windowW, int windowH, EntityManager& entityManager,
                std::vector<Command*>& commandList, SDL_Renderer* renderer,
+               std::vector<Entity*>& savedEntities,
                DrawingHandler& drawingHandler, InputHandler& inputHandler,
                SoundHandler& soundHandler, ControlHandler& controlHandler,
                CollisionHandler& collisionHandler);
@@ -58,6 +61,7 @@ private:
 public:
     MenuState(int windowW, int windowH, EntityManager& entityManager,
               std::vector<Command*>& commandList, SDL_Renderer* renderer,
+              std::vector<Entity*>& savedEntities,
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~MenuState();
@@ -77,6 +81,7 @@ private:
 public:
     PlayState(int windowW, int windowH, EntityManager& entityManager,
               std::vector<Command*>& commandList, SDL_Renderer* renderer,
+              std::vector<Entity*>& savedEntities,
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler,
               AiHandler& aiHandler, CollisionHandler& collisionHandler);
@@ -96,9 +101,28 @@ private:
 public:
     HighscoreState(int windowW, int windowH, EntityManager& entityManager,
                    std::vector<Command*>& commandList, SDL_Renderer* renderer,
+                   std::vector<Entity*>& savedEntities,
                    DrawingHandler& drawingHandler, InputHandler& inputHandler,
                    SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~HighscoreState();
+    void begin();
+    StateEnum run();
+    void cleanup();
+};
+
+class ResultsState : public State {
+private:
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
+    ControlHandler& controlHandler;
+public:
+    ResultsState(int windowW, int windowH, EntityManager& entityManager,
+                   std::vector<Command*>& commandList, SDL_Renderer* renderer,
+                   std::vector<Entity*>& savedEntities,
+                   DrawingHandler& drawingHandler, InputHandler& inputHandler,
+                   SoundHandler& soundHandler, ControlHandler& controlHandler);
+    ~ResultsState();
     void begin();
     StateEnum run();
     void cleanup();

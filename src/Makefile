@@ -23,13 +23,15 @@ SRCFILES = \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
 	playState.cpp \
+	resultsState.cpp \
     scoreComponent.cpp \
     scoreTextArtComponent.cpp \
 	soundHandler.cpp \
 	startState.cpp \
 	state.cpp \
 	staticArtComponent.cpp \
-	textFadeInComponent.cpp
+	textFadeInComponent.cpp \
+	victoryZoneCollisionComponent.cpp
 
 CXX = g++
 CXXFLAGS = -std=c++11 -Wall -Wextra -Wpedantic

@@ -134,3 +134,9 @@ Entity* EntityManager::createHorizontallyCenteredFadeInText(const char* fontName
     this->addEntity(entity);
     return entity;
 }
+
+Entity* EntityManager::createVictoryZone(int x, int y) {
+    Entity* entity = this->entityBuilder.createVictoryZone(x, y);
+    this->addEntity(entity);
+    return entity;
+}

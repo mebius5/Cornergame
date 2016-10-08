@@ -98,6 +98,16 @@ Entity * EntityBuilder::createHorizontallyCenteredFadeInText(const char *fontNam
     return fadeInText;
 }
 
+Entity* EntityBuilder::createVictoryZone(int x, int y) {
+    Entity* zone = new Entity(this->nextId++, x, y, 50, 50);
+    SDL_Surface* surface = SDL_CreateRGBSurface(0, 50, 50, 32, 0, 0xff, 0, 0);
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
+    SDL_FreeSurface(surface);
+    zone->art = new StaticArtComponent(zone, texture, 2);
+    zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_RESULTS));
+    return zone;
+}
+
 SDL_Surface* EntityBuilder::loadFont(const char * fontName,
                       const char * text,
                       int fontSize,
