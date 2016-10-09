@@ -96,6 +96,12 @@ Else, the enemy moves randomly and freely on its own.
 
 If your hero gets hit, an alarm noise will play.
 
+SCORE
+The score increments with time of survival and decrements with each collision
+with enemy. In order to get the highest score, you want to try to survive as
+long as possible while avoiding the enemy, and then go to the victory zone
+when you absolutely can't hold on.
+
 
 QUIRKS
 - no game name yet!
