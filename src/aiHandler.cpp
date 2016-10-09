@@ -1,8 +1,8 @@
 #include "aiHandler.h"
 
-AiHandler::AiHandler(std::vector<AiComponent*>& componentList, std::vector<InputComponent*>& inputComponentList) :
-    componentList(componentList),
-    inputComponentList(inputComponentList){
+AiHandler::AiHandler(std::vector<AiComponent*>& componentList, std::vector<Entity*>& heroEntitiesList) :
+        componentList(componentList),
+        heroEntitiesList(heroEntitiesList){
 }
 
 void AiHandler::updateAi(int dt) {
@@ -12,34 +12,25 @@ void AiHandler::updateAi(int dt) {
             *it = this->componentList.back();
             this->componentList.pop_back();
         } else {
-            /*** //Currenly makes everything lag, so hero
-            std::vector<InputComponent*>::iterator heroInIt;
+            std::vector<Entity*>::iterator heroInIt;
             int minDistance = 100000;
-            for (heroInIt = this->inputComponentList.begin(); heroInIt != this->inputComponentList.end(); ) {
-                if (!(*heroInIt)->isValid()) {        // remove invalid components
-                    *heroInIt = this->inputComponentList.back();
-                    this->inputComponentList.pop_back();
-                } else {
-                    if(dynamic_cast<HeroInputComponent*>((*heroInIt))){
-                        (*heroInIt)->updateLocation(dt);
-                        int distance = sqrt(((*heroInIt)->entity->x - (*it)->entity->x ) * ((*heroInIt)->entity->x - (*it)->entity->x) +
-                                            ((*heroInIt)->entity->y - (*it)->entity->y ) * ((*heroInIt)->entity->y - (*it)->entity->y));
+            for (heroInIt = this->heroEntitiesList.begin(); heroInIt != this->heroEntitiesList.end(); ) {
+                if((*heroInIt)){
+                    int distance = sqrt(((*heroInIt)->x - (*it)->entity->x ) * ((*heroInIt)->x - (*it)->entity->x) +
+                                        ((*heroInIt)->y - (*it)->entity->y ) * ((*heroInIt)->y - (*it)->entity->y));
 
-                        //If the enemy gets within 300 pixel and is the hero is the closest hero to the enemy
-                        //Then we update the distance of the enemy with respect to the location of the hero
-                        //Else the movement is random
-                        if( distance < 300 && distance<minDistance){
-                            (*it)->updateLocation(dt, (*heroInIt)->entity);
-                            minDistance=distance;
-                        } else{
-                            (*it)->updateLocation(dt, NULL);
-                        }
-                        ++heroInIt;
+                    //If the enemy gets within 300 pixel and is the hero is the closest hero to the enemy
+                    //Then we update the distance of the enemy with respect to the location of the hero
+                    //Else the movement is random
+                    if( distance < 300 && distance<minDistance){
+                        (*it)->updateLocation(dt, (*heroInIt));
+                        minDistance=distance;
+                    } else{
+                        (*it)->updateLocation(dt, NULL);
                     }
+                    ++heroInIt;
                 }
             }
-            ***/
-            (*it)->updateLocation(dt, NULL); //Disable for
             ++it;
         }
     }

@@ -20,6 +20,7 @@ public:
     std::vector<PhysicsComponent*> physicsComponents;
     std::vector<HealthComponent*> healthComponents;
     std::vector<ScoreComponent*> scoreComponents;
+    std::vector<Entity *> heroEntities;
 
     EntityManager(SDL_Renderer* renderer);
     ~EntityManager();

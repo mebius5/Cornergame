@@ -78,12 +78,16 @@ void EntityManager::clear() {
     this->physicsComponents.clear();
     this->healthComponents.clear();
     this->scoreComponents.clear();
+    this->heroEntities.clear();
 }
 
 /* Entity Creation Methods */
 Entity* EntityManager::createHero(int x, int y, SfxEnum sfxType) {
     Entity* entity = this->entityBuilder.createHero(x, y, sfxType);
     this->addEntity(entity);
+
+    this->heroEntities.push_back(entity);
+
     return entity;
 }
 
