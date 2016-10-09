@@ -5,7 +5,7 @@ EnemyCollisionComponent::EnemyCollisionComponent(Entity* entity) :
 }
 
 void EnemyCollisionComponent::onEntityCollision(Entity* /*other*/) {
-    this->entity->health->takeDamage(50);
+    this->entity->health->takeDamage(30);
 }
 
 void EnemyCollisionComponent::onBorderCollision() {
