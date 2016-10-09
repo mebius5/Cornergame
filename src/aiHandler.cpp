@@ -12,6 +12,7 @@ void AiHandler::updateAi(int dt) {
             *it = this->componentList.back();
             this->componentList.pop_back();
         } else {
+            /*** //Currenly makes everything lag, so hero
             std::vector<InputComponent*>::iterator heroInIt;
             int minDistance = 100000;
             for (heroInIt = this->inputComponentList.begin(); heroInIt != this->inputComponentList.end(); ) {
@@ -37,8 +38,8 @@ void AiHandler::updateAi(int dt) {
                     }
                 }
             }
-
-            //(*it)->updateLocation(dt);
+            ***/
+            (*it)->updateLocation(dt, NULL); //Disable for
             ++it;
         }
     }
