@@ -11,7 +11,7 @@ HeroCollisionComponent::~HeroCollisionComponent() {
 }
 
 void HeroCollisionComponent::onEntityCollision(Entity* /*other*/) {
-    this->entity->score->addScore(100);
+    this->entity->score->addScore(-10);
     this->entity->health->takeDamage(10);
     if (this->entityCollisionCommand)
         Component::commandList->push_back(this->entityCollisionCommand);

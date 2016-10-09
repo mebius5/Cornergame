@@ -4,7 +4,7 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
                  std::vector<Command*>& commandList, SDL_Renderer* renderer,
                  DrawingHandler& drawingHandler, InputHandler& inputHandler,
                  SoundHandler& soundHandler, ControlHandler& controlHandler,
-                 AiHandler& aiHandler, CollisionHandler& collisionHandler,
+                 AiHandler& aiHandler, CollisionHandler& collisionHandler, ScoreHandler& scoreHandler,
                  ResultsState& resultsState, HighscoreState& highscoreState) :
     State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
@@ -13,6 +13,7 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
     controlHandler(controlHandler),
     aiHandler(aiHandler),
     collisionHandler(collisionHandler),
+    scoreHandler(scoreHandler),
     resultsState(resultsState),
     highscoreState(highscoreState) {
 }
@@ -54,6 +55,7 @@ StateEnum PlayState::run() {
         this->inputHandler.update(dt);
         this->collisionHandler.handleCollisions();
         this->soundHandler.handleSfx(dt);
+        this->scoreHandler.handleScore(dt);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();

@@ -25,6 +25,7 @@ SRCFILES = \
 	playState.cpp \
 	resultsState.cpp \
     scoreComponent.cpp \
+    scoreHandler.cpp \
     scoreTextArtComponent.cpp \
 	soundHandler.cpp \
 	startState.cpp \

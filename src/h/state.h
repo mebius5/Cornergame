@@ -10,6 +10,7 @@
 #include "soundHandler.h"
 #include "controlHandler.h"
 #include "enums.h"
+#include "scoreHandler.h"
 
 class State {
 protected:
@@ -113,6 +114,7 @@ private:
     ControlHandler& controlHandler;
     AiHandler& aiHandler;
     CollisionHandler& collisionHandler;
+    ScoreHandler& scoreHandler;
     ResultsState& resultsState;
     HighscoreState& highscoreState;
     Entity* hero;
@@ -121,7 +123,7 @@ public:
               std::vector<Command*>& commandList, SDL_Renderer* renderer,
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler,
-              AiHandler& aiHandler, CollisionHandler& collisionHandler,
+              AiHandler& aiHandler, CollisionHandler& collisionHandler, ScoreHandler& scoreHandler,
               ResultsState& resultsState, HighscoreState& highscoreState);
     ~PlayState();
     void begin();

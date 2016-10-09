@@ -6,13 +6,13 @@
 
 class ScoreComponent : public Component {
 private:
-    int score;
+    float score;
     float multiplier;
 
 public:
     ScoreComponent(Entity* entity);
     ~ScoreComponent();
-    void addScore(int scoreIncrease);
+    void addScore(float scoreIncrease);
     int getScore();
     void resetScore();
     void setMultiplier(float multiplier);

@@ -1,6 +1,7 @@
 #define TWO_PI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
 
+#include <scoreHandler.h>
 #include "gameManager.h"
 
 /* gameManager.cpp
@@ -102,6 +103,7 @@ void GameManager::run() {
                                       this->width, this->height);
     SoundHandler soundHandler(commandList);
     ControlHandler controlHandler(commandList);
+    ScoreHandler scoreHandler(entityMgr.scoreComponents);
 
     StartState startState(this->width, this->height, entityMgr, commandList,
                     this->renderer, drawingHandler, inputHandler,
@@ -118,7 +120,7 @@ void GameManager::run() {
     PlayState playState(this->width, this->height, entityMgr, commandList,
                     this->renderer, drawingHandler, inputHandler,
                     soundHandler, controlHandler, aiHandler,
-                    collisionHandler, resultsState, highscoreState);
+                    collisionHandler, scoreHandler, resultsState, highscoreState);
 
     // Load music resources
     soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);

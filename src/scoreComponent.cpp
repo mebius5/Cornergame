@@ -10,12 +10,12 @@ ScoreComponent::~ScoreComponent() {
     this->entity = NULL;
 }
 
-void ScoreComponent::addScore(int scoreIncrease) {
-    this->score += int(this->multiplier * scoreIncrease);
+void ScoreComponent::addScore(float scoreIncrease) {
+    this->score += (this->multiplier * scoreIncrease);
 }
 
 int ScoreComponent::getScore() {
-    return this->score;
+    return (int) this->score;
 }
 
 void ScoreComponent::resetScore() {
