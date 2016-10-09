@@ -10,13 +10,13 @@ void EnemyAiComponent::updateLocation(int dt, Entity * hero) {
     this->timeElapsed += dt;
     if (this->timeElapsed >= 1500) {
         if(hero!=NULL){
-            int xNewDir = (hero->x-this->entity->x);//*(this->entity->xVelocity);
+            int xNewDir = (hero->x - this->entity->x);//*(this->entity->xVelocity);
             if(xNewDir>0){
                 this->entity->xVelocity=1*speed;
             } else if (xNewDir<=0){
                 this->entity->xVelocity=-1*speed;
             }
-            int yNewDir = (hero->y-this->entity->y);//*(this->entity->yVelocity);
+            int yNewDir = (hero->y - this->entity->y);//*(this->entity->yVelocity);
             if(yNewDir>0){
                 this->entity->yVelocity=1*speed;
             } else if (yNewDir<=0){

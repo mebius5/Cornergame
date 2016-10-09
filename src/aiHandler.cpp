@@ -12,28 +12,28 @@ void AiHandler::updateAi(int dt) {
             *it = this->componentList.back();
             this->componentList.pop_back();
         } else {
-            std::vector<InputComponent*>::iterator inIt;
+            std::vector<InputComponent*>::iterator heroInIt;
             int minDistance = 100000;
-            for (inIt = this->inputComponentList.begin(); inIt != this->inputComponentList.end(); ) {
-                if (!(*inIt)->isValid()) {        // remove invalid components
-                    *inIt = this->inputComponentList.back();
+            for (heroInIt = this->inputComponentList.begin(); heroInIt != this->inputComponentList.end(); ) {
+                if (!(*heroInIt)->isValid()) {        // remove invalid components
+                    *heroInIt = this->inputComponentList.back();
                     this->inputComponentList.pop_back();
                 } else {
-                    if(dynamic_cast<HeroInputComponent*>((*inIt))){
-                        (*inIt)->updateLocation(dt);
-                        int distance = sqrt(((*inIt)->entity->x - (*it)->entity->x ) * ((*inIt)->entity->x - (*it)->entity->x) +
-                                            ((*inIt)->entity->y - (*it)->entity->y ) * ((*inIt)->entity->y - (*it)->entity->y));
+                    if(dynamic_cast<HeroInputComponent*>((*heroInIt))){
+                        (*heroInIt)->updateLocation(dt);
+                        int distance = sqrt(((*heroInIt)->entity->x - (*it)->entity->x ) * ((*heroInIt)->entity->x - (*it)->entity->x) +
+                                            ((*heroInIt)->entity->y - (*it)->entity->y ) * ((*heroInIt)->entity->y - (*it)->entity->y));
 
                         //If the enemy gets within 300 pixel and is the hero is the closest hero to the enemy
                         //Then we update the distance of the enemy with respect to the location of the hero
                         //Else the movement is random
                         if( distance < 300 && distance<minDistance){
-                            (*it)->updateLocation(dt, (*inIt)->entity);
+                            (*it)->updateLocation(dt, (*heroInIt)->entity);
                             minDistance=distance;
                         } else{
                             (*it)->updateLocation(dt, NULL);
                         }
-                        ++inIt;
+                        ++heroInIt;
                     }
                 }
             }
