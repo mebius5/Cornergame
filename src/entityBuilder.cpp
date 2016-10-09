@@ -100,7 +100,9 @@ Entity * EntityBuilder::createHorizontallyCenteredFadeInText(const char *fontNam
 
 Entity* EntityBuilder::createVictoryZone(int x, int y) {
     Entity* zone = new Entity(this->nextId++, x, y, 50, 50);
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, 50, 50, 32, 0, 0xff, 0, 0);
+    SDL_Surface* surface = SDL_CreateRGBSurface(0, 50, 50, 32, 0, 0, 0, 0);
+    SDL_Rect tempRect = {0,0,50,50};
+    SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 255, 0, 0));
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     SDL_FreeSurface(surface);
     zone->art = new StaticArtComponent(zone, texture, 2);
