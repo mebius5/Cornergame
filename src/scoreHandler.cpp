@@ -3,7 +3,7 @@
 ScoreHandler::ScoreHandler(std::vector < ScoreComponent * > &componentList):
 componentList(componentList)
 {
-};
+}
 
 void ScoreHandler::handleScore(int dt) {
     std::vector<ScoreComponent*>::iterator it;
