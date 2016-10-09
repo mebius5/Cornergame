@@ -91,6 +91,9 @@ is also more sophisticated: you can accelerate in any direction. Hitting a wall
 will reset your corresponding velocity direction. There is also some friction
 so you will come to a stop if you stop inputting.
 
+The enemy will move towards the hero if the hero is within a certain range.
+Else, the enemy moves randomly and freely on its own.
+
 If your hero gets hit, an alarm noise will play.
 
 

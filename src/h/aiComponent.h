@@ -8,7 +8,7 @@ class AiComponent : public Component {
 public:
     AiComponent(Entity* entity);
     virtual void resetAi() = 0;
-    virtual void updateLocation(int dt) = 0;
+    virtual void updateLocation(int dt, Entity * hero) = 0;
 };
 
 class EnemyAiComponent : public AiComponent {
@@ -18,7 +18,7 @@ private:
 public:
     EnemyAiComponent(Entity* entity);
     void resetAi();
-    void updateLocation(int dt);
+    void updateLocation(int dt, Entity * hero);
 };
 
 #endif
