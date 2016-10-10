@@ -48,6 +48,13 @@ void PlayState::begin() {
     this->entityManager.createVictoryZone(1150, 200);
 
     this->entityManager.createTerrain(250,250,250,250);
+
+    /*** Can use this to disable border handling in collision handler
+    this->entityManager.createTerrain(0,0,windowW,1);
+    this->entityManager.createTerrain(0,0,1,windowH);
+    this->entityManager.createTerrain(windowW,0,1,windowH);
+    this->entityManager.createTerrain(0,windowH,windowW,1);
+     ***/
 }
 
 StateEnum PlayState::run() {
