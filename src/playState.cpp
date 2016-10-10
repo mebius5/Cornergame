@@ -46,6 +46,8 @@ void PlayState::begin() {
 
 
     this->entityManager.createVictoryZone(1150, 200);
+
+    this->entityManager.createTerrain(250,250,250,250);
 }
 
 StateEnum PlayState::run() {

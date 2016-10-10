@@ -42,4 +42,14 @@ public:
     void onBorderCollision();
 };
 
+class TerrainCollisionComponent : public CollisionComponent {
+private:
+    void borderBoundX(Entity* other, float boundValue);
+    void borderBoundY(Entity* other, float boundValue);
+public:
+    TerrainCollisionComponent(Entity * entity);
+    void onEntityCollision(Entity * other);
+    void onBorderCollision();
+};
+
 #endif

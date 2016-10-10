@@ -31,6 +31,7 @@ SRCFILES = \
 	startState.cpp \
 	state.cpp \
 	staticArtComponent.cpp \
+	terrainCollisionComponent.cpp \
 	textFadeInComponent.cpp \
 	victoryZoneCollisionComponent.cpp
 

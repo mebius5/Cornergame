@@ -15,9 +15,11 @@ void HeroCollisionComponent::onEntityCollision(Entity* other) {
         //Avoid taking damage for colliding with victory zone
         this->entity->score->addScore(-20);
     }
-    this->entity->health->takeDamage(10);
-    if (this->entityCollisionCommand)
-        Component::commandList->push_back(this->entityCollisionCommand);
+    if((other->collision&& dynamic_cast<EnemyCollisionComponent*>(other->collision))){
+        this->entity->health->takeDamage(10);
+        if (this->entityCollisionCommand)
+            Component::commandList->push_back(this->entityCollisionCommand);
+    }
 }
 
 void HeroCollisionComponent::onBorderCollision() {

@@ -70,7 +70,7 @@ bool CollisionHandler::detectOverlap(Entity* entity1, Entity* entity2) {
     int topA = entity1->y;
     int bottomA = entity1->y + entity1->height;
 
-    //Calculate the sides of entity 1
+    //Calculate the sides of entity 2
     int leftB = entity2->x;
     int rightB = entity2->x + entity2->width;
     int topB = entity2->y;

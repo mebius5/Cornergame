@@ -110,6 +110,18 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {
     return zone;
 }
 
+Entity* EntityBuilder::createTerrain(int x, int y, int width, int height) {
+    Entity * terrain = new Entity(this->nextId++, x, y, width, height);
+    SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
+    SDL_Rect tempRect = {0,0,width,height};
+    SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 165, 42, 42));
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
+    SDL_FreeSurface(surface);
+    terrain->art = new StaticArtComponent(terrain, texture, 1);
+    terrain->collision = new TerrainCollisionComponent(terrain);
+    return terrain;
+}
+
 SDL_Surface* EntityBuilder::loadFont(const char * fontName,
                       const char * text,
                       int fontSize,
