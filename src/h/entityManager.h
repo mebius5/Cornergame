@@ -31,7 +31,7 @@ public:
     void cleanupEntities();             // delete entities when ready
     void clear();                       // delete all entities
 
-    Entity* createHero(int x, int y, SfxEnum sfxType);
+    Entity* createHero(int x, int y, SfxEnum sfxType, bool wasd);
     Entity* createEnemy(int x, int y);
     Entity* createBackground(const char * filename, int width, int height);
 

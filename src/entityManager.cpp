@@ -82,8 +82,8 @@ void EntityManager::clear() {
 }
 
 /* Entity Creation Methods */
-Entity* EntityManager::createHero(int x, int y, SfxEnum sfxType) {
-    Entity* entity = this->entityBuilder.createHero(x, y, sfxType);
+Entity* EntityManager::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
+    Entity* entity = this->entityBuilder.createHero(x, y, sfxType, wasd);
     this->addEntity(entity);
 
     this->heroEntities.push_back(entity);

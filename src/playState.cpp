@@ -28,7 +28,15 @@ void PlayState::begin() {
     this->entityManager.createBackground("resources/jhu-logo.png",
                                          this->windowW, this->windowH);
 
-    this->hero = this->entityManager.createHero(100, 100, SFX_ALERT);
+    this->hero = this->entityManager.createHero(100, 150, SFX_ALERT, false);
+    this->entityManager.createHealthBar(100, 100, 200, 40, hero);
+    this->entityManager.createScoreBox(850, 100, hero);
+
+    /***
+    Entity * hero2 = this->entityManager.createHero(100, 250, SFX_ALERT, true);
+    this->entityManager.createHealthBar(100, 600, 200, 40, hero2);
+    this->entityManager.createScoreBox(850, 600, hero2);
+    ****/
 
     this->entityManager.createEnemy(350, 150);
     this->entityManager.createEnemy(500, 150);
@@ -36,8 +44,7 @@ void PlayState::begin() {
     this->entityManager.createEnemy(400, 300);
     this->entityManager.createEnemy(600, 300);
 
-    this->entityManager.createHealthBar(100, 600, 200, 50, hero);
-    this->entityManager.createScoreBox(850, 600, hero);
+
     this->entityManager.createVictoryZone(1150, 200);
 }
 

@@ -5,7 +5,7 @@ EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
     renderer(renderer) {
 }
 
-Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType) {
+Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
     SDL_Surface* image = this->loadImage("spritesheets/hero.png");
     Entity* hero = new Entity(this->nextId++, x, y, (image->w)/4, (image->h));
 
@@ -16,7 +16,7 @@ Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType) {
     hero->art = new AnimationComponent(hero,
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1);
     SDL_FreeSurface(image);
-    hero->input = new HeroInputComponent(hero);
+    hero->input = new HeroInputComponent(hero, wasd);
     hero->score = new ScoreComponent(hero);
     hero->health = new HealthComponent(hero, 300, new SwitchStateCommand(STATE_RESULTS));
     return hero;

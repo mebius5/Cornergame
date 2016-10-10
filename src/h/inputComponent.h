@@ -21,9 +21,10 @@ private:
     float maxVelocity;
     float velocityDecay;
     float boundVelocity(float velocity);
+    bool wasd;
 
 public:
-    HeroInputComponent(Entity* entity);
+    HeroInputComponent(Entity* entity, bool wasd);
     ~HeroInputComponent();
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
