@@ -14,6 +14,7 @@ HealthBarArtComponent::HealthBarArtComponent(Entity* entity, SDL_Texture *textur
 
 HealthBarArtComponent::~HealthBarArtComponent() {
     this->entity = NULL;
+    this->owner = NULL;
     if(this->texture){
         SDL_DestroyTexture(this->texture);
         this->texture = NULL;

@@ -8,12 +8,14 @@ class HealthComponent : public Component {
 private:
     int health;
     int maxHealth;
+    bool isInvincible;
     Command* onDeath;
 public:
     HealthComponent(Entity* entity, int maxHealth, Command* onDeath);
     ~HealthComponent();
     int getHealth();
     int getMaxHealth();
+    void toggleInvincibility();
     void takeDamage(int damage);
 };
 
