@@ -8,7 +8,7 @@ EnemyAiComponent::EnemyAiComponent(Entity* entity) :
 // picks a behavior at random, and keeps it until timer resets
 void EnemyAiComponent::updateLocation(int dt, Entity * hero) {
     this->timeElapsed += dt;
-    if (this->timeElapsed >= 1500) {
+    if (this->timeElapsed >= 750) {
         if(hero!=NULL){
             int xNewDir = (hero->x - this->entity->x);//*(this->entity->xVelocity);
             if(xNewDir>0){
