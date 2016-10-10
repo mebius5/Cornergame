@@ -37,7 +37,7 @@ void PlayState::begin() {
     this->entityManager.createEnemy(600, 300);
 
     this->entityManager.createHealthBar(100, 600, 200, 50, hero);
-    this->entityManager.createScoreBox(1150, 600, hero);
+    this->entityManager.createScoreBox(850, 600, hero);
     this->entityManager.createVictoryZone(1150, 200);
 }
 

@@ -11,7 +11,7 @@
 
 GameManager::GameManager() :
     title("<GAME NAME>"),
-    width(1280),
+    width(1024),
     height(720) {
 
     srand(time(NULL));
