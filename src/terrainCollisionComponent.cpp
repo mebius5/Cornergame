@@ -23,10 +23,18 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other) {
             borderBoundY(other, bottomA);
         } else{
             if (rightA > leftB && rightA < rightB){
-                borderBoundY(other, bottomA);
+                if(rightA - leftB < bottomA-topB){
+                    borderBoundX(other, rightA);
+                } else{
+                    borderBoundY(other, bottomA);
+                }
             }
             else if (leftA < rightB && leftA > leftB){
-                borderBoundY(other, bottomA);
+                if(rightB - leftA < bottomA - topB){
+                    borderBoundX(other, leftA-other->width);
+                } else {
+                    borderBoundY(other, bottomA);
+                }
             }
         }
     }
@@ -35,10 +43,18 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other) {
             borderBoundY(other, topA-other->height);
         } else{
             if (rightA > leftB && rightA < rightB){
-                borderBoundY(other, topA-other->height);
+                if(rightA - leftB < bottomB-topA){
+                    borderBoundX(other, rightA);
+                } else{
+                    borderBoundY(other, topA-other->height);
+                }
             }
             else if (leftA < rightB && leftA > leftB){
-                borderBoundY(other, topA-other->height);
+                if(rightB - leftA < bottomB - topA){
+                    borderBoundX(other, leftA-other->width);
+                } else {
+                    borderBoundY(other, topA-other->height);
+                }
             }
         }
     }
@@ -47,9 +63,17 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other) {
             borderBoundX(other, rightA);
         } else {
             if (bottomA > topB && bottomB > bottomA){
-                borderBoundX(other, rightA);
+                if(bottomA - topB < rightA - leftB){
+                    borderBoundY(other, bottomA);
+                } else{
+                    borderBoundX(other, rightA);
+                }
             } else if(topA < bottomB && topB < topA){
-                borderBoundX(other, rightA);
+                if(bottomB - topA < rightA - leftB){
+                    borderBoundY(other, topA-other->height);
+                } else{
+                    borderBoundX(other, rightA);
+                }
             }
         }
     }
@@ -58,9 +82,17 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other) {
             borderBoundX(other, leftA-other->width);
         } else {
             if (bottomA > topB && bottomB > bottomA){
-                borderBoundX(other, leftA-other->width);
+                if(bottomA - topB < rightB - leftA){
+                    borderBoundY(other, bottomA);
+                } else{
+                    borderBoundX(other, leftA-other->width);
+                }
             } else if(topA < bottomB && topB < topA){
-                borderBoundX(other, leftA-other->width);
+                if(bottomB - topA < rightB - leftA){
+                    borderBoundY(other, topA-other->height);
+                } else{
+                    borderBoundX(other, leftA-other->width);
+                }
             }
         }
     }
