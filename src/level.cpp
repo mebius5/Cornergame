@@ -4,25 +4,25 @@
 #include <string>
 
 Level::Level(std::string filename) {
-    int height, width;
     std::string line;
     std::ifstream infile(filename);
     if (infile.is_open()) {
         // get the size of the level from first line
         getline(infile, line);
-        infile >> height;
-        infile >> width;
+        infile >> this->height;
+        infile >> this->width;
+        std::cout << "Creating level with height: " << this->height << " width: " << this->width << std::endl;
 
         // initialize level contents
-        levelContents = new Tiles * [height];
-        for (int i = 0; i < height; i++) {
-            levelContents[i] = new Tiles[width];
+        levelContents = new Tiles * [this->height];
+        for (int i = 0; i < this->height; i++) {
+            levelContents[i] = new Tiles[this->width];
         }
 
         // read the file and build the level
-        for (int i = 0; i < height; i++) {
+        for (int i = 0; i < this->height; i++) {
             getline(infile, line);
-            for (int j = 0; i < width; j++) {
+            for (int j = 0; i < this->width; j++) {
                 switch (line[j]) {
                     case '^':
                         levelContents[i][j] = NONE;

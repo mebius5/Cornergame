@@ -1,5 +1,5 @@
-#ifndef CORNERGAME_COMMAND_H
-#define CORNERGAME_COMMAND_H
+#ifndef CORNERGAME_LEVEL_H
+#define CORNERGAME_LEVEL_H
 
 #include <string>
 
@@ -9,6 +9,7 @@ class Level {
     private:
         Tiles** levelContents;
     public:
+        int height, width;
         Level(std::string filename);
         ~Level();
 };
