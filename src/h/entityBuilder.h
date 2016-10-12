@@ -37,7 +37,7 @@ public:
                                       int index, int numOptions,
                                       StateEnum nextState);
     Entity * createVictoryZone(int x, int y);
-    Entity * createTerrain(int x, int y, int width, int height);
+    Entity * createTerrain(int x, int y);
 };
 
 #endif

@@ -145,8 +145,8 @@ Entity* EntityManager::createVictoryZone(int x, int y) {
     return entity;
 }
 
-Entity* EntityManager::createTerrain(int x, int y, int width, int height) {
-    Entity * entity = this->entityBuilder.createTerrain(x, y, width, height);
+Entity* EntityManager::createTerrain(int x, int y) {
+    Entity * entity = this->entityBuilder.createTerrain(x, y);
     this->addEntity(entity);
     return entity;
 }
