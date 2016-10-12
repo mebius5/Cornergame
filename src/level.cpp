@@ -8,9 +8,9 @@ Level::Level(std::string filename) {
     std::ifstream infile(filename);
     if (infile.is_open()) {
         // get the size of the level from first line
-        getline(infile, line);
         infile >> this->height;
         infile >> this->width;
+        getline(infile, line);
         std::cout << "Creating level with height: " << this->height << " width: " << this->width << std::endl;
 
         // initialize level contents
@@ -22,8 +22,8 @@ Level::Level(std::string filename) {
         // read the file and build the level
         for (int i = 0; i < this->height; i++) {
             getline(infile, line);
-            for (int j = 0; i < this->width; j++) {
-                switch (line[j]) {
+            for (int j = 0; j < this->width; j++) {
+                switch (line.at(j)) {
                     case '^':
                         levelContents[i][j] = NONE;
                         break;
@@ -31,7 +31,7 @@ Level::Level(std::string filename) {
                         levelContents[i][j] = TERRAIN;
                         break;
                     default:
-                        std::cout << "Unrecognized symbol in level file" << line[j] << std::endl;
+                        std::cout << "Unrecognized symbol in level file " << line.at(j) << std::endl;
                         break;
                 }
             }
