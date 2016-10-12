@@ -11,7 +11,6 @@ Level::Level(std::string filename) {
         infile >> this->height;
         infile >> this->width;
         getline(infile, line);
-        std::cout << "Creating level with height: " << this->height << " width: " << this->width << std::endl;
 
         // initialize level contents
         levelContents = new Tiles * [this->height];
@@ -43,4 +42,8 @@ Level::Level(std::string filename) {
 
 Level::~Level() {
     // TODO
+}
+
+Tiles Level::getTile(int i, int j) {
+    return this->levelContents[i][j];
 }

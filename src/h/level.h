@@ -12,6 +12,7 @@ class Level {
         int height, width;
         Level(std::string filename);
         ~Level();
+        Tiles getTile(int i, int j);
 };
 
 #endif

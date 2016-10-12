@@ -49,9 +49,11 @@ void PlayState::begin() {
     this->entityManager.createVictoryZone(1150, 200);
 
 
-    for(int i = 0; i <= this->level->height; i++){
-        for(int j = 0; j <= this->level->width; j++){
-            this->entityManager.createTerrain(i * 64, j * 64);
+    for(int i = 0; i < this->level->height; i++){
+        for(int j = 0; j < this->level->width; j++){
+            if (this->level->getTile(i, j) == TERRAIN) {
+                this->entityManager.createTerrain(j * 32, i * 32);
+            }
         }
     }
 
