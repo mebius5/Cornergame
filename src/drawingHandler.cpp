@@ -1,9 +1,11 @@
 #include "drawingHandler.h"
 
 DrawingHandler::DrawingHandler(std::vector<ArtComponent*>& componentList,
-                               SDL_Renderer* renderer) :
+                               SDL_Renderer* renderer, int windowW, int windowH) :
     componentList(componentList),
-    renderer(renderer) {
+    renderer(renderer),
+    camera(renderer, windowW, windowH) {
+
 }
 
 void DrawingHandler::draw(int dt) {
@@ -18,15 +20,7 @@ void DrawingHandler::draw(int dt) {
             }
 
             ArtComponent* artComp = *it;
-            Entity* entity = artComp->entity;
-            if (artComp->layer == i) {
-                SDL_Rect rect = { (int) entity->x,
-                                  (int) entity->y,
-                                  entity->width,
-                                  entity->height };
-                SDL_RenderCopy(this->renderer, artComp->getNextTexture(dt),
-                               artComp->getNextSrcRect(dt), &rect);
-            }
+            camera.draw(dt, artComp);
             ++it;
         }
     }
