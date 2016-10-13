@@ -13,16 +13,16 @@ maxY(windowH)
 }
 
 Camera::~Camera() {
-
+    this->renderer=NULL;
 }
 
 void Camera::draw(int dt, ArtComponent * artComponent) {
     Entity* entity = artComponent->entity;
 
-    /*if(entity->x + entity->width < minX||
+    if(entity->x + entity->width < minX||
             entity->y+entity->height < minY||
             entity->x > maxX || entity->y > maxY)
-        return;*/
+        return;
 
     SDL_Rect dest = { (int)entity->x - minX,
                       (int) entity->y - minY,
