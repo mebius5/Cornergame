@@ -16,6 +16,7 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
     scoreHandler(scoreHandler),
     resultsState(resultsState),
     highscoreState(highscoreState) {
+        this->level = new Level("levels/level1.txt");
 }
 
 PlayState::~PlayState() {
@@ -47,8 +48,13 @@ void PlayState::begin() {
 
     this->entityManager.createVictoryZone(1150, 200);
 
-    for(int i = 0; i<=this->windowW; i+=32){
-        this->entityManager.createTerrain(i,600);
+
+    for(int i = 0; i < this->level->height; i++){
+        for(int j = 0; j < this->level->width; j++){
+            if (this->level->getTile(i, j) == TERRAIN) {
+                this->entityManager.createTerrain(j * 32, i * 32);
+            }
+        }
     }
 
     /*** Can use this to disable border handling in collision handler

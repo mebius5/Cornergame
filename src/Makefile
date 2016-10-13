@@ -21,6 +21,7 @@ SRCFILES = \
 	heroInputComponent.cpp \
     highscoreState.cpp \
 	inputHandler.cpp \
+    level.cpp \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
 	playState.cpp \
