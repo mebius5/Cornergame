@@ -19,10 +19,10 @@ Camera::~Camera() {
 void Camera::draw(int dt, ArtComponent * artComponent) {
     Entity* entity = artComponent->entity;
 
-    if(entity->x + entity->width < minX||
+    /*if(entity->x + entity->width < minX||
             entity->y+entity->height < minY||
             entity->x > maxX || entity->y > maxY)
-        return;
+        return;*/
 
     SDL_Rect dest = { (int)entity->x - minX,
                       (int) entity->y - minY,
@@ -31,6 +31,12 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
 
     SDL_RenderCopy(this->renderer, artComponent->getNextTexture(dt),
                    artComponent->getNextSrcRect(dt), &dest);
+
+    if(entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)){
+        if(entity->x >= ((maxX+minX)/2)){
+            shift(1,0);
+        }
+    }
 }
 
 void Camera::shift(int dx, int dy) {
