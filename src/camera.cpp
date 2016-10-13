@@ -18,7 +18,13 @@ Camera::~Camera() {
 
 void Camera::draw(int dt, ArtComponent * artComponent) {
     Entity* entity = artComponent->entity;
-    SDL_Rect dest = { (int) entity->x - minX,
+
+    if(entity->x + entity->width < minX||
+            entity->y+entity->height < minY||
+            entity->x > maxX || entity->y > maxY)
+        return;
+
+    SDL_Rect dest = { (int)entity->x - minX,
                       (int) entity->y - minY,
                       entity->width,
                       entity->height};
@@ -32,4 +38,11 @@ void Camera::shift(int dx, int dy) {
     minY += dy;
     maxX += dx;
     maxY += dy;
+}
+
+void Camera::resetCamera(int windowW, int windowH) {
+    minX=0;
+    minY=0;
+    maxX=windowW;
+    maxY=windowH;
 }

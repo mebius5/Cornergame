@@ -10,10 +10,13 @@ private:
     std::vector<ArtComponent*>& componentList;
     SDL_Renderer* renderer;
     Camera camera;
+    int shiftCount;
 public:
     DrawingHandler(std::vector<ArtComponent*>& componentList,
                    SDL_Renderer* renderer, int windowW, int windowH);
     void draw(int dt);
+    void shift(int dt);
+    void resetCamera(int windowW, int windowH);
 };
 
 #endif

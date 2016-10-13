@@ -80,6 +80,7 @@ StateEnum PlayState::run() {
         this->collisionHandler.handleCollisions();
         this->soundHandler.handleSfx(dt);
         this->scoreHandler.handleScore(dt);
+        this->drawingHandler.shift(dt);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
@@ -98,4 +99,5 @@ void PlayState::cleanup(StateEnum nextState) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
+    this->drawingHandler.resetCamera(windowW,windowH);
 }

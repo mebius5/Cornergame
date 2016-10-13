@@ -15,6 +15,7 @@ public:
     ~Camera();
     void draw(int dt, ArtComponent * artComponent);
     void shift(int dx, int dy);
+    void resetCamera(int windowW, int windowH);
 };
 
 #endif //CORNERGAME_CAMERA_H
