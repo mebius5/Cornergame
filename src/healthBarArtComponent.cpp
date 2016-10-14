@@ -2,7 +2,7 @@
 
 HealthBarArtComponent::HealthBarArtComponent(Entity* entity, SDL_Texture *texture,
                                              Entity *owner, int layer, float width, int height):
-    ArtComponent(entity, layer),
+    ArtComponent(entity, layer, true),
     texture(texture),
     owner(owner),
     width(width),

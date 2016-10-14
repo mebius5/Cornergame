@@ -10,7 +10,9 @@ private:
     int minY;
     int maxX;
     int maxY;
+
 public:
+
     Camera(SDL_Renderer * renderer, int windowW, int windowH);
     ~Camera();
     void draw(int dt, ArtComponent * artComponent);

@@ -1,6 +1,4 @@
 #include "camera.h"
-#include <iostream>
-
 
 Camera::Camera(SDL_Renderer * renderer, int windowW, int windowH) :
 renderer(renderer),
@@ -36,6 +34,11 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
         if(entity->x >= ((maxX+minX)/2)){
             shift(1,0);
         }
+    }
+
+    if(artComponent->movesWithCamera){
+        artComponent->entity->x = this->minX+artComponent->offsetX;
+        artComponent->entity->y = this->minY+artComponent->offSetY;
     }
 }
 

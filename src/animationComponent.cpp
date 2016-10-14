@@ -2,7 +2,7 @@
 
 AnimationComponent::AnimationComponent(Entity* entity, SDL_Texture* texture,
                                        int surfaceW, int surfaceH, int layer):
-    ArtComponent(entity, layer),
+    ArtComponent(entity, layer, false),
     texture(texture),
     surfaceW(surfaceW),
     surfaceH(surfaceH),

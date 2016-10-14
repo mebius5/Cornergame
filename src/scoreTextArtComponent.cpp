@@ -3,7 +3,7 @@
 
 ScoreTextArtComponent::ScoreTextArtComponent(Entity* entity,
                                SDL_Renderer* renderer, Entity *owner, int layer):
-    ArtComponent(entity, layer),
+    ArtComponent(entity, layer, true),
     owner(owner),
     renderer(renderer),
     lastTexture(NULL),
