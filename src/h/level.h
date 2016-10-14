@@ -3,7 +3,7 @@
 
 #include <string>
 
-enum Tiles {NONE, TERRAIN};
+enum Tiles {NONE, TERRAIN, SPAWN, ENEMY, GOAL};
 
 class Level {
     private:

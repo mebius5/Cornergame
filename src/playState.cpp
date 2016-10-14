@@ -23,15 +23,12 @@ PlayState::~PlayState() {
 }
 
 void PlayState::begin() {
+    // Play background music
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
 
-    // Create entities
+    // Create background
     this->entityManager.createBackground("resources/jhu-logo.png",
                                          this->windowW, this->windowH);
-
-    this->hero = this->entityManager.createHero(100, 150, SFX_ALERT, false);
-    this->entityManager.createHealthBar(100, 100, 200, 40, hero);
-    this->entityManager.createScoreBox(850, 100, hero);
 
     /***
     Entity * hero2 = this->entityManager.createHero(100, 250, SFX_ALERT, true);
@@ -39,30 +36,29 @@ void PlayState::begin() {
     this->entityManager.createScoreBox(850, 600, hero2);
     ****/
 
-    this->entityManager.createEnemy(350, 150);
-    this->entityManager.createEnemy(500, 150);
-    this->entityManager.createEnemy(650, 150);
-    this->entityManager.createEnemy(400, 300);
-    this->entityManager.createEnemy(600, 300);
-
-
-    this->entityManager.createVictoryZone(1150, 200);
-
-
     for(int i = 0; i < this->level->height; i++){
         for(int j = 0; j < this->level->width; j++){
-            if (this->level->getTile(i, j) == TERRAIN) {
-                this->entityManager.createTerrain(j * 32, i * 32);
+            switch(this->level->getTile(i, j)) {
+                case TERRAIN:
+                    this->entityManager.createTerrain(j * 32, i * 32);
+                    break;
+                case ENEMY:
+                    this->entityManager.createEnemy(j * 32, i * 32);
+                    break;
+                case SPAWN:
+                    this->hero = this->entityManager.createHero(j * 32, i * 32, SFX_ALERT, false);
+                    this->entityManager.createHealthBar(100, 100, 200, 40, hero);
+                    this->entityManager.createScoreBox(850, 100, hero);
+                    break;
+                case GOAL:
+                    this->entityManager.createVictoryZone(j * 32, i * 32);
+                    break;
+                default:
+                    break;
             }
         }
     }
 
-    /*** Can use this to disable border handling in collision handler
-    this->entityManager.createTerrain(0,0,windowW,1);
-    this->entityManager.createTerrain(0,0,1,windowH);
-    this->entityManager.createTerrain(windowW,0,1,windowH);
-    this->entityManager.createTerrain(0,windowH,windowW,1);
-     ***/
 }
 
 StateEnum PlayState::run() {
