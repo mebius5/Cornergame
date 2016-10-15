@@ -46,8 +46,12 @@ class TerrainCollisionComponent : public CollisionComponent {
 private:
     void borderBoundX(Entity* other, float boundValue);
     void borderBoundY(Entity* other, float boundValue);
+    bool freeTop;
+    bool freeBot;
+    bool freeRight;
+    bool freeLeft;
 public:
-    TerrainCollisionComponent(Entity * entity);
+    TerrainCollisionComponent(Entity * entity, bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
     void onEntityCollision(Entity * other);
     void onBorderCollision();
 };

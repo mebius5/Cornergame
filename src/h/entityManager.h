@@ -48,7 +48,8 @@ public:
                             int windowW, int yPos,
                             int index, int numOptions, StateEnum nextState);
     Entity* createVictoryZone(int x, int y);
-    Entity * createTerrain(int x, int y);
+    Entity * createTerrain(int x, int y, bool freeTop, bool freeBot, 
+        bool freeRight, bool freeLeft);
 };
 
 #endif

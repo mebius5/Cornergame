@@ -1,22 +1,45 @@
 #include "collisionComponent.h"
 
-TerrainCollisionComponent::TerrainCollisionComponent(Entity *entity):
-    CollisionComponent(entity)
-{
+TerrainCollisionComponent::TerrainCollisionComponent(Entity *entity,
+ bool freeTop, bool freeBot, bool freeRight, bool freeLeft):
+    CollisionComponent(entity),
+    freeTop(freeTop),
+    freeBot(freeBot),
+    freeRight(freeRight),
+    freeLeft(freeLeft) {
 }
 
 void TerrainCollisionComponent::onEntityCollision(Entity *other) {
+
     //Calculate the sides of entity 1
-    int leftA = this->entity->x;
-    int rightA = this->entity->x + this->entity->width;
-    int topA = this->entity->y;
-    int bottomA = this->entity->y + this->entity->height;
+    int leftT = this->entity->x;
+    int rightT = this->entity->x + this->entity->width;
+    int topT = this->entity->y;
+    int bottomT = this->entity->y + this->entity->height;
 
     //Calculate the sides of entity 2
-    int leftB = other->x;
-    int rightB = other->x + other->width;
-    int topB = other->y;
-    int bottomB = other->y + other->height;
+    int leftO = other->x;
+    int rightO = other->x + other->width;
+    int topO = other->y;
+    int bottomO = other->y + other->height;
+
+    //vertical check
+    if (bottomT > topO && bottomO > bottomT && freeBot) { //object collide below
+         borderBoundY(other, bottomT);
+
+    } else if (topT < bottomO && topO < bottomT && freeTop) { //object collide from above
+         borderBoundY(other, topT - other->height);
+    }
+    if (rightT > leftO && rightO > rightT && freeRight) { //object collide from right
+         borderBoundX(other, rightT);
+    } else if (leftT < rightO && leftO < leftT && freeLeft) {
+         borderBoundX(other, leftT - other->width);
+    }
+
+
+
+    /**
+
 
     if (bottomA >= topB && bottomB > bottomA){
         if(leftA <= leftB && rightA >= rightB){
@@ -95,7 +118,7 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other) {
                 }
             }
         }
-    }
+    } **/
 }
 
 void TerrainCollisionComponent::onBorderCollision() {

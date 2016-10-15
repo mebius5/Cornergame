@@ -1,5 +1,5 @@
 #include <state.h>
-
+#include <iostream>
 PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
                  std::vector<Command*>& commandList, SDL_Renderer* renderer,
                  DrawingHandler& drawingHandler, InputHandler& inputHandler,
@@ -48,11 +48,31 @@ void PlayState::begin() {
 
     this->entityManager.createVictoryZone(1150, 200);
 
-
+    bool freeRight;
+    bool freeLeft;
+    bool freeTop;
+    bool freeBot;
     for(int i = 0; i < this->level->height; i++){
         for(int j = 0; j < this->level->width; j++){
+            freeRight = false;
+            freeLeft = false;
+            freeTop = false;
+            freeBot = false;
             if (this->level->getTile(i, j) == TERRAIN) {
-                this->entityManager.createTerrain(j * 32, i * 32);
+                if (j>0 && this->level->getTile(i,j-1) == NONE) {
+                    freeLeft = true;
+                }
+                if (j < (this->level->width -1) && this->level->getTile(i,j+1) == NONE) {
+                    freeRight = true;
+                }
+                if (i>0 && this->level->getTile(i-1,j) == NONE) {
+                    freeTop = true;
+                }
+                if (i < (this->level->height -1) && this->level->getTile(i+1,j) == NONE) {
+                    freeBot = true;
+                }
+                this->entityManager.createTerrain(j * 32, i * 32, freeTop, freeBot, freeRight, freeLeft);
+
             }
         }
     }
@@ -74,6 +94,7 @@ StateEnum PlayState::run() {
         int dt = currentTime - lastTime;
         lastTime = currentTime;
 
+        std::cout << this->hero->xVelocity << "  " << this->hero->yVelocity << "\n" << std::endl;
         this->aiHandler.updateAi(dt);
         this->inputHandler.handleEvents();
         this->inputHandler.update(dt);

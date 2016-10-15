@@ -110,7 +110,8 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {
     return zone;
 }
 
-Entity* EntityBuilder::createTerrain(int x, int y) {
+Entity* EntityBuilder::createTerrain(int x, int y, bool freeTop, 
+        bool freeBot, bool freeRight, bool freeLeft) {
     SDL_Surface * image = this->loadImage("resources/tile.png");
     Entity * terrain = new Entity(this->nextId++, x, y, image->w, image->h);
     /***
@@ -122,7 +123,7 @@ Entity* EntityBuilder::createTerrain(int x, int y) {
           ***/
     terrain->art = new StaticArtComponent(terrain, SDL_CreateTextureFromSurface(this->renderer,image), 1);
     SDL_FreeSurface(image);
-    terrain->collision = new TerrainCollisionComponent(terrain);
+    terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
     return terrain;
 }
 
