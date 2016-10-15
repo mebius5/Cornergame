@@ -28,9 +28,14 @@ AiComponent::AiComponent(Entity* entity) :
     Component(entity) {
 }
 
-ArtComponent::ArtComponent(Entity* entity, int layer) :
+ArtComponent::ArtComponent(Entity* entity, int layer, bool movesWithCamera) :
     Component(entity),
-    layer(layer) {
+    layer(layer),
+    movesWithCamera(movesWithCamera){
+    if(this->movesWithCamera){
+        this->offsetX = entity->x;
+        this->offSetY = entity->y;
+    }
 }
 
 CollisionComponent::CollisionComponent(Entity* entity) :

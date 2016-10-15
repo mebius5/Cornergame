@@ -1,14 +1,18 @@
 #include "drawingHandler.h"
 
 DrawingHandler::DrawingHandler(std::vector<ArtComponent*>& componentList,
-                               SDL_Renderer* renderer) :
+                               SDL_Renderer* renderer, int windowW, int windowH) :
     componentList(componentList),
-    renderer(renderer) {
+    renderer(renderer),
+    camera(renderer, windowW, windowH),
+    shiftCount(0){
+
 }
 
 void DrawingHandler::draw(int dt) {
     SDL_RenderClear(this->renderer);
     std::vector<ArtComponent*>::iterator it;
+
     for (int i = 0; i <= ArtComponent::MAXLAYER; i++) {
         for (it = this->componentList.begin(); it != this->componentList.end(); ) {
             if (!(*it)->isValid()) {        // remove invalid components
@@ -18,17 +22,23 @@ void DrawingHandler::draw(int dt) {
             }
 
             ArtComponent* artComp = *it;
-            Entity* entity = artComp->entity;
-            if (artComp->layer == i) {
-                SDL_Rect rect = { (int) entity->x,
-                                  (int) entity->y,
-                                  entity->width,
-                                  entity->height };
-                SDL_RenderCopy(this->renderer, artComp->getNextTexture(dt),
-                               artComp->getNextSrcRect(dt), &rect);
-            }
+            camera.draw(dt, artComp);
             ++it;
         }
     }
+
     SDL_RenderPresent(this->renderer);
+}
+
+void DrawingHandler::shift(int dt) {
+    shiftCount+=dt;
+
+    if(shiftCount>=50){
+        camera.shift(1,0);
+        shiftCount=0;
+    }
+}
+
+void DrawingHandler::resetCamera(int windowW, int windowH){
+    camera.resetCamera(windowW, windowH);
 }

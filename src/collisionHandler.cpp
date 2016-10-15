@@ -25,7 +25,7 @@ void CollisionHandler::handleCollisions() {
     std::vector<CollisionComponent*>::const_iterator it2;
     for (it = this->componentList.begin(); it != this->componentList.end(); ++it) {
         CollisionComponent* comp1 = *it;
-        this->detectBorderCollision(comp1->entity);
+        //this->detectBorderCollision(comp1->entity);
         for (it2 = std::next(it, 1); it2 != this->componentList.end(); ++it2) {
             CollisionComponent* comp2 = *it2;
             if (detectOverlap(comp1->entity, comp2->entity)) {

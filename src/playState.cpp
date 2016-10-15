@@ -23,15 +23,12 @@ PlayState::~PlayState() {
 }
 
 void PlayState::begin() {
+    // Play background music
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
 
-    // Create entities
+    // Create background
     this->entityManager.createBackground("resources/jhu-logo.png",
                                          this->windowW, this->windowH);
-
-    this->hero = this->entityManager.createHero(100, 150, SFX_ALERT, false);
-    this->entityManager.createHealthBar(100, 100, 200, 40, hero);
-    this->entityManager.createScoreBox(850, 100, hero);
 
     /***
     Entity * hero2 = this->entityManager.createHero(100, 250, SFX_ALERT, true);
@@ -58,31 +55,39 @@ void PlayState::begin() {
             freeLeft = false;
             freeTop = false;
             freeBot = false;
-            if (this->level->getTile(i, j) == TERRAIN) {
-                if (j>0 && this->level->getTile(i,j-1) == NONE) {
-                    freeLeft = true;
-                }
-                if (j < (this->level->width -1) && this->level->getTile(i,j+1) == NONE) {
-                    freeRight = true;
-                }
-                if (i>0 && this->level->getTile(i-1,j) == NONE) {
-                    freeTop = true;
-                }
-                if (i < (this->level->height -1) && this->level->getTile(i+1,j) == NONE) {
-                    freeBot = true;
-                }
-                this->entityManager.createTerrain(j * 32, i * 32, freeTop, freeBot, freeRight, freeLeft);
-
+            switch(this->level->getTile(i, j)) {
+                case TERRAIN:
+                    if (j>0 && this->level->getTile(i,j-1) == NONE) {
+                        freeLeft = true;
+                    }
+                    if (j < (this->level->width -1) && this->level->getTile(i,j+1) == NONE) {
+                        freeRight = true;
+                    }   
+                    if (i>0 && this->level->getTile(i-1,j) == NONE) {
+                        freeTop = true;
+                    }
+                    if (i < (this->level->height -1) && this->level->getTile(i+1,j) == NONE) {
+                        freeBot = true;
+                    }
+                    this->entityManager.createTerrain(j * 32, i * 32, freeTop, freeBot, freeRight, freeLeft);
+                        break;
+                case ENEMY:
+                    this->entityManager.createEnemy(j * 32, i * 32);
+                    break;
+                case SPAWN:
+                    this->hero = this->entityManager.createHero(j * 32, i * 32, SFX_ALERT, false);
+                    this->entityManager.createHealthBar(100, 100, 200, 40, hero);
+                    this->entityManager.createScoreBox(850, 100, hero);
+                    break;
+                case GOAL:
+                    this->entityManager.createVictoryZone(j * 32, i * 32);
+                    break;
+                default:
+                    break;
             }
         }
     }
 
-    /*** Can use this to disable border handling in collision handler
-    this->entityManager.createTerrain(0,0,windowW,1);
-    this->entityManager.createTerrain(0,0,1,windowH);
-    this->entityManager.createTerrain(windowW,0,1,windowH);
-    this->entityManager.createTerrain(0,windowH,windowW,1);
-     ***/
 }
 
 StateEnum PlayState::run() {
@@ -101,6 +106,7 @@ StateEnum PlayState::run() {
         this->collisionHandler.handleCollisions();
         this->soundHandler.handleSfx(dt);
         this->scoreHandler.handleScore(dt);
+        this->drawingHandler.shift(dt);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
@@ -119,4 +125,5 @@ void PlayState::cleanup(StateEnum nextState) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
+    this->drawingHandler.resetCamera(windowW,windowH);
 }

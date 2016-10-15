@@ -3,7 +3,7 @@
 TextFadeInComponent::TextFadeInComponent(Entity* entity, SDL_Renderer *renderer,
                                          SDL_Surface *surface,
                                          int layer, int initialAlpha):
-    ArtComponent(entity, layer),
+    ArtComponent(entity, layer, false),
     surface(surface),
     renderer(renderer),
     lastTexture(NULL),

@@ -29,6 +29,15 @@ Level::Level(std::string filename) {
                     case '#':
                         levelContents[i][j] = TERRAIN;
                         break;
+                    case '@':
+                        levelContents[i][j] = SPAWN;
+                        break;
+                    case '-':
+                        levelContents[i][j] = ENEMY;
+                        break;
+                    case 'O':
+                        levelContents[i][j] = GOAL;
+                        break;
                     default:
                         std::cout << "Unrecognized symbol in level file " << line.at(j) << std::endl;
                         break;
