@@ -10,7 +10,6 @@ TerrainCollisionComponent::TerrainCollisionComponent(Entity *entity,
 }
 
 void TerrainCollisionComponent::onEntityCollision(Entity *other) {
-
     //Calculate the sides of entity 1
     int leftT = this->entity->x;
     int rightT = this->entity->x + this->entity->width;
@@ -23,8 +22,19 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other) {
     int topO = other->y;
     int bottomO = other->y + other->height;
 
-    //vertical check
-    if (bottomT > topO && bottomO > bottomT && freeBot) { //object collide below
+    // is there a collision on terrain's bottom? top? right? left?
+    bool collideBottom = this->freeBot && bottomT > topO && bottomO > bottomT;
+    bool collideTop = this->freeTop && topT < bottomO && topO < topT;
+    bool collideRight = this->freeRight && rightT > leftO && rightO > rightT;
+    bool collideLeft = this->freeLeft && leftT < rightO && leftO < leftT;
+    bool collideTopLeft = collideTop && collideLeft && !collideBottom && !collideRight;
+    bool collideTopRight = collideTop && collideRight && !collideBottom && !collideLeft;
+    bool collideBottomLeft = collideBottom && collideLeft && !collideTop && !collideRight;
+    bool collideBottomRight = collideBottom && collideRight && !collideTop && !collideLeft;
+
+
+
+    if (collideBottom)
          borderBoundY(other, bottomT);
 
     } else if (topT < bottomO && topO < topT && freeTop) { //object collide from above
@@ -39,92 +49,10 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other) {
     }
 
 
-
-    /**
-
-
-    if (bottomA >= topB && bottomB > bottomA){
-        if(leftA <= leftB && rightA >= rightB){
-            borderBoundY(other, bottomA);
-        } else{
-            if (rightA > leftB && rightA < rightB){
-                if(rightA - leftB < bottomA-topB){
-                    borderBoundX(other, rightA);
-                } else{
-                    borderBoundY(other, bottomA);
-                }
-            }
-            else if (leftA < rightB && leftA > leftB){
-                if(rightB - leftA < bottomA - topB){
-                    borderBoundX(other, leftA-other->width);
-                } else {
-                    borderBoundY(other, bottomA);
-                }
-            }
-        }
-    }
-    else if (topA <= bottomB && topB < topA){
-        if(leftA <= leftB && rightA >= rightB){
-            borderBoundY(other, topA-other->height);
-        } else{
-            if (rightA > leftB && rightA < rightB){
-                if(rightA - leftB < bottomB-topA){
-                    borderBoundX(other, rightA);
-                } else{
-                    borderBoundY(other, topA-other->height);
-                }
-            }
-            else if (leftA < rightB && leftA > leftB){
-                if(rightB - leftA < bottomB - topA){
-                    borderBoundX(other, leftA-other->width);
-                } else {
-                    borderBoundY(other, topA-other->height);
-                }
-            }
-        }
-    }
-    else if (rightA >= leftB && rightA < rightB){
-        if(topA <= topB && bottomA >= bottomB){
-            borderBoundX(other, rightA);
-        } else {
-            if (bottomA > topB && bottomB > bottomA){
-                if(bottomA - topB < rightA - leftB){
-                    borderBoundY(other, bottomA);
-                } else{
-                    borderBoundX(other, rightA);
-                }
-            } else if(topA < bottomB && topB < topA){
-                if(bottomB - topA < rightA - leftB){
-                    borderBoundY(other, topA-other->height);
-                } else{
-                    borderBoundX(other, rightA);
-                }
-            }
-        }
-    }
-    else if (leftA <= rightB && leftA > leftB && topA <= topB && bottomA >= bottomB){
-        if(topA <= topB && bottomA >= bottomB){
-            borderBoundX(other, leftA-other->width);
-        } else {
-            if (bottomA > topB && bottomB > bottomA){
-                if(bottomA - topB < rightB - leftA){
-                    borderBoundY(other, bottomA);
-                } else{
-                    borderBoundX(other, leftA-other->width);
-                }
-            } else if(topA < bottomB && topB < topA){
-                if(bottomB - topA < rightB - leftA){
-                    borderBoundY(other, topA-other->height);
-                } else{
-                    borderBoundX(other, leftA-other->width);
-                }
-            }
-        }
-    } **/
 }
 
 void TerrainCollisionComponent::onBorderCollision() {
-    
+
 }
 
 void TerrainCollisionComponent::borderBoundX(Entity* other, float boundValue) {
