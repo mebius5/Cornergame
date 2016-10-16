@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include "entityBuilder.h"
+#include "level.h"
 
 class EntityManager {
 private:
@@ -50,6 +51,7 @@ public:
     Entity* createVictoryZone(int x, int y);
     Entity * createTerrain(int x, int y, bool freeTop, bool freeBot, 
         bool freeRight, bool freeLeft);
+    void populateLevel(Level * level);
 };
 
 #endif
