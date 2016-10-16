@@ -119,7 +119,6 @@ private:
     ResultsState& resultsState;
     HighscoreState& highscoreState;
     Entity* hero;
-    Level* level;
 public:
     PlayState(int windowW, int windowH, EntityManager& entityManager,
               std::vector<Command*>& commandList, SDL_Renderer* renderer,

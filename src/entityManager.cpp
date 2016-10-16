@@ -102,11 +102,17 @@ Entity* EntityManager::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
 
     this->heroEntities.push_back(entity);
 
+    if(wasd){
+
+    } else{
+
+    }
+
     return entity;
 }
 
 Entity* EntityManager::createEnemy(int x, int y) {
-    Entity* entity = this->entityBuilder.createEnemy(x, y);
+    Entity* entity = this->entityBuilder.createEnemy(x, y, &this->heroEntities);
     this->addEntity(entity);
     return entity;
 }
@@ -140,7 +146,7 @@ Entity* EntityManager::createCenteredFadeInText(const char* fontName,
     return entity;
 }
 
-Entity* EntityManager::createHorizontallyCenteredFadeInText(const char* fontName,
+Entity * EntityManager::createHorizontallyCenteredFadeInText(const char* fontName,
                                                  const char* text,
                                                  int fontSize,
                                                  int r, int g, int b, int initialAlpha,
@@ -153,15 +159,62 @@ Entity* EntityManager::createHorizontallyCenteredFadeInText(const char* fontName
     return entity;
 }
 
-Entity* EntityManager::createVictoryZone(int x, int y) {
+Entity * EntityManager::createVictoryZone(int x, int y) {
     Entity* entity = this->entityBuilder.createVictoryZone(x, y);
     this->addEntity(entity);
     return entity;
 }
 
-Entity* EntityManager::createTerrain(int x, int y, bool freeTop, bool freeBot, 
+Entity * EntityManager::createTerrain(int x, int y, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft) {
     Entity * entity = this->entityBuilder.createTerrain(x, y, freeTop, freeBot, freeRight, freeLeft);
     this->addEntity(entity);
     return entity;
+}
+
+void EntityManager::populateLevel(Level *level) {
+    bool freeRight;
+    bool freeLeft;
+    bool freeTop;
+    bool freeBot;
+    for(int i = 0; i < level->height; i++){
+        for(int j = 0; j < level->width; j++){
+            freeRight = false;
+            freeLeft = false;
+            freeTop = false;
+            freeBot = false;
+            switch(level->getTile(i, j)) {
+                case TERRAIN:
+                    if (j>0 && level->getTile(i,j-1) == NONE) {
+                        freeLeft = true;
+                    }
+                    if (j < (level->width -1) && level->getTile(i,j+1) == NONE) {
+                        freeRight = true;
+                    }
+                    if (i>0 && level->getTile(i-1,j) == NONE) {
+                        freeTop = true;
+                    }
+                    if (i < (level->height -1) && level->getTile(i+1,j) == NONE) {
+                        freeBot = true;
+                    }
+                    createTerrain(j * 32, i * 32, freeTop, freeBot, freeRight, freeLeft);
+                    break;
+                case ENEMY:
+                    createEnemy(j * 32, i * 32);
+                    break;
+                case SPAWN:
+                {
+                    Entity * hero = createHero(j * 32, i * 32, SFX_ALERT, false);
+                    createHealthBar(100, 100, 200, 40, hero);
+                    createScoreBox(850, 100, hero);
+                    break;
+                }
+                case GOAL:
+                    createVictoryZone(j * 32, i * 32);
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
 }
