@@ -6,7 +6,8 @@
 
 class CollisionComponent : public Component {
 public:
-    CollisionComponent(Entity* entity);
+    bool staticObject;
+    CollisionComponent(Entity* entity, bool staticObject);
     virtual ~CollisionComponent() { };
 
     virtual void onEntityCollision(Entity* other) = 0;

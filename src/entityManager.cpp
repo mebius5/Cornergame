@@ -15,20 +15,32 @@ void EntityManager::addEntity(Entity* entity) {
     int id = entity->getId();
     this->entityMap[id] = entity;
 
-    if (entity->ai)
+    if (entity->ai) {
         this->aiComponents.push_back(entity->ai);
-    if (entity->art)
+    }
+    if (entity->art) {
         this->artComponents.push_back(entity->art);
-    if (entity->collision)
+    }
+    if (entity->collision) {
         this->collisionComponents.push_back(entity->collision);
-    if (entity->input)
+        if (entity->collision->staticObject) {
+            this->staticCollisionComponents.push_back(entity->collision);
+        } else {
+            this->volatileCollisionComponents.push_back(entity->collision);
+        }
+    }
+    if (entity->input) {
         this->inputComponents.push_back(entity->input);
-    if (entity->physics)
+    }
+    if (entity->physics) {
         this->physicsComponents.push_back(entity->physics);
-    if (entity->health)
+    }
+    if (entity->health) {
         this->healthComponents.push_back(entity->health);
-    if (entity->score)
+    }
+    if (entity->score) {
         this->scoreComponents.push_back(entity->score);
+    }
 }
 
 void EntityManager::deleteEntity(Entity* entity) {
@@ -78,7 +90,9 @@ void EntityManager::clear() {
     this->physicsComponents.clear();
     this->healthComponents.clear();
     this->scoreComponents.clear();
+    this->staticCollisionComponents.clear();
     this->heroEntities.clear();
+    this->volatileCollisionComponents.clear();
 }
 
 /* Entity Creation Methods */

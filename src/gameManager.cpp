@@ -4,6 +4,8 @@
 #include <scoreHandler.h>
 #include "gameManager.h"
 
+#include <iostream>
+
 /* gameManager.cpp
  * Cornerstone <GAME NAME>
  * This class initializes and closes SDL resources, and manages the game loop.
@@ -100,6 +102,8 @@ void GameManager::run() {
     InputHandler inputHandler(entityMgr.inputComponents, commandList);
     AiHandler aiHandler(entityMgr.aiComponents, entityMgr.heroEntities);
     CollisionHandler collisionHandler(entityMgr.collisionComponents,
+                                      entityMgr.volatileCollisionComponents,
+                                      entityMgr.staticCollisionComponents,
                                       this->width, this->height);
     SoundHandler soundHandler(commandList);
     ControlHandler controlHandler(commandList);

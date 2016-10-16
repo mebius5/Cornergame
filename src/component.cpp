@@ -38,8 +38,9 @@ ArtComponent::ArtComponent(Entity* entity, int layer, bool movesWithCamera) :
     }
 }
 
-CollisionComponent::CollisionComponent(Entity* entity) :
-    Component(entity) {
+CollisionComponent::CollisionComponent(Entity* entity, bool staticObject) :
+    Component(entity),
+    staticObject(staticObject) {
 }
 
 InputComponent::InputComponent(Entity* entity) :

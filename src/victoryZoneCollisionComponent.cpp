@@ -1,7 +1,7 @@
 #include "collisionComponent.h"
 
 VictoryZoneCollisionComponent::VictoryZoneCollisionComponent(Entity* ent, Command* onEntity) :
-    CollisionComponent(ent),
+    CollisionComponent(ent, true),
     entityCollisionCommand(onEntity) {
 }
 
