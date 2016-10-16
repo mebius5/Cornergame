@@ -32,7 +32,7 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
 
     if(entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)){
         if(entity->x >= ((maxX+minX)/2)){
-            shift(1,0);
+            shift(entity->x-(maxX+minX)/2,0);
         }
     }
 
