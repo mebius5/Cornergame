@@ -99,7 +99,6 @@ StateEnum PlayState::run() {
         int dt = currentTime - lastTime;
         lastTime = currentTime;
 
-        std::cout << this->hero->xVelocity << "  " << this->hero->yVelocity << "\n" << std::endl;
         this->aiHandler.updateAi(dt);
         this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
