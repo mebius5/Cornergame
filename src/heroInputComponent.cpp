@@ -1,16 +1,20 @@
 #include "inputComponent.h"
 
-HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd) :
+HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand) :
     InputComponent(entity),
     accelRate(.001f),
     maxVelocity(.6f),       // .6f
     velocityDecay(.95f),
-    wasd(wasd){
+    wasd(wasd),
+    spawnCommand(spawnCommand) {
     this->entity->yAccel = .0017f;
 }
 
 HeroInputComponent::~HeroInputComponent() {
     this->entity = NULL;
+    if (spawnCommand) {
+        delete spawnCommand;
+    }
 }
 
 float HeroInputComponent::boundVelocity(float velocity) {
@@ -67,6 +71,9 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
                 break;
             case SDLK_x:
                 this->entity->actionState = THROW;
+                this->spawnCommand->x = entity->x;
+                this->spawnCommand->y = entity->y;
+                Component::commandList->push_back(this->spawnCommand);
                 break;
         }
     }

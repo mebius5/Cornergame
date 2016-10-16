@@ -7,3 +7,9 @@ PlaySoundCommand::PlaySoundCommand(SfxEnum sfxType) :
 SwitchStateCommand::SwitchStateCommand(StateEnum newState) :
     newState(newState) {
 }
+
+SpawnEntityCommand::SpawnEntityCommand(ProjEnum projType) :
+     projType(projType) {
+}
+
+    

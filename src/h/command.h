@@ -23,4 +23,12 @@ public:
     SwitchStateCommand(StateEnum newState);
 };
 
+class SpawnEntityCommand : public Command {
+public:
+	ProjEnum projType;
+	int x;
+	int y;
+	SpawnEntityCommand(ProjEnum projType);
+};
+
 #endif

@@ -8,4 +8,6 @@ enum SfxEnum { SFX_NONE = 0, SFX_ALERT };
 
 enum MusicEnum { MUSIC_START, MUSIC_MENU, MUSIC_PLAY, MUSIC_HIGHSCORE };
 
+enum ProjEnum { HERO_PROJ, ENEMY_PROJ };
+
 #endif

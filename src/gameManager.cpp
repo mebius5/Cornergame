@@ -97,7 +97,7 @@ void GameManager::run() {
     std::vector<Command*> commandList;
     Component::setCommandList(&commandList);
 
-    EntityManager entityMgr(this->renderer);
+    EntityManager entityMgr(this->renderer, commandList);
     DrawingHandler drawingHandler(entityMgr.artComponents, this->renderer, width, height);
     InputHandler inputHandler(entityMgr.inputComponents, commandList);
     AiHandler aiHandler(entityMgr.aiComponents);

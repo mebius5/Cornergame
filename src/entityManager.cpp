@@ -1,7 +1,8 @@
 #include "entityManager.h"
 
 /* Constructor and Destructor */
-EntityManager::EntityManager(SDL_Renderer* renderer) :
+EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList) :
+    commandList(cmdList),
     entityBuilder(renderer),
     numCleanable(0) {
 }
@@ -170,6 +171,25 @@ Entity * EntityManager::createTerrain(int x, int y, bool freeTop, bool freeBot,
     Entity * entity = this->entityBuilder.createTerrain(x, y, freeTop, freeBot, freeRight, freeLeft);
     this->addEntity(entity);
     return entity;
+}
+
+Entity * EntityManager::createProjectile(int x, int y, ProjEnum projType) {
+    Entity * entity = this->entityBuilder.createProjectile(x, y);
+    this->addEntity(entity);
+    return entity;
+}
+
+void EntityManager::handleSpawns() {
+    std::vector<Command*>::iterator it;
+    for (it = this->commandList.begin(); it != this->commandList.end(); ++it) {
+        if (SpawnEntityCommand* eCmd = dynamic_cast<SpawnEntityCommand*>(*it)) {
+            this->createProjectile(eCmd->x, eCmd->y, eCmd->projType);
+            *it = this->commandList.back();
+            this->commandList.pop_back();
+        } else {
+            ++it;
+        }
+    }
 }
 
 void EntityManager::populateLevel(Level *level) {
