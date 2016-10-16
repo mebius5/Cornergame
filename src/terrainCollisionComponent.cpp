@@ -2,7 +2,7 @@
 
 TerrainCollisionComponent::TerrainCollisionComponent(Entity *entity,
  bool freeTop, bool freeBot, bool freeRight, bool freeLeft):
-    CollisionComponent(entity),
+    CollisionComponent(entity, true),
     freeTop(freeTop),
     freeBot(freeBot),
     freeRight(freeRight),

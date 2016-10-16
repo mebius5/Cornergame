@@ -7,6 +7,8 @@
 class CollisionHandler {
 private:
     std::vector<CollisionComponent*>& componentList;
+    std::vector<CollisionComponent*>& volatileList;
+    std::vector<CollisionComponent*>& staticList;
     const int width;
     const int height;
     void removeInvalidComponents();
@@ -16,6 +18,8 @@ private:
     void detectBorderCollision(Entity* entity);
 public:
     CollisionHandler(std::vector<CollisionComponent*>& componentList,
+                     std::vector<CollisionComponent*>& volatileList,
+                     std::vector<CollisionComponent*>& staticList,
                      const int w, const int h);
     void handleCollisions();
 };

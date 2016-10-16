@@ -1,7 +1,7 @@
 #include "collisionComponent.h"
 
 EnemyCollisionComponent::EnemyCollisionComponent(Entity* entity) :
-    CollisionComponent(entity) {
+    CollisionComponent(entity, false) {
 }
 
 void EnemyCollisionComponent::onEntityCollision(Entity* /*other*/) {
