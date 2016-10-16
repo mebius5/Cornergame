@@ -8,17 +8,20 @@ class AiComponent : public Component {
 public:
     AiComponent(Entity* entity);
     virtual void resetAi() = 0;
-    virtual void updateLocation(int dt, Entity * hero) = 0;
+    virtual void updateLocation(int dt) = 0;
 };
 
 class EnemyAiComponent : public AiComponent {
 private:
     int timeElapsed;      // time passed since a behavior was generated
     float speed;
+    std::vector<Entity *> * heroEntities;
 public:
-    EnemyAiComponent(Entity* entity);
+    EnemyAiComponent(Entity* entity, std::vector<Entity *> * heroEntities);
+    ~EnemyAiComponent();
     void resetAi();
-    void updateLocation(int dt, Entity * hero);
+    void updateLocation(int dt);
+    void update(int dt, Entity *hero);
 };
 
 #endif

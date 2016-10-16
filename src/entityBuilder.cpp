@@ -1,4 +1,5 @@
 #include "entityBuilder.h"
+#include <iostream>
 
 EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
     nextId(0),
@@ -22,7 +23,7 @@ Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
     return hero;
 }
 
-Entity* EntityBuilder::createEnemy(int x, int y) {
+Entity* EntityBuilder::createEnemy(int x, int y, std::vector<Entity *> * heroEntities) {
     SDL_Surface* image = this->loadImage("spritesheets/lax.png");
     Entity* enemy = new Entity(this->nextId++, x, y, (image->w)/4, (image->h)/2);
 
@@ -30,7 +31,7 @@ Entity* EntityBuilder::createEnemy(int x, int y) {
     enemy->art = new AnimationComponent(enemy,
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1);
     SDL_FreeSurface(image);
-    enemy->ai = new EnemyAiComponent(enemy);
+    enemy->ai = new EnemyAiComponent(enemy, heroEntities);
     enemy->health = new HealthComponent(enemy, 200, NULL);
     return enemy;
 }

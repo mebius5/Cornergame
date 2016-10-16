@@ -1,8 +1,13 @@
 #include "collisionHandler.h"
+#include <iostream>
 
 CollisionHandler::CollisionHandler(std::vector<CollisionComponent*>& compList,
+                                   std::vector<CollisionComponent*>& volList,
+                                   std::vector<CollisionComponent*>& statList,
                                    const int w, const int h) :
     componentList(compList),
+    volatileList(volList),
+    staticList(statList),
     width(w),
     height(h) {
 }
@@ -16,17 +21,45 @@ void CollisionHandler::removeInvalidComponents() {
         } else
             ++it;
     }
+    for (it = this->staticList.begin(); it != this->staticList.end(); ) {
+        if (!(*it)->isValid()) {
+            *it = this->staticList.back();
+            this->staticList.pop_back();
+        } else
+            ++it;
+    }
+    for (it = this->volatileList.begin(); it != this->volatileList.end(); ) {
+        if (!(*it)->isValid()) {
+            *it = this->volatileList.back();
+            this->volatileList.pop_back();
+        } else
+            ++it;
+    }
 }
 
 void CollisionHandler::handleCollisions() {
     this->removeInvalidComponents();
 
+    // handle volatile components colliding with each other
     std::vector<CollisionComponent*>::const_iterator it;
     std::vector<CollisionComponent*>::const_iterator it2;
-    for (it = this->componentList.begin(); it != this->componentList.end(); ++it) {
+    for (it = this->volatileList.begin(); it != this->volatileList.end(); ++it) {
         CollisionComponent* comp1 = *it;
         //this->detectBorderCollision(comp1->entity);
-        for (it2 = std::next(it, 1); it2 != this->componentList.end(); ++it2) {
+        for (it2 = std::next(it, 1); it2 != this->volatileList.end(); ++it2) {
+            CollisionComponent* comp2 = *it2;
+            if (detectOverlap(comp1->entity, comp2->entity)) {
+                comp1->onEntityCollision(comp2->entity);
+                comp2->onEntityCollision(comp1->entity);
+            }
+        }
+    }
+
+    // handle volatile components colliding with static components
+    for (it = this->volatileList.begin(); it != this->volatileList.end(); ++it) {
+        CollisionComponent* comp1 = *it;
+        //this->detectBorderCollision(comp1->entity);
+        for (it2 = this->staticList.begin(); it2 != this->staticList.end(); ++it2) {
             CollisionComponent* comp2 = *it2;
             if (detectOverlap(comp1->entity, comp2->entity)) {
                 comp1->onEntityCollision(comp2->entity);

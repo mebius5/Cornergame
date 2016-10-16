@@ -37,7 +37,7 @@ public:
 //     ~StartScreenInputComponent();
 //     void keyDown(SDL_Keycode keycode);
 //     void keyUp(SDL_Keycode keycode);
-//     void updateLocation(int dt);
+//     void update(int dt);
 // };
 
 class MenuOptionInputComponent : public InputComponent {

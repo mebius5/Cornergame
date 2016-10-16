@@ -48,6 +48,8 @@ Level::Level(std::string filename) {
             }
         }
     }
+
+    infile.close();
 }
 
 Level::~Level() {

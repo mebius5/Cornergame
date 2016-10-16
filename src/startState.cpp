@@ -1,4 +1,5 @@
 #include "state.h"
+#include <iostream>
 
 StartState::StartState(int windowW, int windowH, EntityManager& entityManager,
                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
