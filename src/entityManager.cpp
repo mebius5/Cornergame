@@ -98,7 +98,7 @@ Entity* EntityManager::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
 }
 
 Entity* EntityManager::createEnemy(int x, int y) {
-    Entity* entity = this->entityBuilder.createEnemy(x, y);
+    Entity* entity = this->entityBuilder.createEnemy(x, y, &this->heroEntities);
     this->addEntity(entity);
     return entity;
 }

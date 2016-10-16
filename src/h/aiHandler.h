@@ -7,9 +7,8 @@
 class AiHandler {
 private:
     std::vector<AiComponent*>& componentList;
-    std::vector<Entity*> & heroEntitiesList;
 public:
-    AiHandler(std::vector<AiComponent*>& componentList, std::vector<Entity *> & heroEntityList);
+    AiHandler(std::vector<AiComponent*>& componentList);
     void updateAi(int dt);
 };
 
