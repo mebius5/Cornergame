@@ -27,12 +27,14 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other) {
     if (bottomT > topO && bottomO > bottomT && freeBot) { //object collide below
          borderBoundY(other, bottomT);
 
-    } else if (topT < bottomO && topO < bottomT && freeTop) { //object collide from above
+    } else if (topT < bottomO && topO < topT && freeTop) { //object collide from above
          borderBoundY(other, topT - other->height);
     }
+
     if (rightT > leftO && rightO > rightT && freeRight) { //object collide from right
          borderBoundX(other, rightT);
-    } else if (leftT < rightO && leftO < leftT && freeLeft) {
+
+    } else if (leftT < rightO && leftO < leftT && freeLeft) { // object collide from left
          borderBoundX(other, leftT - other->width);
     }
 
