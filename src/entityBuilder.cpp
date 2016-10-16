@@ -7,7 +7,7 @@ EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
 
 Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
     SDL_Surface* image = this->loadImage("spritesheets/hero.png");
-    Entity* hero = new Entity(this->nextId++, x, y, (image->w)/4, (image->h));
+    Entity* hero = new Entity(this->nextId++, x, y, (image->w)/4, (image->h)/2);
 
     if (sfxType)        // if sfxType != SFX_NONE
         hero->collision = new HeroCollisionComponent(hero, new PlaySoundCommand(sfxType));
@@ -24,7 +24,7 @@ Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
 
 Entity* EntityBuilder::createEnemy(int x, int y) {
     SDL_Surface* image = this->loadImage("spritesheets/lax.png");
-    Entity* enemy = new Entity(this->nextId++, x, y, (image->w)/4, (image->h));
+    Entity* enemy = new Entity(this->nextId++, x, y, (image->w)/4, (image->h)/2);
 
     enemy->collision = new EnemyCollisionComponent(enemy);
     enemy->art = new AnimationComponent(enemy,

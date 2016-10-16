@@ -8,6 +8,7 @@ AnimationComponent::AnimationComponent(Entity* entity, SDL_Texture* texture,
     surfaceH(surfaceH),
     timecount(0) {
     this->clip = {0,0,0,0};
+    
 }
 
 AnimationComponent::~AnimationComponent() {
@@ -29,7 +30,7 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
     // if moving, use a walking animation, else idle
     float velocity = sqrt(pow(this->entity->xVelocity, 2) +
                           pow(this->entity->yVelocity, 2));
-    if (velocity > 0.01) {
+    if (velocity > 0.03) {
         // if moving left, start at middle of sheet
         int startpos = 0;
         if (this->entity->xVelocity < 0) {
@@ -42,6 +43,6 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         clip.y = 32;
     }
     clip.w = (this->surfaceW) / 8;
-    clip.h = (this->surfaceH) / 2;
+    clip.h = (this->surfaceH) / 4;
     return &clip;
 }
