@@ -179,7 +179,7 @@ Entity * EntityManager::createProjectile(int x, int y, ProjEnum projType) {
 
 void EntityManager::handleSpawns() {
     std::vector<Command*>::iterator it;
-    for (it = this->commandList.begin(); it != this->commandList.end(); ++it) {
+    for (it = this->commandList.begin(); it != this->commandList.end(); ) {
         if (SpawnEntityCommand* eCmd = dynamic_cast<SpawnEntityCommand*>(*it)) {
             this->createProjectile(eCmd->x, eCmd->y, eCmd->projType);
             *it = this->commandList.back();
