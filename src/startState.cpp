@@ -25,9 +25,9 @@ void StartState::begin() {
                         100,
                         255, 255, 255, 0, this->windowW, this->windowH);
 
-    this->entityManager.createHero(500, 500, SFX_NONE, false);
     Level level1("levels/startScreenLevel.txt");
     this->entityManager.populateLevel(&level1);
+    this->entityManager.createHero(500, 500, SFX_NONE, false);
 }
 
 StateEnum StartState::run() {
