@@ -6,7 +6,6 @@
 
 class CollisionHandler {
 private:
-    std::vector<CollisionComponent*>& componentList;
     std::vector<CollisionComponent*>& volatileList;
     std::vector<CollisionComponent*>& staticList;
     const int width;
@@ -17,8 +16,7 @@ private:
     bool detectOverlap(Entity* entity1, Entity* entity2);
     void detectBorderCollision(Entity* entity);
 public:
-    CollisionHandler(std::vector<CollisionComponent*>& componentList,
-                     std::vector<CollisionComponent*>& volatileList,
+    CollisionHandler(std::vector<CollisionComponent*>& volatileList,
                      std::vector<CollisionComponent*>& staticList,
                      const int w, const int h);
     void handleCollisions();

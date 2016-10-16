@@ -22,7 +22,6 @@ void EntityManager::addEntity(Entity* entity) {
         this->artComponents.push_back(entity->art);
     }
     if (entity->collision) {
-        this->collisionComponents.push_back(entity->collision);
         if (entity->collision->staticObject) {
             this->staticCollisionComponents.push_back(entity->collision);
         } else {
@@ -85,7 +84,6 @@ void EntityManager::clear() {
     this->entityMap.clear();
     this->aiComponents.clear();
     this->artComponents.clear();
-    this->collisionComponents.clear();
     this->inputComponents.clear();
     this->physicsComponents.clear();
     this->healthComponents.clear();

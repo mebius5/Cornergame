@@ -16,7 +16,6 @@ private:
 public:
     std::vector<AiComponent*> aiComponents;
     std::vector<ArtComponent*> artComponents;
-    std::vector<CollisionComponent*> collisionComponents;
     std::vector<CollisionComponent*> staticCollisionComponents;
     std::vector<CollisionComponent*> volatileCollisionComponents;
     std::vector<InputComponent*> inputComponents;
@@ -51,7 +50,7 @@ public:
                             int windowW, int yPos,
                             int index, int numOptions, StateEnum nextState);
     Entity* createVictoryZone(int x, int y);
-    Entity * createTerrain(int x, int y, bool freeTop, bool freeBot, 
+    Entity * createTerrain(int x, int y, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
     void populateLevel(Level * level);
 };

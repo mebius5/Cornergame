@@ -1,11 +1,9 @@
 #include "collisionHandler.h"
 #include <iostream>
 
-CollisionHandler::CollisionHandler(std::vector<CollisionComponent*>& compList,
-                                   std::vector<CollisionComponent*>& volList,
+CollisionHandler::CollisionHandler(std::vector<CollisionComponent*>& volList,
                                    std::vector<CollisionComponent*>& statList,
                                    const int w, const int h) :
-    componentList(compList),
     volatileList(volList),
     staticList(statList),
     width(w),
@@ -14,13 +12,6 @@ CollisionHandler::CollisionHandler(std::vector<CollisionComponent*>& compList,
 
 void CollisionHandler::removeInvalidComponents() {
     std::vector<CollisionComponent*>::iterator it;
-    for (it = this->componentList.begin(); it != this->componentList.end(); ) {
-        if (!(*it)->isValid()) {
-            *it = this->componentList.back();
-            this->componentList.pop_back();
-        } else
-            ++it;
-    }
     for (it = this->staticList.begin(); it != this->staticList.end(); ) {
         if (!(*it)->isValid()) {
             *it = this->staticList.back();
