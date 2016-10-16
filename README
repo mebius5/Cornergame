@@ -7,16 +7,29 @@ Andrew Zhu azhu8@jhu.edu
 Grady Xiao gxiao2@jhu.edu
 Pratyush Trivedi ptrived8@jhu.edu
 
-ASSIGNMENT 3 NOTES
-This readme details the backend for all new features in this assignment
+ASSIGNMENT 5 NOTES
+This readme details the backend features in this iteration
 
 To compile and run, type the following:
 cd src/
 make
 ./gameManager
 
-SCREENS
+CAMERA
+- Updated the camera to follow the hero around as they traverse the level.
+- camera will also slowly pan to the left, which is how the camera will probably
+    move once multiplayer is created.
 
+TERRAIN
+- static object with art and collision ability
+- collisions with moving entities are calculated -> with corner cases considered
+
+LEVEL EDITOR
+- the game reads in a text file to determine the layout of the level
+- all players, enemies, terrain, victory zones are placed this way. See
+    EntityManager's populateLevel() method.
+
+SCREENS
 StartScreen
 - Currently has our game production logo that fades in from black
 - Also has our hero just walking to show progress and as something related
@@ -105,19 +118,14 @@ when you absolutely can't hold on.
 
 QUIRKS
 - no game name yet!
-- crashing into walls resets your velocity to 0, but there is sometimes a lag
-    when you try to move again in the opposite direction?
 - idle state sometimes changes directions
 
-TL;DR
-- stuff!
 
 TODOS
 valgrind!
 rule of three
 verify deletion was implemented properly w/ vectors!
-How to do terrain?
-Physics on characters?
+Physics into physicsComponent
 loadFont in entityBuilder?
 Move handlers to namespaces?
 Move texture deletion to entityBuilder -> pool textures like music

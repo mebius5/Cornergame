@@ -23,13 +23,14 @@ private:
     float boundVelocity(float velocity);
     bool wasd;
     SpawnEntityCommand* spawnCommand;
-
+    int jumps;
 public:
     HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand);
     ~HeroInputComponent();
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
     void updateLocation(int dt);
+    void resetJumps();
 };
 
 // class StartScreenInputComponent : public InputComponent {

@@ -6,7 +6,8 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCom
     maxVelocity(.6f),       // .6f
     velocityDecay(.95f),
     wasd(wasd),
-    spawnCommand(spawnCommand) {
+    spawnCommand(spawnCommand),
+    jumps(0) {
     this->entity->yAccel = .0017f;
 }
 
@@ -29,9 +30,10 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
     if(wasd){
         switch (keycode) {
             case SDLK_w:
-                if (this->entity->yVelocity >= 0.0f) {
+                if (this->jumps < 2 && this->entity->yVelocity >= 0.0f) {
                     this->entity->yVelocity = -.6f;
                     this->entity->y -= 1.0f;
+                    this->jumps += 1;
                 }
                 this->entity->yAccel = -1 * this->accelRate + .0017f;
                 break;
@@ -51,9 +53,10 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
     }else{
         switch (keycode) {
             case SDLK_UP:
-                if (this->entity->yVelocity >= 0.0f) {
+                if (this->jumps < 2 && this->entity->yVelocity >= 0.0f) {
                     this->entity->yVelocity = -.6f;
                     this->entity->y -= 1.0f;
+                    this->jumps += 1;
                 }
                 this->entity->yAccel = -1 * this->accelRate + .0017f;
                 break;
@@ -114,4 +117,8 @@ void HeroInputComponent::updateLocation(int dt) {
 
     this->entity->x += this->entity->xVelocity * dt;
     this->entity->y += this->entity->yVelocity * dt;
+}
+
+void HeroInputComponent::resetJumps() {
+    this->jumps = 0;
 }

@@ -15,5 +15,8 @@ void VictoryZoneCollisionComponent::onEntityCollision(Entity* other) {
         Component::commandList->push_back(this->entityCollisionCommand);
 }
 
+void VictoryZoneCollisionComponent::onStaticCollision(Entity* /*other*/) {
+}
+
 void VictoryZoneCollisionComponent::onBorderCollision() {
 }

@@ -69,18 +69,18 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other) {
     }
 }
 
-void TerrainCollisionComponent::onBorderCollision() {
+void TerrainCollisionComponent::onStaticCollision(Entity* /*other*/) {
+}
 
+void TerrainCollisionComponent::onBorderCollision() {
 }
 
 void TerrainCollisionComponent::borderBoundX(Entity* other, float boundValue) {
     other->x = boundValue;
     other->xVelocity = 0.0f;
-    other->collision->onBorderCollision();
 }
 
 void TerrainCollisionComponent::borderBoundY(Entity* other, float boundValue) {
     other->y = boundValue;
     other->yVelocity = 0.0f;
-    other->collision->onBorderCollision();
 }

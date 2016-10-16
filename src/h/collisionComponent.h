@@ -11,6 +11,7 @@ public:
     virtual ~CollisionComponent() { };
 
     virtual void onEntityCollision(Entity* other) = 0;
+    virtual void onStaticCollision(Entity* other) = 0;
     virtual void onBorderCollision() = 0;
 };
 
@@ -22,6 +23,7 @@ public:
     ~HeroCollisionComponent();
 
     void onEntityCollision(Entity* other);
+    void onStaticCollision(Entity* other);
     void onBorderCollision();
 };
 
@@ -29,6 +31,7 @@ class EnemyCollisionComponent : public CollisionComponent {
 public:
     EnemyCollisionComponent(Entity* entity);
     void onEntityCollision(Entity* other);
+    void onStaticCollision(Entity* other);
     void onBorderCollision();
 };
 
@@ -40,6 +43,7 @@ public:
     ~VictoryZoneCollisionComponent();
 
     void onEntityCollision(Entity* other);
+    void onStaticCollision(Entity* other);
     void onBorderCollision();
 };
 
@@ -53,7 +57,8 @@ private:
     bool freeLeft;
 public:
     TerrainCollisionComponent(Entity * entity, bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
-    void onEntityCollision(Entity * other);
+    void onEntityCollision(Entity* other);
+    void onStaticCollision(Entity* other);
     void onBorderCollision();
 };
 

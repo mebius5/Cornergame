@@ -11,12 +11,17 @@ HeroCollisionComponent::~HeroCollisionComponent() {
 }
 
 void HeroCollisionComponent::onEntityCollision(Entity* other) {
-    if((other->collision&& dynamic_cast<EnemyCollisionComponent*>(other->collision))){
+    if(other->collision && dynamic_cast<EnemyCollisionComponent*>(other->collision)){
         this->entity->score->addScore(-20);
         this->entity->health->takeDamage(10);
         if (this->entityCollisionCommand)
             Component::commandList->push_back(this->entityCollisionCommand);
     }
+}
+
+void HeroCollisionComponent::onStaticCollision(Entity* /*other*/) {
+    if (this->entity->yVelocity > 0)
+        ((HeroInputComponent*)this->entity->input)->resetJumps();
 }
 
 void HeroCollisionComponent::onBorderCollision() {
