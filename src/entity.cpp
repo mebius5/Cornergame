@@ -10,6 +10,7 @@ Entity::Entity(int id, float x, float y, int w, int h) :
     yVelocity(0.0f),
     xAccel(0.0f),
     yAccel(0.0f),
+    actionState(IDLE),
     collision(NULL),
     score(NULL),
     physics(NULL),

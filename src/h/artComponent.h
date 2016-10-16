@@ -39,6 +39,7 @@ private:
     int surfaceW;
     int surfaceH;
     int timecount;
+    int actionTime;
     SDL_Rect clip;
 public:
     AnimationComponent(Entity* entity, SDL_Texture* texture, int surfaceW,

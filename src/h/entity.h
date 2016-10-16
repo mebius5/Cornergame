@@ -16,6 +16,8 @@ class ArtComponent;
 class ScoreComponent;
 class HealthComponent;
 
+enum Action {IDLE, JUMP, THROW, DAMAGE};
+
 class Entity {
 private:
     int id;
@@ -28,6 +30,7 @@ public:
     float yVelocity;
     float xAccel;
     float yAccel;
+    Action actionState;
 
     CollisionComponent* collision;
     ScoreComponent* score;

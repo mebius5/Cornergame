@@ -65,6 +65,9 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
             case SDLK_k:
                 this->entity->health->toggleInvincibility();
                 break;
+            case SDLK_x:
+                this->entity->actionState = THROW;
+                break;
         }
     }
 }
