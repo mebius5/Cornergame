@@ -27,6 +27,10 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
         if(entity->x >= ((maxX+minX)/2)){
             shift(entity->x-(maxX+minX)/2,0);
         }
+
+        if(entity->y != (minY+(maxY-minY)*.75)){
+            shift(0,entity->y-(minY+(maxY-minY)*.75));
+        }
     }
 
     if(artComponent->movesWithCamera){
