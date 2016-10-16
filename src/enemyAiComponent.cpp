@@ -7,6 +7,11 @@ EnemyAiComponent::EnemyAiComponent(Entity* entity, std::vector<Entity *> * heroE
     heroEntities(heroEntities){
 }
 
+EnemyAiComponent::~EnemyAiComponent() {
+    this->entity = NULL;
+    this->heroEntities = NULL;
+}
+
 // picks a behavior at random, and keeps it until timer resets
 void EnemyAiComponent::updateLocation(int dt) {
     std::vector<Entity*>::iterator heroInIt;
