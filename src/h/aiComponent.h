@@ -24,4 +24,12 @@ public:
     void update(int dt, Entity *hero);
 };
 
+class ProjectileAiComponent : public AiComponent {
+public:
+    ProjectileAiComponent(Entity* entity);
+    ~ProjectileAiComponent();
+    void updateLocation(int dt);
+    void resetAi();
+};
+
 #endif

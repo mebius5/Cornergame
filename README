@@ -129,5 +129,6 @@ Physics into physicsComponent
 loadFont in entityBuilder?
 Move handlers to namespaces?
 Move texture deletion to entityBuilder -> pool textures like music
+Bug in collision for standing on columns? (see start screen)
 
 Change owner pointer in Art components to ownerHealth/ownerScore
