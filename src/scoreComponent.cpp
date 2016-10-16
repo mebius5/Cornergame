@@ -12,6 +12,9 @@ ScoreComponent::~ScoreComponent() {
 
 void ScoreComponent::addScore(float scoreIncrease) {
     this->score += (this->multiplier * scoreIncrease);
+    if(this->score<0){
+        this->score=0;
+    }
 }
 
 int ScoreComponent::getScore() {
