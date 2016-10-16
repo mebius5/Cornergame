@@ -23,6 +23,7 @@ private:
     float boundVelocity(float velocity);
     bool wasd;
     SpawnEntityCommand* spawnCommand;
+    int timecount;
 
 public:
     HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand);

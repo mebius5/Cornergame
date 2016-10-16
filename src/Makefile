@@ -25,6 +25,8 @@ SRCFILES = \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
 	playState.cpp \
+        projectileAiComponent.cpp \
+	projectileCollisionComponent.cpp \
 	resultsState.cpp \
     scoreComponent.cpp \
     scoreHandler.cpp \

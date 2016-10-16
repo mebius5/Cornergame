@@ -135,7 +135,9 @@ Entity * EntityBuilder::createProjectile(int x, int y) {
     projectile->art = new StaticArtComponent(projectile,
     SDL_CreateTextureFromSurface(this->renderer, image), 1);
     SDL_FreeSurface(image);
-    //projectile->xVelocity = 1.0f;
+    projectile->xVelocity = 0.6f;
+    projectile->ai = new ProjectileAiComponent(projectile);
+    projectile->collision = new ProjectileCollisionComponent(projectile);
     return projectile;
 }
 
