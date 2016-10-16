@@ -26,6 +26,8 @@ void StartState::begin() {
                         255, 255, 255, 0, this->windowW, this->windowH);
 
     this->entityManager.createHero(500, 500, SFX_NONE, false);
+    Level level1("levels/startScreenLevel.txt");
+    this->entityManager.populateLevel(&level1);
 }
 
 StateEnum StartState::run() {
@@ -58,4 +60,5 @@ void StartState::cleanup(StateEnum /*next*/) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
+    this->drawingHandler.resetCamera(windowW, windowH);
 }
