@@ -17,7 +17,8 @@ Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
     hero->art = new AnimationComponent(hero,
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1);
     SDL_FreeSurface(image);
-    hero->input = new HeroInputComponent(hero, wasd);
+    SpawnEntityCommand* eCmd = new SpawnEntityCommand(HERO_PROJ);
+    hero->input = new HeroInputComponent(hero, wasd, eCmd);
     hero->score = new ScoreComponent(hero);
     hero->health = new HealthComponent(hero, 300, new SwitchStateCommand(STATE_RESULTS));
     return hero;
@@ -128,6 +129,17 @@ Entity* EntityBuilder::createTerrain(int x, int y, bool freeTop,
     return terrain;
 }
 
+Entity * EntityBuilder::createProjectile(int x, int y) {
+    SDL_Surface* image = this->loadImage("spritesheets/ball.png");
+    Entity* projectile = new Entity(this->nextId++, x, y, (image->w)*2, (image->h)*2);
+    projectile->art = new StaticArtComponent(projectile,
+    SDL_CreateTextureFromSurface(this->renderer, image), 1);
+    SDL_FreeSurface(image);
+    //projectile->xVelocity = 1.0f;
+    return projectile;
+}
+
+
 SDL_Surface* EntityBuilder::loadFont(const char * fontName,
                       const char * text,
                       int fontSize,
@@ -165,3 +177,10 @@ SDL_Surface* EntityBuilder::loadImage(const char* filename) {
     }
     return finalImage;
 }
+
+
+
+
+
+
+

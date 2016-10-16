@@ -6,9 +6,11 @@
 #include <vector>
 #include "entityBuilder.h"
 #include "level.h"
+#include "enums.h"
 
 class EntityManager {
 private:
+    std::vector<Command*>& commandList;
     std::unordered_map<int, Entity*> entityMap;
     EntityBuilder entityBuilder;
     std::queue<Entity*> deletionQueue;  // Entities waiting to be deleted
@@ -24,7 +26,7 @@ public:
     std::vector<ScoreComponent*> scoreComponents;
     std::vector<Entity *> heroEntities;
 
-    EntityManager(SDL_Renderer* renderer);
+    EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList);
     ~EntityManager();
 
     void addEntity(Entity* entity);     // add entity/components to map/vectors
@@ -52,6 +54,8 @@ public:
     Entity* createVictoryZone(int x, int y);
     Entity * createTerrain(int x, int y, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
+    Entity* createProjectile(int x, int y, ProjEnum projType);
+    void handleSpawns();
     void populateLevel(Level * level);
 };
 

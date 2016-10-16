@@ -61,6 +61,7 @@ StateEnum PlayState::run() {
 
         //std::cout << this->hero->xVelocity << "  " << this->hero->yVelocity << "\n" << std::endl;
         this->aiHandler.updateAi(dt);
+        this->entityManager.handleSpawns();
         this->inputHandler.handleEvents();
         this->inputHandler.update(dt);
         this->collisionHandler.handleCollisions();
