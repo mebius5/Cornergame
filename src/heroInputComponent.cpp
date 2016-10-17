@@ -117,6 +117,9 @@ void HeroInputComponent::updateLocation(int dt) {
 
     this->entity->x += this->entity->xVelocity * dt;
     this->entity->y += this->entity->yVelocity * dt;
+
+    if (this->entity->y > 1600)          // die if falling off screen
+        this->entity->health->takeDamage(1000);  // TODO: remove!
 }
 
 void HeroInputComponent::resetJumps() {

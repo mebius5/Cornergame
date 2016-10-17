@@ -112,7 +112,7 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {
     return zone;
 }
 
-Entity* EntityBuilder::createTerrain(int x, int y, bool freeTop, 
+Entity* EntityBuilder::createTerrain(int x, int y, bool freeTop,
         bool freeBot, bool freeRight, bool freeLeft) {
     SDL_Surface * image = this->loadImage("resources/tile.png");
     Entity * terrain = new Entity(this->nextId++, x, y, image->w, image->h);
@@ -140,7 +140,6 @@ Entity * EntityBuilder::createProjectile(int x, int y) {
     projectile->collision = new ProjectileCollisionComponent(projectile);
     return projectile;
 }
-
 
 SDL_Surface* EntityBuilder::loadFont(const char * fontName,
                       const char * text,
@@ -179,10 +178,3 @@ SDL_Surface* EntityBuilder::loadImage(const char* filename) {
     }
     return finalImage;
 }
-
-
-
-
-
-
-

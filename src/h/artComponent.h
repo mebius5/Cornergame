@@ -27,7 +27,8 @@ class StaticArtComponent : public ArtComponent {
 private:
     SDL_Texture* texture;
 public:
-    StaticArtComponent(Entity* entity, SDL_Texture* texture, int layer, bool moving);
+    StaticArtComponent(Entity* entity, SDL_Texture* texture, int layer,
+                       bool movesWithCamera);
     ~StaticArtComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);

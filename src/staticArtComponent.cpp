@@ -1,7 +1,8 @@
 #include "artComponent.h"
 
-StaticArtComponent::StaticArtComponent(Entity* ent, SDL_Texture* tex, int lay, bool moving) :
-    ArtComponent(ent, lay, moving),
+StaticArtComponent::StaticArtComponent(Entity* ent, SDL_Texture* tex, int lay,
+                                       bool movesWithCamera) :
+    ArtComponent(ent, lay, movesWithCamera),
     texture(tex) {
 }
 
