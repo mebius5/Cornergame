@@ -65,9 +65,11 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
                 break;
             case SDLK_LEFT:
                 this->entity->xAccel = -1 * this->accelRate;
+                this->spawnCommand->dir = -1;
                 break;
             case SDLK_RIGHT:
                 this->entity->xAccel = this->accelRate;
+                this->spawnCommand->dir = 1;
                 break;
             case SDLK_k:
                 this->entity->health->toggleInvincibility();

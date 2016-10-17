@@ -9,6 +9,7 @@ ProjectileAiComponent::~ProjectileAiComponent() {
     this->entity = NULL;
 }
 void ProjectileAiComponent::updateLocation(int dt) {
+	this->entity->yVelocity += 0.05f;
     this->entity->x += this->entity->xVelocity * dt;
     this->entity->y += this->entity->yVelocity * dt;
 }

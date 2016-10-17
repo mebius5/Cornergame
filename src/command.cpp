@@ -9,7 +9,11 @@ SwitchStateCommand::SwitchStateCommand(StateEnum newState) :
 }
 
 SpawnEntityCommand::SpawnEntityCommand(ProjEnum projType) :
-     projType(projType) {
+    projType(projType) {
+}
+
+DespawnEntityCommand::DespawnEntityCommand(int id) :
+	id(id) {
 }
 
     

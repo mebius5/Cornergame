@@ -171,8 +171,8 @@ Entity * EntityManager::createTerrain(int x, int y, bool freeTop, bool freeBot,
     return entity;
 }
 
-Entity * EntityManager::createProjectile(int x, int y, ProjEnum /*projType*/) {
-    Entity * entity = this->entityBuilder.createProjectile(x, y);
+Entity * EntityManager::createProjectile(int x, int y, int dir, ProjEnum /*projType*/) {
+    Entity * entity = this->entityBuilder.createProjectile(x, y, dir);
     this->addEntity(entity);
     return entity;
 }
@@ -181,7 +181,11 @@ void EntityManager::handleSpawns() {
     std::vector<Command*>::iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
         if (SpawnEntityCommand* eCmd = dynamic_cast<SpawnEntityCommand*>(*it)) {
-            this->createProjectile(eCmd->x, eCmd->y, eCmd->projType);
+            this->createProjectile(eCmd->x, eCmd->y, eCmd->dir, eCmd->projType);
+            *it = this->commandList.back();
+            this->commandList.pop_back();
+        } else if (DespawnEntityCommand* dCmd = dynamic_cast<DespawnEntityCommand*>(*it)) {
+            this->deleteEntity(dCmd->id);
             *it = this->commandList.back();
             this->commandList.pop_back();
         } else {

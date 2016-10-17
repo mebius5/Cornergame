@@ -32,8 +32,9 @@ Entity* EntityBuilder::createEnemy(int x, int y, std::vector<Entity *> * heroEnt
     enemy->art = new AnimationComponent(enemy,
         SDL_CreateTextureFromSurface(this->renderer, image), image->w, image->h, 1);
     SDL_FreeSurface(image);
+    DespawnEntityCommand* dCmd = new DespawnEntityCommand(enemy->getId());
     enemy->ai = new EnemyAiComponent(enemy, heroEntities);
-    enemy->health = new HealthComponent(enemy, 200, NULL);
+    enemy->health = new HealthComponent(enemy, 200, dCmd);
     return enemy;
 }
 
@@ -129,15 +130,17 @@ Entity* EntityBuilder::createTerrain(int x, int y, bool freeTop,
     return terrain;
 }
 
-Entity * EntityBuilder::createProjectile(int x, int y) {
+Entity * EntityBuilder::createProjectile(int x, int y, int dir) {
     SDL_Surface* image = this->loadImage("spritesheets/ball.png");
     Entity* projectile = new Entity(this->nextId++, x, y, (image->w)*2, (image->h)*2);
     projectile->art = new StaticArtComponent(projectile,
     SDL_CreateTextureFromSurface(this->renderer, image), 1, false);
     SDL_FreeSurface(image);
-    projectile->xVelocity = 0.6f;
+    projectile->xVelocity = dir * 0.6f;
+    projectile->yVelocity = -0.4f;
     projectile->ai = new ProjectileAiComponent(projectile);
-    projectile->collision = new ProjectileCollisionComponent(projectile);
+    DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
+    projectile->collision = new ProjectileCollisionComponent(projectile, dCmd);
     return projectile;
 }
 

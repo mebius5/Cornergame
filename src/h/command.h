@@ -28,7 +28,14 @@ public:
 	ProjEnum projType;
 	int x;
 	int y;
+	int dir;
 	SpawnEntityCommand(ProjEnum projType);
+};
+
+class DespawnEntityCommand : public Command {
+public:
+	int id;
+	DespawnEntityCommand(int id);
 };
 
 #endif

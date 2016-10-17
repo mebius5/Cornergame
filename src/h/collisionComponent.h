@@ -36,8 +36,10 @@ public:
 };
 
 class ProjectileCollisionComponent : public CollisionComponent {
+private:
+    Command* entityCollisionCommand;
 public:
-    ProjectileCollisionComponent(Entity* entity);
+    ProjectileCollisionComponent(Entity* entity, Command* entityCollisionCommand);
     void onEntityCollision(Entity* other);
     void onStaticCollision(Entity* other);
     void onBorderCollision();
