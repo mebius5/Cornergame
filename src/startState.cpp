@@ -18,16 +18,16 @@ StartState::~StartState() {
 }
 
 void StartState::begin() {
+    Level level1("levels/startScreenLevel.txt");
+    this->entityManager.populateLevel(&level1);
+    this->entityManager.createHero(500, 200, SFX_NONE, false);
+
     this->soundHandler.playBackgroundMusic(MUSIC_START);
 
     this->entityManager.createCenteredFadeInText(
-                        "resources/CaesarDressing-Regular.ttf", "CornerGame",
-                        100,
-                        255, 255, 255, 0, this->windowW, this->windowH);
-
-    Level level1("levels/startScreenLevel.txt");
-    this->entityManager.populateLevel(&level1);
-    this->entityManager.createHero(500, 500, SFX_NONE, false);
+            "resources/CaesarDressing-Regular.ttf", "CornerGame",
+            100,
+            255, 255, 255, 0, this->windowW, this->windowH);
 }
 
 StateEnum StartState::run() {
