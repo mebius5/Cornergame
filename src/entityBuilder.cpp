@@ -41,7 +41,7 @@ Entity * EntityBuilder::createBackground(const char * filename, int width, int h
     SDL_Surface * image = this->loadImage(filename);
     Entity * background = new Entity(this->nextId++, 0, 0, width, height);
     background->art = new StaticArtComponent(background,
-            SDL_CreateTextureFromSurface(this->renderer, image), 0);
+            SDL_CreateTextureFromSurface(this->renderer, image), 0, true);
     SDL_FreeSurface(image);
     return background;
 }
@@ -107,7 +107,7 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {
     SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 255, 0, 0));
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     SDL_FreeSurface(surface);
-    zone->art = new StaticArtComponent(zone, texture, 2);
+    zone->art = new StaticArtComponent(zone, texture, 2, false);
     zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_RESULTS));
     return zone;
 }
@@ -123,7 +123,7 @@ Entity* EntityBuilder::createTerrain(int x, int y, bool freeTop,
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     SDL_FreeSurface(surface);
           ***/
-    terrain->art = new StaticArtComponent(terrain, SDL_CreateTextureFromSurface(this->renderer,image), 1);
+    terrain->art = new StaticArtComponent(terrain, SDL_CreateTextureFromSurface(this->renderer,image), 1, false);
     SDL_FreeSurface(image);
     terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
     return terrain;
@@ -133,7 +133,7 @@ Entity * EntityBuilder::createProjectile(int x, int y) {
     SDL_Surface* image = this->loadImage("spritesheets/ball.png");
     Entity* projectile = new Entity(this->nextId++, x, y, (image->w)*2, (image->h)*2);
     projectile->art = new StaticArtComponent(projectile,
-    SDL_CreateTextureFromSurface(this->renderer, image), 1);
+    SDL_CreateTextureFromSurface(this->renderer, image), 1, false);
     SDL_FreeSurface(image);
     projectile->xVelocity = 0.6f;
     projectile->ai = new ProjectileAiComponent(projectile);
