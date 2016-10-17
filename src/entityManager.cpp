@@ -190,48 +190,48 @@ void EntityManager::handleSpawns() {
     }
 }
 
-void EntityManager::populateLevel(Level *level) {
+void EntityManager::populateLevel(Level* level) {
+    Entity* hero;
     bool freeRight;
     bool freeLeft;
     bool freeTop;
     bool freeBot;
-    for(int i = 0; i < level->height; i++){
-        for(int j = 0; j < level->width; j++){
-            freeRight = false;
-            freeLeft = false;
-            freeTop = false;
-            freeBot = false;
+
+    for (int i = 0; i < level->height; i++) {
+        for (int j = 0; j < level->width; j++) {
             switch(level->getTile(i, j)) {
-                case TERRAIN:
-                    if (j>0 && level->getTile(i,j-1) == NONE) {
-                        freeLeft = true;
-                    }
-                    if (j < (level->width -1) && level->getTile(i,j+1) == NONE) {
-                        freeRight = true;
-                    }
-                    if (i>0 && level->getTile(i-1,j) == NONE) {
-                        freeTop = true;
-                    }
-                    if (i < (level->height -1) && level->getTile(i+1,j) == NONE) {
-                        freeBot = true;
-                    }
-                    createTerrain(j * 32, i * 32, freeTop, freeBot, freeRight, freeLeft);
-                    break;
-                case ENEMY:
-                    createEnemy(j * 32, i * 32);
-                    break;
-                case SPAWN:
-                {
-                    Entity * hero = createHero(j * 32, i * 32, SFX_ALERT, false);
-                    createHealthBar(100, 100, 200, 40, hero);
-                    createScoreBox(850, 100, hero);
-                    break;
+            case TERRAIN:
+                freeRight = true;
+                freeLeft = true;
+                freeTop = true;
+                freeBot = true;
+                if (j>0 && level->getTile(i,j-1) == TERRAIN) {
+                    freeLeft = false;
                 }
-                case GOAL:
-                    createVictoryZone(j * 32, i * 32);
-                    break;
-                default:
-                    break;
+                if (j < (level->width -1) && level->getTile(i,j+1) == TERRAIN) {
+                    freeRight = false;
+                }
+                if (i>0 && level->getTile(i-1,j) == TERRAIN) {
+                    freeTop = false;
+                }
+                if (i < (level->height -1) && level->getTile(i+1,j) == TERRAIN) {
+                    freeBot = false;
+                }
+                createTerrain(j * 32, i * 32, freeTop, freeBot, freeRight, freeLeft);
+                break;
+            case ENEMY:
+                createEnemy(j * 32, i * 32);
+                break;
+            case SPAWN:
+                hero = createHero(j * 32, i * 32, SFX_ALERT, false);
+                createHealthBar(100, 100, 200, 40, hero);
+                createScoreBox(850, 100, hero);
+                break;
+            case GOAL:
+                createVictoryZone(j * 32, i * 32);
+                break;
+            default:
+                break;
             }
         }
     }

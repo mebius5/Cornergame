@@ -1,13 +1,11 @@
 #include "camera.h"
 
 Camera::Camera(SDL_Renderer * renderer, int windowW, int windowH) :
-renderer(renderer),
-minX(0),
-minY(0),
-maxX(windowW),
-maxY(windowH)
-{
-
+    renderer(renderer),
+    minX(0),
+    minY(0),
+    maxX(windowW),
+    maxY(windowH) {
 }
 
 Camera::~Camera() {
