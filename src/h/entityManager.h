@@ -52,7 +52,7 @@ public:
                             int windowW, int yPos,
                             int index, int numOptions, StateEnum nextState);
     Entity* createVictoryZone(int x, int y);
-    Entity * createTerrain(int x, int y, bool freeTop, bool freeBot,
+    Entity * createTerrain(int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
     Entity* createProjectile(int x, int y, int dir, ProjEnum projType);
     void handleSpawns();

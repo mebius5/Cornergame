@@ -113,19 +113,18 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {
     return zone;
 }
 
-Entity* EntityBuilder::createTerrain(int x, int y, bool freeTop,
+Entity* EntityBuilder::createTerrain(int x, int y, int numberHorizontal, bool freeTop,
         bool freeBot, bool freeRight, bool freeLeft) {
     SDL_Surface * image = this->loadImage("resources/tile.png");
-    Entity * terrain = new Entity(this->nextId++, x, y, image->w, image->h);
-    /***
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, width, height, 32, 0, 0, 0, 0);
-    SDL_Rect tempRect = {0,0,width,height};
-    SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 165, 42, 42));
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
-    SDL_FreeSurface(surface);
-          ***/
-    terrain->art = new StaticArtComponent(terrain, SDL_CreateTextureFromSurface(this->renderer,image), 1, false);
+    Entity * terrain = new Entity(this->nextId++, x, y, image->w*numberHorizontal, image->h);
+    SDL_Surface* surface = SDL_CreateRGBSurface(0, image->w*numberHorizontal, image->h, 32, 0, 0, 0, 0);
+    for(int i=0;i<numberHorizontal;i++){
+        SDL_Rect tempRect = {image->w * i,0,image->w, image->h};
+        SDL_BlitSurface(image, NULL, surface, &tempRect);
+    }
+    terrain->art = new StaticArtComponent(terrain, SDL_CreateTextureFromSurface(this->renderer,surface), 1, false);
     SDL_FreeSurface(image);
+    SDL_FreeSurface(surface);
     terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
     return terrain;
 }

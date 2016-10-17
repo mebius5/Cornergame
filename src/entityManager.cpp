@@ -2,9 +2,9 @@
 
 /* Constructor and Destructor */
 EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList) :
-    commandList(cmdList),
-    entityBuilder(renderer),
-    numCleanable(0) {
+        commandList(cmdList),
+        entityBuilder(renderer),
+        numCleanable(0) {
 }
 
 EntityManager::~EntityManager() {
@@ -135,25 +135,25 @@ Entity* EntityManager::createScoreBox(int x, int y, Entity* owner) {
 }
 
 Entity* EntityManager::createCenteredFadeInText(const char* fontName,
-                        const char* text, int fontSize, int r, int g, int b,
-                        int initialAlpha, int windowW, int windowH) {
+                                                const char* text, int fontSize, int r, int g, int b,
+                                                int initialAlpha, int windowW, int windowH) {
 
     Entity* entity = this->entityBuilder.createCenteredFadeInText(fontName,
-                            text, fontSize, r, g, b,
-                            initialAlpha, windowW, windowH);
+                                                                  text, fontSize, r, g, b,
+                                                                  initialAlpha, windowW, windowH);
     this->addEntity(entity);
     return entity;
 }
 
 Entity * EntityManager::createHorizontallyCenteredFadeInText(const char* fontName,
-                                                 const char* text,
-                                                 int fontSize,
-                                                 int r, int g, int b, int initialAlpha,
-                                                 int windowW, int yPos,
-                                                 int index, int numOptions, StateEnum nextState) {
+                                                             const char* text,
+                                                             int fontSize,
+                                                             int r, int g, int b, int initialAlpha,
+                                                             int windowW, int yPos,
+                                                             int index, int numOptions, StateEnum nextState) {
     Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInText(
-        fontName, text, fontSize, r, g, b, initialAlpha,
-        windowW, yPos, index, numOptions, nextState);
+            fontName, text, fontSize, r, g, b, initialAlpha,
+            windowW, yPos, index, numOptions, nextState);
     this->addEntity(entity);
     return entity;
 }
@@ -164,9 +164,9 @@ Entity * EntityManager::createVictoryZone(int x, int y) {
     return entity;
 }
 
-Entity * EntityManager::createTerrain(int x, int y, bool freeTop, bool freeBot,
-        bool freeRight, bool freeLeft) {
-    Entity * entity = this->entityBuilder.createTerrain(x, y, freeTop, freeBot, freeRight, freeLeft);
+Entity * EntityManager::createTerrain(int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
+                                      bool freeRight, bool freeLeft) {
+    Entity * entity = this->entityBuilder.createTerrain(x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
     this->addEntity(entity);
     return entity;
 }
@@ -204,38 +204,52 @@ void EntityManager::populateLevel(Level* level) {
     for (int i = 0; i < level->height; i++) {
         for (int j = 0; j < level->width; j++) {
             switch(level->getTile(i, j)) {
-            case TERRAIN:
-                freeRight = true;
-                freeLeft = true;
-                freeTop = true;
-                freeBot = true;
-                if (j>0 && level->getTile(i,j-1) == TERRAIN) {
-                    freeLeft = false;
-                }
-                if (j < (level->width -1) && level->getTile(i,j+1) == TERRAIN) {
-                    freeRight = false;
-                }
-                if (i>0 && level->getTile(i-1,j) == TERRAIN) {
-                    freeTop = false;
-                }
-                if (i < (level->height -1) && level->getTile(i+1,j) == TERRAIN) {
+                case TERRAIN:
+                {
+                    freeRight = true;
+                    freeLeft = true;
+                    int numberHorizontal=1;
+                    int originalJ= j;
+                    while(true){
+                        if (j>0 && level->getTile(i,j-1) == TERRAIN) {
+                            freeLeft = false;
+                        }
+                        if (j < (level->width -1) && level->getTile(i,j+1) == TERRAIN) {
+                            freeRight = false;
+                        }
+                        if( j < (level->width -1) && level->getTile(i,j+1) == TERRAIN){
+                            numberHorizontal++;
+                            j++;
+                        } else{
+                            break;
+                        }
+                    }
                     freeBot = false;
+                    freeTop = false;
+                    for(int k = originalJ; k < originalJ+numberHorizontal;k++){
+                        if (i>0 && level->getTile(i-1,k) != TERRAIN) {
+                            freeTop = true;
+                        }
+                        if (i < (level->height -1) && level->getTile(i+1,k) != TERRAIN) {
+                            freeBot = true;
+                        }
+                    }
+                    createTerrain(originalJ * 32, i * 32, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+                    break;
                 }
-                createTerrain(j * 32, i * 32, freeTop, freeBot, freeRight, freeLeft);
-                break;
-            case ENEMY:
-                createEnemy(j * 32, i * 32);
-                break;
-            case SPAWN:
-                hero = createHero(j * 32, i * 32, SFX_ALERT, false);
-                createHealthBar(100, 100, 200, 40, hero);
-                createScoreBox(850, 100, hero);
-                break;
-            case GOAL:
-                createVictoryZone(j * 32, i * 32);
-                break;
-            default:
-                break;
+                case ENEMY:
+                    createEnemy(j * 32, i * 32);
+                    break;
+                case SPAWN:
+                    hero = createHero(j * 32, i * 32, SFX_ALERT, false);
+                    createHealthBar(100, 100, 200, 40, hero);
+                    createScoreBox(850, 100, hero);
+                    break;
+                case GOAL:
+                    createVictoryZone(j * 32, i * 32);
+                    break;
+                default:
+                    break;
             }
         }
     }
