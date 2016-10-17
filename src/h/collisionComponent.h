@@ -39,8 +39,8 @@ class ProjectileCollisionComponent : public CollisionComponent {
 public:
     ProjectileCollisionComponent(Entity* entity);
     void onEntityCollision(Entity* other);
+    void onStaticCollision(Entity* other);
     void onBorderCollision();
-
 };
 
 class VictoryZoneCollisionComponent : public CollisionComponent {

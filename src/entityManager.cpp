@@ -171,7 +171,7 @@ Entity * EntityManager::createTerrain(int x, int y, bool freeTop, bool freeBot,
     return entity;
 }
 
-Entity * EntityManager::createProjectile(int x, int y, ProjEnum projType) {
+Entity * EntityManager::createProjectile(int x, int y, ProjEnum /*projType*/) {
     Entity * entity = this->entityBuilder.createProjectile(x, y);
     this->addEntity(entity);
     return entity;
