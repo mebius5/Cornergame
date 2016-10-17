@@ -109,6 +109,11 @@ Else, the enemy moves randomly and freely on its own.
 
 If your hero gets hit, an alarm noise will play.
 
+
+CONTROL
+Up/down/left/right to move player 1
+Up (to jump) can perform double jump in air, or infinite wall jumps
+
 SCORE
 The score increments with time of survival and decrements with each collision
 with enemy. In order to get the highest score, you want to try to survive as
