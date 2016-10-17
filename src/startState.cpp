@@ -50,8 +50,8 @@ StateEnum StartState::run() {
         if (nextState != STATE_NONE)
             return nextState;
 
-        //if (milliSecElapsed >= 10000)    // Return menu after 10 sec
-        //    break;
+        if (milliSecElapsed >= 10000)    // Return menu after 10 sec
+            break;
     }
     return STATE_MENU;
 }
