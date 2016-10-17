@@ -29,6 +29,12 @@ LEVEL EDITOR
 - all players, enemies, terrain, victory zones are placed this way. See
     EntityManager's populateLevel() method.
 
+CONTROLS
+- Up/down/left/right to move player 1
+- Up (to jump) can perform double jump in air, or infinite wall jumps
+- Press X to throw a projectile. These don't do anything yet, but the animation
+    is in place.
+
 SCREENS
 StartScreen
 - Currently has our game production logo that fades in from black
@@ -109,22 +115,16 @@ Else, the enemy moves randomly and freely on its own.
 
 If your hero gets hit, an alarm noise will play.
 
-
-CONTROL
-Up/down/left/right to move player 1
-Up (to jump) can perform double jump in air, or infinite wall jumps
-
 SCORE
 The score increments with time of survival and decrements with each collision
 with enemy. In order to get the highest score, you want to try to survive as
 long as possible while avoiding the enemy, and then go to the victory zone
 when you absolutely can't hold on.
 
-
 QUIRKS
 - no game name yet!
 - idle state sometimes changes directions
-
+- projectile collision with side of terrain is iffy
 
 TODOS
 valgrind!
@@ -134,6 +134,5 @@ Physics into physicsComponent
 loadFont in entityBuilder?
 Move handlers to namespaces?
 Move texture deletion to entityBuilder -> pool textures like music
-Bug in collision for standing on columns? (see start screen)
 
 Change owner pointer in Art components to ownerHealth/ownerScore
