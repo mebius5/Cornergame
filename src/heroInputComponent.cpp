@@ -76,8 +76,8 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
                 break;
             case SDLK_x:
                 this->entity->actionState = THROW;
-                this->spawnCommand->x = entity->x;
-                this->spawnCommand->y = entity->y;
+                this->spawnCommand->x = entity->x+10;
+                this->spawnCommand->y = entity->y+20;
                 Component::commandList->push_back(this->spawnCommand);
                 break;
         }
