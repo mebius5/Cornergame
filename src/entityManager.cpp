@@ -221,7 +221,7 @@ void EntityManager::populateLevel(Level* level) {
                             break;
                         }
                     }
-                    if (j < (level->width) && level->getTile(i,j) == TERRAIN) {
+                    if (j < (level->width-1) && level->getTile(i,j+1) == TERRAIN) {
                         freeRight = false;
                     }
                     freeBot = false;
