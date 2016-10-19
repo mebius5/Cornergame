@@ -1,13 +1,14 @@
 #include "collisionComponent.h"
 
-ProjectileCollisionComponent::ProjectileCollisionComponent(Entity* entity, Command* entityCollisionCommand) :
+ProjectileCollisionComponent::ProjectileCollisionComponent(Entity* entity, Command* entityCollisionCommand, int ownerID) :
     CollisionComponent(entity, false),
-    entityCollisionCommand(entityCollisionCommand) {
+    entityCollisionCommand(entityCollisionCommand),
+    ownerID(ownerID) {
 }
 
 void ProjectileCollisionComponent::onEntityCollision(Entity* other) {
-	if(other->collision && !dynamic_cast<HeroCollisionComponent*>(other->collision)) {
-	    //Component::commandList->push_back(this->entityCollisionCommand);
+	if(other->collision && other->getId() != this->ownerID) {
+	    Component::commandList->push_back(this->entityCollisionCommand);
 	}
 }
 

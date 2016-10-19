@@ -4,7 +4,7 @@ Camera::Camera(SDL_Renderer * renderer, int windowW, int windowH) :
     renderer(renderer),
     minX(0),
     minY(0),
-    maxX(windowW),
+    maxX(windowW), 
     maxY(windowH) {
 }
 
@@ -25,8 +25,7 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
         if(entity->x >= ((maxX+minX)/2)){
             shift(entity->x-(maxX+minX)/2,0);
         }
-
-        if(entity->y != (minY+(maxY-minY)*.75)){
+        if(entity->y >= (minY+(maxY-minY)*.75)){
             shift(0,entity->y-(minY+(maxY-minY)*.75));
         }
     }

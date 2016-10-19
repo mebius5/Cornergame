@@ -16,7 +16,12 @@ void HeroCollisionComponent::onEntityCollision(Entity* other) {
         this->entity->health->takeDamage(10);
         if (this->entityCollisionCommand)
             Component::commandList->push_back(this->entityCollisionCommand);
-    }
+    } else if (other->collision && dynamic_cast<ProjectileCollisionComponent*>(other->collision)) {
+        ProjectileCollisionComponent* projectile = dynamic_cast<ProjectileCollisionComponent*>(other->collision);
+        if (projectile->ownerID != this->entity->getId()) {
+            this->entity->health->takeDamage(10);
+        }
+    } 
 }
 
 void HeroCollisionComponent::onStaticCollision(Entity* /*other*/) {

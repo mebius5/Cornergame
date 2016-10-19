@@ -20,7 +20,7 @@ Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
     SpawnEntityCommand* eCmd = new SpawnEntityCommand(HERO_PROJ);
     hero->input = new HeroInputComponent(hero, wasd, eCmd);
     hero->score = new ScoreComponent(hero);
-    hero->health = new HealthComponent(hero, 300, new SwitchStateCommand(STATE_RESULTS));
+    hero->health = new HealthComponent(hero, 1000, new SwitchStateCommand(STATE_RESULTS));
     return hero;
 }
 
@@ -129,7 +129,7 @@ Entity* EntityBuilder::createTerrain(int x, int y, int numberHorizontal, bool fr
     return terrain;
 }
 
-Entity * EntityBuilder::createProjectile(int x, int y, int dir) {
+Entity * EntityBuilder::createProjectile(int x, int y, int dir, int ownerID) {
     SDL_Surface* image = this->loadImage("spritesheets/ball.png");
     Entity* projectile = new Entity(this->nextId++, x, y, (image->w)*2, (image->h)*2);
     projectile->art = new StaticArtComponent(projectile,
@@ -139,7 +139,7 @@ Entity * EntityBuilder::createProjectile(int x, int y, int dir) {
     projectile->yVelocity = -0.4f;
     projectile->ai = new ProjectileAiComponent(projectile);
     DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
-    projectile->collision = new ProjectileCollisionComponent(projectile, dCmd);
+    projectile->collision = new ProjectileCollisionComponent(projectile, dCmd, ownerID);
     return projectile;
 }
 

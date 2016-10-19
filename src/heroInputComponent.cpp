@@ -27,61 +27,31 @@ float HeroInputComponent::boundVelocity(float velocity) {
 }
 
 void HeroInputComponent::keyDown(SDL_Keycode keycode) {
-    if(wasd){
-        switch (keycode) {
-            case SDLK_w:
-                if (this->jumps < 2 && this->entity->yVelocity >= 0.0f) {
-                    this->entity->yVelocity = -.6f;
-                    this->entity->y -= 1.0f;
-                    this->jumps += 1;
-                }
-                this->entity->yAccel = -1 * this->accelRate + .0017f;
-                break;
-            case SDLK_s:
-                this->entity->yAccel = this->accelRate + .0017f;
-                break;
-            case SDLK_a:
-                this->entity->xAccel = -1 * this->accelRate;
-                break;
-            case SDLK_d:
-                this->entity->xAccel = this->accelRate;
-                break;
-            case SDLK_k:
-                this->entity->health->toggleInvincibility();
-                break;
+    if ((!this->wasd && keycode == SDLK_UP) || (this->wasd && keycode == SDLK_w)) {
+        if (this->jumps < 2 && this->entity->yVelocity >= 0.0f) {
+            this->entity->yVelocity = -.6f;
+            this->entity->y -= 1.0f;
+            this->jumps += 1;
         }
-    }else{
-        switch (keycode) {
-            case SDLK_UP:
-                if (this->jumps < 2 && this->entity->yVelocity >= 0.0f) {
-                    this->entity->yVelocity = -.6f;
-                    this->entity->y -= 1.0f;
-                    this->jumps += 1;
-                }
-                this->entity->yAccel = -1 * this->accelRate + .0017f;
-                break;
-            case SDLK_DOWN:
-                this->entity->yAccel = this->accelRate + .0017f;
-                break;
-            case SDLK_LEFT:
-                this->entity->xAccel = -1 * this->accelRate;
-                this->spawnCommand->dir = -1;
-                break;
-            case SDLK_RIGHT:
-                this->entity->xAccel = this->accelRate;
-                this->spawnCommand->dir = 1;
-                break;
-            case SDLK_k:
-                this->entity->health->toggleInvincibility();
-                break;
-            case SDLK_x:
-                this->entity->actionState = THROW;
-                this->spawnCommand->x = entity->x+10;
-                this->spawnCommand->y = entity->y+20;
-                Component::commandList->push_back(this->spawnCommand);
-                break;
-        }
+        this->entity->yAccel = -1 * this->accelRate + .0017f;
+    } else if ((!this->wasd && keycode == SDLK_DOWN) || (this->wasd && keycode == SDLK_s)) {
+        this->entity->yAccel = this->accelRate + .0017f;
+    } else if ((!this->wasd && keycode == SDLK_LEFT) || (this->wasd && keycode == SDLK_a)) {
+        this->entity->xAccel = -1 * this->accelRate;
+        this->spawnCommand->dir = -1;
+    } else if ((!this->wasd && keycode == SDLK_RIGHT) || (this->wasd && keycode == SDLK_d)) {
+        this->entity->xAccel = this->accelRate;
+        this->spawnCommand->dir = 1;
+    } else if ((!this->wasd && keycode == SDLK_k) || (this->wasd && keycode == SDLK_k)) {
+        this->entity->health->toggleInvincibility();
+    } else if ((!this->wasd && keycode == SDLK_m) || (this->wasd && keycode == SDLK_v)) {
+        this->entity->actionState = THROW;
+        this->spawnCommand->x = entity->x+10;
+        this->spawnCommand->y = entity->y+20;
+        this->spawnCommand->ownerID = entity->getId();
+        Component::commandList->push_back(this->spawnCommand);
     }
+    
 }
 
 void HeroInputComponent::keyUp(SDL_Keycode keycode) {
