@@ -137,7 +137,7 @@ void GameManager::run() {
     StateEnum nextState;
 
     do {
-        currentState->begin();
+        currentState->begin(1);
         nextState = currentState->run();
         currentState->cleanup(nextState);
 

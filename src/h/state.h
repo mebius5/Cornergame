@@ -26,7 +26,7 @@ public:
     virtual ~State() { };
     static int center(int large, int small);
     static SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
-    virtual void begin() = 0;
+    virtual void begin(int level) = 0;
     virtual StateEnum run() = 0;
     virtual void cleanup(StateEnum nextState) = 0;
 };
@@ -45,7 +45,7 @@ public:
                SoundHandler& soundHandler, ControlHandler& controlHandler,
                CollisionHandler& collisionHandler);
     ~StartState();
-    void begin();
+    void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
 };
@@ -63,7 +63,7 @@ public:
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~MenuState();
-    void begin();
+    void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
 };
@@ -81,7 +81,7 @@ public:
                    DrawingHandler& drawingHandler, InputHandler& inputHandler,
                    SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~HighscoreState();
-    void begin();
+    void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
     void updateHighscores(Entity* hero);
@@ -101,7 +101,7 @@ public:
                    DrawingHandler& drawingHandler, InputHandler& inputHandler,
                    SoundHandler& soundHandler, ControlHandler& controlHandler);
     ~ResultsState();
-    void begin();
+    void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
     void updateResults(Entity* hero);
@@ -127,7 +127,7 @@ public:
               AiHandler& aiHandler, CollisionHandler& collisionHandler, ScoreHandler& scoreHandler,
               ResultsState& resultsState, HighscoreState& highscoreState);
     ~PlayState();
-    void begin();
+    void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
 };
