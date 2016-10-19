@@ -24,6 +24,7 @@ private:
     bool wasd;
     SpawnEntityCommand* spawnCommand;
     int jumps;
+    int maxJumps;
 public:
     HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand);
     ~HeroInputComponent();
@@ -31,6 +32,7 @@ public:
     void keyUp(SDL_Keycode keycode);
     void updateLocation(int dt);
     void resetJumps();
+    void toggleInfiniteJumps();
 };
 
 // class StartScreenInputComponent : public InputComponent {
