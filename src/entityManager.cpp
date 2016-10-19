@@ -205,19 +205,19 @@ void EntityManager::populateLevel(Level* level) {
                     freeLeft = true;
                     int numberHorizontal=1;
                     int originalJ= j;
+                    if (j>0 && level->getTile(i,j-1) == TERRAIN) {
+                        freeLeft = false;
+                    }
                     while(true){
-                        if (j>0 && level->getTile(i,j-1) == TERRAIN) {
-                            freeLeft = false;
-                        }
-                        if (j < (level->width -1) && level->getTile(i,j+1) == TERRAIN) {
-                            freeRight = false;
-                        }
                         if( j < (level->width -1) && level->getTile(i,j+1) == TERRAIN){
                             numberHorizontal++;
                             j++;
                         } else{
                             break;
                         }
+                    }
+                    if (j < (level->width-1) && level->getTile(i,j+1) == TERRAIN) {
+                        freeRight = false;
                     }
                     freeBot = false;
                     freeTop = false;

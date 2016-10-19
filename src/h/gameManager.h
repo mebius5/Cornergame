@@ -29,6 +29,9 @@ private:
     const int width;
     const int height;
 
+    int currentLevel;
+    int maxLevel;
+
 public:
     GameManager();
     void setup();

@@ -21,7 +21,7 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
 PlayState::~PlayState() {
 }
 
-void PlayState::begin() {
+void PlayState::begin(int level) {
     // Play background music
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
 
@@ -45,7 +45,10 @@ void PlayState::begin() {
     this->entityManager.createVictoryZone(1150, 200);
       ****/
 
-    Level level1("levels/level1.txt");
+    std::string levelFile = "levels/level";
+    levelFile.append(std::to_string(level));
+    levelFile.append(".txt");
+    Level level1(levelFile.c_str());
     this->entityManager.populateLevel(&level1);
     this->hero = entityManager.heroEntities.at(0);
 }

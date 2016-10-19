@@ -109,7 +109,7 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     SDL_FreeSurface(surface);
     zone->art = new StaticArtComponent(zone, texture, 2, false);
-    zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_RESULTS));
+    zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_PLAY));
     return zone;
 }
 
