@@ -63,6 +63,7 @@ valgrind: $(SRCFILES)
 clean:
 	$(RM) $(TARGET) *.o
 	$(RM) -rf *.dSYM
+	$(RM) *~
 
 #For compiling on mac only
 mac:
