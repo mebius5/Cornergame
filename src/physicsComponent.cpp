@@ -60,7 +60,7 @@ void PhysicsComponent::updateLocation(int dt) {
 }
 
 void PhysicsComponent::jump() {
-    if (this->jumps < this->maxJumps && this->yVelocity >= 0.0f && !this->infiniteJumps) {
+    if ((this->jumps < this->maxJumps && this->yVelocity >= 0.0f) || this->infiniteJumps) {
         this->yVelocity = -1 * this->maxVelocity;
         this->jumps += 1;
     }
@@ -72,6 +72,7 @@ void PhysicsComponent::resetJumps() {
 
 void PhysicsComponent::toggleInfiniteJumps() {
     this->infiniteJumps = !this->infiniteJumps;
+    this->resetJumps();
 }
 
 void PhysicsComponent::accelerateX(int dir) {
