@@ -43,10 +43,13 @@ void EntityManager::addEntity(Entity* entity) {
     }
 }
 
-void EntityManager::deleteEntity(Entity* entity) {
-    int id = entity->getId();
-    this->entityMap.erase(id);
+void EntityManager::deleteEntity(int id) {
+    if (this->entityMap.count(id) == 0) {
+        return;
+    }
+    Entity* entity = this->entityMap[id];
     this->deletionQueue.push(entity);
+    this->entityMap.erase(id);
 
     if (entity->ai)
         entity->ai->invalidate();
@@ -62,10 +65,6 @@ void EntityManager::deleteEntity(Entity* entity) {
         entity->health->invalidate();
     if (entity->score)
         entity->score->invalidate();
-}
-
-void EntityManager::deleteEntity(int id) {
-    this->deleteEntity(this->entityMap[id]);
 }
 
 void EntityManager::cleanupEntities() {
@@ -101,11 +100,6 @@ Entity* EntityManager::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
 
     this->heroEntities.push_back(entity);
 
-    if(wasd){
-
-    } else{
-
-    }
 
     return entity;
 }
@@ -171,8 +165,8 @@ Entity * EntityManager::createTerrain(int x, int y, int numberHorizontal, bool f
     return entity;
 }
 
-Entity * EntityManager::createProjectile(int x, int y, int dir, ProjEnum /*projType*/) {
-    Entity * entity = this->entityBuilder.createProjectile(x, y, dir);
+Entity * EntityManager::createProjectile(int x, int y, int dir, int ownerID, ProjEnum /*projType*/) {
+    Entity * entity = this->entityBuilder.createProjectile(x, y, dir, ownerID);
     this->addEntity(entity);
     return entity;
 }
@@ -181,7 +175,7 @@ void EntityManager::handleSpawns() {
     std::vector<Command*>::iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
         if (SpawnEntityCommand* eCmd = dynamic_cast<SpawnEntityCommand*>(*it)) {
-            this->createProjectile(eCmd->x, eCmd->y, eCmd->dir, eCmd->projType);
+            this->createProjectile(eCmd->x, eCmd->y, eCmd->dir, eCmd->ownerID, eCmd->projType);
             *it = this->commandList.back();
             this->commandList.pop_back();
         } else if (DespawnEntityCommand* dCmd = dynamic_cast<DespawnEntityCommand*>(*it)) {
@@ -196,13 +190,14 @@ void EntityManager::handleSpawns() {
 
 void EntityManager::populateLevel(Level* level) {
     Entity* hero;
+    Entity* hero2;
     bool freeRight;
     bool freeLeft;
     bool freeTop;
     bool freeBot;
 
-    for (int i = 0; i < level->height; i++) {
-        for (int j = 0; j < level->width; j++) {
+    for (int i = 0; i < level->contentHeight; i++) {
+        for (int j = 0; j < level->contentWidth; j++) {
             switch(level->getTile(i, j)) {
                 case TERRAIN:
                 {
@@ -242,6 +237,7 @@ void EntityManager::populateLevel(Level* level) {
                     break;
                 case SPAWN:
                     hero = createHero(j * 32, i * 32, SFX_ALERT, false);
+                    hero2 = createHero(j * 32, i * 32, SFX_ALERT, true);
                     createHealthBar(100, 100, 200, 40, hero);
                     createScoreBox(850, 100, hero);
                     break;

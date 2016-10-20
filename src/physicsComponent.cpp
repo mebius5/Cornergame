@@ -7,6 +7,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     accelAmount(.002f),
     gravity(0.0017f),
     jumps(0),
+    infiniteJumps(false),
     xVelocity(0.0f),
     yVelocity(0.0f),
     maxVelocity(.6f),
@@ -59,7 +60,7 @@ void PhysicsComponent::updateLocation(int dt) {
 }
 
 void PhysicsComponent::jump() {
-    if (this->jumps < this->maxJumps && this->yVelocity >= 0.0f) {
+    if (this->jumps < this->maxJumps && this->yVelocity >= 0.0f && !this->infiniteJumps) {
         this->yVelocity = -1 * this->maxVelocity;
         this->jumps += 1;
     }
@@ -67,6 +68,10 @@ void PhysicsComponent::jump() {
 
 void PhysicsComponent::resetJumps() {
     this->jumps = 0;
+}
+
+void PhysicsComponent::toggleInfiniteJumps() {
+    this->infiniteJumps = !this->infiniteJumps;
 }
 
 void PhysicsComponent::accelerateX(int dir) {

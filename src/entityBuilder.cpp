@@ -20,7 +20,7 @@ Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
     SpawnEntityCommand* eCmd = new SpawnEntityCommand(HERO_PROJ);
     hero->input = new HeroInputComponent(hero, wasd, eCmd);
     hero->score = new ScoreComponent(hero);
-    hero->health = new HealthComponent(hero, 300, new SwitchStateCommand(STATE_RESULTS));
+    hero->health = new HealthComponent(hero, 1000, new SwitchStateCommand(STATE_RESULTS));
     hero->physics = new PhysicsComponent(hero);
     return hero;
 }
@@ -113,7 +113,7 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     SDL_FreeSurface(surface);
     zone->art = new StaticArtComponent(zone, texture, 2, false);
-    zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_RESULTS));
+    zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_PLAY));
     return zone;
 }
 
@@ -133,14 +133,14 @@ Entity* EntityBuilder::createTerrain(int x, int y, int numberHorizontal, bool fr
     return terrain;
 }
 
-Entity * EntityBuilder::createProjectile(int x, int y, int dir) {
+Entity * EntityBuilder::createProjectile(int x, int y, int dir, int ownerID) {
     SDL_Surface* image = this->loadImage("spritesheets/ball.png");
     Entity* projectile = new Entity(this->nextId++, x, y, (image->w)*2, (image->h)*2);
     projectile->art = new StaticArtComponent(projectile,
     SDL_CreateTextureFromSurface(this->renderer, image), 1, false);
     SDL_FreeSurface(image);
     DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
-    projectile->collision = new ProjectileCollisionComponent(projectile, dCmd);
+    projectile->collision = new ProjectileCollisionComponent(projectile, dCmd, ownerID);
     projectile->physics = new PhysicsComponent(projectile);
     projectile->physics->xVelocity = dir * 0.6f;
     projectile->physics->yVelocity = -0.4f;

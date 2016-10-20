@@ -17,6 +17,7 @@ public:
     void draw(int dt);
     void shift(int dt);
     void resetCamera(int windowW, int windowH);
+    void initializeCamera(int levelW, int levelH);
 };
 
 #endif

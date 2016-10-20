@@ -10,7 +10,8 @@ private:
     int minY;
     int maxX;
     int maxY;
-
+    int levelW;
+    int levelH;
 public:
 
     Camera(SDL_Renderer * renderer, int windowW, int windowH);
@@ -18,6 +19,7 @@ public:
     void draw(int dt, ArtComponent * artComponent);
     void shift(int dx, int dy);
     void resetCamera(int windowW, int windowH);
+    void setLevelWH(int levelW, int levelH);
 };
 
 #endif //CORNERGAME_CAMERA_H

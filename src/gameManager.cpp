@@ -12,9 +12,12 @@
  */
 
 GameManager::GameManager() :
-    title("<GAME NAME>"),
-    width(1024),
-    height(720) {
+        title("<GAME NAME>"),
+        width(1024),
+        height(704),
+        currentLevel(0),
+        maxLevel(2)
+{
 
     srand(time(NULL));
 }
@@ -110,22 +113,22 @@ void GameManager::run() {
     PhysicsHandler physicsHandler(entityMgr.physicsComponents);
 
     StartState startState(this->width, this->height, entityMgr, commandList,
-                    this->renderer, drawingHandler, inputHandler,
-                    soundHandler, controlHandler, collisionHandler, physicsHandler);
+                          this->renderer, drawingHandler, inputHandler,
+                          soundHandler, controlHandler, collisionHandler, physicsHandler);
     MenuState menuState(this->width, this->height, entityMgr, commandList,
-                    this->renderer, drawingHandler, inputHandler,
-                    soundHandler, controlHandler);
+                        this->renderer, drawingHandler, inputHandler,
+                        soundHandler, controlHandler);
     HighscoreState highscoreState(this->width, this->height, entityMgr,
-                    commandList, this->renderer, drawingHandler,
-                    inputHandler, soundHandler, controlHandler);
+                                  commandList, this->renderer, drawingHandler,
+                                  inputHandler, soundHandler, controlHandler);
     ResultsState resultsState(this->width, this->height, entityMgr,
-                    commandList, this->renderer, drawingHandler,
-                    inputHandler, soundHandler, controlHandler);
+                              commandList, this->renderer, drawingHandler,
+                              inputHandler, soundHandler, controlHandler);
     PlayState playState(this->width, this->height, entityMgr, commandList,
-                    this->renderer, drawingHandler, inputHandler,
-                    soundHandler, controlHandler, aiHandler,
-                    collisionHandler, scoreHandler, physicsHandler,
-                    resultsState, highscoreState);
+                        this->renderer, drawingHandler, inputHandler,
+                        soundHandler, controlHandler, aiHandler,
+                        collisionHandler, scoreHandler, physicsHandler,
+                        resultsState, highscoreState);
 
     // Load music resources
     soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);
@@ -139,25 +142,32 @@ void GameManager::run() {
     StateEnum nextState;
 
     do {
-        currentState->begin();
+        currentState->begin(this->currentLevel);
         nextState = currentState->run();
         currentState->cleanup(nextState);
 
         switch (nextState) {
-        case STATE_PLAY:
-            currentState = &playState;
-            break;
-        case STATE_HIGHSCORE:
-            currentState = &highscoreState;
-            break;
-        case STATE_MENU:
-            currentState = &menuState;
-            break;
-        case STATE_RESULTS:
-            currentState = &resultsState;
-            break;
-        default:
-            break;
+            case STATE_PLAY:
+                currentState = &playState;
+                this->currentLevel++;
+                if(this->currentLevel>maxLevel){
+                    currentState = & resultsState;
+                }
+                break;
+            case STATE_HIGHSCORE:
+                currentState = &highscoreState;
+                this->currentLevel=0;
+                break;
+            case STATE_MENU:
+                currentState = &menuState;
+                this->currentLevel=0;
+                break;
+            case STATE_RESULTS:
+                currentState = &resultsState;
+                this->currentLevel=0;
+                break;
+            default:
+                break;
         }
     } while (nextState != STATE_QUIT);
 

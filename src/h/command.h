@@ -29,6 +29,7 @@ public:
 	int x;
 	int y;
 	int dir;
+	int ownerID;
 	SpawnEntityCommand(ProjEnum projType);
 };
 

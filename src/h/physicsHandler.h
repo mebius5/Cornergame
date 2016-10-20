@@ -6,6 +6,7 @@
 class PhysicsHandler {
     private:
         std::vector<PhysicsComponent*>& componentList;
+        void removeInvalidComponents();
     public:
         PhysicsHandler(std::vector<PhysicsComponent*>& componentList);
         void update(int dt);

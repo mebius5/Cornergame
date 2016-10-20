@@ -6,13 +6,14 @@
 enum Tiles {NONE, TERRAIN, SPAWN, ENEMY, GOAL};
 
 class Level {
-    private:
-        Tiles** levelContents;
-    public:
-        int height, width;
-        Level(std::string filename);
-        ~Level();
-        Tiles getTile(int i, int j);
+private:
+    Tiles** levelContents;
+public:
+    int height, width;
+    int contentHeight, contentWidth;
+    Level(std::string filename, int windowW, int windowH);
+    ~Level();
+    Tiles getTile(int i, int j);
 };
 
 #endif

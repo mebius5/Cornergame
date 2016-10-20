@@ -15,7 +15,7 @@ ResultsState::ResultsState(int windowW, int windowH, EntityManager& entMgr,
 ResultsState::~ResultsState() {
 }
 
-void ResultsState::begin() {
+void ResultsState::begin(int) {
     this->soundHandler.playBackgroundMusic(MUSIC_HIGHSCORE);
 
     std::string resultString;

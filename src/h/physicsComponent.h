@@ -12,6 +12,7 @@ private:
     float accelAmount;
     float gravity;
     int jumps;
+    bool infiniteJumps;
 
     float clipVelocity(float velocity);
 
@@ -27,6 +28,7 @@ public:
 
     void updateLocation(int dt);
     void jump();
+    void toggleInfiniteJumps();
     void resetJumps();
     void accelerateX(int dir);
     void accelerateY(int dir);
