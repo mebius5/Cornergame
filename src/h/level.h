@@ -8,8 +8,6 @@ enum Tiles {NONE, TERRAIN, SPAWN, ENEMY, GOAL};
 class Level {
 private:
     Tiles** levelContents;
-    int windowW;
-    int windowH;
 public:
     int height, width;
     int contentHeight, contentWidth;

@@ -20,12 +20,20 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
 
     if(entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)) {
         if(levelW!=-1 && entity->x > levelW){
-            entity->x = entity->x - levelW;
+            if(levelW!=-1 && minX>=levelW){
+                entity->x = entity->x - levelW;
+
+                //TODO: Add command to respawn all enemy and heros at updated location
+
+                minX = minX - levelW;
+                maxX = maxX - levelW;
+            }
         }
-        /***
-        if(levelH !=-1 && entity->y > levelH){
-            entity->y = entity->y - levelH;
-        }***/
+    }
+
+    if(artComponent->movesWithCamera){
+        artComponent->entity->x = this->minX+artComponent->offsetX;
+        artComponent->entity->y = this->minY+artComponent->offSetY;
     }
 
     if(entity->x + entity->width < minX||
@@ -42,11 +50,6 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
         }
     }
 
-    if(artComponent->movesWithCamera){
-        artComponent->entity->x = this->minX+artComponent->offsetX;
-        artComponent->entity->y = this->minY+artComponent->offSetY;
-    }
-
     SDL_Rect dest = { (int)entity->x - minX,
                       (int) entity->y - minY,
                       entity->width,
@@ -61,13 +64,16 @@ void Camera::shift(int dx, int dy) {
     minY += dy;
     maxX += dx;
     maxY += dy;
-    if(levelW!=-1 && minX > levelW){
-        minX = minX - levelW;
-    }
     /****
-    if(levelH!=-1 && minY > levelH){
-        minY = minY - levelH;
-    }****/
+if(levelW!=-1 && minX > levelW){
+    minX = minX - levelW;
+    maxX = maxX - levelW;
+}
+
+if(levelH!=-1 && minY > levelH){
+    minY = minY - levelH;
+    maxY = maxY - levelH;
+}****/
 }
 
 void Camera::resetCamera(int windowW, int windowH) {
