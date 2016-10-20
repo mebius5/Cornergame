@@ -18,7 +18,7 @@ StartState::~StartState() {
 }
 
 void StartState::begin(int) {
-    Level level1("levels/startScreenLevel.txt");
+    Level level1("levels/startScreenLevel.txt", windowW, windowH);
     this->entityManager.populateLevel(&level1);
     this->entityManager.createHero(500, 200, SFX_NONE, false);
 

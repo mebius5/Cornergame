@@ -196,8 +196,8 @@ void EntityManager::populateLevel(Level* level) {
     bool freeTop;
     bool freeBot;
 
-    for (int i = 0; i < level->height; i++) {
-        for (int j = 0; j < level->width; j++) {
+    for (int i = 0; i < level->contentHeight; i++) {
+        for (int j = 0; j < level->contentWidth; j++) {
             switch(level->getTile(i, j)) {
                 case TERRAIN:
                 {

@@ -5,7 +5,10 @@ Camera::Camera(SDL_Renderer * renderer, int windowW, int windowH) :
     minX(0),
     minY(0),
     maxX(windowW), 
-    maxY(windowH) {
+    maxY(windowH),
+    levelW(-1),
+    levelH(-1)
+{
 }
 
 Camera::~Camera() {
@@ -15,6 +18,15 @@ Camera::~Camera() {
 void Camera::draw(int dt, ArtComponent * artComponent) {
     Entity* entity = artComponent->entity;
 
+    if(entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)) {
+        if(levelW!=-1 && entity->x > levelW){
+            entity->x = entity->x - levelW;
+        }
+        /***
+        if(levelH !=-1 && entity->y > levelH){
+            entity->y = entity->y - levelH;
+        }***/
+    }
 
     if(entity->x + entity->width < minX||
             entity->y+entity->height < minY||
@@ -49,6 +61,13 @@ void Camera::shift(int dx, int dy) {
     minY += dy;
     maxX += dx;
     maxY += dy;
+    if(levelW!=-1 && minX > levelW){
+        minX = minX - levelW;
+    }
+    /****
+    if(levelH!=-1 && minY > levelH){
+        minY = minY - levelH;
+    }****/
 }
 
 void Camera::resetCamera(int windowW, int windowH) {
@@ -56,4 +75,9 @@ void Camera::resetCamera(int windowW, int windowH) {
     minY=0;
     maxX=windowW;
     maxY=windowH;
+}
+
+void Camera::setLevelWH(int levelW, int levelH) {
+    this->levelW = levelW;
+    this->levelH = levelH;
 }

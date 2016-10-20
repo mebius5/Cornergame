@@ -14,7 +14,7 @@
 GameManager::GameManager() :
         title("<GAME NAME>"),
         width(1024),
-        height(720),
+        height(704),
         currentLevel(0),
         maxLevel(2)
 {

@@ -9,6 +9,10 @@ DrawingHandler::DrawingHandler(std::vector<ArtComponent*>& componentList,
 
 }
 
+void DrawingHandler::initializeCamera(int levelW, int levelH) {
+    this->camera.setLevelWH(levelW, levelH);
+}
+
 void DrawingHandler::draw(int dt) {
     SDL_RenderClear(this->renderer);
     std::vector<ArtComponent*>::iterator it;

@@ -48,8 +48,9 @@ void PlayState::begin(int level) {
     std::string levelFile = "levels/level";
     levelFile.append(std::to_string(level));
     levelFile.append(".txt");
-    Level level1(levelFile.c_str());
+    Level level1(levelFile.c_str(), windowW, windowH);
     this->entityManager.populateLevel(&level1);
+    drawingHandler.initializeCamera(level1.width*32, level1.height*32);
     this->hero = entityManager.heroEntities.at(0);
 }
 

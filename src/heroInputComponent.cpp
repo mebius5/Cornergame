@@ -7,7 +7,9 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCom
     velocityDecay(.95f),
     wasd(wasd),
     spawnCommand(spawnCommand),
-    jumps(0) {
+    jumps(0),
+    maxJumps(2)
+{
     this->entity->yAccel = .0017f;
 }
 
@@ -28,7 +30,7 @@ float HeroInputComponent::boundVelocity(float velocity) {
 
 void HeroInputComponent::keyDown(SDL_Keycode keycode) {
     if ((!this->wasd && keycode == SDLK_UP) || (this->wasd && keycode == SDLK_w)) {
-        if (this->jumps < 2 && this->entity->yVelocity >= 0.0f) {
+        if (this->jumps < maxJumps && this->entity->yVelocity >= 0.0f) {
             this->entity->yVelocity = -.6f;
             this->entity->y -= 1.0f;
             this->jumps += 1;
@@ -44,6 +46,7 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
         this->spawnCommand->dir = 1;
     } else if ((!this->wasd && keycode == SDLK_k) || (this->wasd && keycode == SDLK_k)) {
         this->entity->health->toggleInvincibility();
+        toggleInfiniteJumps();
     } else if ((!this->wasd && keycode == SDLK_m) || (this->wasd && keycode == SDLK_v)) {
         this->entity->actionState = THROW;
         this->spawnCommand->x = entity->x+10;
@@ -51,7 +54,7 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
         this->spawnCommand->ownerID = entity->getId();
         Component::commandList->push_back(this->spawnCommand);
     }
-    
+
 }
 
 void HeroInputComponent::keyUp(SDL_Keycode keycode) {
@@ -96,4 +99,13 @@ void HeroInputComponent::updateLocation(int dt) {
 
 void HeroInputComponent::resetJumps() {
     this->jumps = 0;
+}
+
+void HeroInputComponent::toggleInfiniteJumps() {
+    if(this->maxJumps==2){
+        this->maxJumps = 1000000000;
+    } else{
+        this->maxJumps = 2;
+    }
+    resetJumps();
 }
