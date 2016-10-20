@@ -20,8 +20,8 @@ void HeroCollisionComponent::onEntityCollision(Entity* other) {
 }
 
 void HeroCollisionComponent::onStaticCollision(Entity* /*other*/) {
-    if (this->entity->yVelocity > 0)
-        ((HeroInputComponent*)this->entity->input)->resetJumps();
+    if (this->entity->physics->yVelocity > 0)
+        ((PhysicsComponent*)this->entity->physics)->resetJumps();
 }
 
 void HeroCollisionComponent::onBorderCollision() {

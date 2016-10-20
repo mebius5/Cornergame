@@ -30,12 +30,12 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         timecount %= 1000;
 
         // if moving, use a walking animation, else idle
-        float velocity = sqrt(pow(this->entity->xVelocity, 2) +
-                              pow(this->entity->yVelocity, 2));
-        if (velocity > 0.08) {
+        float velocity = sqrt(pow(this->entity->physics->xVelocity, 2) +
+                              pow(this->entity->physics->yVelocity, 2));
+        if (velocity > 0.01) {
             // if moving left, start at middle of sheet
             int startpos = 0;
-            if (this->entity->xVelocity < 0) {
+            if (this->entity->physics->xVelocity < 0) {
                 startpos = 32 * 4;
             }
             clip.x = (timecount / 250) * 32 + startpos;

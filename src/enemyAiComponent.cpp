@@ -3,7 +3,6 @@
 EnemyAiComponent::EnemyAiComponent(Entity* entity, std::vector<Entity *> * heroEntities) :
     AiComponent(entity),
     timeElapsed(1500),
-    speed(.1f),
     heroEntities(heroEntities){
 }
 
@@ -41,25 +40,22 @@ void EnemyAiComponent::update(int dt, Entity *hero) {
         if(hero!=NULL){
             int xNewDir = (hero->x - this->entity->x);//*(this->entity->xVelocity);
             if(xNewDir>0){
-                this->entity->xVelocity=1*speed;
+                this->entity->physics->xVelocity= 0.05f;
             } else if (xNewDir<=0){
-                this->entity->xVelocity=-1*speed;
+                this->entity->physics->xVelocity= -0.05f;
             }
             int yNewDir = (hero->y - this->entity->y);//*(this->entity->yVelocity);
-            if(yNewDir>0){
-                this->entity->yVelocity=1*speed;
-            } else if (yNewDir<=0){
-                this->entity->yVelocity=-1*speed;
+            if(yNewDir<0){
+                this->entity->physics->jump();
             }
         } else{
-            this->entity->xVelocity = (rand() % 3 - 1) * speed; // pick 1, 0 or -1
-            this->entity->yVelocity = (rand() % 3 - 1) * speed; //  for scaling x, y
+            this->entity->physics->xVelocity = (rand() % 3 - 1) * 0.05f; // pick 1, 0 or -1
+            if (rand() % 3 == 0) {
+                this->entity->physics->jump();
+            }
         }
         this->timeElapsed = 0;
     }
-
-    this->entity->x += this->entity->xVelocity * dt;
-    this->entity->y += this->entity->yVelocity * dt;
 }
 
 // force the entity to pick a new behavior

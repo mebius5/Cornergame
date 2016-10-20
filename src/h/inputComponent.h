@@ -12,25 +12,17 @@ public:
     virtual ~InputComponent() { };
     virtual void keyDown(SDL_Keycode keycode) = 0;
     virtual void keyUp(SDL_Keycode keycode) = 0;
-    virtual void updateLocation(int dt) = 0;
 };
 
 class HeroInputComponent: public InputComponent {
 private:
-    float accelRate;
-    float maxVelocity;
-    float velocityDecay;
-    float boundVelocity(float velocity);
     bool wasd;
     SpawnEntityCommand* spawnCommand;
-    int jumps;
 public:
     HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand);
     ~HeroInputComponent();
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
-    void updateLocation(int dt);
-    void resetJumps();
 };
 
 // class StartScreenInputComponent : public InputComponent {
@@ -55,7 +47,6 @@ public:
     ~MenuOptionInputComponent();
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
-    void updateLocation(int dt);
 };
 
 #endif

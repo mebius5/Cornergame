@@ -11,6 +11,7 @@
 #include "controlHandler.h"
 #include "enums.h"
 #include "scoreHandler.h"
+#include "physicsHandler.h"
 #include "level.h"
 
 class State {
@@ -38,12 +39,13 @@ private:
     SoundHandler& soundHandler;
     ControlHandler& controlHandler;
     CollisionHandler& collisionHandler;
+    PhysicsHandler& physicsHandler;
 public:
     StartState(int windowW, int windowH, EntityManager& entityManager,
                std::vector<Command*>& commandList, SDL_Renderer* renderer,
                DrawingHandler& drawingHandler, InputHandler& inputHandler,
                SoundHandler& soundHandler, ControlHandler& controlHandler,
-               CollisionHandler& collisionHandler);
+               CollisionHandler& collisionHandler, PhysicsHandler& physicsHandler);
     ~StartState();
     void begin();
     StateEnum run();
@@ -118,13 +120,15 @@ private:
     ScoreHandler& scoreHandler;
     ResultsState& resultsState;
     HighscoreState& highscoreState;
+    PhysicsHandler& physicsHandler;
     Entity* hero;
 public:
     PlayState(int windowW, int windowH, EntityManager& entityManager,
               std::vector<Command*>& commandList, SDL_Renderer* renderer,
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler,
-              AiHandler& aiHandler, CollisionHandler& collisionHandler, ScoreHandler& scoreHandler,
+              AiHandler& aiHandler, CollisionHandler& collisionHandler,
+              ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
               ResultsState& resultsState, HighscoreState& highscoreState);
     ~PlayState();
     void begin();

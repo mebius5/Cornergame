@@ -12,6 +12,8 @@ void EnemyCollisionComponent::onEntityCollision(Entity* other) {
 
 void EnemyCollisionComponent::onStaticCollision(Entity* /*other*/) {
     this->entity->ai->resetAi();
+    if (this->entity->physics->yVelocity > 0)
+        ((PhysicsComponent*)this->entity->physics)->resetJumps();
 }
 
 void EnemyCollisionComponent::onBorderCollision() {

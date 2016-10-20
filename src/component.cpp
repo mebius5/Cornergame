@@ -2,7 +2,6 @@
 #include "artComponent.h"
 #include "collisionComponent.h"
 #include "inputComponent.h"
-#include "physicsComponent.h"
 #include "component.h"
 
 std::vector<Command*>* Component::commandList = NULL;
@@ -45,8 +44,4 @@ CollisionComponent::CollisionComponent(Entity* entity, bool staticObject) :
 
 InputComponent::InputComponent(Entity* entity) :
     Component(entity) {
-}
-
-PhysicsComponent::PhysicsComponent() :
-    Component(NULL) {
 }

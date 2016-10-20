@@ -15,8 +15,9 @@ class InputComponent;
 class ArtComponent;
 class ScoreComponent;
 class HealthComponent;
+class PhysicsComponent;
 
-enum Action {IDLE, JUMP, THROW, DAMAGE};
+enum Action {IDLE, JUMP, THROW, DAMAGE, SLIDING};
 
 class Entity {
 private:
@@ -26,10 +27,6 @@ public:
     float y;
     int width;
     int height;
-    float xVelocity;
-    float yVelocity;
-    float xAccel;
-    float yAccel;
     Action actionState;
 
     CollisionComponent* collision;

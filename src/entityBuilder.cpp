@@ -21,6 +21,7 @@ Entity* EntityBuilder::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
     hero->input = new HeroInputComponent(hero, wasd, eCmd);
     hero->score = new ScoreComponent(hero);
     hero->health = new HealthComponent(hero, 300, new SwitchStateCommand(STATE_RESULTS));
+    hero->physics = new PhysicsComponent(hero);
     return hero;
 }
 
@@ -35,6 +36,9 @@ Entity* EntityBuilder::createEnemy(int x, int y, std::vector<Entity *> * heroEnt
     DespawnEntityCommand* dCmd = new DespawnEntityCommand(enemy->getId());
     enemy->ai = new EnemyAiComponent(enemy, heroEntities);
     enemy->health = new HealthComponent(enemy, 200, dCmd);
+    enemy->physics = new PhysicsComponent(enemy);
+    enemy->physics->deceleration = 0.0f;
+    enemy->physics->maxJumps = 1;
     return enemy;
 }
 
@@ -135,11 +139,11 @@ Entity * EntityBuilder::createProjectile(int x, int y, int dir) {
     projectile->art = new StaticArtComponent(projectile,
     SDL_CreateTextureFromSurface(this->renderer, image), 1, false);
     SDL_FreeSurface(image);
-    projectile->xVelocity = dir * 0.6f;
-    projectile->yVelocity = -0.4f;
-    projectile->ai = new ProjectileAiComponent(projectile);
     DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
     projectile->collision = new ProjectileCollisionComponent(projectile, dCmd);
+    projectile->physics = new PhysicsComponent(projectile);
+    projectile->physics->xVelocity = dir * 0.6f;
+    projectile->physics->yVelocity = -0.4f;
     return projectile;
 }
 
