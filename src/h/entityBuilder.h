@@ -5,41 +5,47 @@
 #include <SDL_mixer.h>
 #include <SDL_ttf.h>
 #include <iostream>
+#include <vector>
 #include "enums.h"
+#include "structs.h"
 #include "entity.h"
 
 class EntityBuilder {
 private:
     int nextId;
     SDL_Renderer* renderer;
-    SDL_Surface * loadImage(const char * filename);
-    SDL_Surface* loadFont(const char * fontName,
-                          const char * text,
-                          int fontSize,
-                          int r, int g, int b, int initialAlpha);
+    std::vector<Texture> textureMap;
+    std::vector<std::vector<Texture>> terrainTexMap;  // indexes by type & width
+    std::vector<std::vector<TTF_Font*>> fontMap;      // indexes by font & size
+    SDL_Surface* createText(FontEnum font, const char* text, int fontSize,
+                            int r, int g, int b, int a);
+    SDL_Surface* loadImage(const char* filename);
 public:
     EntityBuilder(SDL_Renderer* renderer);
-    Entity * createHero(int x, int y, SfxEnum sfxType, bool wasd);
-    Entity * createEnemy(int x, int y, std::vector<Entity *> * heroEntities);
-    Entity * createBackground(const char * filename, int width, int height);
-    Entity * createHealthBar(int x, int y, int width, int height, Entity * owner);
-    Entity * createScoreBox(int x, int y, Entity * owner);
-    Entity * createCenteredFadeInText(const char *fontName,
-                                      const char *text,
-                                      int fontSize,
-                                      int r, int g, int b, int initialAlpha,
-                                      int windowW, int windowH);
-    Entity * createHorizontallyCenteredFadeInText(const char *fontName,
-                                      const char *text,
-                                      int fontSize,
+    void loadTexture(TextureEnum texType, const char* filename);
+    void loadHealthBar(int width, int height);
+    void loadFont(FontEnum fontType, int fontSize);
+    void loadTerrain(TerrainTexEnum texType, int width);
+    void freeTextures();
+    void freeFonts();
+    Entity* createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd);
+    Entity* createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes);
+    Entity* createBackground(TextureEnum texType, int width, int height);
+    Entity* createHealthBar(int x, int y, Entity* owner);
+    Entity* createScoreBox(int x, int y, Entity* owner, FontEnum font, int fontSize);
+    Entity* createCenteredFadeInText(FontEnum fontType, const char *text, int fontSize,
+                                     int r, int g, int b, int initialAlpha,
+                                     int windowW, int windowH);
+    Entity* createHorizontallyCenteredFadeInText(FontEnum fontType,
+                                      const char* text, int fontSize,
                                       int r, int g, int b, int initialAlpha,
                                       int windowW, int yPos,
                                       int index, int numOptions,
                                       StateEnum nextState);
-    Entity * createVictoryZone(int x, int y);
-    Entity * createTerrain(int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
-        bool freeRight, bool freeLeft);
-    Entity * createProjectile(int x, int y, int dir);
+    Entity* createVictoryZone(int x, int y);
+    Entity* createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
+            bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
+    Entity* createProjectile(TextureEnum texType, int x, int y, int dir);
 };
 
 #endif

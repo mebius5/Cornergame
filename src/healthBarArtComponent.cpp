@@ -1,24 +1,15 @@
 #include "artComponent.h"
 
-HealthBarArtComponent::HealthBarArtComponent(Entity* entity, SDL_Texture *texture,
-                                             Entity *owner, int layer, float width, int height):
+HealthBarArtComponent::HealthBarArtComponent(Entity* entity, Texture tex,
+                                             Entity *owner, int layer):
     ArtComponent(entity, layer, true),
-    texture(texture),
+    texture(tex.sdlTexture),
     owner(owner),
-    width(width),
-    height(height),
+    width(tex.width / 2),
+    height(tex.height),
     lastHealth(-1)
 {
     this->clip = {0,0,0,0};
-}
-
-HealthBarArtComponent::~HealthBarArtComponent() {
-    this->entity = NULL;
-    this->owner = NULL;
-    if(this->texture){
-        SDL_DestroyTexture(this->texture);
-        this->texture = NULL;
-    }
 }
 
 SDL_Texture * HealthBarArtComponent::getNextTexture(int) {

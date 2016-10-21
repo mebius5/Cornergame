@@ -44,7 +44,7 @@ Level::Level(std::string filename) {
                     break;
                 default:
                     levelContents[i][j] = NONE;
-                    std::cout << "Unrecognized symbol in level file: " << line.at(j) << std::endl;
+                    std::cerr << "Unrecognized symbol in level file: " << line.at(j) << std::endl;
                     break;
             }
         }

@@ -6,13 +6,6 @@ StaticArtComponent::StaticArtComponent(Entity* ent, SDL_Texture* tex, int lay,
     texture(tex) {
 }
 
-StaticArtComponent::~StaticArtComponent() {
-    if(this->texture){
-        SDL_DestroyTexture(this->texture);
-        this->texture = NULL;
-    }
-}
-
 SDL_Texture* StaticArtComponent::getNextTexture(int /*dt*/) {
     return this->texture;
 }

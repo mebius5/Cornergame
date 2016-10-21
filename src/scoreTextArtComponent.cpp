@@ -1,14 +1,14 @@
 #include "artComponent.h"
+#include <iostream>
 
-
-ScoreTextArtComponent::ScoreTextArtComponent(Entity* entity,
-                               SDL_Renderer* renderer, Entity *owner, int layer):
+ScoreTextArtComponent::ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer,
+                                             TTF_Font* font, Entity *owner, int layer):
     ArtComponent(entity, layer, true),
     owner(owner),
     renderer(renderer),
     lastTexture(NULL),
-    lastScore(-1){
-
+    lastScore(-1),
+    font(font) {
 }
 
 ScoreTextArtComponent::~ScoreTextArtComponent() {
@@ -19,36 +19,27 @@ ScoreTextArtComponent::~ScoreTextArtComponent() {
     }
 }
 
-SDL_Surface* ScoreTextArtComponent::loadFont(const char *fontName, const char *text,
-                                             int fontSize, int r, int g, int b) {
-    TTF_Font* font = TTF_OpenFont(fontName, fontSize);
-    SDL_Color color = {(Uint8)r, (Uint8) g, (Uint8) b, 255};
-    SDL_Surface* textSurf = TTF_RenderUTF8_Blended(font, text, color);
-    TTF_CloseFont(font);
-    if (textSurf == NULL) {
-        std::cerr << "Unable to load font! TTF font Error: "
-                  << TTF_GetError() << std::endl;
-        return NULL;
-    }
-    return textSurf;
-}
-
 SDL_Texture* ScoreTextArtComponent::getNextTexture(int) {
-    if(this->lastScore!=this->owner->score->getScore()){
-        if(this->lastTexture){
+    if (this->lastScore!=this->owner->score->getScore()) {
+        if (this->lastTexture) {
             SDL_DestroyTexture(this->lastTexture);
             this->lastTexture = NULL;
         }
 
         this->lastScore = this->owner->score->getScore();
 
-        SDL_Surface * tempSurface = loadFont("resources/CaesarDressing-Regular.ttf",
-                                             std::to_string(this->lastScore).c_str(),
-                                             36, 255, 255, 255);
-        this->lastTexture = SDL_CreateTextureFromSurface(this->renderer, tempSurface);
-        this->entity->width = tempSurface->w;
-        this->entity->height = tempSurface->h;
-        SDL_FreeSurface(tempSurface);
+        SDL_Color color = { 255, 255, 255, 255 };
+        SDL_Surface* textSurf =
+            TTF_RenderUTF8_Blended(this->font, std::to_string(this->lastScore).c_str(), color);
+        if (textSurf == NULL) {
+            std::cerr << "Blend font failed! TTF Error: " << TTF_GetError() << std::endl;
+            return NULL;
+        }
+
+        this->lastTexture = SDL_CreateTextureFromSurface(this->renderer, textSurf);
+        this->entity->width = textSurf->w;
+        this->entity->height = textSurf->h;
+        SDL_FreeSurface(textSurf);
     }
 
     return this->lastTexture;

@@ -35,18 +35,18 @@ public:
     void cleanupEntities();             // delete entities when ready
     void clear();                       // delete all entities
 
-    Entity* createHero(int x, int y, SfxEnum sfxType, bool wasd);
-    Entity* createEnemy(int x, int y);
-    Entity* createBackground(const char * filename, int width, int height);
+    Entity* createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd);
+    Entity* createEnemy(TextureEnum texType, int x, int y);
+    Entity* createBackground(TextureEnum texType, int width, int height);
 
-    Entity* createHealthBar(int x, int y, int width, int height, Entity* owner);
+    Entity* createHealthBar(int x, int y, Entity* owner);
     Entity* createScoreBox(int x, int y, Entity* owner);
 
-    Entity* createCenteredFadeInText(const char *fontName,
-                            const char *text, int fontSize, int r, int g, int b,
+    Entity* createCenteredFadeInText(FontEnum font,
+                            const char* text, int fontSize, int r, int g, int b,
                             int initialAlpha, int windowW, int windowH);
 
-    Entity* createHorizontallyCenteredFadeInText(const char *fontName,
+    Entity* createHorizontallyCenteredFadeInText(FontEnum font,
                             const char *text, int fontSize,
                             int r, int g, int b, int initialAlpha,
                             int windowW, int yPos,
@@ -57,6 +57,7 @@ public:
     Entity* createProjectile(int x, int y, int dir, ProjEnum projType);
     void handleSpawns();
     void populateLevel(Level * level);
+    void printCommands();
 };
 
 #endif

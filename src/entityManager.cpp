@@ -1,13 +1,21 @@
 #include "entityManager.h"
+#include <iostream>
 
 /* Constructor and Destructor */
 EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList) :
-        commandList(cmdList),
-        entityBuilder(renderer),
-        numCleanable(0) {
+    commandList(cmdList),
+    entityBuilder(renderer),
+    numCleanable(0) {
+    this->entityBuilder.loadTexture(TEX_HERO, "spritesheets/hero.png");
+    this->entityBuilder.loadTexture(TEX_ENEMY, "spritesheets/lax.png");
+    this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
+    this->entityBuilder.loadTexture(TEX_BACKGROUND, "resources/jhu-logo.png");
+    this->entityBuilder.loadHealthBar(200, 40);
 }
 
 EntityManager::~EntityManager() {
+    this->entityBuilder.freeTextures();
+    this->entityBuilder.freeFonts();
     this->clear();
 }
 
@@ -95,8 +103,8 @@ void EntityManager::clear() {
 }
 
 /* Entity Creation Methods */
-Entity* EntityManager::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
-    Entity* entity = this->entityBuilder.createHero(x, y, sfxType, wasd);
+Entity* EntityManager::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
+    Entity* entity = this->entityBuilder.createHero(texType, x, y, sfxType, wasd);
     this->addEntity(entity);
 
     this->heroEntities.push_back(entity);
@@ -110,69 +118,68 @@ Entity* EntityManager::createHero(int x, int y, SfxEnum sfxType, bool wasd) {
     return entity;
 }
 
-Entity* EntityManager::createEnemy(int x, int y) {
-    Entity* entity = this->entityBuilder.createEnemy(x, y, &this->heroEntities);
+Entity* EntityManager::createEnemy(TextureEnum texType, int x, int y) {
+    Entity* entity = this->entityBuilder.createEnemy(texType, x, y, &this->heroEntities);
     this->addEntity(entity);
     return entity;
 }
 
-Entity* EntityManager::createBackground(const char* filename, int w, int h) {
-    Entity* entity = this->entityBuilder.createBackground(filename, w, h);
+Entity* EntityManager::createBackground(TextureEnum texType, int width, int height) {
+    Entity* entity = this->entityBuilder.createBackground(texType, width, height);
     this->addEntity(entity);
     return entity;
 }
 
-Entity* EntityManager::createHealthBar(int x, int y, int width, int height, Entity* owner) {
-    Entity* entity = this->entityBuilder.createHealthBar(x, y, width, height, owner);
+Entity* EntityManager::createHealthBar(int x, int y, Entity* owner) {
+    Entity* entity = this->entityBuilder.createHealthBar(x, y, owner);
     this->addEntity(entity);
     return entity;
 }
 
 Entity* EntityManager::createScoreBox(int x, int y, Entity* owner) {
-    Entity* entity = this->entityBuilder.createScoreBox(x, y, owner);
+    Entity* entity = this->entityBuilder.createScoreBox(x, y, owner, FONT_GLOBAL, 32);
     this->addEntity(entity);
     return entity;
 }
 
-Entity* EntityManager::createCenteredFadeInText(const char* fontName,
+Entity* EntityManager::createCenteredFadeInText(FontEnum font,
                                                 const char* text, int fontSize, int r, int g, int b,
                                                 int initialAlpha, int windowW, int windowH) {
-
-    Entity* entity = this->entityBuilder.createCenteredFadeInText(fontName,
-                                                                  text, fontSize, r, g, b,
-                                                                  initialAlpha, windowW, windowH);
+    Entity* entity = this->entityBuilder.createCenteredFadeInText(
+            font, text, fontSize, r, g, b,
+            initialAlpha, windowW, windowH);
     this->addEntity(entity);
     return entity;
 }
 
-Entity * EntityManager::createHorizontallyCenteredFadeInText(const char* fontName,
-                                                             const char* text,
-                                                             int fontSize,
-                                                             int r, int g, int b, int initialAlpha,
-                                                             int windowW, int yPos,
-                                                             int index, int numOptions, StateEnum nextState) {
+Entity* EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const char* text,
+                                                            int fontSize,
+                                                            int r, int g, int b, int initialAlpha,
+                                                            int windowW, int yPos,
+                                                            int index, int numOptions, StateEnum nextState) {
     Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInText(
-            fontName, text, fontSize, r, g, b, initialAlpha,
+            font, text, fontSize, r, g, b, initialAlpha,
             windowW, yPos, index, numOptions, nextState);
     this->addEntity(entity);
     return entity;
 }
 
-Entity * EntityManager::createVictoryZone(int x, int y) {
+Entity* EntityManager::createVictoryZone(int x, int y) {
     Entity* entity = this->entityBuilder.createVictoryZone(x, y);
     this->addEntity(entity);
     return entity;
 }
 
-Entity * EntityManager::createTerrain(int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
-                                      bool freeRight, bool freeLeft) {
-    Entity * entity = this->entityBuilder.createTerrain(x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+Entity* EntityManager::createTerrain(int x, int y, int numberHorizontal, bool freeTop,
+                                     bool freeBot, bool freeRight, bool freeLeft) {
+    Entity* entity = this->entityBuilder.createTerrain(
+            TT_BRICK, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
     this->addEntity(entity);
     return entity;
 }
 
-Entity * EntityManager::createProjectile(int x, int y, int dir, ProjEnum /*projType*/) {
-    Entity * entity = this->entityBuilder.createProjectile(x, y, dir);
+Entity* EntityManager::createProjectile(int x, int y, int dir, ProjEnum /*projType*/) {
+    Entity* entity = this->entityBuilder.createProjectile(TEX_PROJECTILE, x, y, dir);
     this->addEntity(entity);
     return entity;
 }
@@ -238,11 +245,11 @@ void EntityManager::populateLevel(Level* level) {
                     break;
                 }
                 case ENEMY:
-                    createEnemy(j * 32, i * 32);
+                    createEnemy(TEX_ENEMY, j * 32, i * 32);
                     break;
                 case SPAWN:
-                    hero = createHero(j * 32, i * 32, SFX_ALERT, false);
-                    createHealthBar(100, 100, 200, 40, hero);
+                    hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
+                    createHealthBar(100, 100, hero);
                     createScoreBox(850, 100, hero);
                     break;
                 case GOAL:
@@ -251,6 +258,21 @@ void EntityManager::populateLevel(Level* level) {
                 default:
                     break;
             }
+        }
+    }
+}
+
+void EntityManager::printCommands() {
+    std::vector<Command*>::iterator it;
+    for (it = this->commandList.begin(); it != this->commandList.end(); ++it) {
+        if (SwitchStateCommand* ssCmd = dynamic_cast<SwitchStateCommand*>(*it)) {
+            std::cout << "Switch Command " << ssCmd->newState << std::endl;
+        } else if (PlaySoundCommand* psCmd = dynamic_cast<PlaySoundCommand*>(*it)) {
+            std::cout << "Sound Command " << psCmd->sfxType << std::endl;
+        } else if (SpawnEntityCommand* seCmd = dynamic_cast<SpawnEntityCommand*>(*it)) {
+            std::cout << "Switch Command " << seCmd->projType << std::endl;
+        } else if (DespawnEntityCommand* deCmd = dynamic_cast<DespawnEntityCommand*>(*it)) {
+            std::cout << "Switch Command " << deCmd->id << std::endl;
         }
     }
 }

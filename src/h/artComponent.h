@@ -6,6 +6,7 @@
 #include <string>
 #include <math.h>
 #include <iostream>
+#include "structs.h"
 #include "entity.h"
 #include "component.h"
 
@@ -29,7 +30,6 @@ private:
 public:
     StaticArtComponent(Entity* entity, SDL_Texture* texture, int layer,
                        bool movesWithCamera);
-    ~StaticArtComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
@@ -43,9 +43,7 @@ private:
     int actionTime;
     SDL_Rect clip;
 public:
-    AnimationComponent(Entity* entity, SDL_Texture* texture, int surfaceW,
-                       int surfaceH, int layer);
-    ~AnimationComponent();
+    AnimationComponent(Entity* entity, Texture texture, int layer);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
@@ -76,29 +74,23 @@ private:
     int height;
     int lastHealth;
 public:
-    HealthBarArtComponent(Entity* entity, SDL_Texture *texture, Entity *owner,
-                          int layer, float width, int height);
-    ~HealthBarArtComponent();
-    SDL_Texture * getNextTexture(int dt);
+    HealthBarArtComponent(Entity* entity, Texture tex, Entity* owner, int layer);
+    SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
 
 class ScoreTextArtComponent: public ArtComponent{
 private:
-    Entity * owner;
-    SDL_Renderer * renderer;
-    SDL_Texture * lastTexture;
+    Entity* owner;
+    SDL_Renderer* renderer;
+    SDL_Texture* lastTexture;
     int lastScore;
-
-    SDL_Surface* loadFont(const char * fontName,
-                          const char * text,
-                          int fontSize,
-                          int r, int g, int b);
+    TTF_Font* font;
 public:
-    ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer, Entity* owner,
-                          int layer);
+    ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer, TTF_Font* font,
+                          Entity* owner, int layer);
     ~ScoreTextArtComponent();
-    SDL_Texture * getNextTexture(int dt);
+    SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
 

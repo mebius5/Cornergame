@@ -18,32 +18,27 @@ void MenuState::begin(int) {
     this->soundHandler.playBackgroundMusic(MUSIC_MENU);
 
     this->entityManager.createHorizontallyCenteredFadeInText(
-            "resources/CaesarDressing-Regular.ttf", "Play",
-            80,
+            FONT_GLOBAL, "Play", 80,
             255, 255, 255, 0, this->windowW, 100,
             0, 5, STATE_PLAY);
 
     this->entityManager.createHorizontallyCenteredFadeInText(
-            "resources/CaesarDressing-Regular.ttf", "Adjust Visual Brightness",
-            80,
+            FONT_GLOBAL, "Adjust Visual Brightness", 80,
             255, 255, 255, 0, this->windowW, 200,
             1, 5, STATE_NONE);
 
     this->entityManager.createHorizontallyCenteredFadeInText(
-            "resources/CaesarDressing-Regular.ttf", "Adjust Audio Volume",
-            80,
+            FONT_GLOBAL, "Adjust Audio Volume", 80,
             255, 255, 255, 0, this->windowW, 300,
             2, 5, STATE_NONE);
 
     this->entityManager.createHorizontallyCenteredFadeInText(
-            "resources/CaesarDressing-Regular.ttf", "Highscore",
-            80,
+            FONT_GLOBAL, "Highscore", 80,
             255, 255, 255, 0, this->windowW, 400,
             3, 5, STATE_HIGHSCORE);
 
     this->entityManager.createHorizontallyCenteredFadeInText(
-            "resources/CaesarDressing-Regular.ttf", "Quit",
-            80,
+            FONT_GLOBAL, "Quit", 80,
             255, 255, 255, 0, this->windowW, 500,
             4, 5, STATE_QUIT);
 }

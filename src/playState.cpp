@@ -1,11 +1,13 @@
-#include <state.h>
+#include "state.h"
 #include <iostream>
+
 PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
                  std::vector<Command*>& commandList, SDL_Renderer* renderer,
                  DrawingHandler& drawingHandler, InputHandler& inputHandler,
                  SoundHandler& soundHandler, ControlHandler& controlHandler,
-                 AiHandler& aiHandler, CollisionHandler& collisionHandler, ScoreHandler& scoreHandler,
-                 ResultsState& resultsState, HighscoreState& highscoreState) :
+                 AiHandler& aiHandler, CollisionHandler& collisionHandler,
+                 ScoreHandler& scoreHandler, ResultsState& resultsState,
+                 HighscoreState& highscoreState) :
     State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
@@ -22,28 +24,9 @@ PlayState::~PlayState() {
 }
 
 void PlayState::begin(int level) {
-    // Play background music
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
-
-    // Create background
-    this->entityManager.createBackground("resources/jhu-logo.png",
-                                         this->windowW, this->windowH);
-
-    /***
-    Entity * hero2 = this->entityManager.createHero(100, 250, SFX_ALERT, true);
-    this->entityManager.createHealthBar(100, 600, 200, 40, hero2);
-    this->entityManager.createScoreBox(850, 600, hero2);
-
-
-    this->entityManager.createEnemy(350, 150);
-    this->entityManager.createEnemy(500, 150);
-    this->entityManager.createEnemy(650, 150);
-    this->entityManager.createEnemy(400, 300);
-    this->entityManager.createEnemy(600, 300);
-
-
-    this->entityManager.createVictoryZone(1150, 200);
-      ****/
+    this->entityManager.createBackground(TEX_BACKGROUND, this->windowW,
+                                         this->windowH);
 
     std::string levelFile = "levels/level";
     levelFile.append(std::to_string(level));
@@ -62,7 +45,6 @@ StateEnum PlayState::run() {
         int dt = currentTime - lastTime;
         lastTime = currentTime;
 
-        //std::cout << this->hero->xVelocity << "  " << this->hero->yVelocity << "\n" << std::endl;
         this->aiHandler.updateAi(dt);
         this->entityManager.handleSpawns();
         this->inputHandler.handleEvents();
@@ -74,7 +56,7 @@ StateEnum PlayState::run() {
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
-        if (nextState)
+        if (nextState != STATE_NONE)
             return nextState;
     }
 

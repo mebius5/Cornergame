@@ -1,13 +1,23 @@
 #ifndef CORNERGAME_ENUMS_H
 #define CORNERGAME_ENUMS_H
 
-enum StateEnum { STATE_NONE = 0, STATE_QUIT, STATE_START, STATE_PLAY,
-                 STATE_MENU, STATE_HIGHSCORE, STATE_RESULTS };
+// NOTE: keep NONE state the last one to make array indexing easier!
+enum StateEnum { STATE_QUIT, STATE_START, STATE_PLAY,
+                 STATE_MENU, STATE_HIGHSCORE, STATE_RESULTS, STATE_NONE };
 
-enum SfxEnum { SFX_NONE = 0, SFX_ALERT };
+enum ProjEnum { PROJ_HERO, PROJ_ENEMY };
+
+// NOTE: if updating any of the following, MAKE SURE to update vector sizes in
+// soundHander or entityBuilder for the map vectors.
+enum SfxEnum { SFX_ALERT, SFX_NONE };
 
 enum MusicEnum { MUSIC_START, MUSIC_MENU, MUSIC_PLAY, MUSIC_HIGHSCORE };
 
-enum ProjEnum { HERO_PROJ, ENEMY_PROJ };
+enum TextureEnum { TEX_HERO, TEX_ENEMY, TEX_BACKGROUND, TEX_HEALTHBAR,
+                   TEX_VICTORY, TEX_PROJECTILE, TEX_NONE};
+
+enum TerrainTexEnum { TT_BRICK, TT_NONE };
+
+enum FontEnum { FONT_GLOBAL };
 
 #endif

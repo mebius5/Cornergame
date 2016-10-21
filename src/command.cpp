@@ -13,7 +13,5 @@ SpawnEntityCommand::SpawnEntityCommand(ProjEnum projType) :
 }
 
 DespawnEntityCommand::DespawnEntityCommand(int id) :
-	id(id) {
+    id(id) {
 }
-
-    

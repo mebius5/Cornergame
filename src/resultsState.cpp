@@ -25,7 +25,7 @@ void ResultsState::begin(int) {
         resultString = "Defeat! Score: " + std::to_string(this->score);
 
     this->entityManager.createCenteredFadeInText(
-                   "resources/CaesarDressing-Regular.ttf", resultString.c_str(),
+                   FONT_GLOBAL, resultString.c_str(),
                    100, 255, 255, 255, 0, this->windowW, this->windowH);
 }
 
@@ -45,7 +45,7 @@ StateEnum ResultsState::run() {
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
-        if (nextState)
+        if (nextState != STATE_NONE)
             return nextState;
 
         if (timeElapsed > 5000) {   //Return to MENU screen after 5 secs

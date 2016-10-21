@@ -19,7 +19,7 @@ void HighscoreState::begin(int) {
     this->soundHandler.playBackgroundMusic(MUSIC_HIGHSCORE);
     std::string hsText = "High Score:\n" + std::to_string(this->highscore);
     this->entityManager.createCenteredFadeInText(
-            "resources/CaesarDressing-Regular.ttf", hsText.c_str(),
+            FONT_GLOBAL, hsText.c_str(),
             100, 255, 255, 255, 0, this->windowW, this->windowH);
 }
 
@@ -39,7 +39,7 @@ StateEnum HighscoreState::run() {
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
-        if (nextState)
+        if (nextState != STATE_NONE)
             return nextState;
 
         if (timeElapsed > 5000){   //Return to MENU screen after 5 secs

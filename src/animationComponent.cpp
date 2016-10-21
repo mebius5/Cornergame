@@ -1,22 +1,13 @@
 #include "artComponent.h"
 
-AnimationComponent::AnimationComponent(Entity* entity, SDL_Texture* texture,
-                                       int surfaceW, int surfaceH, int layer):
+AnimationComponent::AnimationComponent(Entity* entity, Texture tex, int layer):
     ArtComponent(entity, layer, false),
-    texture(texture),
-    surfaceW(surfaceW),
-    surfaceH(surfaceH),
+    texture(tex.sdlTexture),
+    surfaceW(tex.width),
+    surfaceH(tex.height),
     timecount(0) {
     this->clip = {0,0,0,0};
-    this->actionTime = 0;   
-}
-
-AnimationComponent::~AnimationComponent() {
-    if(this->texture){
-        SDL_DestroyTexture(this->texture);
-        this->texture = NULL;
-    }
-    this->entity = NULL;
+    this->actionTime = 0;
 }
 
 SDL_Texture* AnimationComponent::getNextTexture(int /*dt*/) {
