@@ -13,16 +13,16 @@ HeroCollisionComponent::~HeroCollisionComponent() {
 void HeroCollisionComponent::onEntityCollision(Entity *other, int dt) {
     if(other->collision && dynamic_cast<EnemyCollisionComponent*>(other->collision)){
 
-        if(timeSinceLastCollision%40==0){
+        timeSinceLastCollision+=dt;
+
+        if(timeSinceLastCollision>=30){
             timeSinceLastCollision=0;
-            timeSinceLastCollision+=dt;
-            this->entity->score->addScore(-20);
-            this->entity->health->takeDamage(10);
+            this->entity->score->addScore(-10);
+            this->entity->health->takeDamage(5);
             if (this->entityCollisionCommand)
                 Component::commandList->push_back(this->entityCollisionCommand);
-        } else{
-            timeSinceLastCollision+=dt;
         }
+
     } else if (other->collision && dynamic_cast<ProjectileCollisionComponent*>(other->collision)) {
         ProjectileCollisionComponent* projectile = dynamic_cast<ProjectileCollisionComponent*>(other->collision);
         if (projectile->ownerID != this->entity->getId()) {
