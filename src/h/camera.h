@@ -6,6 +6,7 @@
 class Camera{
 private:
     SDL_Renderer * renderer;
+    std::vector<ArtComponent*>& componentList;
     int minX;
     int minY;
     int maxX;
@@ -14,7 +15,7 @@ private:
     int levelH;
 public:
 
-    Camera(SDL_Renderer * renderer, int windowW, int windowH);
+    Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH);
     ~Camera();
     void draw(int dt, ArtComponent * artComponent);
     void shift(int dx, int dy);

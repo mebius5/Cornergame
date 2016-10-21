@@ -4,7 +4,7 @@ DrawingHandler::DrawingHandler(std::vector<ArtComponent*>& componentList,
                                SDL_Renderer* renderer, int windowW, int windowH) :
     componentList(componentList),
     renderer(renderer),
-    camera(renderer, windowW, windowH),
+    camera(renderer, componentList, windowW, windowH),
     shiftCount(0){
 
 }
