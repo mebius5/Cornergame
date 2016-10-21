@@ -43,7 +43,7 @@ StateEnum StartState::run() {
 
         this->inputHandler.handleEvents();
         this->physicsHandler.update(dt);
-        this->collisionHandler.handleCollisions();
+        this->collisionHandler.handleCollisions(0);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();

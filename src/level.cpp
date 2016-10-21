@@ -68,7 +68,7 @@ Level::Level(std::string filename, int windowW, int windowH) {
 
     for(int i= 0 ; i<height; i++){
         for (int j = 0; j < windowW/32; j++) {
-            if(levelContents[i][j]!=SPAWN){
+            if(levelContents[i][j]==TERRAIN){
                 levelContents[i][j+width]=levelContents[i][j];
             } else {
                 levelContents[i][j+width]= NONE;

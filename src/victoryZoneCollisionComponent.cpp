@@ -10,12 +10,12 @@ VictoryZoneCollisionComponent::~VictoryZoneCollisionComponent() {
         delete this->entityCollisionCommand;
 }
 
-void VictoryZoneCollisionComponent::onEntityCollision(Entity* other) {
+void VictoryZoneCollisionComponent::onEntityCollision(Entity *other, int) {
     if (other->input)   // if hero, enter victory state
         Component::commandList->push_back(this->entityCollisionCommand);
 }
 
-void VictoryZoneCollisionComponent::onStaticCollision(Entity* /*other*/) {
+void VictoryZoneCollisionComponent::onStaticCollision(Entity *) {
 }
 
 void VictoryZoneCollisionComponent::onBorderCollision() {

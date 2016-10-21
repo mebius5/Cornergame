@@ -51,7 +51,7 @@ StateEnum PlayState::run() {
         this->entityManager.handleSpawns();
         this->inputHandler.handleEvents();
         this->physicsHandler.update(dt);
-        this->collisionHandler.handleCollisions();
+        this->collisionHandler.handleCollisions(dt);
         this->soundHandler.handleSfx(dt);
         this->scoreHandler.handleScore(dt);
         this->drawingHandler.shift(dt);

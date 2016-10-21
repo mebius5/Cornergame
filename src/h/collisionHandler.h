@@ -19,7 +19,7 @@ public:
     CollisionHandler(std::vector<CollisionComponent*>& volatileList,
                      std::vector<CollisionComponent*>& staticList,
                      const int w, const int h);
-    void handleCollisions();
+    void handleCollisions(int dt);
 };
 
 #endif

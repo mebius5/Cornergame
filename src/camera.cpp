@@ -1,7 +1,8 @@
 #include "camera.h"
 
-Camera::Camera(SDL_Renderer * renderer, int windowW, int windowH) :
+Camera::Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH) :
     renderer(renderer),
+    componentList(componentList),
     minX(0),
     minY(0),
     maxX(windowW), 
@@ -21,10 +22,24 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
     if(entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)) {
         if(levelW!=-1 && entity->x > levelW){
             if(levelW!=-1 && minX>=levelW){
-                entity->x = entity->x - levelW;
+                std::vector<ArtComponent*>::iterator it;
+                for (it = this->componentList.begin(); it != this->componentList.end(); ) {
+                    if (!(*it)->isValid()) {        // remove invalid components
+                        *it = this->componentList.back();
+                        this->componentList.pop_back();
+                        continue;
+                    }
+
+                    if((*it)->entity->collision&& !dynamic_cast<TerrainCollisionComponent*>((*it)->entity->collision)){
+                        if((*it)->entity->x>= minX && (*it)->entity->x<=maxX){
+                            (*it)->entity->x = (*it)->entity->x - levelW;
+                        }
+                    }
+
+                    ++it;
+                }
 
                 //TODO: Add command to respawn all enemy and heros at updated location
-
                 minX = minX - levelW;
                 maxX = maxX - levelW;
             }
