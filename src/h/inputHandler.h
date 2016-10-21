@@ -16,7 +16,6 @@ public:
     InputHandler(std::vector<InputComponent*>& componentList,
                  std::vector<Command*>& commandList);
     virtual void handleEvents();
-    void update(int dt);
 };
 
 #endif

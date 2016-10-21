@@ -17,6 +17,7 @@ public:
     int getMaxHealth();
     void toggleInvincibility();
     void takeDamage(int damage);
+    void die();
 };
 
 #endif

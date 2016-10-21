@@ -24,8 +24,9 @@ SRCFILES = \
     level.cpp \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
+    physicsComponent.cpp \
+    physicsHandler.cpp \
 	playState.cpp \
-        projectileAiComponent.cpp \
 	projectileCollisionComponent.cpp \
 	resultsState.cpp \
     scoreComponent.cpp \

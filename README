@@ -135,6 +135,7 @@ Grady
 - Modified level editor to collapse all neighboring horizontal terrain tiles into a single entity.
   This decreases amount of collisions that need to be checked
 - Added ability to proceed to the next level
+- Added ability to wrap a level to go on forever until a hero dies or get to the victory zone
 
 Pratyush
 

@@ -109,18 +109,21 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
     hero->art = new AnimationComponent(hero, texture, 1);
     hero->input = new HeroInputComponent(hero, wasd, new SpawnEntityCommand(PROJ_HERO));
     hero->score = new ScoreComponent(hero);
-    hero->health = new HealthComponent(hero, 300, new SwitchStateCommand(STATE_RESULTS));
+    hero->health = new HealthComponent(hero, 1000, new SwitchStateCommand(STATE_RESULTS));
+    hero->physics = new PhysicsComponent(hero);
     return hero;
 }
 
 Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes) {
     Texture texture = this->textureMap[texType];
     Entity* enemy = new Entity(this->nextId++, x, y, texture.width / 4, texture.height / 2);
-
     enemy->collision = new EnemyCollisionComponent(enemy);
     enemy->art = new AnimationComponent(enemy, texture, 1);
     enemy->ai = new EnemyAiComponent(enemy, heroes);
     enemy->health = new HealthComponent(enemy, 200, new DespawnEntityCommand(enemy->getId()));
+    enemy->physics = new PhysicsComponent(enemy);
+    enemy->physics->deceleration = 0.0f;
+    enemy->physics->maxJumps = 1;
     return enemy;
 }
 
@@ -205,14 +208,14 @@ Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int n
     return terrain;
 }
 
-Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, int dir) {
+Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, int dir, int ownerId) {
     Texture texture = this->textureMap[texType];
     Entity* projectile = new Entity(this->nextId++, x, y, texture.width*2, texture.height*2);
     projectile->art = new StaticArtComponent(projectile, texture.sdlTexture, 1, false);
-    projectile->xVelocity = dir * 0.6f;
-    projectile->yVelocity = -0.4f;
-    projectile->ai = new ProjectileAiComponent(projectile);
     DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
-    projectile->collision = new ProjectileCollisionComponent(projectile, dCmd);
+    projectile->collision = new ProjectileCollisionComponent(projectile, dCmd, ownerId);
+    projectile->physics = new PhysicsComponent(projectile);
+    projectile->physics->xVelocity = dir * 0.6f;
+    projectile->physics->yVelocity = -0.4f;
     return projectile;
 }

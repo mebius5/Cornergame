@@ -38,10 +38,3 @@ void InputHandler::handleEvents() {
         }
     }
 }
-
-// Note: run this after handleEvents(): doesn't check validity of components
-void InputHandler::update(int dt) {
-    std::vector<InputComponent*>::const_iterator it;
-    for (it = this->componentList.begin(); it != this->componentList.end(); ++it)
-        (*it)->updateLocation(dt);
-}

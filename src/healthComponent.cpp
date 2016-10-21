@@ -35,3 +35,8 @@ void HealthComponent::takeDamage(int damage) {
             Component::commandList->push_back(this->onDeath);
     }
 }
+
+void HealthComponent::die() {
+    this->health = 0;
+    Component::commandList->push_back(this->onDeath);
+}

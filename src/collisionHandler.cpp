@@ -62,13 +62,13 @@ void CollisionHandler::handleCollisions() {
 
 void CollisionHandler::borderBoundX(Entity* entity, float boundValue) {
     entity->x = boundValue;
-    entity->xVelocity = 0.0f;
+    entity->physics->xVelocity = 0.0f;
     entity->collision->onBorderCollision();
 }
 
 void CollisionHandler::borderBoundY(Entity* entity, float boundValue) {
     entity->y = boundValue;
-    entity->yVelocity = 0.0f;
+    entity->physics->yVelocity = 0.0f;
     entity->collision->onBorderCollision();
 }
 

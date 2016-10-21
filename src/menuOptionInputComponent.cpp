@@ -53,7 +53,3 @@ void MenuOptionInputComponent::keyDown(SDL_Keycode keycode) {
         art->selectMenuItem();
     }
 }
-
-void MenuOptionInputComponent::updateLocation(int /*dt*/) {
-
-}

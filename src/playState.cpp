@@ -6,8 +6,8 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
                  DrawingHandler& drawingHandler, InputHandler& inputHandler,
                  SoundHandler& soundHandler, ControlHandler& controlHandler,
                  AiHandler& aiHandler, CollisionHandler& collisionHandler,
-                 ScoreHandler& scoreHandler, ResultsState& resultsState,
-                 HighscoreState& highscoreState) :
+                 ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
+                 ResultsState& resultsState, HighscoreState& highscoreState) :
     State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
@@ -17,7 +17,8 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
     collisionHandler(collisionHandler),
     scoreHandler(scoreHandler),
     resultsState(resultsState),
-    highscoreState(highscoreState) {
+    highscoreState(highscoreState),
+    physicsHandler(physicsHandler) {
 }
 
 PlayState::~PlayState() {
@@ -31,8 +32,9 @@ void PlayState::begin(int level) {
     std::string levelFile = "levels/level";
     levelFile.append(std::to_string(level));
     levelFile.append(".txt");
-    Level level1(levelFile.c_str());
+    Level level1(levelFile.c_str(), windowW, windowH);
     this->entityManager.populateLevel(&level1);
+    drawingHandler.initializeCamera(level1.width*32, level1.height*32);
     this->hero = entityManager.heroEntities.at(0);
 }
 
@@ -48,7 +50,7 @@ StateEnum PlayState::run() {
         this->aiHandler.updateAi(dt);
         this->entityManager.handleSpawns();
         this->inputHandler.handleEvents();
-        this->inputHandler.update(dt);
+        this->physicsHandler.update(dt);
         this->collisionHandler.handleCollisions();
         this->soundHandler.handleSfx(dt);
         this->scoreHandler.handleScore(dt);

@@ -14,7 +14,7 @@
 GameManager::GameManager() :
         title("<GAME NAME>"),
         width(1024),
-        height(720),
+        height(704),
         currentLevel(0),
         maxLevel(2)
 {
@@ -110,10 +110,11 @@ void GameManager::run() {
     SoundHandler soundHandler(commandList);
     ControlHandler controlHandler(commandList);
     ScoreHandler scoreHandler(entityMgr.scoreComponents);
+    PhysicsHandler physicsHandler(entityMgr.physicsComponents);
 
     StartState startState(this->width, this->height, entityMgr, commandList,
                           this->renderer, drawingHandler, inputHandler,
-                          soundHandler, controlHandler, collisionHandler);
+                          soundHandler, controlHandler, collisionHandler, physicsHandler);
     MenuState menuState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler);
@@ -126,7 +127,8 @@ void GameManager::run() {
     PlayState playState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
-                        collisionHandler, scoreHandler, resultsState, highscoreState);
+                        collisionHandler, scoreHandler, physicsHandler,
+                        resultsState, highscoreState);
 
     // Load music resources
     soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);

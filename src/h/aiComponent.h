@@ -14,7 +14,6 @@ public:
 class EnemyAiComponent : public AiComponent {
 private:
     int timeElapsed;      // time passed since a behavior was generated
-    float speed;
     std::vector<Entity *> * heroEntities;
 public:
     EnemyAiComponent(Entity* entity, std::vector<Entity *> * heroEntities);

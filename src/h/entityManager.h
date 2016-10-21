@@ -31,7 +31,6 @@ public:
 
     void addEntity(Entity* entity);     // add entity/components to map/vectors
     void deleteEntity(int id);          // put entity on queue for deletion on
-    void deleteEntity(Entity* entity);  //  next round (allows commands to run)
     void cleanupEntities();             // delete entities when ready
     void clear();                       // delete all entities
 
@@ -54,7 +53,7 @@ public:
     Entity* createVictoryZone(int x, int y);
     Entity * createTerrain(int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
-    Entity* createProjectile(int x, int y, int dir, ProjEnum projType);
+    Entity* createProjectile(int x, int y, int dir, int ownerID, ProjEnum projType);
     void handleSpawns();
     void populateLevel(Level * level);
     void printCommands();
