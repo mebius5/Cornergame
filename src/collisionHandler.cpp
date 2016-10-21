@@ -28,7 +28,7 @@ void CollisionHandler::removeInvalidComponents() {
     }
 }
 
-void CollisionHandler::handleCollisions() {
+void CollisionHandler::handleCollisions(int dt) {
     this->removeInvalidComponents();
 
     // handle volatile components colliding with each other
@@ -40,8 +40,8 @@ void CollisionHandler::handleCollisions() {
         for (it2 = std::next(it, 1); it2 != this->volatileList.end(); ++it2) {
             CollisionComponent* comp2 = *it2;
             if (detectOverlap(comp1->entity, comp2->entity)) {
-                comp1->onEntityCollision(comp2->entity);
-                comp2->onEntityCollision(comp1->entity);
+                comp1->onEntityCollision(comp2->entity, dt);
+                comp2->onEntityCollision(comp1->entity, dt);
             }
         }
     }
@@ -54,7 +54,7 @@ void CollisionHandler::handleCollisions() {
             CollisionComponent* comp2 = *it2;
             if (detectOverlap(comp1->entity, comp2->entity)) {
                 comp1->onStaticCollision(comp2->entity);
-                comp2->onEntityCollision(comp1->entity);
+                comp2->onEntityCollision(comp1->entity, dt);
             }
         }
     }

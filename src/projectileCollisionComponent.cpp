@@ -6,13 +6,13 @@ ProjectileCollisionComponent::ProjectileCollisionComponent(Entity* entity, Comma
     ownerID(ownerID) {
 }
 
-void ProjectileCollisionComponent::onEntityCollision(Entity* other) {
+void ProjectileCollisionComponent::onEntityCollision(Entity *other, int) {
 	if(other->collision && other->getId() != this->ownerID) {
 	    Component::commandList->push_back(this->entityCollisionCommand);
 	}
 }
 
-void ProjectileCollisionComponent::onStaticCollision(Entity* /*other*/) {
+void ProjectileCollisionComponent::onStaticCollision(Entity *) {
 	Component::commandList->push_back(this->entityCollisionCommand);
 }
 

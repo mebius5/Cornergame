@@ -10,28 +10,29 @@ public:
     CollisionComponent(Entity* entity, bool staticObject);
     virtual ~CollisionComponent() { };
 
-    virtual void onEntityCollision(Entity* other) = 0;
-    virtual void onStaticCollision(Entity* other) = 0;
+    virtual void onEntityCollision(Entity *other, int dt) = 0;
+    virtual void onStaticCollision(Entity *other) = 0;
     virtual void onBorderCollision() = 0;
 };
 
 class HeroCollisionComponent : public CollisionComponent {
 private:
     Command* entityCollisionCommand;
+    int timeSinceLastCollision;
 public:
     HeroCollisionComponent(Entity* entity, Command* entityCollisionCmd);
     ~HeroCollisionComponent();
 
-    void onEntityCollision(Entity* other);
-    void onStaticCollision(Entity* other);
+    void onEntityCollision(Entity *other, int dt);
+    void onStaticCollision(Entity *other);
     void onBorderCollision();
 };
 
 class EnemyCollisionComponent : public CollisionComponent {
 public:
     EnemyCollisionComponent(Entity* entity);
-    void onEntityCollision(Entity* other);
-    void onStaticCollision(Entity* other);
+    void onEntityCollision(Entity *other, int dt);
+    void onStaticCollision(Entity *other);
     void onBorderCollision();
 };
 
@@ -41,8 +42,8 @@ private:
 public:
     int ownerID;
     ProjectileCollisionComponent(Entity* entity, Command* entityCollisionCommand, int ownerID);
-    void onEntityCollision(Entity* other);
-    void onStaticCollision(Entity* other);
+    void onEntityCollision(Entity *other, int dt);
+    void onStaticCollision(Entity *other);
     void onBorderCollision();
 };
 
@@ -53,8 +54,8 @@ public:
     VictoryZoneCollisionComponent(Entity* entity, Command* entityCollisionCmd);
     ~VictoryZoneCollisionComponent();
 
-    void onEntityCollision(Entity* other);
-    void onStaticCollision(Entity* other);
+    void onEntityCollision(Entity *other, int dt);
+    void onStaticCollision(Entity *other);
     void onBorderCollision();
 };
 
@@ -68,8 +69,8 @@ private:
     bool freeLeft;
 public:
     TerrainCollisionComponent(Entity * entity, bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
-    void onEntityCollision(Entity* other);
-    void onStaticCollision(Entity* other);
+    void onEntityCollision(Entity *other, int dt);
+    void onStaticCollision(Entity *other);
     void onBorderCollision();
 };
 

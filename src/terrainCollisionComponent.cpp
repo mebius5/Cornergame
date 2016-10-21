@@ -9,7 +9,7 @@ TerrainCollisionComponent::TerrainCollisionComponent(Entity *entity,
     freeLeft(freeLeft) {
 }
 
-void TerrainCollisionComponent::onEntityCollision(Entity *other) {
+void TerrainCollisionComponent::onEntityCollision(Entity *other, int) {
     //Calculate the sides of entity 1
     int leftT = this->entity->x;
     int rightT = this->entity->x + this->entity->width;
@@ -69,7 +69,7 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other) {
     }
 }
 
-void TerrainCollisionComponent::onStaticCollision(Entity* /*other*/) {
+void TerrainCollisionComponent::onStaticCollision(Entity *) {
 }
 
 void TerrainCollisionComponent::onBorderCollision() {
