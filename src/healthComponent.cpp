@@ -10,6 +10,8 @@ HealthComponent::HealthComponent(Entity * entity, int maxHealth, Command* onDeat
 
 HealthComponent::~HealthComponent() {
     this->entity = NULL;
+    if (this->onDeath)
+        delete this->onDeath;
 }
 
 int HealthComponent::getHealth() {

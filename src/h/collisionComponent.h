@@ -42,6 +42,7 @@ private:
 public:
     int ownerID;
     ProjectileCollisionComponent(Entity* entity, Command* entityCollisionCommand, int ownerID);
+    ~ProjectileCollisionComponent();
     void onEntityCollision(Entity *other, int dt);
     void onStaticCollision(Entity *other);
     void onBorderCollision();

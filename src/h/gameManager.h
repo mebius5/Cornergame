@@ -19,6 +19,7 @@
 #include "collisionHandler.h"
 #include "controlHandler.h"
 #include "physicsHandler.h"
+#include "scoreHandler.h"
 #include "state.h"
 
 class GameManager {

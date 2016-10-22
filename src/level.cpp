@@ -1,7 +1,4 @@
 #include "level.h"
-#include <iostream>
-#include <fstream>
-#include <string>
 
 Level::Level(std::string filename, int windowW, int windowH) {
     std::string line;

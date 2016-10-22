@@ -1,5 +1,4 @@
 #include "scoreHandler.h"
-#include <iostream>
 
 ScoreHandler::ScoreHandler(std::vector < ScoreComponent * > &componentList):
     componentList(componentList) {

@@ -1,19 +1,24 @@
 #include "collisionComponent.h"
 
-ProjectileCollisionComponent::ProjectileCollisionComponent(Entity* entity, Command* entityCollisionCommand, int ownerID) :
+ProjectileCollisionComponent::ProjectileCollisionComponent(Entity* entity, Command* cmd, int ownerID) :
     CollisionComponent(entity, false),
-    entityCollisionCommand(entityCollisionCommand),
+    entityCollisionCommand(cmd),
     ownerID(ownerID) {
 }
 
-void ProjectileCollisionComponent::onEntityCollision(Entity *other, int) {
-	if(other->collision && other->getId() != this->ownerID) {
-	    Component::commandList->push_back(this->entityCollisionCommand);
-	}
+ProjectileCollisionComponent::~ProjectileCollisionComponent() {
+    if (this->entityCollisionCommand)
+        delete this->entityCollisionCommand;
 }
 
-void ProjectileCollisionComponent::onStaticCollision(Entity *) {
-	Component::commandList->push_back(this->entityCollisionCommand);
+void ProjectileCollisionComponent::onEntityCollision(Entity *other, int /*dt*/) {
+    if(other->getId() != this->ownerID) {
+        Component::commandList->push_back(this->entityCollisionCommand);
+    }
+}
+
+void ProjectileCollisionComponent::onStaticCollision(Entity* /*other*/) {
+    Component::commandList->push_back(this->entityCollisionCommand);
 }
 
 void ProjectileCollisionComponent::onBorderCollision() {

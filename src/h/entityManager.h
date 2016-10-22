@@ -13,7 +13,7 @@ private:
     std::vector<Command*>& commandList;
     std::unordered_map<int, Entity*> entityMap;
     EntityBuilder entityBuilder;
-    std::queue<Entity*> deletionQueue;  // Entities waiting to be deleted
+    std::queue<Entity*> deletionQueue;
     int numCleanable;                   // # of entities ready for deletion
 public:
     std::vector<AiComponent*> aiComponents;

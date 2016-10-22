@@ -1,5 +1,4 @@
 #include "entityBuilder.h"
-#include <iostream>
 
 EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
     nextId(0),

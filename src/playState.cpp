@@ -1,5 +1,4 @@
 #include "state.h"
-#include <iostream>
 
 PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
                  std::vector<Command*>& commandList, SDL_Renderer* renderer,
@@ -48,7 +47,6 @@ StateEnum PlayState::run() {
         lastTime = currentTime;
 
         this->aiHandler.updateAi(dt);
-        this->entityManager.handleSpawns();
         this->inputHandler.handleEvents();
         this->physicsHandler.update(dt);
         this->collisionHandler.handleCollisions(dt);
@@ -56,6 +54,8 @@ StateEnum PlayState::run() {
         this->scoreHandler.handleScore(dt);
         this->drawingHandler.shift(dt);
         this->drawingHandler.draw(dt);
+        this->entityManager.handleSpawns();
+        this->entityManager.cleanupEntities();
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
         if (nextState != STATE_NONE)

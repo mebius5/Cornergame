@@ -11,7 +11,7 @@ HeroCollisionComponent::~HeroCollisionComponent() {
 }
 
 void HeroCollisionComponent::onEntityCollision(Entity *other, int dt) {
-    if(other->collision && dynamic_cast<EnemyCollisionComponent*>(other->collision)){
+    if(dynamic_cast<EnemyCollisionComponent*>(other->collision)){
 
         timeSinceLastCollision+=dt;
 
@@ -23,8 +23,8 @@ void HeroCollisionComponent::onEntityCollision(Entity *other, int dt) {
                 Component::commandList->push_back(this->entityCollisionCommand);
         }
 
-    } else if (other->collision && dynamic_cast<ProjectileCollisionComponent*>(other->collision)) {
-        ProjectileCollisionComponent* projectile = dynamic_cast<ProjectileCollisionComponent*>(other->collision);
+    } else if (ProjectileCollisionComponent* projectile =
+                   dynamic_cast<ProjectileCollisionComponent*>(other->collision)) {
         if (projectile->ownerID != this->entity->getId()) {
             this->entity->health->takeDamage(10);
         }

@@ -142,12 +142,7 @@ Grady
 Pratyush
 
 TODOS
-valgrind!
-rule of three
 verify deletion was implemented properly w/ vectors!
-Physics into physicsComponent
-loadFont in entityBuilder?
 Move handlers to namespaces?
-Move texture deletion to entityBuilder -> pool textures like music
-
 Change owner pointer in Art components to ownerHealth/ownerScore
+fix collisions with corners

@@ -1,6 +1,8 @@
 #ifndef CORNERGAME_LEVEL_H
 #define CORNERGAME_LEVEL_H
 
+#include <iostream>
+#include <fstream>
 #include <string>
 
 enum Tiles {NONE, TERRAIN, SPAWN, ENEMY, GOAL};

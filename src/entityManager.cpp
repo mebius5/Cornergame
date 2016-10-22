@@ -1,7 +1,5 @@
 #include "entityManager.h"
-#include <iostream>
 
-/* Constructor and Destructor */
 EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList) :
     commandList(cmdList),
     entityBuilder(renderer),
@@ -89,6 +87,7 @@ void EntityManager::clear() {
     std::unordered_map<int, Entity*>::const_iterator it;
     for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it)
         delete it->second;      // delete all Entities from map
+    this->cleanupEntities();    // delete all Entities from deletionQueue
     this->entityMap.clear();
     this->aiComponents.clear();
     this->artComponents.clear();
@@ -105,10 +104,7 @@ void EntityManager::clear() {
 Entity* EntityManager::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
     Entity* entity = this->entityBuilder.createHero(texType, x, y, sfxType, wasd);
     this->addEntity(entity);
-
     this->heroEntities.push_back(entity);
-
-
     return entity;
 }
 

@@ -1,5 +1,4 @@
 #include "collisionHandler.h"
-#include <iostream>
 
 CollisionHandler::CollisionHandler(std::vector<CollisionComponent*>& volList,
                                    std::vector<CollisionComponent*>& statList,

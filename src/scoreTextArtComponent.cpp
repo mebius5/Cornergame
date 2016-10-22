@@ -1,5 +1,4 @@
 #include "artComponent.h"
-#include <iostream>
 
 ScoreTextArtComponent::ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer,
                                              TTF_Font* font, Entity *owner, int layer):

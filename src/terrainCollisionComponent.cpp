@@ -9,7 +9,7 @@ TerrainCollisionComponent::TerrainCollisionComponent(Entity *entity,
     freeLeft(freeLeft) {
 }
 
-void TerrainCollisionComponent::onEntityCollision(Entity *other, int) {
+void TerrainCollisionComponent::onEntityCollision(Entity *other, int /*dt*/) {
     //Calculate the sides of entity 1
     int leftT = this->entity->x;
     int rightT = this->entity->x + this->entity->width;
@@ -23,10 +23,12 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other, int) {
     int bottomO = other->y + other->height;
 
     // is there a collision on terrain's bottom? top? right? left? corners?
-    bool collideBottom = this->freeBot && bottomT > topO && other->physics->yVelocity <= 0;
-    bool collideTop = this->freeTop && topT < bottomO && other->physics->yVelocity >= 0;
-    bool collideRight = this->freeRight && rightT > leftO && other->physics->xVelocity <= 0;
-    bool collideLeft = this->freeLeft && leftT < rightO && other->physics->xVelocity >= 0;
+    float xVelocity = other->physics->xVelocity;
+    float yVelocity = other->physics->yVelocity;
+    bool collideBottom = this->freeBot && bottomT > topO && yVelocity <= 0;
+    bool collideTop = this->freeTop && topT < bottomO && yVelocity >= 0;
+    bool collideRight = this->freeRight && rightT > leftO && xVelocity <= 0;
+    bool collideLeft = this->freeLeft && leftT < rightO && xVelocity >= 0;
     bool collideTopLeft = collideTop && collideLeft && !collideBottom && !collideRight;
     bool collideTopRight = collideTop && collideRight && !collideBottom && !collideLeft;
     bool collideBottomLeft = collideBottom && collideLeft && !collideTop && !collideRight;
@@ -35,25 +37,25 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other, int) {
     // resolve collisions
     float crossProduct;
     if (collideTopLeft) {
-        crossProduct = -(rightO-leftT) * other->physics->yVelocity + (bottomO-topT) * other->physics->xVelocity;
+        crossProduct = -(rightO-leftT) * yVelocity + (bottomO-topT) * xVelocity;
         if (crossProduct > 0)       // velocity vector to the left of collision vector
             borderBoundX(other, leftT - other->width); // bound with terrain left side
         else                        // velocity vector to the right of collision vector
             borderBoundY(other, topT - other->height); // bound with terrain top
     } else if (collideTopRight) {
-        crossProduct = -(leftO-rightT) * other->physics->yVelocity + (bottomO-topT) * other->physics->xVelocity;
+        crossProduct = -(leftO-rightT) * yVelocity + (bottomO-topT) * xVelocity;
         if (crossProduct > 0)
             borderBoundY(other, topT - other->height);
         else
             borderBoundX(other, rightT);
     } else if (collideBottomLeft) {
-        crossProduct = -(rightO-leftT) * other->physics->yVelocity + (topO-bottomT) * other->physics->xVelocity;
+        crossProduct = -(rightO-leftT) * yVelocity + (topO-bottomT) * xVelocity;
         if (crossProduct > 0)
             borderBoundY(other, bottomT);
         else
             borderBoundX(other, leftT - other->width);
     } else if (collideBottomRight) {
-        crossProduct = -(leftO-rightT) * other->physics->yVelocity + (topO-bottomT) * other->physics->xVelocity;
+        crossProduct = -(leftO-rightT) * yVelocity + (topO-bottomT) * xVelocity;
         if (crossProduct > 0)
             borderBoundX(other, rightT);
         else
@@ -69,7 +71,7 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other, int) {
     }
 }
 
-void TerrainCollisionComponent::onStaticCollision(Entity *) {
+void TerrainCollisionComponent::onStaticCollision(Entity* /*other*/) {
 }
 
 void TerrainCollisionComponent::onBorderCollision() {

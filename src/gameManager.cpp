@@ -1,10 +1,7 @@
 #define TWO_PI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
 
-#include <scoreHandler.h>
 #include "gameManager.h"
-
-#include <iostream>
 
 /* gameManager.cpp
  * Cornerstone <GAME NAME>
