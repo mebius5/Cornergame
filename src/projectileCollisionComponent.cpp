@@ -1,7 +1,7 @@
 #include "collisionComponent.h"
 
 ProjectileCollisionComponent::ProjectileCollisionComponent(Entity* entity, Command* cmd, int ownerID) :
-    CollisionComponent(entity, false),
+    DynamicCollisionComponent(entity),
     entityCollisionCommand(cmd),
     ownerID(ownerID) {
 }

@@ -1,8 +1,9 @@
 #include "collisionComponent.h"
 
 HeroCollisionComponent::HeroCollisionComponent(Entity* ent, Command* onEntity) :
-        CollisionComponent(ent, false),
-        entityCollisionCommand(onEntity), timeSinceLastCollision(0) {
+    DynamicCollisionComponent(ent),
+    entityCollisionCommand(onEntity),
+    timeSinceLastCollision(0) {
 }
 
 HeroCollisionComponent::~HeroCollisionComponent() {
@@ -11,11 +12,10 @@ HeroCollisionComponent::~HeroCollisionComponent() {
 }
 
 void HeroCollisionComponent::onEntityCollision(Entity *other, int dt) {
-    if(dynamic_cast<EnemyCollisionComponent*>(other->collision)){
-
+    if (dynamic_cast<EnemyCollisionComponent*>(other->collision)) {
         timeSinceLastCollision+=dt;
 
-        if(timeSinceLastCollision>=30){
+        if (timeSinceLastCollision>=30) {
             timeSinceLastCollision=0;
             this->entity->score->addScore(-10);
             this->entity->health->takeDamage(5);

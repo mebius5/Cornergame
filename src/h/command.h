@@ -25,18 +25,18 @@ public:
 
 class SpawnEntityCommand : public Command {
 public:
-	ProjEnum projType;
-	int x;
-	int y;
-	int dir;
-	int ownerID;
-	SpawnEntityCommand(ProjEnum projType);
+    ProjEnum projType;
+    int x;
+    int y;
+    int dir;
+    int ownerID;
+    SpawnEntityCommand(ProjEnum projType);
 };
 
 class DespawnEntityCommand : public Command {
 public:
-	int id;
-	DespawnEntityCommand(int id);
+    int id;
+    DespawnEntityCommand(int id);
 };
 
 #endif

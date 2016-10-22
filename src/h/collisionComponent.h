@@ -6,16 +6,30 @@
 
 class CollisionComponent : public Component {
 public:
-    bool staticObject;
-    CollisionComponent(Entity* entity, bool staticObject);
+    CollisionComponent(Entity* entity);
     virtual ~CollisionComponent() { };
 
-    virtual void onEntityCollision(Entity *other, int dt) = 0;
-    virtual void onStaticCollision(Entity *other) = 0;
+    virtual void onEntityCollision(Entity* other, int dt) = 0;
     virtual void onBorderCollision() = 0;
 };
 
-class HeroCollisionComponent : public CollisionComponent {
+class StaticCollisionComponent : public CollisionComponent {
+public:
+    //int xBinIndex;
+    //int yBinIndex;
+    StaticCollisionComponent(Entity* entity);
+};
+
+class DynamicCollisionComponent : public CollisionComponent {
+public:
+    bool onGround;
+    bool onLeftWall;
+    bool onRightWall;
+    DynamicCollisionComponent(Entity* entity);
+    virtual void onStaticCollision(Entity* other) = 0;
+};
+
+class HeroCollisionComponent : public DynamicCollisionComponent {
 private:
     Command* entityCollisionCommand;
     int timeSinceLastCollision;
@@ -28,7 +42,7 @@ public:
     void onBorderCollision();
 };
 
-class EnemyCollisionComponent : public CollisionComponent {
+class EnemyCollisionComponent : public DynamicCollisionComponent {
 public:
     EnemyCollisionComponent(Entity* entity);
     void onEntityCollision(Entity *other, int dt);
@@ -36,19 +50,19 @@ public:
     void onBorderCollision();
 };
 
-class ProjectileCollisionComponent : public CollisionComponent {
+class ProjectileCollisionComponent : public DynamicCollisionComponent {
 private:
     Command* entityCollisionCommand;
 public:
     int ownerID;
-    ProjectileCollisionComponent(Entity* entity, Command* entityCollisionCommand, int ownerID);
+    ProjectileCollisionComponent(Entity* entity, Command* entCollisionCmd, int ownerID);
     ~ProjectileCollisionComponent();
     void onEntityCollision(Entity *other, int dt);
     void onStaticCollision(Entity *other);
     void onBorderCollision();
 };
 
-class VictoryZoneCollisionComponent : public CollisionComponent {
+class VictoryZoneCollisionComponent : public StaticCollisionComponent {
 private:
     Command* entityCollisionCommand;
 public:
@@ -56,22 +70,20 @@ public:
     ~VictoryZoneCollisionComponent();
 
     void onEntityCollision(Entity *other, int dt);
-    void onStaticCollision(Entity *other);
     void onBorderCollision();
 };
 
-class TerrainCollisionComponent : public CollisionComponent {
+class TerrainCollisionComponent : public StaticCollisionComponent {
 private:
-    void borderBoundX(Entity* other, float boundValue);
-    void borderBoundY(Entity* other, float boundValue);
     bool freeTop;
     bool freeBot;
     bool freeRight;
     bool freeLeft;
+    void borderBoundX(Entity* other, float boundValue);
+    void borderBoundY(Entity* other, float boundValue);
 public:
-    TerrainCollisionComponent(Entity * entity, bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
+    TerrainCollisionComponent(Entity* entity, bool top, bool bot, bool r, bool l);
     void onEntityCollision(Entity *other, int dt);
-    void onStaticCollision(Entity *other);
     void onBorderCollision();
 };
 

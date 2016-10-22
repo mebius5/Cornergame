@@ -79,8 +79,10 @@ Level::Level(std::string filename, int windowW, int windowH) {
     infile.close();
 }
 
-Level::~Level() {
-    // TODO
+Level::~Level() {       // TODO: verify this is correct
+    for (int i = 0; i < this->height/*+(windowH/32)*/; i++)
+        delete[] levelContents[i];
+    delete[] levelContents;
 }
 
 Tiles Level::getTile(int i, int j) {

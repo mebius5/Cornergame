@@ -29,10 +29,12 @@ void EntityManager::addEntity(Entity* entity) {
         this->artComponents.push_back(entity->art);
     }
     if (entity->collision) {
-        if (entity->collision->staticObject) {
-            this->staticCollisionComponents.push_back(entity->collision);
-        } else {
-            this->volatileCollisionComponents.push_back(entity->collision);
+        if (StaticCollisionComponent* scc =
+                dynamic_cast<StaticCollisionComponent*>(entity->collision)) {
+            this->staticCollisionComponents.push_back(scc);
+        } else if (DynamicCollisionComponent* dcc =
+                dynamic_cast<DynamicCollisionComponent*>(entity->collision)) {
+            this->dynamicCollisionComponents.push_back(dcc);
         }
     }
     if (entity->input) {
@@ -96,9 +98,8 @@ void EntityManager::clear() {
     this->healthComponents.clear();
     this->scoreComponents.clear();
     this->staticCollisionComponents.clear();
-    this->heroEntities.clear();
-    this->volatileCollisionComponents.clear();
-}
+    this->dynamicCollisionComponents.clear();
+    this->heroEntities.clear();}
 
 /* Entity Creation Methods */
 Entity* EntityManager::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {

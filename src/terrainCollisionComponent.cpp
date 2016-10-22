@@ -1,8 +1,8 @@
 #include "collisionComponent.h"
 
 TerrainCollisionComponent::TerrainCollisionComponent(Entity *entity,
- bool freeTop, bool freeBot, bool freeRight, bool freeLeft):
-    CollisionComponent(entity, true),
+                bool freeTop, bool freeBot, bool freeRight, bool freeLeft):
+    StaticCollisionComponent(entity),
     freeTop(freeTop),
     freeBot(freeBot),
     freeRight(freeRight),
@@ -69,9 +69,6 @@ void TerrainCollisionComponent::onEntityCollision(Entity *other, int /*dt*/) {
     } else if (collideLeft) { // object collide from left
          borderBoundX(other, leftT - other->width);
     }
-}
-
-void TerrainCollisionComponent::onStaticCollision(Entity* /*other*/) {
 }
 
 void TerrainCollisionComponent::onBorderCollision() {

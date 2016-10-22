@@ -1,7 +1,7 @@
 #include "collisionComponent.h"
 
 VictoryZoneCollisionComponent::VictoryZoneCollisionComponent(Entity* ent, Command* onEntity) :
-    CollisionComponent(ent, true),
+    StaticCollisionComponent(ent),
     entityCollisionCommand(onEntity) {
 }
 
@@ -10,12 +10,9 @@ VictoryZoneCollisionComponent::~VictoryZoneCollisionComponent() {
         delete this->entityCollisionCommand;
 }
 
-void VictoryZoneCollisionComponent::onEntityCollision(Entity *other, int) {
+void VictoryZoneCollisionComponent::onEntityCollision(Entity* other, int /*dt*/) {
     if (other->input)   // if hero, enter victory state
         Component::commandList->push_back(this->entityCollisionCommand);
-}
-
-void VictoryZoneCollisionComponent::onStaticCollision(Entity *) {
 }
 
 void VictoryZoneCollisionComponent::onBorderCollision() {

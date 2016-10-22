@@ -146,3 +146,4 @@ verify deletion was implemented properly w/ vectors!
 Move handlers to namespaces?
 revamp terrain -> fewer rectangles!
 change collision to only check static objects in certain bins?
+EntityEnum instead of dynamic casts everywhere (see camera.cpp, etc.)

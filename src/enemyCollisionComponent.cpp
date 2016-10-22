@@ -1,13 +1,13 @@
 #include "collisionComponent.h"
 
 EnemyCollisionComponent::EnemyCollisionComponent(Entity* entity) :
-    CollisionComponent(entity, false) {
+    DynamicCollisionComponent(entity) {
 }
 
-void EnemyCollisionComponent::onEntityCollision(Entity *other, int /*dt*/) {
-	if(other->collision && dynamic_cast<ProjectileCollisionComponent*>(other->collision)) {
-	    this->entity->health->takeDamage(50);
-	}
+void EnemyCollisionComponent::onEntityCollision(Entity* other, int /*dt*/) {
+    if(other->collision && dynamic_cast<ProjectileCollisionComponent*>(other->collision)) {
+        this->entity->health->takeDamage(50);
+    }
 }
 
 void EnemyCollisionComponent::onStaticCollision(Entity* /*other*/) {

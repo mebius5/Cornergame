@@ -15,23 +15,23 @@ SRCFILES = \
 	entityBuilder.cpp \
 	entityManager.cpp \
 	gameManager.cpp \
-    healthComponent.cpp \
+	healthComponent.cpp \
 	healthBarArtComponent.cpp \
 	heroCollisionComponent.cpp \
 	heroInputComponent.cpp \
-    highscoreState.cpp \
+	highscoreState.cpp \
 	inputHandler.cpp \
-    level.cpp \
+	level.cpp \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
-    physicsComponent.cpp \
-    physicsHandler.cpp \
+	physicsComponent.cpp \
+	physicsHandler.cpp \
 	playState.cpp \
 	projectileCollisionComponent.cpp \
 	resultsState.cpp \
-    scoreComponent.cpp \
-    scoreHandler.cpp \
-    scoreTextArtComponent.cpp \
+	scoreComponent.cpp \
+	scoreHandler.cpp \
+	scoreTextArtComponent.cpp \
 	soundHandler.cpp \
 	startState.cpp \
 	state.cpp \

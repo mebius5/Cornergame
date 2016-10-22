@@ -37,9 +37,21 @@ ArtComponent::ArtComponent(Entity* entity, int layer, bool movesWithCamera) :
     }
 }
 
-CollisionComponent::CollisionComponent(Entity* entity, bool staticObject) :
-    Component(entity),
-    staticObject(staticObject) {
+CollisionComponent::CollisionComponent(Entity* entity) :
+    Component(entity) {
+}
+
+StaticCollisionComponent::StaticCollisionComponent(Entity* entity) :
+    CollisionComponent(entity) {
+    //xBinIndex(0),       //TODO: init this index and use it!
+    //yBinIndex(0) {
+}
+
+DynamicCollisionComponent::DynamicCollisionComponent(Entity* entity) :
+    CollisionComponent(entity),
+    onGround(false),
+    onLeftWall(false),
+    onRightWall(false) {
 }
 
 InputComponent::InputComponent(Entity* entity) :

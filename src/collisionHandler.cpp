@@ -1,16 +1,16 @@
 #include "collisionHandler.h"
 
-CollisionHandler::CollisionHandler(std::vector<CollisionComponent*>& volList,
-                                   std::vector<CollisionComponent*>& statList,
+CollisionHandler::CollisionHandler(std::vector<DynamicCollisionComponent*>& dynList,
+                                   std::vector<StaticCollisionComponent*>& statList,
                                    const int w, const int h) :
-    volatileList(volList),
+    dynamicList(dynList),
     staticList(statList),
     width(w),
     height(h) {
 }
 
 void CollisionHandler::removeInvalidComponents() {
-    std::vector<CollisionComponent*>::iterator it;
+    std::vector<StaticCollisionComponent*>::iterator it;
     for (it = this->staticList.begin(); it != this->staticList.end(); ) {
         if (!(*it)->isValid()) {
             *it = this->staticList.back();
@@ -18,26 +18,27 @@ void CollisionHandler::removeInvalidComponents() {
         } else
             ++it;
     }
-    for (it = this->volatileList.begin(); it != this->volatileList.end(); ) {
-        if (!(*it)->isValid()) {
-            *it = this->volatileList.back();
-            this->volatileList.pop_back();
+    std::vector<DynamicCollisionComponent*>::iterator it2;
+    for (it2 = this->dynamicList.begin(); it2 != this->dynamicList.end(); ) {
+        if (!(*it2)->isValid()) {
+            *it2 = this->dynamicList.back();
+            this->dynamicList.pop_back();
         } else
-            ++it;
+            ++it2;
     }
 }
 
 void CollisionHandler::handleCollisions(int dt) {
     this->removeInvalidComponents();
 
-    // handle volatile components colliding with each other
-    std::vector<CollisionComponent*>::const_iterator it;
-    std::vector<CollisionComponent*>::const_iterator it2;
-    for (it = this->volatileList.begin(); it != this->volatileList.end(); ++it) {
-        CollisionComponent* comp1 = *it;
+    // handle dynamic components colliding with each other
+    std::vector<DynamicCollisionComponent*>::const_iterator it;
+    std::vector<DynamicCollisionComponent*>::const_iterator it2;
+    for (it = this->dynamicList.begin(); it != this->dynamicList.end(); ++it) {
+        DynamicCollisionComponent* comp1 = *it;
         //this->detectBorderCollision(comp1->entity);
-        for (it2 = std::next(it, 1); it2 != this->volatileList.end(); ++it2) {
-            CollisionComponent* comp2 = *it2;
+        for (it2 = std::next(it, 1); it2 != this->dynamicList.end(); ++it2) {
+            DynamicCollisionComponent* comp2 = *it2;
             if (detectOverlap(comp1->entity, comp2->entity)) {
                 comp1->onEntityCollision(comp2->entity, dt);
                 comp2->onEntityCollision(comp1->entity, dt);
@@ -45,12 +46,13 @@ void CollisionHandler::handleCollisions(int dt) {
         }
     }
 
-    // handle volatile components colliding with static components
-    for (it = this->volatileList.begin(); it != this->volatileList.end(); ++it) {
-        CollisionComponent* comp1 = *it;
+    // handle dynamic components colliding with static components
+    std::vector<StaticCollisionComponent*>::const_iterator it3;
+    for (it = this->dynamicList.begin(); it != this->dynamicList.end(); ++it) {
+        DynamicCollisionComponent* comp1 = *it;
         //this->detectBorderCollision(comp1->entity);
-        for (it2 = this->staticList.begin(); it2 != this->staticList.end(); ++it2) {
-            CollisionComponent* comp2 = *it2;
+        for (it3 = this->staticList.begin(); it3 != this->staticList.end(); ++it3) {
+            StaticCollisionComponent* comp2 = *it3;
             if (detectOverlap(comp1->entity, comp2->entity)) {
                 comp1->onStaticCollision(comp2->entity);
                 comp2->onEntityCollision(comp1->entity, dt);

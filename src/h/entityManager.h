@@ -18,8 +18,8 @@ private:
 public:
     std::vector<AiComponent*> aiComponents;
     std::vector<ArtComponent*> artComponents;
-    std::vector<CollisionComponent*> staticCollisionComponents;
-    std::vector<CollisionComponent*> volatileCollisionComponents;
+    std::vector<StaticCollisionComponent*> staticCollisionComponents;
+    std::vector<DynamicCollisionComponent*> dynamicCollisionComponents;
     std::vector<InputComponent*> inputComponents;
     std::vector<PhysicsComponent*> physicsComponents;
     std::vector<HealthComponent*> healthComponents;
