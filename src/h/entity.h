@@ -1,14 +1,6 @@
 #ifndef CORNERGAME_ENTITY_H
 #define CORNERGAME_ENTITY_H
 
-#include "artComponent.h"
-#include "inputComponent.h"
-#include "collisionComponent.h"
-#include "physicsComponent.h"
-#include "scoreComponent.h"
-#include "aiComponent.h"
-#include "healthComponent.h"
-
 class CollisionComponent;       // forward declared for circular dependency
 class AiComponent;
 class InputComponent;
@@ -16,6 +8,14 @@ class ArtComponent;
 class ScoreComponent;
 class HealthComponent;
 class PhysicsComponent;
+
+#include "artComponent.h"
+#include "inputComponent.h"
+#include "collisionComponent.h"
+#include "physicsComponent.h"
+#include "scoreComponent.h"
+#include "aiComponent.h"
+#include "healthComponent.h"
 
 enum Action {IDLE, JUMP, THROW, DAMAGE, SLIDING};
 

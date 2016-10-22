@@ -136,7 +136,7 @@ Entity* EntityBuilder::createBackground(TextureEnum texType, int width, int heig
 Entity* EntityBuilder::createHealthBar(int x, int y, Entity* owner) {
     Texture texture = this->textureMap[TEX_HEALTHBAR];
     Entity* healthBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height);
-    healthBar->art = new HealthBarArtComponent(healthBar, texture, owner, 2);
+    healthBar->art = new HealthBarArtComponent(healthBar, texture, owner->health, 2);
     return healthBar;
 }
 
@@ -145,7 +145,7 @@ Entity* EntityBuilder::createScoreBox(int x, int y, Entity* owner, FontEnum font
         this->loadFont(fontType, fontSize);
     Entity* scoreBox = new Entity(this->nextId++, x, y, 100, 100);
     scoreBox->art = new ScoreTextArtComponent(scoreBox, this->renderer,
-                                              this->fontMap[fontType][fontSize], owner, 2);
+                                              this->fontMap[fontType][fontSize], owner->score, 2);
     return scoreBox;
 }
 

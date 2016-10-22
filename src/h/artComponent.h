@@ -69,26 +69,27 @@ class HealthBarArtComponent: public ArtComponent {
 private:
     SDL_Texture* texture;
     SDL_Rect clip;
-    Entity* owner;
+    HealthComponent* ownerHealth;
     float width;
     int height;
     int lastHealth;
 public:
-    HealthBarArtComponent(Entity* entity, Texture tex, Entity* owner, int layer);
+    HealthBarArtComponent(Entity* entity, Texture tex,
+                          HealthComponent* ownerHealth, int layer);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
 
 class ScoreTextArtComponent: public ArtComponent{
 private:
-    Entity* owner;
+    ScoreComponent* ownerScore;
     SDL_Renderer* renderer;
     SDL_Texture* lastTexture;
     int lastScore;
     TTF_Font* font;
 public:
     ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer, TTF_Font* font,
-                          Entity* owner, int layer);
+                          ScoreComponent* ownerScore, int layer);
     ~ScoreTextArtComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);

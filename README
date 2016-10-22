@@ -144,5 +144,4 @@ Pratyush
 TODOS
 verify deletion was implemented properly w/ vectors!
 Move handlers to namespaces?
-Change owner pointer in Art components to ownerHealth/ownerScore
 fix collisions with corners

@@ -1,9 +1,9 @@
 #include "artComponent.h"
 
 ScoreTextArtComponent::ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer,
-                                             TTF_Font* font, Entity *owner, int layer):
+                            TTF_Font* font, ScoreComponent *ownerScore, int layer):
     ArtComponent(entity, layer, true),
-    owner(owner),
+    ownerScore(ownerScore),
     renderer(renderer),
     lastTexture(NULL),
     lastScore(-1),
@@ -19,13 +19,13 @@ ScoreTextArtComponent::~ScoreTextArtComponent() {
 }
 
 SDL_Texture* ScoreTextArtComponent::getNextTexture(int) {
-    if (this->lastScore!=this->owner->score->getScore()) {
+    if (this->lastScore!=this->ownerScore->getScore()) {
         if (this->lastTexture) {
             SDL_DestroyTexture(this->lastTexture);
             this->lastTexture = NULL;
         }
 
-        this->lastScore = this->owner->score->getScore();
+        this->lastScore = this->ownerScore->getScore();
 
         SDL_Color color = { 255, 255, 255, 255 };
         SDL_Surface* textSurf =
