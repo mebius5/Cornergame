@@ -4,19 +4,19 @@ Level::Level(std::string filename, int windowW, int windowH) {
     std::string line;
     std::ifstream infile(filename);
     if(!infile.is_open()){
-        std::cerr<<"Cannot open level file: "+filename<<std::endl;
+        std::cerr << "Cannot open level file: " << filename << std::endl;
         return ;
     }
 
     // get the size of the level from first line
     infile >> this->height;
     infile >> this->width;
-    getline(infile, line);
+    std::getline(infile, line);
 
     if((this->height%(windowH/32))!=0||(this->width%(windowW/32))!=0){
-        std::cerr<<"Level width needs to be multiples of "<<std::to_string(windowW/32).c_str()
-                 <<", and level height needs to be multiples of "<<std::to_string(windowH/32).c_str()
-                                                                 <<std::endl;
+        std::cerr << "Level width needs to be multiple of " << windowW/32
+                  << "Level height needs to be multiple of " << windowH/32
+                  << std::endl;
         return;
     }
 
@@ -37,7 +37,7 @@ Level::Level(std::string filename, int windowW, int windowH) {
 
     // read the file and build the level
     for (int i = 0; i < this->height; i++) {
-        getline(infile, line);
+        std::getline(infile, line);
         for (int j = 0; j < this->width; j++) {
             switch (line.at(j)) {
                 case '^':

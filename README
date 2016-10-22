@@ -144,4 +144,5 @@ Pratyush
 TODOS
 verify deletion was implemented properly w/ vectors!
 Move handlers to namespaces?
-fix collisions with corners
+revamp terrain -> fewer rectangles!
+change collision to only check static objects in certain bins?
