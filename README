@@ -21,6 +21,7 @@ Andrew
 - added detection of entities hitting walls/ground -> will reduce (doesn't yet!)
     number of collisions and allows things like wall jumps and sliding on
     walls to work
+- implemented wall slides and wall jumps, but somewhat buggy (see quirks below)
 - performance updates to PhysicsHandler and PhysicsComponent
 - segfault bug fixes with PhysicsComponent, HealthComponent
 - minor bug fixes with CollisionHandler
@@ -146,6 +147,9 @@ QUIRKS
 - idle state sometimes changes directions
 - projectile collision with side of terrain was iffy when projectiles didn't
     disappear?
+- wall jumps and wall slides work better when colliding on right side of wall.
+    Being onLeftWall gets reset for some reason...
+- disabled the down key due to bugs that allow you to sink into the terrain
 
 TODOS
 verify deletion was implemented properly w/ vectors!

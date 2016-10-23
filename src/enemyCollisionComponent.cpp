@@ -12,7 +12,7 @@ void EnemyCollisionComponent::onEntityCollision(DynamicCollisionComponent* other
 
 void EnemyCollisionComponent::onStaticCollision(StaticCollisionComponent* /*otherComp*/) {
     this->entity->ai->resetAi();
-    if (this->entity->physics->yVelocity > 0)
+    if (this->onGround || this->onLeftWall || this->onRightWall)
         ((PhysicsComponent*)this->entity->physics)->resetJumps();
 }
 

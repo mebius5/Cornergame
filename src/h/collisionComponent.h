@@ -85,8 +85,11 @@ private:
     bool freeBot;
     bool freeRight;
     bool freeLeft;
-    void boundX(DynamicCollisionComponent* otherComp, float boundValue, int topT, int bottomT);
-    void boundY(DynamicCollisionComponent* otherComp, float boundValue, int leftT, int rightT);
+    void boundX(DynamicCollisionComponent* otherComp, float boundValue);
+    void boundY(DynamicCollisionComponent* otherComp, float boundValue);
+    void collideLeftWall(DynamicCollisionComponent* otherComp, float boundValue, int topT, int bottomT);
+    void collideRightWall(DynamicCollisionComponent* otherComp, float boundValue, int topT, int bottomT);
+    void collideGround(DynamicCollisionComponent* otherComp, float boundValue, int leftT, int rightT);
 public:
     TerrainCollisionComponent(Entity* entity, bool top, bool bot, bool r, bool l);
     void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);

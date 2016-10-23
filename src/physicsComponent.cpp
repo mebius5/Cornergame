@@ -1,4 +1,5 @@
 #include "physicsComponent.h"
+#include <iostream>
 
 PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
@@ -8,12 +9,12 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     gravity(0.0017f),
     jumps(0),
     infiniteJumps(false),
+    collisionComp(static_cast<DynamicCollisionComponent*>(entity->collision)),
     xVelocity(0.0f),
     yVelocity(0.0f),
     maxVelocity(.6f),
-    deceleration(.001f),
-    maxJumps(2) {
-    this->yAccel = this->gravity;
+    deceleration(.0007f),
+    maxJumps(1) {
 }
 
 PhysicsComponent::~PhysicsComponent() {
@@ -31,11 +32,45 @@ float PhysicsComponent::clipVelocity(float velocity) {
 }
 
 void PhysicsComponent::updateLocation(int dt) {
-    // update velocities based on acceleration
+    bool& onGround = this->collisionComp->onGround;
+    bool& onLeftWall = this->collisionComp->onLeftWall;
+    bool& onRightWall = this->collisionComp->onRightWall;
+
+    // update velocities & flags based on acceleration
     this->xVelocity += this->xAccel * dt;
+    if (this->xVelocity > 0 && onLeftWall)
+        onLeftWall = false;
+    if (this->xVelocity < 0 && onRightWall)
+        onRightWall = false;
     this->xVelocity = this->clipVelocity(this->xVelocity);
-    this->yVelocity += this->yAccel * dt;
+
+    float finalYAccel = this->yAccel;
+    if (!onGround)
+        finalYAccel += this->gravity;
+
+    this->yVelocity += finalYAccel * dt;
+    if (this->yVelocity < 0 && onGround)
+        onGround = false;
     this->yVelocity = this->clipVelocity(this->yVelocity);
+
+    // account for sliding on walls
+    float finalYVelocity = this->yVelocity;
+    if ((onLeftWall || onRightWall) && this->yVelocity > 0) {
+        finalYVelocity *= .125f;
+    } else if (dynamic_cast<HeroCollisionComponent*>(collisionComp)) {
+        std::cout << "off wall" << std::endl;
+    }
+
+    // update flags if entity slides off platform/wall
+    if (onGround && (this->entity->x > this->collisionComp->rightBound
+            || this->entity->x + this->entity->width <= this->collisionComp->leftBound)) {
+        onGround = false;
+    }
+    if ((onLeftWall || onRightWall) && (this->entity->y > this->collisionComp->topBound
+            || this->entity->y + this->entity->height <= this->collisionComp->bottomBound)) {
+        onLeftWall = false;
+        onRightWall = false;
+    }
 
     // apply friction if not accelerating
     if (this->xAccel == 0) {
@@ -48,9 +83,17 @@ void PhysicsComponent::updateLocation(int dt) {
         }
     }
 
+    // update acceleration and velocity based on these final flags
+    if (onGround) {
+        this->yVelocity = 0;
+    }
+    if (onLeftWall || onRightWall) {
+        this->xVelocity = 0;
+    }
+
     // move entity based on velocity
     this->entity->x += this->xVelocity * dt;
-    this->entity->y += this->yVelocity * dt;
+    this->entity->y += finalYVelocity * dt;
 
     // apply death if out of bounds
     // TODO move this somewhere else
@@ -60,9 +103,13 @@ void PhysicsComponent::updateLocation(int dt) {
 }
 
 void PhysicsComponent::jump() {
-    if ((this->jumps < this->maxJumps && this->yVelocity >= 0.0f) || this->infiniteJumps) {
+    if (this->jumps < this->maxJumps || this->infiniteJumps) {
         this->yVelocity = -1 * this->maxVelocity;
-        this->jumps += 1;
+        this->jumps++;
+        if (this->collisionComp->onLeftWall && !this->collisionComp->onGround)
+            this->xVelocity = .5f * this->maxVelocity;
+        else if (this->collisionComp->onRightWall && !this->collisionComp->onGround)
+            this->xVelocity = -.5f * this->maxVelocity;
     }
 }
 
@@ -80,7 +127,7 @@ void PhysicsComponent::accelerateX(int dir) {
 }
 
 void PhysicsComponent::accelerateY(int dir) {
-    this->yAccel = dir * this->accelAmount + this->gravity;
+    this->yAccel = dir * this->accelAmount;
 }
 
 void PhysicsComponent::clearAccelerationX() {
@@ -88,13 +135,5 @@ void PhysicsComponent::clearAccelerationX() {
 }
 
 void PhysicsComponent::clearAccelerationY() {
-    this->yAccel = this->gravity;
+    this->yAccel = 0;
 }
-
-// void PhysicsComponent::startSliding() {
-//     this->maxVelocity /= 2;
-// }
-//
-// void PhysicsComponent::stopSliding() {
-//     this->maxVelocity *= 2;
-// }

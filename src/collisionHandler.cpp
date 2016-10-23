@@ -54,8 +54,8 @@ void CollisionHandler::handleCollisions(int dt) {
         for (it3 = this->staticList.begin(); it3 != this->staticList.end(); ++it3) {
             StaticCollisionComponent* comp2 = *it3;
             if (detectOverlap(comp1->entity, comp2->entity)) {
-                comp1->onStaticCollision(comp2);
                 comp2->onEntityCollision(comp1, dt);
+                comp1->onStaticCollision(comp2);
             }
         }
     }

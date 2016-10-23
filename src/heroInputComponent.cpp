@@ -18,7 +18,7 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
         this->entity->physics->jump();
         this->entity->physics->accelerateY(-1);
     } else if ((!this->wasd && keycode == SDLK_DOWN) || (this->wasd && keycode == SDLK_s)) {
-        this->entity->physics->accelerateY(1);
+        //this->entity->physics->accelerateY(1);
     } else if ((!this->wasd && keycode == SDLK_LEFT) || (this->wasd && keycode == SDLK_a)) {
         this->entity->physics->accelerateX(-1);
         this->spawnCommand->dir = -1;
