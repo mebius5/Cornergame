@@ -44,6 +44,8 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
                 maxX = maxX - levelW;
             }
         }
+        detectBorderCollision(entity, dt);
+
     }
 
     if(artComponent->movesWithCamera){
@@ -57,9 +59,10 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
         return;
 
     if(entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)){
+        /***
         if(entity->x >= ((maxX+minX)/2)){
             shift(entity->x-(maxX+minX)/2,0);
-        }
+        }***/
         if(entity->y >= (minY+(maxY-minY)*.75)){
             shift(0,entity->y-(minY+(maxY-minY)*.75));
         }
@@ -101,4 +104,37 @@ void Camera::resetCamera(int windowW, int windowH) {
 void Camera::setLevelWH(int levelW, int levelH) {
     this->levelW = levelW;
     this->levelH = levelH;
+}
+
+void Camera::detectBorderCollision(Entity *entity, int) {
+    if (entity->collision) {
+        if (entity->x < minX){
+            this->borderBoundX(entity, minX+7);
+            entity->health->takeDamage(4);
+        }
+        else if (entity->x + entity->width > maxX){
+            this->borderBoundX(entity, maxX - entity->width-7);
+            entity->health->takeDamage(4);
+        }
+        if (entity->y < minY){
+            this->borderBoundY(entity, minY+7);
+            entity->health->takeDamage(4);
+        }
+        else if (entity->y + entity->height > this->maxY){
+            this->borderBoundY(entity, maxY - entity->height-7);
+            entity->health->takeDamage(4);
+        }
+    }
+}
+
+void Camera::borderBoundX(Entity* entity, float boundValue) {
+    entity->x = boundValue;
+    entity->physics->xVelocity = 0.0f;
+    entity->collision->onBorderCollision();
+}
+
+void Camera::borderBoundY(Entity* entity, float boundValue) {
+    entity->y = boundValue;
+    entity->physics->yVelocity = 0.0f;
+    entity->collision->onBorderCollision();
 }

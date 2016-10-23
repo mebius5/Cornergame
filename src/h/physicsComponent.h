@@ -6,7 +6,7 @@
 
 class PhysicsComponent : public Component {
 private:
-    float minVelocity;
+    //float minVelocity;
     float xAccel;
     float yAccel;
     float accelAmount;
@@ -20,6 +20,7 @@ public:
     float xVelocity;
     float yVelocity;
     float maxVelocity;
+    float jumpVelocity;
     float deceleration;
     int maxJumps;
 
@@ -30,6 +31,7 @@ public:
     void jump();
     void toggleInfiniteJumps();
     void resetJumps();
+    void bump(int dir);
     void accelerateX(int dir);
     void accelerateY(int dir);
     void clearAccelerationX();

@@ -1,5 +1,4 @@
 #include "collisionComponent.h"
-#include <iostream>
 
 HeroCollisionComponent::HeroCollisionComponent(Entity* ent, Command* onEntity) :
     DynamicCollisionComponent(ent),
@@ -19,7 +18,7 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
         if (timeSinceLastCollision>=30) {
             timeSinceLastCollision=0;
             this->entity->score->addScore(-10);
-            this->entity->health->takeDamage(5);
+            this->entity->health->takeDamage(7);
             if (this->entityCollisionCommand)
                 Component::commandList->push_back(this->entityCollisionCommand);
         }
@@ -33,8 +32,6 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
 }
 
 void HeroCollisionComponent::onStaticCollision(StaticCollisionComponent* /*otherComp*/) {
-    static int i;
-    std::cout << "collision!" << i++ << std::endl;
     if (this->onGround || this->onLeftWall || this->onRightWall)
         ((PhysicsComponent*)this->entity->physics)->resetJumps();
 }

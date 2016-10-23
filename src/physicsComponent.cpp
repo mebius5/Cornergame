@@ -1,5 +1,4 @@
 #include "physicsComponent.h"
-#include <iostream>
 
 PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
@@ -13,6 +12,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     xVelocity(0.0f),
     yVelocity(0.0f),
     maxVelocity(.6f),
+    jumpVelocity(.6f),
     deceleration(.0007f),
     maxJumps(1) {
 }
@@ -57,8 +57,6 @@ void PhysicsComponent::updateLocation(int dt) {
     float finalYVelocity = this->yVelocity;
     if ((onLeftWall || onRightWall) && this->yVelocity > 0) {
         finalYVelocity *= .125f;
-    } else if (dynamic_cast<HeroCollisionComponent*>(collisionComp)) {
-        std::cout << "off wall" << std::endl;
     }
 
     // update flags if entity slides off platform/wall
@@ -104,12 +102,12 @@ void PhysicsComponent::updateLocation(int dt) {
 
 void PhysicsComponent::jump() {
     if (this->jumps < this->maxJumps || this->infiniteJumps) {
-        this->yVelocity = -1 * this->maxVelocity;
+        this->yVelocity = -1 * this->jumpVelocity;
         this->jumps++;
         if (this->collisionComp->onLeftWall && !this->collisionComp->onGround)
-            this->xVelocity = .5f * this->maxVelocity;
+            this->xVelocity = .5f * this->jumpVelocity;
         else if (this->collisionComp->onRightWall && !this->collisionComp->onGround)
-            this->xVelocity = -.5f * this->maxVelocity;
+            this->xVelocity = -.5f * this->jumpVelocity;
     }
 }
 
@@ -120,6 +118,11 @@ void PhysicsComponent::resetJumps() {
 void PhysicsComponent::toggleInfiniteJumps() {
     this->infiniteJumps = !this->infiniteJumps;
     this->resetJumps();
+}
+
+void PhysicsComponent::bump(int dir) {
+    this->xVelocity += dir * this->jumpVelocity;
+    this->xVelocity = this->clipVelocity(this->xVelocity);
 }
 
 void PhysicsComponent::accelerateX(int dir) {

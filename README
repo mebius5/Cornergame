@@ -51,10 +51,16 @@ LEVEL EDITOR
     EntityManager's populateLevel() method.
 
 CONTROLS
+Player 1
 - Up/down/left/right to move player 1
-- Up (to jump) can perform double jump in air, or infinite wall jumps
-- Press X to throw a projectile. These don't do anything yet, but the animation
-    is in place.
+- Jump(up) can perform double jump in air, or infinite wall jumps (must be next to terrain)
+- Press M to throw projectiles (there's knock back present)
+
+Player 2
+- WASD to move player 2
+- Jump (W) can perform double jump in air, or infinite wall jumps (must be next to terrain)
+- Press V to throw projectiles (there's knock back present)
+
 
 SCREENS
 StartScreen

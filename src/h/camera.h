@@ -21,6 +21,9 @@ public:
     void shift(int dx, int dy);
     void resetCamera(int windowW, int windowH);
     void setLevelWH(int levelW, int levelH);
+    void detectBorderCollision(Entity *entity, int dt);
+    void borderBoundX(Entity* entity, float boundValue);
+    void borderBoundY(Entity* entity, float boundValue);
 };
 
 #endif //CORNERGAME_CAMERA_H
