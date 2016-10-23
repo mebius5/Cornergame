@@ -13,7 +13,7 @@ private:
     float gravity;
     int jumps;
     bool infiniteJumps;
-
+    DynamicCollisionComponent* collisionComp;
     float clipVelocity(float velocity);
 
 public:
@@ -34,8 +34,6 @@ public:
     void accelerateY(int dir);
     void clearAccelerationX();
     void clearAccelerationY();
-    void startSliding();
-    void stopSliding();
 };
 
 #endif

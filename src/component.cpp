@@ -43,7 +43,7 @@ CollisionComponent::CollisionComponent(Entity* entity) :
 
 StaticCollisionComponent::StaticCollisionComponent(Entity* entity) :
     CollisionComponent(entity) {
-    //xBinIndex(0),       //TODO: init this index and use it!
+    //xBinIndex(0),       //TODO: init this index and use it?
     //yBinIndex(0) {
 }
 

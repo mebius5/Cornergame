@@ -1,6 +1,6 @@
 #include "inputComponent.h"
 
-// note: this file is not currently in the Makefile.
+// NOTE: this file is not currently in the Makefile.
 // TODO: cheat codes?
 
 StartScreenInputComponent::StartScreenInputComponent(Entity* entity):

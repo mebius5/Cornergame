@@ -4,13 +4,13 @@ EnemyCollisionComponent::EnemyCollisionComponent(Entity* entity) :
     DynamicCollisionComponent(entity) {
 }
 
-void EnemyCollisionComponent::onEntityCollision(Entity* other, int /*dt*/) {
-    if(other->collision && dynamic_cast<ProjectileCollisionComponent*>(other->collision)) {
+void EnemyCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int /*dt*/) {
+    if (dynamic_cast<ProjectileCollisionComponent*>(otherComp)) {
         this->entity->health->takeDamage(50);
     }
 }
 
-void EnemyCollisionComponent::onStaticCollision(Entity* /*other*/) {
+void EnemyCollisionComponent::onStaticCollision(StaticCollisionComponent* /*otherComp*/) {
     this->entity->ai->resetAi();
     if (this->entity->physics->yVelocity > 0)
         ((PhysicsComponent*)this->entity->physics)->resetJumps();

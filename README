@@ -7,13 +7,33 @@ Andrew Zhu azhu8@jhu.edu
 Grady Xiao gxiao2@jhu.edu
 Pratyush Trivedi ptrived8@jhu.edu
 
-ASSIGNMENT 5 NOTES
-This readme details the backend features in this iteration
 
 To compile and run, type the following:
 cd src/
 make
 ./gameManager
+
+Assignment 6 Task Writeups
+Akshay
+
+Andrew
+- reorganized texture pools so that copies of entities can share textures
+- added detection of entities hitting walls/ground -> will reduce (doesn't yet!)
+    number of collisions and allows things like wall jumps and sliding on
+    walls to work
+- performance updates to PhysicsHandler and PhysicsComponent
+- segfault bug fixes with PhysicsComponent, HealthComponent
+- minor bug fixes with CollisionHandler
+
+Grady
+- Modified level editor to collapse all neighboring horizontal terrain tiles into a single entity.
+  This decreases amount of collisions that need to be checked
+- Added ability to wrap a level to go on forever until a hero dies or get to the victory zone
+  Note: The hero is copied over only if it was originally on the last camera section.
+- Added ability to proceed to the next level, allowing the addition of multiple levels
+- Modified damage control so that it's based on time
+
+Pratyush
 
 CAMERA
 - Updated the camera to follow the hero around as they traverse the level.
@@ -124,22 +144,8 @@ when you absolutely can't hold on.
 QUIRKS
 - no game name yet!
 - idle state sometimes changes directions
-- projectile collision with side of terrain is iffy
-
-Assignment 6 Task Writeups
-Akshay
-
-Andrew
-
-Grady
-- Modified level editor to collapse all neighboring horizontal terrain tiles into a single entity.
-  This decreases amount of collisions that need to be checked
-- Added ability to wrap a level to go on forever until a hero dies or get to the victory zone
-  Note: The hero is copied over only if it was originally on the last camera section.
-- Added ability to proceed to the next level, allowing the addition of multiple levels
-- Modified damage control so that it's based on time
-
-Pratyush
+- projectile collision with side of terrain was iffy when projectiles didn't
+    disappear?
 
 TODOS
 verify deletion was implemented properly w/ vectors!
@@ -147,3 +153,4 @@ Move handlers to namespaces?
 revamp terrain -> fewer rectangles!
 change collision to only check static objects in certain bins?
 EntityEnum instead of dynamic casts everywhere (see camera.cpp, etc.)
+Fix inputScheme stuff

@@ -11,13 +11,13 @@ ProjectileCollisionComponent::~ProjectileCollisionComponent() {
         delete this->entityCollisionCommand;
 }
 
-void ProjectileCollisionComponent::onEntityCollision(Entity *other, int /*dt*/) {
-    if(other->getId() != this->ownerID) {
+void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int /*dt*/) {
+    if (otherComp->entity->getId() != this->ownerID) {
         Component::commandList->push_back(this->entityCollisionCommand);
     }
 }
 
-void ProjectileCollisionComponent::onStaticCollision(Entity* /*other*/) {
+void ProjectileCollisionComponent::onStaticCollision(StaticCollisionComponent* /*otherComp*/) {
     Component::commandList->push_back(this->entityCollisionCommand);
 }
 

@@ -40,8 +40,8 @@ void CollisionHandler::handleCollisions(int dt) {
         for (it2 = std::next(it, 1); it2 != this->dynamicList.end(); ++it2) {
             DynamicCollisionComponent* comp2 = *it2;
             if (detectOverlap(comp1->entity, comp2->entity)) {
-                comp1->onEntityCollision(comp2->entity, dt);
-                comp2->onEntityCollision(comp1->entity, dt);
+                comp1->onEntityCollision(comp2, dt);
+                comp2->onEntityCollision(comp1, dt);
             }
         }
     }
@@ -54,8 +54,8 @@ void CollisionHandler::handleCollisions(int dt) {
         for (it3 = this->staticList.begin(); it3 != this->staticList.end(); ++it3) {
             StaticCollisionComponent* comp2 = *it3;
             if (detectOverlap(comp1->entity, comp2->entity)) {
-                comp1->onStaticCollision(comp2->entity);
-                comp2->onEntityCollision(comp1->entity, dt);
+                comp1->onStaticCollision(comp2);
+                comp2->onEntityCollision(comp1, dt);
             }
         }
     }
@@ -91,15 +91,15 @@ void CollisionHandler::detectBorderCollision(Entity *entity) {
 bool CollisionHandler::detectOverlap(Entity* entity1, Entity* entity2) {
     //Calculate the sides of entity 1
     int leftA = entity1->x;
-    int rightA = entity1->x + entity1->width;
+    int rightA = entity1->x + entity1->width - 1;
     int topA = entity1->y;
-    int bottomA = entity1->y + entity1->height;
+    int bottomA = entity1->y + entity1->height - 1;
 
     //Calculate the sides of entity 2
     int leftB = entity2->x;
-    int rightB = entity2->x + entity2->width;
+    int rightB = entity2->x + entity2->width - 1;
     int topB = entity2->y;
-    int bottomB = entity2->y + entity2->height;
+    int bottomB = entity2->y + entity2->height - 1;
 
     //If any of the sides from A are outside of B, no overlap
     if (bottomA <= topB)

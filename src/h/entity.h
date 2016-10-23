@@ -1,7 +1,8 @@
 #ifndef CORNERGAME_ENTITY_H
 #define CORNERGAME_ENTITY_H
 
-class CollisionComponent;       // forward declared for circular dependency
+class CollisionComponent;         // forward declared for circular dependency
+class DynamicCollisionComponent;
 class AiComponent;
 class InputComponent;
 class ArtComponent;

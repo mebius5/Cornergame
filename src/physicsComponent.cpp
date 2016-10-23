@@ -4,7 +4,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
     xAccel(0.0f),
     yAccel(0.0f),
-    accelAmount(.002f),
+    accelAmount(.001f),
     gravity(0.0017f),
     jumps(0),
     infiniteJumps(false),
@@ -91,10 +91,10 @@ void PhysicsComponent::clearAccelerationY() {
     this->yAccel = this->gravity;
 }
 
-void PhysicsComponent::startSliding() {
-    this->maxVelocity /= 2;
-}
-
-void PhysicsComponent::stopSliding() {
-    this->maxVelocity *= 2;
-}
+// void PhysicsComponent::startSliding() {
+//     this->maxVelocity /= 2;
+// }
+//
+// void PhysicsComponent::stopSliding() {
+//     this->maxVelocity *= 2;
+// }
