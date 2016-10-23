@@ -14,16 +14,16 @@ ProjectileCollisionComponent::~ProjectileCollisionComponent() {
 void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int /*dt*/) {
     if (otherComp->entity->getId() != this->ownerID) {
         Component::commandList->push_back(this->entityCollisionCommand);
-    }
 
-    // knock back the other entity
-    int dir = 0;
-    if (this->entity->physics->xVelocity >= 0) {
-        dir = 1;
-    } else {
-        dir = -1;
+        // knock back the other entity
+        int dir = 0;
+        if (this->entity->physics->xVelocity >= 0) {
+            dir = 1;
+        } else {
+            dir = -1;
+        }
+        otherComp->entity->physics->bump(dir);
     }
-    otherComp->entity->physics->bump(dir);
 }
 
 void ProjectileCollisionComponent::onStaticCollision(StaticCollisionComponent* /*otherComp*/) {

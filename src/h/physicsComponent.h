@@ -6,14 +6,14 @@
 
 class PhysicsComponent : public Component {
 private:
-    float minVelocity;
+    //float minVelocity;
     float xAccel;
     float yAccel;
     float accelAmount;
     float gravity;
     int jumps;
     bool infiniteJumps;
-    DynamicCollisionComponent* collisionComp;
+    //DynamicCollisionComponent* collisionComp;
     float clipVelocity(float velocity);
 
 public:
