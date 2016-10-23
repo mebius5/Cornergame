@@ -20,6 +20,7 @@ public:
     float xVelocity;
     float yVelocity;
     float maxVelocity;
+    float jumpVelocity;
     float deceleration;
     int maxJumps;
 
