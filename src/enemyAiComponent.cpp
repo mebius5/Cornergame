@@ -40,16 +40,16 @@ void EnemyAiComponent::update(int dt, Entity *hero) {
         if(hero!=NULL){
             int xNewDir = (hero->x - this->entity->x);//*(this->entity->xVelocity);
             if(xNewDir>0){
-                this->entity->physics->xVelocity= 0.05f;
+                this->entity->physics->bump(1);
             } else if (xNewDir<=0){
-                this->entity->physics->xVelocity= -0.05f;
+                this->entity->physics->bump(-1);
             }
             int yNewDir = (hero->y - this->entity->y);//*(this->entity->yVelocity);
             if(yNewDir<0){
                 this->entity->physics->jump();
             }
         } else{
-            this->entity->physics->xVelocity = (rand() % 3 - 1) * 0.05f; // pick 1, 0 or -1
+            this->entity->physics->bump((rand() % 3 - 1) * 0.05f); // pick 1, 0 or -1
             if (rand() % 3 == 0) {
                 this->entity->physics->jump();
             }

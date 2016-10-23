@@ -122,6 +122,7 @@ Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vecto
     enemy->health = new HealthComponent(enemy, 200, new DespawnEntityCommand(enemy->getId()));
     enemy->physics = new PhysicsComponent(enemy);
     enemy->physics->deceleration = 0.0f;
+    enemy->physics->maxVelocity = 0.1f;
     enemy->physics->maxJumps = 1;
     return enemy;
 }

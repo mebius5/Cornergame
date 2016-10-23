@@ -76,7 +76,8 @@ void PhysicsComponent::toggleInfiniteJumps() {
 }
 
 void PhysicsComponent::bump(int dir) {
-    this->xVelocity = dir * this->maxVelocity;
+    this->xVelocity += dir * this->maxVelocity;
+    this->xVelocity = this->clipVelocity(this->xVelocity);
 }
 
 void PhysicsComponent::accelerateX(int dir) {
