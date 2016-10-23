@@ -106,23 +106,23 @@ void Camera::setLevelWH(int levelW, int levelH) {
     this->levelH = levelH;
 }
 
-void Camera::detectBorderCollision(Entity *entity, int dt) {
+void Camera::detectBorderCollision(Entity *entity, int) {
     if (entity->collision) {
         if (entity->x < minX){
             this->borderBoundX(entity, minX+7);
-            entity->health->takeDamage(3);
+            entity->health->takeDamage(4);
         }
         else if (entity->x + entity->width > maxX){
             this->borderBoundX(entity, maxX - entity->width-7);
-            entity->health->takeDamage(3);
+            entity->health->takeDamage(4);
         }
         if (entity->y < minY){
             this->borderBoundY(entity, minY+7);
-            entity->health->takeDamage(3);
+            entity->health->takeDamage(4);
         }
         else if (entity->y + entity->height > this->maxY){
             this->borderBoundY(entity, maxY - entity->height-7);
-            entity->health->takeDamage(3);
+            entity->health->takeDamage(4);
         }
     }
 }
