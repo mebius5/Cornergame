@@ -1,12 +1,9 @@
 #include "collisionHandler.h"
 
 CollisionHandler::CollisionHandler(std::vector<DynamicCollisionComponent*>& dynList,
-                                   std::vector<StaticCollisionComponent*>& statList,
-                                   const int w, const int h) :
+                                   std::vector<StaticCollisionComponent*>& statList) :
     dynamicList(dynList),
-    staticList(statList),
-    width(w),
-    height(h) {
+    staticList(statList) {
 }
 
 void CollisionHandler::removeInvalidComponents() {
@@ -58,32 +55,6 @@ void CollisionHandler::handleCollisions(int dt) {
                 comp2->onEntityCollision(comp1, dt);
             }
         }
-    }
-}
-
-void CollisionHandler::borderBoundX(Entity* entity, float boundValue) {
-    entity->x = boundValue;
-    entity->physics->xVelocity = 0.0f;
-    entity->collision->onBorderCollision();
-}
-
-void CollisionHandler::borderBoundY(Entity* entity, float boundValue) {
-    entity->y = boundValue;
-    entity->physics->yVelocity = 0.0f;
-    entity->collision->onBorderCollision();
-}
-
-void CollisionHandler::detectBorderCollision(Entity *entity) {
-    if (entity->collision) {
-        if (entity->x < 0)
-            this->borderBoundX(entity, 0.0f);
-        else if (entity->x + entity->width > this->width)
-            this->borderBoundX(entity, this->width - entity->width);
-
-        if (entity->y < 0)
-            this->borderBoundY(entity, 0.0f);
-        else if (entity->y + entity->height > this->height)
-            this->borderBoundY(entity, this->height - entity->height);
     }
 }
 

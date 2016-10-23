@@ -8,17 +8,11 @@ class CollisionHandler {
 private:
     std::vector<DynamicCollisionComponent*>& dynamicList;
     std::vector<StaticCollisionComponent*>& staticList;
-    const int width;
-    const int height;
     void removeInvalidComponents();
-    void borderBoundX(Entity* entity, float boundValue);
-    void borderBoundY(Entity* entity, float boundValue);
     bool detectOverlap(Entity* entity1, Entity* entity2);
-    void detectBorderCollision(Entity* entity);
 public:
     CollisionHandler(std::vector<DynamicCollisionComponent*>& dynamicList,
-                     std::vector<StaticCollisionComponent*>& staticList,
-                     const int w, const int h);
+                     std::vector<StaticCollisionComponent*>& staticList);
     void handleCollisions(int dt);
 };
 

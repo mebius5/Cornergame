@@ -37,7 +37,7 @@ void DrawingHandler::draw(int dt) {
 void DrawingHandler::shift(int dt) {
     shiftCount+=dt;
 
-    if(shiftCount>=50){
+    if(shiftCount>=15){
         camera.shift(1,0);
         shiftCount=0;
     }

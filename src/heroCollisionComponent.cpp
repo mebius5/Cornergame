@@ -18,7 +18,7 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
         if (timeSinceLastCollision>=30) {
             timeSinceLastCollision=0;
             this->entity->score->addScore(-10);
-            this->entity->health->takeDamage(5);
+            this->entity->health->takeDamage(7);
             if (this->entityCollisionCommand)
                 Component::commandList->push_back(this->entityCollisionCommand);
         }
