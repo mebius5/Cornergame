@@ -30,7 +30,11 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
         this->entity->physics->toggleInfiniteJumps();
     } else if ((!this->wasd && keycode == SDLK_m) || (this->wasd && keycode == SDLK_v)) {
         this->entity->actionState = THROW;
-        this->spawnCommand->x = entity->x+10;
+        if (this->spawnCommand->dir == 1) {
+            this->spawnCommand->x = entity->x + entity->width;
+        } else {
+            this->spawnCommand->x = entity->x;
+        }
         this->spawnCommand->y = entity->y+20;
         this->spawnCommand->ownerID = entity->getId();
         Component::commandList->push_back(this->spawnCommand);

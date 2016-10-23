@@ -30,6 +30,7 @@ public:
     void jump();
     void toggleInfiniteJumps();
     void resetJumps();
+    void bump(int dir);
     void accelerateX(int dir);
     void accelerateY(int dir);
     void clearAccelerationX();
