@@ -99,7 +99,7 @@ void EntityBuilder::freeFonts() {
 /* Entity creation operations */
 Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
     Texture texture = this->textureMap[texType];
-    Entity* hero = new Entity(this->nextId++, x, y, texture.width / 4, texture.height / 2);
+    Entity* hero = new Entity(this->nextId++, x, y, 64, 64);
 
     PlaySoundCommand* command = NULL;
     if (sfxType != SFX_NONE)
@@ -115,7 +115,7 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
 
 Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes) {
     Texture texture = this->textureMap[texType];
-    Entity* enemy = new Entity(this->nextId++, x, y, texture.width / 4, texture.height / 2);
+    Entity* enemy = new Entity(this->nextId++, x, y, 64, 64);
     enemy->collision = new EnemyCollisionComponent(enemy);
     enemy->art = new AnimationComponent(enemy, texture, 1);
     enemy->ai = new EnemyAiComponent(enemy, heroes);

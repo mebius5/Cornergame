@@ -42,6 +42,7 @@ private:
     int timecount;
     int actionTime;
     SDL_Rect clip;
+    DynamicCollisionComponent* collisionComp;
 public:
     AnimationComponent(Entity* entity, Texture texture, int layer);
     SDL_Texture* getNextTexture(int dt);

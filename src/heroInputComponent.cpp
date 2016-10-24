@@ -21,10 +21,12 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
         //this->entity->physics->accelerateY(1);
     } else if ((!this->wasd && keycode == SDLK_LEFT) || (this->wasd && keycode == SDLK_a)) {
         this->entity->physics->accelerateX(-1);
+        this->entity->dir = -1;
         this->spawnCommand->dir = -1;
     } else if ((!this->wasd && keycode == SDLK_RIGHT) || (this->wasd && keycode == SDLK_d)) {
         this->entity->physics->accelerateX(1);
         this->spawnCommand->dir = 1;
+        this->entity->dir = 1;
     } else if ((!this->wasd && keycode == SDLK_k) || (this->wasd && keycode == SDLK_k)) {
         this->entity->health->toggleInvincibility();
         this->entity->physics->toggleInfiniteJumps();

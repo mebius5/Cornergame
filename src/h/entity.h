@@ -28,6 +28,7 @@ public:
     float y;
     int width;
     int height;
+    int dir;
     Action actionState;
 
     CollisionComponent* collision;

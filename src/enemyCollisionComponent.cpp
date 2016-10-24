@@ -7,6 +7,7 @@ EnemyCollisionComponent::EnemyCollisionComponent(Entity* entity) :
 void EnemyCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int /*dt*/) {
     if (dynamic_cast<ProjectileCollisionComponent*>(otherComp)) {
         this->entity->health->takeDamage(50);
+        this->entity->actionState = DAMAGE;
     }
 }
 

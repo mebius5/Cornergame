@@ -19,6 +19,7 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
             timeSinceLastCollision=0;
             this->entity->score->addScore(-10);
             this->entity->health->takeDamage(7);
+            this->entity->actionState = DAMAGE;
             if (this->entityCollisionCommand)
                 Component::commandList->push_back(this->entityCollisionCommand);
         }
