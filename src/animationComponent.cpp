@@ -5,8 +5,8 @@ AnimationComponent::AnimationComponent(Entity* entity, Texture tex, int layer):
     texture(tex.sdlTexture),
     surfaceW(tex.width),
     surfaceH(tex.height),
-    collisionComp(static_cast<DynamicCollisionComponent*>(entity->collision)),
-    timecount(0) {
+    timecount(0),
+    collisionComp(static_cast<DynamicCollisionComponent*>(entity->collision)) {
     this->clip = {0,0,0,0};
     this->actionTime = 0;
 }
@@ -45,8 +45,6 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
             clip.x = (timecount / 500) * 32 + startpos;
             clip.y = 32;
         }
-        clip.w = (this->surfaceW) / 8;
-        clip.h = 32;
     } else if (this->entity->actionState == THROW) {
         this->actionTime += dt;
         if (this->actionTime > 1000) {
@@ -55,15 +53,11 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         }
         clip.x = (actionTime / 250) * 32 + startpos;
         clip.y = 64;
-        clip.w = (this->surfaceW) / 8;
-        clip.h = 32;
 
     } else if (this->entity->actionState == JUMP) {
         this->actionTime += dt;
         clip.x = (actionTime / 250) * 32 + startpos;
         clip.y = 96;
-        clip.w = (this->surfaceW) / 8;
-        clip.h = 32;
         if (this->actionTime > 1000) {
             clip.x = 96 + startpos;
         }
@@ -75,8 +69,6 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         this->actionTime += dt;
         clip.x = (actionTime / 250) * 32 + startpos;
         clip.y = 128;
-        clip.w = (this->surfaceW) / 8;
-        clip.h = 32;
         this->actionTime %= 1000;
         if (onGround) {
             this->entity->actionState = IDLE;
@@ -88,11 +80,10 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
             this->actionTime = 0;
             this->entity->actionState = IDLE;
         }
-        clip.x = ((actionTime / 250)%2) * 32 + startpos + 32;
+        clip.x = ((actionTime / 250) % 2) * 32 + startpos + 32;
         clip.y = 32;
-        clip.w = (this->surfaceW) / 8;
-        clip.h = 32;
-
     }
+    clip.w = (this->surfaceW) / 8;
+    clip.h = (this->surfaceH) / 5;
     return &clip;
 }
