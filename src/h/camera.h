@@ -7,20 +7,21 @@ class Camera{
 private:
     SDL_Renderer * renderer;
     std::vector<ArtComponent*>& componentList;
+    int levelW;
+    int levelH;
+    bool previewOn;
+public:
     int minX;
     int minY;
     int maxX;
     int maxY;
-    int levelW;
-    int levelH;
-public:
 
     Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH);
     ~Camera();
-    void draw(int dt, ArtComponent * artComponent);
+    void draw(int dt, ArtComponent *artComponent);
     void shift(int dx, int dy);
-    void resetCamera(int windowW, int windowH);
-    void setLevelWH(int levelW, int levelH);
+    void resetCamera(int minX, int minY, int maxX, int maxY);
+    void initializeCamera(int levelW, int levelH, bool previewOn);
     void detectBorderCollision(Entity *entity, int dt);
     void borderBoundX(Entity* entity, float boundValue);
     void borderBoundY(Entity* entity, float boundValue);

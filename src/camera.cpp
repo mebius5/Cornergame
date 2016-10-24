@@ -3,12 +3,13 @@
 Camera::Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH) :
     renderer(renderer),
     componentList(componentList),
+    levelW(-1),
+    levelH(-1),
+    previewOn(true),
     minX(0),
     minY(0),
-    maxX(windowW), 
-    maxY(windowH),
-    levelW(-1),
-    levelH(-1)
+    maxX(windowW),
+    maxY(windowH)
 {
 }
 
@@ -16,11 +17,11 @@ Camera::~Camera() {
     this->renderer=NULL;
 }
 
-void Camera::draw(int dt, ArtComponent * artComponent) {
+void Camera::draw(int dt, ArtComponent *artComponent) {
     Entity* entity = artComponent->entity;
 
     if(entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)) {
-        if(levelW!=-1 && entity->x > levelW){
+        if(!previewOn && levelW!=-1 && entity->x > levelW){
             if(levelW!=-1 && minX>=levelW){
                 std::vector<ArtComponent*>::iterator it;
                 for (it = this->componentList.begin(); it != this->componentList.end(); ) {
@@ -44,8 +45,9 @@ void Camera::draw(int dt, ArtComponent * artComponent) {
                 maxX = maxX - levelW;
             }
         }
-        detectBorderCollision(entity, dt);
-
+        if(!previewOn){
+            detectBorderCollision(entity, dt);
+        }
     }
 
     if(artComponent->movesWithCamera){
@@ -94,16 +96,17 @@ if(levelH!=-1 && minY > levelH){
 }****/
 }
 
-void Camera::resetCamera(int windowW, int windowH) {
-    minX=0;
-    minY=0;
-    maxX=windowW;
-    maxY=windowH;
+void Camera::resetCamera(int minX, int minY, int maxX, int maxY) {
+    this->minX = minX;
+    this->minY = minY;
+    this->maxX = maxX;
+    this->maxY = maxY;
 }
 
-void Camera::setLevelWH(int levelW, int levelH) {
+void Camera::initializeCamera(int levelW, int levelH, bool previewOn) {
     this->levelW = levelW;
     this->levelH = levelH;
+    this->previewOn = previewOn;
 }
 
 void Camera::detectBorderCollision(Entity *entity, int) {

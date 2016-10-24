@@ -59,5 +59,5 @@ void StartState::cleanup(StateEnum /*next*/) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
-    this->drawingHandler.resetCamera(windowW, windowH);
+    this->drawingHandler.resetCamera(0, 0, windowW, windowH);
 }

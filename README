@@ -33,6 +33,8 @@ Grady
   Note: The hero is copied over only if it was originally on the last camera section.
 - Added ability to proceed to the next level, allowing the addition of multiple levels
 - Modified damage control so that it's based on time
+- Added border control for hero and damage for hero if colliding with border
+- Added level preview to the beginning of game play
 
 Pratyush
 
@@ -51,6 +53,10 @@ LEVEL EDITOR
     EntityManager's populateLevel() method.
 
 CONTROLS
+- Press ESC to quit game
+- Press q to return to MENU
+- Press p to skip preview
+
 Player 1
 - Up/down/left/right to move player 1
 - Jump(up) can perform double jump in air, or infinite wall jumps (must be next to terrain)

@@ -17,7 +17,9 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
     scoreHandler(scoreHandler),
     resultsState(resultsState),
     highscoreState(highscoreState),
-    physicsHandler(physicsHandler) {
+    physicsHandler(physicsHandler),
+    levelW(0),
+    levelH(0){
 }
 
 PlayState::~PlayState() {
@@ -33,14 +35,44 @@ void PlayState::begin(int level) {
     levelFile.append(".txt");
     Level level1(levelFile.c_str(), windowW, windowH);
     this->entityManager.populateLevel(&level1);
-    drawingHandler.initializeCamera(level1.width*32, level1.height*32);
     this->hero = entityManager.heroEntities.at(0);
     this->hero2 = entityManager.heroEntities.at(1);
+    this->levelW = level1.width*32;
+    this->levelH = level1.height*32;
 }
 
 StateEnum PlayState::run() {
-    bool running = true;
+
+    /****
+     * Preview Section
+     */
+    bool previewOn = true;
     float lastTime = SDL_GetTicks();
+    drawingHandler.resetCamera(this->levelW-windowW, this->levelH-windowH, this->levelW, this->levelH);
+    drawingHandler.initializeCamera(this->levelW, this->levelH, true);
+    while(previewOn){
+        int currentTime = SDL_GetTicks();
+        int dt = currentTime - lastTime;
+        lastTime = currentTime;
+
+        previewOn=drawingHandler.previewLevel(dt);
+        drawingHandler.draw(dt);
+        this->inputHandler.handleEvents();
+        StateEnum nextState = this->controlHandler.handleStateCommands();
+        if(nextState == STATE_PREVIEWOFF)
+            break;
+        if (nextState != STATE_NONE&&nextState!= STATE_PREVIEWOFF)
+            return nextState;
+    }
+
+    /***
+     * Gameplay section
+     */
+    drawingHandler.initializeCamera(this->levelW, this->levelH, false);
+    drawingHandler.resetCamera(0,0,windowW,windowH);
+
+    bool running = true;
+    lastTime = SDL_GetTicks();
 
     while (running) {
         int currentTime = SDL_GetTicks();
@@ -59,7 +91,7 @@ StateEnum PlayState::run() {
         this->entityManager.cleanupEntities();
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
-        if (nextState != STATE_NONE)
+        if (nextState != STATE_NONE && nextState!= STATE_PREVIEWOFF)
             return nextState;
     }
 
@@ -74,5 +106,5 @@ void PlayState::cleanup(StateEnum nextState) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
-    this->drawingHandler.resetCamera(windowW,windowH);
+    this->drawingHandler.resetCamera(0, 0, windowW,windowH);
 }

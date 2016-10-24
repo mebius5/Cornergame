@@ -9,8 +9,8 @@ DrawingHandler::DrawingHandler(std::vector<ArtComponent*>& componentList,
 
 }
 
-void DrawingHandler::initializeCamera(int levelW, int levelH) {
-    this->camera.setLevelWH(levelW, levelH);
+void DrawingHandler::initializeCamera(int levelW, int levelH, bool previewOn) {
+    this->camera.initializeCamera(levelW, levelH, previewOn);
 }
 
 void DrawingHandler::draw(int dt) {
@@ -43,6 +43,26 @@ void DrawingHandler::shift(int dt) {
     }
 }
 
-void DrawingHandler::resetCamera(int windowW, int windowH){
-    camera.resetCamera(windowW, windowH);
+void DrawingHandler::resetCamera(int minX, int minY, int maxX, int maxY) {
+    camera.resetCamera(minX, minY, maxX, maxY);
+}
+
+bool DrawingHandler::previewLevel(int dt) {
+    shiftCount+=dt;
+
+    if(shiftCount>=2){
+        if(camera.minX>0){
+                camera.shift(-1, 0);
+        }
+        if(camera.minX<=0&&camera.minY>0){
+                camera.shift(0, -1);
+        }
+        shiftCount=shiftCount%2;
+    }
+
+    if(camera.minX<=0&&camera.minY<=0){
+        return false;
+    }
+
+    return true;
 }

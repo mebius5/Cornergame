@@ -5,7 +5,9 @@ InputHandler::InputHandler(std::vector<InputComponent*>& componentList,
     componentList(componentList),
     commandList(commandList),
     quitCommand(STATE_QUIT),
-    switchToMenu(STATE_MENU) {
+    switchToMenu(STATE_MENU),
+    previewOff(STATE_PREVIEWOFF)
+{
 }
 
 void InputHandler::handleEvents() {
@@ -21,6 +23,8 @@ void InputHandler::handleEvents() {
             this->commandList.push_back(&this->quitCommand);
         else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_q)
             this->commandList.push_back(&this->switchToMenu);
+        else if(event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_p)
+            this->commandList.push_back(&this->previewOff);
         else {
             for (it = this->componentList.begin(); it != this->componentList.end(); ) {
                 if (!(*it)->isValid()) {        // remove invalid components
