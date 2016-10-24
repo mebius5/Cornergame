@@ -20,9 +20,9 @@ void ResultsState::begin(int) {
 
     std::string resultString;
     if (this->victory)
-        resultString = "Victory! Score: " + std::to_string(this->score);
+        resultString = "Player 1 Wins! Score: " + std::to_string(this->score);
     else
-        resultString = "Defeat! Score: " + std::to_string(this->score);
+        resultString = "Player 2 Wins! Score: " + std::to_string(this->score);
 
     this->entityManager.createCenteredFadeInText(
                    FONT_GLOBAL, resultString.c_str(),

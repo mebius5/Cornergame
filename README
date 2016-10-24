@@ -37,6 +37,13 @@ Grady
 - Added level preview to the beginning of game play
 
 Pratyush
+-Added projectiles to the game 
+-Added commands to spawn and despawn entities mid-game. This was necessary to allow projectiles to
+spawn and despawn and allow enemies to be killed.
+-Drew spritesheets for attacking, taking damage, jumping, and wall sliding for player and enemy
+-Updated animation component to play animations at the right time using an actionState enum
+-Fixed a seg fault when an entity is deleted while colliding with multiple other objects
+-Added a second hero for multiplayer and adjusted the results screen to reflect multiplayer results
 
 CAMERA
 - Updated the camera to follow the hero around as they traverse the level.
@@ -100,7 +107,11 @@ their sprites. If the character is moving at a velocity of more than 0.01,
 we cycle through a four frame walking animation in the direction they are
 facing. These frames are stored in the top row of the spritesheet. If the
 character is not moving, we cycle through a two frame idle animation which is
-in the second row of the spritesheet.
+in the second row of the spritesheet. If the character is taking damage, a 
+two frame animation is flashed twice. If the character is throwing a 
+projectile, a four frame animation is played. If the character is jumping, a 
+four frame animation is played. If the character is sliding down a wall, a 
+four frame animation is cycled.
 
 
 CLASS STRUCTURE

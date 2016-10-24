@@ -228,6 +228,7 @@ void EntityManager::populateLevel(Level* level) {
                 Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
                 Entity* hero2 = createHero(TEX_HERO2, j * 32, i * 32, SFX_ALERT, true);
                 createHealthBar(100, 100, hero);
+                createHealthBar(100, 50, hero2);
                 createScoreBox(850, 100, hero);
                 break;
             }
