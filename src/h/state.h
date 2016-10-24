@@ -122,6 +122,7 @@ private:
     HighscoreState& highscoreState;
     PhysicsHandler& physicsHandler;
     Entity* hero;
+    Entity* hero2;
 public:
     PlayState(int windowW, int windowH, EntityManager& entityManager,
               std::vector<Command*>& commandList, SDL_Renderer* renderer,

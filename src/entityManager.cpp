@@ -5,6 +5,7 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     entityBuilder(renderer),
     numCleanable(0) {
     this->entityBuilder.loadTexture(TEX_HERO, "spritesheets/hero.png");
+    this->entityBuilder.loadTexture(TEX_HERO2, "spritesheets/hero2.png");
     this->entityBuilder.loadTexture(TEX_ENEMY, "spritesheets/lax.png");
     this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
     this->entityBuilder.loadTexture(TEX_BACKGROUND, "resources/jhu-logo.png");
@@ -225,7 +226,7 @@ void EntityManager::populateLevel(Level* level) {
                 break;
             case SPAWN: {
                 Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
-                Entity* hero2 = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, true);
+                Entity* hero2 = createHero(TEX_HERO2, j * 32, i * 32, SFX_ALERT, true);
                 createHealthBar(100, 100, hero);
                 createScoreBox(850, 100, hero);
                 break;

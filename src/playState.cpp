@@ -35,6 +35,7 @@ void PlayState::begin(int level) {
     this->entityManager.populateLevel(&level1);
     drawingHandler.initializeCamera(level1.width*32, level1.height*32);
     this->hero = entityManager.heroEntities.at(0);
+    this->hero2 = entityManager.heroEntities.at(1);
 }
 
 StateEnum PlayState::run() {
