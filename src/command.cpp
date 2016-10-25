@@ -15,3 +15,7 @@ SpawnEntityCommand::SpawnEntityCommand(ProjEnum projType) :
 DespawnEntityCommand::DespawnEntityCommand(int id) :
     id(id) {
 }
+
+PreviewOffCommand::PreviewOffCommand() {
+
+}

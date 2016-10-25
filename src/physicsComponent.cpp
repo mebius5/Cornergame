@@ -8,7 +8,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     gravity(0.0017f),
     jumps(0),
     infiniteJumps(false),
-    collisionComp(static_cast<DynamicCollisionComponent*>(entity->collision)),
+    collisionComp(dynamic_cast<DynamicCollisionComponent*>(entity->collision)),
     xVelocity(0.0f),
     yVelocity(0.0f),
     maxVelocity(.6f),

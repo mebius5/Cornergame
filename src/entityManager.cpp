@@ -230,6 +230,7 @@ void EntityManager::populateLevel(Level* level) {
                 createHealthBar(100, 100, hero);
                 createHealthBar(100, 50, hero2);
                 createScoreBox(850, 100, hero);
+                createScoreBox(850, 50, hero2);
                 break;
             }
             case GOAL:

@@ -15,3 +15,15 @@ StateEnum ControlHandler::handleStateCommands() {
     }
     return STATE_NONE;
 }
+
+bool ControlHandler::isPreviewOff() {
+    std::vector<Command*>::iterator it;
+    for (it = this->commandList.begin(); it != this->commandList.end(); ++it) {
+        if (dynamic_cast<PreviewOffCommand*>(*it)) {
+            *it = this->commandList.back();
+            this->commandList.pop_back();
+            return true;
+        }
+    }
+    return false;
+}

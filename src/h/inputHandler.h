@@ -12,7 +12,7 @@ protected:
     std::vector<Command*>& commandList;
     SwitchStateCommand quitCommand;
     SwitchStateCommand switchToMenu;
-    SwitchStateCommand previewOff;
+    PreviewOffCommand previewOff;
 public:
     InputHandler(std::vector<InputComponent*>& componentList,
                  std::vector<Command*>& commandList);

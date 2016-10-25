@@ -6,7 +6,7 @@ InputHandler::InputHandler(std::vector<InputComponent*>& componentList,
     commandList(commandList),
     quitCommand(STATE_QUIT),
     switchToMenu(STATE_MENU),
-    previewOff(STATE_PREVIEWOFF)
+    previewOff()
 {
 }
 

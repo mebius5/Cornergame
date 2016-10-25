@@ -58,10 +58,10 @@ StateEnum PlayState::run() {
         previewOn=drawingHandler.previewLevel(dt);
         drawingHandler.draw(dt);
         this->inputHandler.handleEvents();
-        StateEnum nextState = this->controlHandler.handleStateCommands();
-        if(nextState == STATE_PREVIEWOFF)
+        if(this->controlHandler.isPreviewOff())
             break;
-        if (nextState != STATE_NONE&&nextState!= STATE_PREVIEWOFF)
+        StateEnum nextState = this->controlHandler.handleStateCommands();
+        if (nextState != STATE_NONE)
             return nextState;
     }
 
@@ -91,7 +91,7 @@ StateEnum PlayState::run() {
         this->entityManager.cleanupEntities();
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
-        if (nextState != STATE_NONE && nextState!= STATE_PREVIEWOFF)
+        if (nextState != STATE_NONE)
             return nextState;
     }
 

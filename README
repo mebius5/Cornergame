@@ -14,7 +14,15 @@ make
 ./gameManager
 
 Assignment 6 Task Writeups
+
+General Notes:
+- As of now, there is only one working level.
+  Level two is in here in preparation for next week.
+
 Akshay
+- Added physics component
+- Separated physics from Input Components
+- Made physics decay based on time
 
 Andrew
 - reorganized texture pools so that copies of entities can share textures
@@ -34,7 +42,7 @@ Grady
 - Added ability to proceed to the next level, allowing the addition of multiple levels
 - Modified damage control so that it's based on time
 - Added border control for hero and damage for hero if colliding with border
-- Added level preview to the beginning of game play
+- Added level preview to the beginning of game play. Press p to skip preview.
 
 Pratyush
 -Added projectiles to the game 
@@ -45,19 +53,7 @@ spawn and despawn and allow enemies to be killed.
 -Fixed a seg fault when an entity is deleted while colliding with multiple other objects
 -Added a second hero for multiplayer and adjusted the results screen to reflect multiplayer results
 
-CAMERA
-- Updated the camera to follow the hero around as they traverse the level.
-- camera will also slowly pan to the left, which is how the camera will probably
-    move once multiplayer is created.
 
-TERRAIN
-- static object with art and collision ability
-- collisions with moving entities are calculated -> with corner cases considered
-
-LEVEL EDITOR
-- the game reads in a text file to determine the layout of the level
-- all players, enemies, terrain, victory zones are placed this way. See
-    EntityManager's populateLevel() method.
 
 CONTROLS
 - Press ESC to quit game
@@ -74,6 +70,19 @@ Player 2
 - Jump (W) can perform double jump in air, or infinite wall jumps (must be next to terrain)
 - Press V to throw projectiles (there's knock back present)
 
+CAMERA
+- Allows for preview of levels and scrolling of levels
+- Camera moves with at a constant speed from left to right during gameplay
+  Incurs damage on heroes if collision happens.
+
+TERRAIN
+- static object with art and collision ability
+- collisions with moving entities are calculated -> with corner cases considered
+
+LEVEL EDITOR
+- the game reads in a text file to determine the layout of the level
+- all players, enemies, terrain, victory zones are placed this way. See
+    EntityManager's populateLevel() method.
 
 SCREENS
 StartScreen

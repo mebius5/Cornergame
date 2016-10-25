@@ -114,18 +114,22 @@ void Camera::detectBorderCollision(Entity *entity, int) {
         if (entity->x < minX){
             this->borderBoundX(entity, minX+7);
             entity->health->takeDamage(4);
+            entity->actionState = DAMAGE;
         }
         else if (entity->x + entity->width > maxX){
             this->borderBoundX(entity, maxX - entity->width-7);
             entity->health->takeDamage(4);
+            entity->actionState = DAMAGE;
         }
         if (entity->y < minY){
             this->borderBoundY(entity, minY+7);
             entity->health->takeDamage(4);
+            entity->actionState = DAMAGE;
         }
         else if (entity->y + entity->height > this->maxY){
             this->borderBoundY(entity, maxY - entity->height-7);
             entity->health->takeDamage(4);
+            entity->actionState = DAMAGE;
         }
     }
 }

@@ -6,7 +6,8 @@ AnimationComponent::AnimationComponent(Entity* entity, Texture tex, int layer):
     surfaceW(tex.width),
     surfaceH(tex.height),
     timecount(0),
-    collisionComp(static_cast<DynamicCollisionComponent*>(entity->collision)) {
+    collisionComp(dynamic_cast<DynamicCollisionComponent*>(entity->collision))
+{
     this->clip = {0,0,0,0};
     this->actionTime = 0;
 }

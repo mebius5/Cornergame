@@ -39,4 +39,9 @@ public:
     DespawnEntityCommand(int id);
 };
 
+class PreviewOffCommand: public Command {
+public:
+    PreviewOffCommand();
+};
+
 #endif

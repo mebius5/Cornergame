@@ -11,6 +11,7 @@ private:
 public:
     ControlHandler(std::vector<Command*>& commandList);
     StateEnum handleStateCommands();
+    bool isPreviewOff();
 };
 
 #endif
