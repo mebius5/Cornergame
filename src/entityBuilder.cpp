@@ -217,5 +217,6 @@ Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, int d
     projectile->physics = new PhysicsComponent(projectile);
     projectile->physics->xVelocity = dir * 0.6f;
     projectile->physics->yVelocity = -0.4f;
+    projectile->physics->deceleration = 0.0f;
     return projectile;
 }
