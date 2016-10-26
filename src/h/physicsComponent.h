@@ -14,12 +14,13 @@ private:
     int jumps;
     bool infiniteJumps;
     DynamicCollisionComponent* collisionComp;
-    float clipVelocity(float velocity);
+    float clipVelocity(float velocity, float max);
 
 public:
     float xVelocity;
     float yVelocity;
-    float maxVelocity;
+    float maxXVelocity;
+    float maxYVelocity;
     float jumpVelocity;
     float deceleration;
     int maxJumps;
