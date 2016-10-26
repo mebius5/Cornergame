@@ -70,10 +70,10 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
         }
     }
 
-    SDL_Rect dest = { (int)entity->x - minX,
-                      (int) entity->y - minY,
-                      entity->width,
-                      entity->height};
+    SDL_Rect dest = { (int)entity->x - minX + entity->width/2 - entity->drawWidth/2,
+                      (int) entity->y - minY + entity->height/2 - entity->drawHeight/2,
+                      entity->drawWidth,
+                      entity->drawHeight};
 
     SDL_RenderCopy(this->renderer, artComponent->getNextTexture(dt),
                    artComponent->getNextSrcRect(dt), &dest);

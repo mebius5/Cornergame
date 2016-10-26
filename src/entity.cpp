@@ -1,11 +1,13 @@
 #include "entity.h"
 
-Entity::Entity(int id, float x, float y, int w, int h) :
+Entity::Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHeight) :
     id(id),
     x(x),
     y(y),
     width(w),
     height(h),
+    drawWidth(drawWidth),
+    drawHeight(drawHeight),
     actionState(IDLE),
     collision(NULL),
     score(NULL),

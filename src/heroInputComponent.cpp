@@ -22,20 +22,19 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
     } else if ((!this->wasd && keycode == SDLK_LEFT) || (this->wasd && keycode == SDLK_a)) {
         this->entity->physics->accelerateX(-1);
         this->entity->dir = -1;
-        this->spawnCommand->dir = -1;
     } else if ((!this->wasd && keycode == SDLK_RIGHT) || (this->wasd && keycode == SDLK_d)) {
         this->entity->physics->accelerateX(1);
-        this->spawnCommand->dir = 1;
         this->entity->dir = 1;
     } else if ((!this->wasd && keycode == SDLK_k) || (this->wasd && keycode == SDLK_k)) {
         this->entity->health->toggleInvincibility();
         this->entity->physics->toggleInfiniteJumps();
     } else if ((!this->wasd && keycode == SDLK_m) || (this->wasd && keycode == SDLK_v)) {
         this->entity->actionState = THROW;
+        this->spawnCommand->dir = this->entity->dir;
         if (this->spawnCommand->dir == 1) {
-            this->spawnCommand->x = entity->x + entity->width;
+            this->spawnCommand->x = entity->x + 48;
         } else {
-            this->spawnCommand->x = entity->x;
+            this->spawnCommand->x = entity->x + 16;
         }
         this->spawnCommand->y = entity->y+20;
         this->spawnCommand->ownerID = entity->getId();
