@@ -52,12 +52,12 @@ bool DrawingHandler::previewLevel(int dt) {
 
     if(shiftCount>=2){
         if(camera.minX>0){
-                camera.shift(-1, 0);
+                camera.shift(-(shiftCount/4+1), 0);
         }
         if(camera.minX<=0&&camera.minY>0){
-                camera.shift(0, -1);
+                camera.shift(0, -(shiftCount/4+1));
         }
-        shiftCount=shiftCount%2;
+        shiftCount=0;
     }
 
     if(camera.minX<=0&&camera.minY<=0){
