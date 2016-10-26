@@ -11,7 +11,8 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     collisionComp(dynamic_cast<DynamicCollisionComponent*>(entity->collision)),
     xVelocity(0.0f),
     yVelocity(0.0f),
-    maxVelocity(.6f),
+    maxXVelocity(.6f),
+    maxYVelocity(5.0f),
     jumpVelocity(.6f),
     deceleration(.0007f),
     maxJumps(1) {
@@ -21,12 +22,12 @@ PhysicsComponent::~PhysicsComponent() {
     this->entity = NULL;
 }
 
-float PhysicsComponent::clipVelocity(float velocity) {
+float PhysicsComponent::clipVelocity(float velocity, float max) {
     // clip the absolute value of the velocity
-    if (velocity > this->maxVelocity) {
-        velocity = this->maxVelocity;
-    } else if (velocity < -1 * this->maxVelocity) {
-        velocity = -1 * this->maxVelocity;
+    if (velocity > max) {
+        velocity = max;
+    } else if (velocity < -1 * max) {
+        velocity = -1 * max;
     }
     return velocity;
 }
@@ -42,7 +43,7 @@ void PhysicsComponent::updateLocation(int dt) {
         onLeftWall = false;
     if (this->xVelocity < 0 && onRightWall)
         onRightWall = false;
-    this->xVelocity = this->clipVelocity(this->xVelocity);
+    this->xVelocity = this->clipVelocity(this->xVelocity, this->maxXVelocity);
 
     float finalYAccel = this->yAccel;
     if (!onGround)
@@ -51,7 +52,7 @@ void PhysicsComponent::updateLocation(int dt) {
     this->yVelocity += finalYAccel * dt;
     if (this->yVelocity < 0 && onGround)
         onGround = false;
-    this->yVelocity = this->clipVelocity(this->yVelocity);
+    this->yVelocity = this->clipVelocity(this->yVelocity, this->maxYVelocity);
 
     // account for sliding on walls
     float finalYVelocity = this->yVelocity;
@@ -123,7 +124,7 @@ void PhysicsComponent::toggleInfiniteJumps() {
 
 void PhysicsComponent::bump(int dir) {
     this->xVelocity += dir * this->jumpVelocity;
-    this->xVelocity = this->clipVelocity(this->xVelocity);
+    this->xVelocity = this->clipVelocity(this->xVelocity, this->maxXVelocity);
 }
 
 void PhysicsComponent::accelerateX(int dir) {
