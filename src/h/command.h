@@ -44,4 +44,9 @@ public:
     PreviewOffCommand();
 };
 
+class CameraShakeCommand: public Command {
+public:
+    CameraShakeCommand();
+};
+
 #endif

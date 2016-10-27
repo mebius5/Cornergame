@@ -13,6 +13,7 @@ public:
 
     virtual void onEntityCollision(DynamicCollisionComponent* otherComp, int dt) = 0;
     virtual void onBorderCollision() = 0;
+    int sign(int x);
 };
 
 class StaticCollisionComponent : public CollisionComponent {
@@ -38,6 +39,7 @@ public:
 class HeroCollisionComponent : public DynamicCollisionComponent {
 private:
     Command* entityCollisionCommand;
+    Command* cameraShakeCommand;
     int timeSinceLastCollision;
 public:
     HeroCollisionComponent(Entity* entity, Command* entityCollisionCmd);

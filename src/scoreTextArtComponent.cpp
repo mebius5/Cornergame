@@ -36,8 +36,8 @@ SDL_Texture* ScoreTextArtComponent::getNextTexture(int) {
         }
 
         this->lastTexture = SDL_CreateTextureFromSurface(this->renderer, textSurf);
-        this->entity->width = textSurf->w;
-        this->entity->height = textSurf->h;
+        this->entity->drawWidth = textSurf->w;
+        this->entity->drawHeight = textSurf->h;
         SDL_FreeSurface(textSurf);
     }
 

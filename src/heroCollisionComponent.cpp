@@ -1,25 +1,22 @@
 #include "collisionComponent.h"
 
-int sign(int x) {
-    if (x < 0) {
-        return -1;
-    } else {
-        return 1;
-    }
-}
-
 HeroCollisionComponent::HeroCollisionComponent(Entity* ent, Command* onEntity) :
     DynamicCollisionComponent(ent),
     entityCollisionCommand(onEntity),
     timeSinceLastCollision(0) {
+        this->cameraShakeCommand = new CameraShakeCommand();
 }
 
 HeroCollisionComponent::~HeroCollisionComponent() {
     if (this->entityCollisionCommand)
         delete this->entityCollisionCommand;
+    delete this->cameraShakeCommand;
 }
 
 void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int dt) {
+    // shake camera
+    Component::commandList->push_back(this->cameraShakeCommand);
+
     if (dynamic_cast<EnemyCollisionComponent*>(otherComp)) {
         timeSinceLastCollision+=dt;
 
@@ -41,7 +38,8 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
     } else if (HeroCollisionComponent* otherHero =
                dynamic_cast<HeroCollisionComponent*>(otherComp)) {
         // knock back the other hero
-        otherHero->entity->physics->bump(sign(otherHero->entity->x - this->entity->x));
+        otherHero->entity->physics->bump(this->sign(otherHero->entity->x + otherHero->entity->width/2 -
+                                                    this->entity->x - this->entity->width/2));
     }
 
 }

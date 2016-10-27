@@ -1,4 +1,6 @@
 #include "camera.h"
+#include "math.h"
+#include <iostream>
 
 Camera::Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH) :
     renderer(renderer),
@@ -9,12 +11,33 @@ Camera::Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentLis
     minX(0),
     minY(0),
     maxX(windowW),
-    maxY(windowH)
+    maxY(windowH),
+    offsetX(0),
+    offsetY(0),
+    shakeTime(0),
+    maxShakeTime(1000),
+    shakeDist(7)
 {
 }
 
 Camera::~Camera() {
     this->renderer=NULL;
+}
+
+void Camera::startShake() {
+    this->shakeTime = this->maxShakeTime;
+}
+
+void Camera::updateShake(int dt) {
+    this->shakeTime -= dt;
+    if (this->shakeTime > 0) {
+        this->offsetX = cos(this->shakeTime) * this->shakeDist * (((float) this->shakeTime) / this->maxShakeTime);
+        this->offsetY = sin(this->shakeTime) * this->shakeDist * (((float) this->shakeTime) / this->maxShakeTime);
+    } else {
+        this->offsetX = 0;
+        this->offsetY = 0;
+        this->shakeTime = 0;
+    }
 }
 
 void Camera::draw(int dt, ArtComponent *artComponent) {
@@ -70,8 +93,8 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
         }
     }
 
-    SDL_Rect dest = { (int)entity->x - minX + entity->width/2 - entity->drawWidth/2,
-                      (int) entity->y - minY + entity->height/2 - entity->drawHeight/2,
+    SDL_Rect dest = { (int)entity->x - minX + entity->width/2 - entity->drawWidth/2 - offsetX,
+                      (int) entity->y - minY + entity->height/2 - entity->drawHeight/2 - offsetY,
                       entity->drawWidth,
                       entity->drawHeight};
 

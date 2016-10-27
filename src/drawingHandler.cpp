@@ -1,7 +1,9 @@
 #include "drawingHandler.h"
 
-DrawingHandler::DrawingHandler(std::vector<ArtComponent*>& componentList,
+DrawingHandler::DrawingHandler(std::vector<Command*>& commandList,
+                               std::vector<ArtComponent*>& componentList,
                                SDL_Renderer* renderer, int windowW, int windowH) :
+    commandList(commandList),
     componentList(componentList),
     renderer(renderer),
     camera(renderer, componentList, windowW, windowH),
@@ -16,6 +18,9 @@ void DrawingHandler::initializeCamera(int levelW, int levelH, bool previewOn) {
 void DrawingHandler::draw(int dt) {
     SDL_RenderClear(this->renderer);
     std::vector<ArtComponent*>::iterator it;
+
+    // shake the camera
+    camera.updateShake(dt);
 
     for (int i = 0; i <= ArtComponent::MAXLAYER; i++) {
         for (it = this->componentList.begin(); it != this->componentList.end(); ) {
@@ -65,4 +70,17 @@ bool DrawingHandler::previewLevel(int dt) {
     }
 
     return true;
+}
+
+void DrawingHandler::checkCameraShakes() {
+    std::vector<Command*>::iterator it;
+    for (it = this->commandList.begin(); it != this->commandList.end();) {
+        if (dynamic_cast<CameraShakeCommand*>(*it)) {
+            *it = this->commandList.back();
+            this->commandList.pop_back();
+            this->camera.startShake();
+        } else {
+            ++it;
+        }
+    }
 }
