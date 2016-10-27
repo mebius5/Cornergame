@@ -1,13 +1,5 @@
 #include "collisionComponent.h"
 
-int sign(int x) {
-    if (x < 0) {
-        return -1;
-    } else {
-        return 1;
-    }
-}
-
 HeroCollisionComponent::HeroCollisionComponent(Entity* ent, Command* onEntity) :
     DynamicCollisionComponent(ent),
     entityCollisionCommand(onEntity),
@@ -46,7 +38,7 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
     } else if (HeroCollisionComponent* otherHero =
                dynamic_cast<HeroCollisionComponent*>(otherComp)) {
         // knock back the other hero
-        otherHero->entity->physics->bump(sign(otherHero->entity->x - this->entity->x));
+        otherHero->entity->physics->bump(this->sign(otherHero->entity->x - this->entity->x));
     }
 
 }

@@ -41,6 +41,15 @@ CollisionComponent::CollisionComponent(Entity* entity) :
     Component(entity) {
 }
 
+int CollisionComponent::sign(int x) {
+    if (x < 0) {
+        return -1;
+    } else {
+        return 1;
+    }
+}
+
+
 StaticCollisionComponent::StaticCollisionComponent(Entity* entity) :
     CollisionComponent(entity) {
     //xBinIndex(0),       //TODO: init this index and use it?
