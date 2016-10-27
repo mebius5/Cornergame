@@ -12,14 +12,19 @@ HeroCollisionComponent::HeroCollisionComponent(Entity* ent, Command* onEntity) :
     DynamicCollisionComponent(ent),
     entityCollisionCommand(onEntity),
     timeSinceLastCollision(0) {
+        this->cameraShakeCommand = new CameraShakeCommand();
 }
 
 HeroCollisionComponent::~HeroCollisionComponent() {
     if (this->entityCollisionCommand)
         delete this->entityCollisionCommand;
+    delete this->cameraShakeCommand;
 }
 
 void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int dt) {
+    // shake camera
+    Component::commandList->push_back(this->cameraShakeCommand);
+
     if (dynamic_cast<EnemyCollisionComponent*>(otherComp)) {
         timeSinceLastCollision+=dt;
 

@@ -38,6 +38,7 @@ public:
 class HeroCollisionComponent : public DynamicCollisionComponent {
 private:
     Command* entityCollisionCommand;
+    Command* cameraShakeCommand;
     int timeSinceLastCollision;
 public:
     HeroCollisionComponent(Entity* entity, Command* entityCollisionCmd);

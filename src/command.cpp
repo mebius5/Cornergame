@@ -19,3 +19,6 @@ DespawnEntityCommand::DespawnEntityCommand(int id) :
 PreviewOffCommand::PreviewOffCommand() {
 
 }
+
+CameraShakeCommand::CameraShakeCommand() {
+}

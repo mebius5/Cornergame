@@ -15,9 +15,16 @@ public:
     int minY;
     int maxX;
     int maxY;
+    int offsetX;
+    int offsetY;
+    int shakeTime;
+    int maxShakeTime;
+    int shakeDist;
 
     Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH);
     ~Camera();
+    void startShake();
+    void updateShake(int dt);
     void draw(int dt, ArtComponent *artComponent);
     void shift(int dx, int dy);
     void resetCamera(int minX, int minY, int maxX, int maxY);
