@@ -4,6 +4,8 @@
 #include "entity.h"
 #include "component.h"
 
+//Must include entity.h before component.h
+
 class PowerUpComponent : public Component {
 private:
     int timeElapsed;
