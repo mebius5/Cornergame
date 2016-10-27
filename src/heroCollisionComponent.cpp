@@ -38,7 +38,8 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
     } else if (HeroCollisionComponent* otherHero =
                dynamic_cast<HeroCollisionComponent*>(otherComp)) {
         // knock back the other hero
-        otherHero->entity->physics->bump(this->sign(otherHero->entity->x - this->entity->x));
+        otherHero->entity->physics->bump(this->sign(otherHero->entity->x + otherHero->entity->width/2 -
+                                                    this->entity->x - this->entity->width/2));
     }
 
 }
