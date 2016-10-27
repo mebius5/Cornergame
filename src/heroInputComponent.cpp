@@ -2,7 +2,12 @@
 
 HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand) :
     InputComponent(entity),
-    wasd(wasd),
+    upKey(wasd ? SDLK_w : SDLK_UP),
+    downKey(wasd ? SDLK_s : SDLK_DOWN),
+    leftKey(wasd ? SDLK_a : SDLK_LEFT),
+    rightKey(wasd ? SDLK_d : SDLK_RIGHT),
+    shootKey(wasd ? SDLK_v : SDLK_m),
+    jumpPressed(false),
     spawnCommand(spawnCommand) {
 }
 
@@ -14,21 +19,21 @@ HeroInputComponent::~HeroInputComponent() {
 }
 
 void HeroInputComponent::keyDown(SDL_Keycode keycode) {
-    if ((!this->wasd && keycode == SDLK_UP) || (this->wasd && keycode == SDLK_w)) {
-        this->entity->physics->jump();
+    if (keycode == this->upKey) {
+        if (!this->jumpPressed) {
+            this->entity->physics->jump();
+            this->jumpPressed = true;
+        }
         this->entity->physics->accelerateY(-1);
-    } else if ((!this->wasd && keycode == SDLK_DOWN) || (this->wasd && keycode == SDLK_s)) {
-        //this->entity->physics->accelerateY(1);
-    } else if ((!this->wasd && keycode == SDLK_LEFT) || (this->wasd && keycode == SDLK_a)) {
+    //} else if (keycode == this->downKey) {
+    //    this->entity->physics->accelerateY(1);
+    } else if (keycode == this->leftKey) {
         this->entity->physics->accelerateX(-1);
         this->entity->dir = -1;
-    } else if ((!this->wasd && keycode == SDLK_RIGHT) || (this->wasd && keycode == SDLK_d)) {
+    } else if (keycode == this->rightKey) {
         this->entity->physics->accelerateX(1);
         this->entity->dir = 1;
-    } else if ((!this->wasd && keycode == SDLK_k) || (this->wasd && keycode == SDLK_k)) {
-        this->entity->health->toggleInvincibility();
-        this->entity->physics->toggleInfiniteJumps();
-    } else if ((!this->wasd && keycode == SDLK_m) || (this->wasd && keycode == SDLK_v)) {
+    } else if (keycode == this->shootKey) {
         this->entity->actionState = THROW;
         this->spawnCommand->dir = this->entity->dir;
         if (this->spawnCommand->dir == 1) {
@@ -39,30 +44,19 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
         this->spawnCommand->y = entity->y+20;
         this->spawnCommand->ownerID = entity->getId();
         Component::commandList->push_back(this->spawnCommand);
+    } else if (keycode == SDLK_k) {
+        this->entity->health->toggleInvincibility();
+        this->entity->physics->toggleInfiniteJumps();
     }
-
 }
 
 void HeroInputComponent::keyUp(SDL_Keycode keycode) {
-    if(wasd){
-        switch (keycode) {
-            case SDLK_w:
-            case SDLK_s:
-                this->entity->physics->clearAccelerationY();
-                break;
-            case SDLK_a:
-            case SDLK_d:
-                this->entity->physics->clearAccelerationX();
-        }
-    } else {
-        switch (keycode) {
-            case SDLK_UP:
-            case SDLK_DOWN:
-                this->entity->physics->clearAccelerationY();
-                break;
-            case SDLK_LEFT:
-            case SDLK_RIGHT:
-                this->entity->physics->clearAccelerationX();
-        }
+    if (keycode == this->upKey) {
+        this->jumpPressed = false;
+        this->entity->physics->clearAccelerationY();
+    //} else if (keycode == this->downKey) {
+    //    this->entity->physics->clearAccelerationY();
+    } else if (keycode == this->leftKey || keycode == this->rightKey) {
+        this->entity->physics->clearAccelerationX();
     }
 }

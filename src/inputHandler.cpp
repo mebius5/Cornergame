@@ -19,26 +19,25 @@ void InputHandler::handleEvents() {
             this->commandList.push_back(&this->quitCommand);
         else if (event.type != SDL_KEYUP && event.type != SDL_KEYDOWN)
             return;
-        else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_ESCAPE)
-            this->commandList.push_back(&this->quitCommand);
-        else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_q)
-            this->commandList.push_back(&this->switchToMenu);
-        else if(event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_p)
-            this->commandList.push_back(&this->previewOff);
-        else {
-            for (it = this->componentList.begin(); it != this->componentList.end(); ) {
-                if (!(*it)->isValid()) {        // remove invalid components
-                    *it = this->componentList.back();
-                    this->componentList.pop_back();
-                    continue;
-                }
 
-                if (event.type == SDL_KEYUP)
-                    (*it)->keyUp(event.key.keysym.sym);
-                else   // if type == SDL_KEYDOWN
-                    (*it)->keyDown(event.key.keysym.sym);
-                ++it;
+        for (it = this->componentList.begin(); it != this->componentList.end(); ) {
+            if (!(*it)->isValid()) {        // remove invalid components
+                *it = this->componentList.back();
+                this->componentList.pop_back();
+                continue;
             }
+
+            if (event.type == SDL_KEYUP)
+                (*it)->keyUp(event.key.keysym.sym);
+            else   // if type == SDL_KEYDOWN
+                (*it)->keyDown(event.key.keysym.sym);
+            ++it;
         }
+        if (event.key.keysym.sym == SDLK_ESCAPE)
+            this->commandList.push_back(&this->quitCommand);
+        else if (event.key.keysym.sym == SDLK_q)
+            this->commandList.push_back(&this->switchToMenu);
+        else if (event.key.keysym.sym == SDLK_p)
+            this->commandList.push_back(&this->previewOff);
     }
 }

@@ -16,7 +16,12 @@ public:
 
 class HeroInputComponent: public InputComponent {
 private:
-    bool wasd;
+    SDL_Keycode upKey;
+    SDL_Keycode downKey;
+    SDL_Keycode leftKey;
+    SDL_Keycode rightKey;
+    SDL_Keycode shootKey;
+    bool jumpPressed;
     SpawnEntityCommand* spawnCommand;
 public:
     HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand);
