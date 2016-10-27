@@ -134,6 +134,9 @@ void Camera::initializeCamera(int levelW, int levelH, bool previewOn) {
 
 void Camera::detectBorderCollision(Entity *entity, int dt) {
     int shiftAmount = (dt/2)+1;
+    if(shiftAmount< 8){
+        shiftAmount = 8;
+    }
     if (entity->collision) {
         if (entity->x < minX){
             this->borderBoundX(entity, minX+shiftAmount);
