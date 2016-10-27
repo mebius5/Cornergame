@@ -1,6 +1,6 @@
 #include "entityBuilder.h"
 
-EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
+EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
     textureMap(10),
@@ -23,12 +23,12 @@ SDL_Surface* EntityBuilder::loadImage(const char* filename) {
 }
 
 SDL_Surface* EntityBuilder::createText(FontEnum fontType, const char* text,
-                                       int fontSize, int r, int g, int b, int a) {
+                                       int fontSize, int r, int g, int b, int a, int windowW) {
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
 
     SDL_Color color={(Uint8)r,(Uint8) g,(Uint8) b, 255};
-    SDL_Surface* textSurf = TTF_RenderUTF8_Blended(this->fontMap[fontType][fontSize], text, color);
+    SDL_Surface* textSurf = TTF_RenderUTF8_Blended_Wrapped(this->fontMap[fontType][fontSize], text, color, (Uint32)windowW);
     if (textSurf == NULL) {
        std::cerr << "Blend font failed! TTF Error: " << TTF_GetError() << std::endl;
        return NULL;
@@ -110,6 +110,8 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
     hero->score = new ScoreComponent(hero);
     hero->health = new HealthComponent(hero, 1000, new SwitchStateCommand(STATE_RESULTS));
     hero->physics = new PhysicsComponent(hero);
+    hero->powerUp = new PowerUpComponent(hero);
+
     return hero;
 }
 
@@ -157,7 +159,7 @@ Entity* EntityBuilder::createCenteredFadeInText(FontEnum fontType, const char *t
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
     SDL_Surface* textSurface =
-        this->createText(fontType, text, fontSize, r, g, b, initialAlpha);
+        this->createText(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
     int x = (windowW/2 - textSurface->w/2);
     int y = (windowH/2 - textSurface->h/2);
     Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
@@ -166,15 +168,27 @@ Entity* EntityBuilder::createCenteredFadeInText(FontEnum fontType, const char *t
     return fadeInText;
 }
 
-Entity* EntityBuilder::createHorizontallyCenteredFadeInText(FontEnum fontType,
-                                                 const char *text, int fontSize,
-                                                 int r, int g, int b, int initialAlpha,
-                                                 int windowW, int yPos,
-                                                 int index, int numOptions, StateEnum nextState) {
+Entity* EntityBuilder::createHorizontallyCenteredFadeInText(FontEnum fontType, const char *text, int fontSize, int r,
+                                                            int g, int b, int initialAlpha, int windowW, int yPos) {
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
     SDL_Surface* textSurface =
-        this->createText(fontType, text, fontSize, r, g, b, initialAlpha);
+            this->createText(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
+    int x = (windowW/2 - textSurface->w/2);
+    Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
+    fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
+    return fadeInText;
+}
+
+Entity* EntityBuilder::createHorizontallyCenteredFadeInMenuText(FontEnum fontType,
+                                                                const char *text, int fontSize,
+                                                                int r, int g, int b, int initialAlpha,
+                                                                int windowW, int yPos,
+                                                                int index, int numOptions, StateEnum nextState) {
+    if (!this->fontMap[fontType][fontSize])
+        this->loadFont(fontType, fontSize);
+    SDL_Surface* textSurface =
+        this->createText(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
     int x = (windowW/2 - textSurface->w/2);
     Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
@@ -195,6 +209,18 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {        // not using map
     zone->art = new StaticArtComponent(zone, texture, 2, false);
     zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_PLAY));
     return zone;
+}
+
+Entity * EntityBuilder::createInfiniteJumpPowerUp(int x, int y) {
+    Entity * entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
+    SDL_Surface* surface = SDL_CreateRGBSurface(0, 30, 30, 32, 0, 0, 0, 0);
+    SDL_Rect tempRect = {0,0,30,30};
+    SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 0, 0, 255));
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
+    SDL_FreeSurface(surface);
+    entity->art = new StaticArtComponent(entity, texture, 1, false);
+    entity->collision = new InfiniteJumpCollisionComponent(entity, new DespawnEntityCommand(entity->getId()));
+    return entity;
 }
 
 Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,

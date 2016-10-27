@@ -13,6 +13,19 @@ cd src/
 make
 ./gameManager
 
+Assignment 7 Task Writeups
+
+Akshay
+
+Andrew
+
+Grady
+- Added power ups and power up handlers
+- Corrected result states and highscore state to get results from both heros
+- Corrected result state texts
+
+Pratyush
+
 Assignment 6 Task Writeups
 
 General Notes:
@@ -37,7 +50,7 @@ Andrew
 Grady
 - Modified level editor to collapse all neighboring horizontal terrain tiles into a single entity.
   This decreases amount of collisions that need to be checked
-- Added ability to wrap a level to go on forever until a hero dies or get to the victory zone
+- Added ability to wrap a level to go on forever until a hero dies or get to the hero1Victory zone
   Note: The hero is copied over only if it was originally on the last camera section.
 - Added ability to proceed to the next level, allowing the addition of multiple levels
 - Modified damage control so that it's based on time
@@ -81,7 +94,7 @@ TERRAIN
 
 LEVEL EDITOR
 - the game reads in a text file to determine the layout of the level
-- all players, enemies, terrain, victory zones are placed this way. See
+- all players, enemies, terrain, hero1Victory zones are placed this way. See
     EntityManager's populateLevel() method.
 
 SCREENS
@@ -169,9 +182,9 @@ Else, the enemy moves randomly and freely on its own.
 If your hero gets hit, an alarm noise will play.
 
 SCORE
-The score increments with time of survival and decrements with each collision
-with enemy. In order to get the highest score, you want to try to survive as
-long as possible while avoiding the enemy, and then go to the victory zone
+The hero1Score increments with time of survival and decrements with each collision
+with enemy. In order to get the highest hero1Score, you want to try to survive as
+long as possible while avoiding the enemy, and then go to the hero1Victory zone
 when you absolutely can't hold on.
 
 QUIRKS

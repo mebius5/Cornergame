@@ -24,9 +24,10 @@ public:
     std::vector<PhysicsComponent*> physicsComponents;
     std::vector<HealthComponent*> healthComponents;
     std::vector<ScoreComponent*> scoreComponents;
+    std::vector<PowerUpComponent*> powerUpComponents;
     std::vector<Entity *> heroEntities;
 
-    EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList);
+    EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList);
     ~EntityManager();
 
     void addEntity(Entity* entity);     // add entity/components to map/vectors
@@ -46,11 +47,17 @@ public:
                             int initialAlpha, int windowW, int windowH);
 
     Entity* createHorizontallyCenteredFadeInText(FontEnum font,
-                            const char *text, int fontSize,
-                            int r, int g, int b, int initialAlpha,
-                            int windowW, int yPos,
-                            int index, int numOptions, StateEnum nextState);
+                                                     const char *text, int fontSize,
+                                                     int r, int g, int b, int initialAlpha,
+                                                     int windowW, int yPos);
+
+    Entity* createHorizontallyCenteredFadeInMenuText(FontEnum font,
+                                                     const char *text, int fontSize,
+                                                     int r, int g, int b, int initialAlpha,
+                                                     int windowW, int yPos,
+                                                     int index, int numOptions, StateEnum nextState);
     Entity* createVictoryZone(int x, int y);
+    Entity* createInfiniteJumpPowerUp(int x, int y);
     Entity * createTerrain(int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
     Entity* createProjectile(int x, int y, int dir, int ownerID, ProjEnum projType);

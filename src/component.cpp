@@ -2,7 +2,10 @@
 #include "artComponent.h"
 #include "collisionComponent.h"
 #include "inputComponent.h"
+#include "powerUpComponent.h"
+
 #include "component.h"
+
 
 std::vector<Command*>* Component::commandList = NULL;
 

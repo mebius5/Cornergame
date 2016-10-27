@@ -32,6 +32,7 @@ public:
     void updateLocation(int dt);
     void jump();
     void toggleInfiniteJumps();
+    bool isInfiniteJumpOn();
     void resetJumps();
     void bump(int dir);
     void accelerateX(int dir);

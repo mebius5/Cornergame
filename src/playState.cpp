@@ -6,7 +6,8 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
                  SoundHandler& soundHandler, ControlHandler& controlHandler,
                  AiHandler& aiHandler, CollisionHandler& collisionHandler,
                  ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
-                 ResultsState& resultsState, HighscoreState& highscoreState) :
+                 PowerUpHandler& powerUpHandler, ResultsState& resultsState,
+                 HighscoreState& highscoreState) :
     State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
@@ -15,9 +16,10 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
     aiHandler(aiHandler),
     collisionHandler(collisionHandler),
     scoreHandler(scoreHandler),
+    physicsHandler(physicsHandler),
+    powerUpHandler(powerUpHandler),
     resultsState(resultsState),
     highscoreState(highscoreState),
-    physicsHandler(physicsHandler),
     levelW(0),
     levelH(0){
 }
@@ -35,6 +37,7 @@ void PlayState::begin(int level) {
     levelFile.append(".txt");
     Level level1(levelFile.c_str(), windowW, windowH);
     this->entityManager.populateLevel(&level1);
+    this->entityManager.createInfiniteJumpPowerUp(600,600);
     this->hero = entityManager.heroEntities.at(0);
     this->hero2 = entityManager.heroEntities.at(1);
     this->levelW = level1.width*32;
@@ -86,6 +89,7 @@ StateEnum PlayState::run() {
         this->soundHandler.handleSfx(dt);
         this->scoreHandler.handleScore(dt);
         this->drawingHandler.checkCameraShakes();
+        this->powerUpHandler.update(dt);
         this->drawingHandler.shift(dt);
         this->drawingHandler.draw(dt);
         this->entityManager.handleSpawns();
@@ -101,8 +105,8 @@ StateEnum PlayState::run() {
 
 void PlayState::cleanup(StateEnum nextState) {
     if (nextState == STATE_RESULTS) {  // if game complete, update other states
-        this->highscoreState.updateHighscores(this->hero);
-        this->resultsState.updateResults(this->hero);     //TODO: save sprite?
+        this->highscoreState.updateHighscores(this->hero, this->hero2);
+        this->resultsState.updateResults(this->hero, this->hero2);     //TODO: save sprite?
     }
     this->entityManager.clear();
     this->commandList.clear();

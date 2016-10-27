@@ -98,4 +98,14 @@ public:
     void onBorderCollision();
 };
 
+class InfiniteJumpCollisionComponent : public StaticCollisionComponent {
+private:
+    Command * deletePowerUpCmd;
+    bool isClaimed;
+public:
+    InfiniteJumpCollisionComponent(Entity *entity, Command * deleteEntityCmd);
+    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
+    void onBorderCollision();
+};
+
 #endif

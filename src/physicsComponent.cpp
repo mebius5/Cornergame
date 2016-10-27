@@ -145,3 +145,7 @@ void PhysicsComponent::clearAccelerationX() {
 void PhysicsComponent::clearAccelerationY() {
     this->yAccel = 0;
 }
+
+bool PhysicsComponent::isInfiniteJumpOn() {
+    return this->infiniteJumps;
+}

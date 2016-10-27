@@ -1,6 +1,7 @@
 #define TWO_PI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
 
+#include <powerUpHandler.h>
 #include "gameManager.h"
 
 /* gameManager.cpp
@@ -107,6 +108,7 @@ void GameManager::run() {
     ControlHandler controlHandler(commandList);
     ScoreHandler scoreHandler(entityMgr.scoreComponents);
     PhysicsHandler physicsHandler(entityMgr.physicsComponents);
+    PowerUpHandler powerUpHandler(entityMgr.powerUpComponents);
 
     StartState startState(this->width, this->height, entityMgr, commandList,
                           this->renderer, drawingHandler, inputHandler,
@@ -124,7 +126,7 @@ void GameManager::run() {
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
                         collisionHandler, scoreHandler, physicsHandler,
-                        resultsState, highscoreState);
+                        powerUpHandler, resultsState, highscoreState);
 
     // Load music resources
     soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);

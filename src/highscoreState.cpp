@@ -55,7 +55,13 @@ void HighscoreState::cleanup(StateEnum /*next*/) {
     this->soundHandler.stopBackgroundMusic();
 }
 
-void HighscoreState::updateHighscores(Entity* hero) {
-    if (hero->score->getScore() > this->highscore)
-        this->highscore = hero->score->getScore();
+void HighscoreState::updateHighscores(Entity *hero1, Entity *hero2) {
+    if(hero1->health> 0){
+        if (hero1->score->getScore() > this->highscore)
+            this->highscore = hero1->score->getScore();
+    } else{
+        if (hero2->score->getScore() > this->highscore)
+            this->highscore = hero2->score->getScore();
+    }
+
 }

@@ -15,7 +15,9 @@ Entity::Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHe
     art(NULL),
     input(NULL),
     ai(NULL),
-    health(NULL) {
+    health(NULL),
+    powerUp(NULL)
+{
 }
 
 Entity::~Entity() {
@@ -33,6 +35,8 @@ Entity::~Entity() {
         delete this->ai;
     if (this->health)
         delete this->health;
+    if (this->powerUp)
+        delete this->powerUp;
 }
 
 int Entity::getId() {

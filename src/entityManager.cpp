@@ -1,6 +1,6 @@
 #include "entityManager.h"
 
-EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList) :
+EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList) :
     commandList(cmdList),
     entityBuilder(renderer),
     numCleanable(0) {
@@ -50,6 +50,9 @@ void EntityManager::addEntity(Entity* entity) {
     if (entity->score) {
         this->scoreComponents.push_back(entity->score);
     }
+    if (entity->powerUp){
+        this->powerUpComponents.push_back(entity->powerUp);
+    }
 }
 
 void EntityManager::deleteEntity(int id) {
@@ -74,6 +77,8 @@ void EntityManager::deleteEntity(int id) {
         entity->health->invalidate();
     if (entity->score)
         entity->score->invalidate();
+    if (entity->powerUp)
+        entity->powerUp->invalidate();
 }
 
 void EntityManager::cleanupEntities() {
@@ -100,6 +105,7 @@ void EntityManager::clear() {
     this->scoreComponents.clear();
     this->staticCollisionComponents.clear();
     this->dynamicCollisionComponents.clear();
+    this->powerUpComponents.clear();
     this->heroEntities.clear();}
 
 /* Entity Creation Methods */
@@ -144,12 +150,22 @@ Entity* EntityManager::createCenteredFadeInText(FontEnum font,
     return entity;
 }
 
-Entity* EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const char* text,
-                                                            int fontSize,
-                                                            int r, int g, int b, int initialAlpha,
-                                                            int windowW, int yPos,
-                                                            int index, int numOptions, StateEnum nextState) {
-    Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInText(
+Entity* EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const char *text, int fontSize, int r, int g,
+                                                            int b, int initialAlpha, int windowW, int yPos) {
+    Entity * entity = this->entityBuilder.createHorizontallyCenteredFadeInText(
+            font, text, fontSize, r, g, b, initialAlpha,
+            windowW, yPos
+    );
+    this->addEntity(entity);
+    return entity;
+}
+
+Entity* EntityManager::createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text,
+                                                                int fontSize,
+                                                                int r, int g, int b, int initialAlpha,
+                                                                int windowW, int yPos,
+                                                                int index, int numOptions, StateEnum nextState) {
+    Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInMenuText(
             font, text, fontSize, r, g, b, initialAlpha,
             windowW, yPos, index, numOptions, nextState);
     this->addEntity(entity);
@@ -160,6 +176,12 @@ Entity* EntityManager::createVictoryZone(int x, int y) {
     Entity* entity = this->entityBuilder.createVictoryZone(x, y);
     this->addEntity(entity);
     return entity;
+}
+
+Entity* EntityManager::createInfiniteJumpPowerUp(int x, int y) {
+    Entity * entity = this->entityBuilder.createInfiniteJumpPowerUp(x,y);
+    this->addEntity(entity);
+    return  entity;
 }
 
 Entity* EntityManager::createTerrain(int x, int y, int numberHorizontal, bool freeTop,
