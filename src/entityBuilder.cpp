@@ -99,7 +99,7 @@ void EntityBuilder::freeFonts() {
 /* Entity creation operations */
 Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
     Texture texture = this->textureMap[texType];
-    Entity* hero = new Entity(this->nextId++, x, y, 64, 64);
+    Entity* hero = new Entity(this->nextId++, x, y, 32, 64, 64, 64);
 
     PlaySoundCommand* command = NULL;
     if (sfxType != SFX_NONE)
@@ -115,7 +115,7 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
 
 Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes) {
     Texture texture = this->textureMap[texType];
-    Entity* enemy = new Entity(this->nextId++, x, y, 64, 64);
+    Entity* enemy = new Entity(this->nextId++, x, y, 64, 64, 64, 64);
     enemy->collision = new EnemyCollisionComponent(enemy);
     enemy->art = new AnimationComponent(enemy, texture, 1);
     enemy->ai = new EnemyAiComponent(enemy, heroes);
@@ -130,14 +130,14 @@ Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vecto
 
 Entity* EntityBuilder::createBackground(TextureEnum texType, int width, int height) {
     Texture texture = this->textureMap[texType];
-    Entity* background = new Entity(this->nextId++, 0, 0, width, height);
+    Entity* background = new Entity(this->nextId++, 0, 0, width, height, width, height);
     background->art = new StaticArtComponent(background, texture.sdlTexture, 0, true);
     return background;
 }
 
 Entity* EntityBuilder::createHealthBar(int x, int y, Entity* owner) {
     Texture texture = this->textureMap[TEX_HEALTHBAR];
-    Entity* healthBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height);
+    Entity* healthBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);
     healthBar->art = new HealthBarArtComponent(healthBar, texture, owner->health, 2);
     return healthBar;
 }
@@ -145,7 +145,7 @@ Entity* EntityBuilder::createHealthBar(int x, int y, Entity* owner) {
 Entity* EntityBuilder::createScoreBox(int x, int y, Entity* owner, FontEnum fontType, int fontSize) {
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
-    Entity* scoreBox = new Entity(this->nextId++, x, y, 100, 100);
+    Entity* scoreBox = new Entity(this->nextId++, x, y, 100, 100, 100, 100);
     scoreBox->art = new ScoreTextArtComponent(scoreBox, this->renderer,
                                               this->fontMap[fontType][fontSize], owner->score, 2);
     return scoreBox;
@@ -160,7 +160,7 @@ Entity* EntityBuilder::createCenteredFadeInText(FontEnum fontType, const char *t
         this->createText(fontType, text, fontSize, r, g, b, initialAlpha);
     int x = (windowW/2 - textSurface->w/2);
     int y = (windowH/2 - textSurface->h/2);
-    Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h);
+    Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
     //fadeInText->input = new StartScreenInputComponent(fadeInText);
     return fadeInText;
@@ -176,7 +176,7 @@ Entity* EntityBuilder::createHorizontallyCenteredFadeInText(FontEnum fontType,
     SDL_Surface* textSurface =
         this->createText(fontType, text, fontSize, r, g, b, initialAlpha);
     int x = (windowW/2 - textSurface->w/2);
-    Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h);
+    Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
     SwitchStateCommand* nextStateCmd = NULL;
     if (nextState != STATE_NONE)
@@ -186,7 +186,7 @@ Entity* EntityBuilder::createHorizontallyCenteredFadeInText(FontEnum fontType,
 }
 
 Entity* EntityBuilder::createVictoryZone(int x, int y) {        // not using maps, since its a
-    Entity* zone = new Entity(this->nextId++, x, y, 50, 50);    // temporary feature
+    Entity* zone = new Entity(this->nextId++, x, y, 50, 50, 50, 50);    // temporary feature
     SDL_Surface* surface = SDL_CreateRGBSurface(0, 50, 50, 32, 0, 0, 0, 0);
     SDL_Rect tempRect = {0,0,50,50};
     SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 255, 0, 0));
@@ -202,7 +202,7 @@ Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int n
     if (!this->terrainTexMap[texType][numberHorizontal].sdlTexture)
         this->loadTerrain(texType, numberHorizontal);
     Texture texture = this->terrainTexMap[texType][numberHorizontal];
-    Entity* terrain = new Entity(this->nextId++, x, y, texture.width, texture.height);
+    Entity* terrain = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
 
     terrain->art = new StaticArtComponent(terrain, texture.sdlTexture, 1, false);
     terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
@@ -211,7 +211,7 @@ Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int n
 
 Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, int dir, int ownerId) {
     Texture texture = this->textureMap[texType];
-    Entity* projectile = new Entity(this->nextId++, x, y, texture.width*2, texture.height*2);
+    Entity* projectile = new Entity(this->nextId++, x, y, texture.width*2, texture.height*2, texture.width*2, texture.height*2);
     projectile->art = new StaticArtComponent(projectile, texture.sdlTexture, 1, false);
     DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
     projectile->collision = new ProjectileCollisionComponent(projectile, dCmd, ownerId);

@@ -28,6 +28,8 @@ public:
     float y;
     int width;
     int height;
+    int drawWidth;
+    int drawHeight;
     int dir;
     Action actionState;
 
@@ -39,7 +41,7 @@ public:
     AiComponent* ai;
     HealthComponent* health;
 
-    Entity(int id, float x, float y, int w, int h);
+    Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHeight);
     ~Entity();
     int getId();
 };
