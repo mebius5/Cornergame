@@ -1,4 +1,5 @@
 #include "physicsComponent.h"
+#include <iostream>
 
 PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
@@ -6,6 +7,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     yAccel(0.0f),
     accelAmount(.001f),
     gravity(0.0017f),
+    slideVelocity(.1f),
     jumps(0),
     infiniteJumps(false),
     collisionComp(dynamic_cast<DynamicCollisionComponent*>(entity->collision)),
@@ -14,7 +16,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     maxXVelocity(.6f),
     maxYVelocity(5.0f),
     jumpVelocity(.6f),
-    deceleration(.0007f),
+    deceleration(.0012f),
     maxJumps(1) {
 }
 
@@ -55,9 +57,8 @@ void PhysicsComponent::updateLocation(int dt) {
     this->yVelocity = this->clipVelocity(this->yVelocity, this->maxYVelocity);
 
     // account for sliding on walls
-    float finalYVelocity = this->yVelocity;
     if ((onLeftWall || onRightWall) && this->yVelocity > 0) {
-        finalYVelocity *= .125f;
+        this->yVelocity = this->clipVelocity(this->yVelocity, this->slideVelocity);
     }
 
     // update flags if entity slides off platform/wall
@@ -65,8 +66,8 @@ void PhysicsComponent::updateLocation(int dt) {
             || this->entity->x + this->entity->width <= this->collisionComp->leftBound)) {
         onGround = false;
     }
-    if ((onLeftWall || onRightWall) && (this->entity->y > this->collisionComp->topBound
-            || this->entity->y + this->entity->height <= this->collisionComp->bottomBound)) {
+    if ((onLeftWall || onRightWall) && (this->entity->y > this->collisionComp->bottomBound
+            || this->entity->y + this->entity->height < this->collisionComp->topBound)) {
         onLeftWall = false;
         onRightWall = false;
     }
@@ -92,7 +93,7 @@ void PhysicsComponent::updateLocation(int dt) {
 
     // move entity based on velocity
     this->entity->x += this->xVelocity * dt;
-    this->entity->y += finalYVelocity * dt;
+    this->entity->y += this->yVelocity * dt;
 
     // apply death if out of bounds
     // TODO move this somewhere else
@@ -137,6 +138,8 @@ void PhysicsComponent::accelerateY(int dir) {
 
 void PhysicsComponent::clearAccelerationX() {
     this->xAccel = 0;
+    this->collisionComp->onLeftWall = false;
+    this->collisionComp->onRightWall = false;
 }
 
 void PhysicsComponent::clearAccelerationY() {

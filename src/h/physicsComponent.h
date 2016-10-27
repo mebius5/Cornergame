@@ -11,6 +11,7 @@ private:
     float yAccel;
     float accelAmount;
     float gravity;
+    float slideVelocity;
     int jumps;
     bool infiniteJumps;
     DynamicCollisionComponent* collisionComp;
