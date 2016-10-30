@@ -88,9 +88,15 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
         if(entity->x >= ((maxX+minX)/2)){
             shift(entity->x-(maxX+minX)/2,0);
         }***/
+
         if(entity->y >= (minY+(maxY-minY)*.75)){
             shift(0,entity->y-(minY+(maxY-minY)*.75));
         }
+
+        if(entity->y <= levelH*32 /*&& entity->y >= levelH*32*0.75*/){
+            shift(0, - 2);
+        }
+
     }
 
     SDL_Rect dest = { (int)entity->x - minX + entity->width/2 - entity->drawWidth/2 - offsetX,
@@ -132,25 +138,29 @@ void Camera::initializeCamera(int levelW, int levelH, bool previewOn) {
     this->previewOn = previewOn;
 }
 
-void Camera::detectBorderCollision(Entity *entity, int) {
+void Camera::detectBorderCollision(Entity *entity, int dt) {
+    int shiftAmount = (dt/2)+1;
+    if(shiftAmount< 8){
+        shiftAmount = 8;
+    }
     if (entity->collision) {
         if (entity->x < minX){
-            this->borderBoundX(entity, minX+7);
+            this->borderBoundX(entity, minX+shiftAmount);
             entity->health->takeDamage(4);
             entity->actionState = DAMAGE;
         }
         else if (entity->x + entity->width > maxX){
-            this->borderBoundX(entity, maxX - entity->width-7);
+            this->borderBoundX(entity, maxX - entity->width-shiftAmount);
             entity->health->takeDamage(4);
             entity->actionState = DAMAGE;
         }
         if (entity->y < minY){
-            this->borderBoundY(entity, minY+7);
+            this->borderBoundY(entity, minY+shiftAmount);
             entity->health->takeDamage(4);
             entity->actionState = DAMAGE;
         }
         else if (entity->y + entity->height > this->maxY){
-            this->borderBoundY(entity, maxY - entity->height-7);
+            this->borderBoundY(entity, maxY - entity->height-shiftAmount);
             entity->health->takeDamage(4);
             entity->actionState = DAMAGE;
         }

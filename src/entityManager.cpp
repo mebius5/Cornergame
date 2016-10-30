@@ -243,21 +243,26 @@ void EntityManager::populateLevel(Level* level) {
                 createTerrain(originalJ*32, i*32, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
                 break;
             }
-            case ENEMY:
+            case ENEMY:{
                 createEnemy(TEX_ENEMY, j * 32, i * 32);
                 break;
+            }
             case SPAWN: {
                 Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
                 Entity* hero2 = createHero(TEX_HERO2, j * 32 + 64, i * 32, SFX_ALERT, true);
-                createHealthBar(100, 100, hero);
-                createHealthBar(100, 50, hero2);
-                createScoreBox(850, 100, hero);
-                createScoreBox(850, 50, hero2);
+                createHealthBar(100, 50, hero);
+                createHealthBar(100, 100, hero2);
+                createScoreBox(850, 50, hero);
+                createScoreBox(850, 100, hero2);
                 break;
             }
-            case GOAL:
+            case GOAL:{
                 createVictoryZone(j * 32, i * 32);
                 break;
+            }
+            case PU_JUMP:{
+                createInfiniteJumpPowerUp(j*32, i*32);
+            }
             default:
                 break;
             }

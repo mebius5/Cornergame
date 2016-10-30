@@ -55,6 +55,9 @@ Level::Level(std::string filename, int windowW, int windowH) {
                 case 'O':
                     levelContents[i][j] = GOAL;
                     break;
+                case 'J':
+                    levelContents[i][j] = PU_JUMP;
+                    break;
                 default:
                     levelContents[i][j] = NONE;
                     std::cerr << "Unrecognized symbol in level file: " << line.at(j) << std::endl;

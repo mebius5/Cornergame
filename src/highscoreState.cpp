@@ -56,7 +56,7 @@ void HighscoreState::cleanup(StateEnum /*next*/) {
 }
 
 void HighscoreState::updateHighscores(Entity *hero1, Entity *hero2) {
-    if(hero1->health> 0){
+    if(hero2->health->getHealth() <= 0){
         if (hero1->score->getScore() > this->highscore)
             this->highscore = hero1->score->getScore();
     } else{

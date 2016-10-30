@@ -65,7 +65,7 @@ StateEnum ResultsState::run() {
         }
     }
 
-    return STATE_MENU;
+    return STATE_PLAY;
 }
 
 void ResultsState::cleanup(StateEnum /*next*/) {

@@ -149,7 +149,8 @@ void GameManager::run() {
                 currentState = &playState;
                 this->currentLevel++;
                 if(this->currentLevel>maxLevel){
-                    currentState = & resultsState;
+                    currentState = & menuState;
+                    this->currentLevel = 0;
                 }
                 break;
             case STATE_HIGHSCORE:
@@ -162,7 +163,11 @@ void GameManager::run() {
                 break;
             case STATE_RESULTS:
                 currentState = &resultsState;
-                this->currentLevel=0;
+                /***
+                if(this->currentLevel>maxLevel){
+                    currentState = & menuState;
+                    this->currentLevel = 0;
+                }***/
                 break;
             default:
                 break;
