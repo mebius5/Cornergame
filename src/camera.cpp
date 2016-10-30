@@ -16,7 +16,7 @@ Camera::Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentLis
     offsetY(0),
     shakeTime(0),
     maxShakeTime(1000),
-    shakeDist(7)
+    shakeDist(4)
 {
 }
 
