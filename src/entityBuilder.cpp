@@ -207,7 +207,7 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {        // not using map
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     SDL_FreeSurface(surface);
     zone->art = new StaticArtComponent(zone, texture, 2, false);
-    zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_PLAY));
+    zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_RESULTS));
     return zone;
 }
 
@@ -220,6 +220,18 @@ Entity * EntityBuilder::createInfiniteJumpPowerUp(int x, int y) {
     SDL_FreeSurface(surface);
     entity->art = new StaticArtComponent(entity, texture, 1, false);
     entity->collision = new InfiniteJumpCollisionComponent(entity, new DespawnEntityCommand(entity->getId()));
+    return entity;
+}
+
+Entity* EntityBuilder::createInfiniteHealthPowerUp(int x, int y) {
+    Entity * entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
+    SDL_Surface* surface = SDL_CreateRGBSurface(0, 30, 30, 32, 0, 0, 0, 0);
+    SDL_Rect tempRect = {0,0,30,30};
+    SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 0, 255, 0));
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
+    SDL_FreeSurface(surface);
+    entity->art = new StaticArtComponent(entity, texture, 1, false);
+    entity->collision = new InfiniteHealthCollisionComponent(entity, new DespawnEntityCommand(entity->getId()));
     return entity;
 }
 

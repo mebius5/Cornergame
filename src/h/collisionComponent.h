@@ -98,12 +98,26 @@ public:
     void onBorderCollision();
 };
 
-class InfiniteJumpCollisionComponent : public StaticCollisionComponent {
-private:
+class PowerUpCollisionComponent : public StaticCollisionComponent {
+protected:
     Command * deletePowerUpCmd;
     bool isClaimed;
 public:
-    InfiniteJumpCollisionComponent(Entity *entity, Command * deleteEntityCmd);
+    PowerUpCollisionComponent(Entity * entity, Command * deletePwrUpEntityCmd);
+    virtual void onEntityCollision(DynamicCollisionComponent* otherComp, int dt)=0;
+    virtual void onBorderCollision()=0;
+};
+
+class InfiniteJumpCollisionComponent : public PowerUpCollisionComponent {
+public:
+    InfiniteJumpCollisionComponent(Entity *entity, Command * deletePwrUpEntityCmd);
+    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
+    void onBorderCollision();
+};
+
+class InfiniteHealthCollisionComponent : public PowerUpCollisionComponent {
+public:
+    InfiniteHealthCollisionComponent(Entity * entity, Command * deletePwrUpEntityCmd);
     void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
     void onBorderCollision();
 };

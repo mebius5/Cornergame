@@ -20,7 +20,6 @@ SRCFILES = \
 	heroCollisionComponent.cpp \
 	heroInputComponent.cpp \
 	highscoreState.cpp \
-	infiniteJumpCollisionComponent.cpp \
 	inputHandler.cpp \
 	level.cpp \
 	menuOptionInputComponent.cpp \
@@ -28,6 +27,7 @@ SRCFILES = \
 	physicsComponent.cpp \
 	physicsHandler.cpp \
 	playState.cpp \
+	powerUpCollisionComponents.cpp \
 	powerUpComponent.cpp \
 	powerUpHandler.cpp \
 	projectileCollisionComponent.cpp \

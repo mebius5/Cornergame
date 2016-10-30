@@ -42,3 +42,11 @@ void HealthComponent::die() {
     this->health = 0;
     Component::commandList->push_back(this->onDeath);
 }
+
+bool HealthComponent::isIsInvincible() const {
+    return isInvincible;
+}
+
+void HealthComponent::setIsInvincible(bool isInvincible) {
+    HealthComponent::isInvincible = isInvincible;
+}

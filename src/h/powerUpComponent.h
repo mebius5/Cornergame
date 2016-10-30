@@ -9,12 +9,15 @@
 class PowerUpComponent : public Component {
 private:
     int timeElapsed;
-    bool infiniteJumpActivated;
+    bool infJumpActivated;
+    bool infHealthActivated;
 public:
     PowerUpComponent(Entity * owner);
     void update(int dt);
-    void activateInfiniteJumpsPowerUp();
-    void deactivateInfiniteJumpsPowerUp();
+    void activateInfJumpPwrUp();
+    void deactivateInfJumpPwrUp();
+    void activateInfHealthPwrUp();
+    void deactivateInfHealthPwrUp();
 };
 
 #endif //CORNERGAME_POWERUPCOMPONENT_H

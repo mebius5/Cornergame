@@ -13,7 +13,7 @@ GameManager::GameManager() :
         title("<GAME NAME>"),
         width(1024),
         height(704),
-        currentLevel(0),
+        currentLevel(1),
         maxLevel(2)
 {
 
@@ -147,27 +147,22 @@ void GameManager::run() {
         switch (nextState) {
             case STATE_PLAY:
                 currentState = &playState;
-                this->currentLevel++;
                 if(this->currentLevel>maxLevel){
                     currentState = & menuState;
-                    this->currentLevel = 0;
+                    this->currentLevel = 1;
                 }
                 break;
             case STATE_HIGHSCORE:
                 currentState = &highscoreState;
-                this->currentLevel=0;
+                this->currentLevel=1;
                 break;
             case STATE_MENU:
                 currentState = &menuState;
-                this->currentLevel=0;
+                this->currentLevel=1;
                 break;
             case STATE_RESULTS:
                 currentState = &resultsState;
-                /***
-                if(this->currentLevel>maxLevel){
-                    currentState = & menuState;
-                    this->currentLevel = 0;
-                }***/
+                this->currentLevel++;
                 break;
             default:
                 break;
