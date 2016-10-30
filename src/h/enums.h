@@ -16,7 +16,7 @@ enum MusicEnum { MUSIC_START, MUSIC_MENU, MUSIC_PLAY, MUSIC_HIGHSCORE };
 enum TextureEnum { TEX_HERO, TEX_HERO2, TEX_ENEMY, TEX_BACKGROUND, TEX_HEALTHBAR,
                    TEX_VICTORY, TEX_PROJECTILE, TEX_NONE};
 
-enum TerrainTexEnum { TT_BRICK, TT_NONE };
+enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_NONE };
 
 enum FontEnum { FONT_GLOBAL };
 

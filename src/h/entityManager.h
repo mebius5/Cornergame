@@ -59,7 +59,7 @@ public:
     Entity* createVictoryZone(int x, int y);
     Entity* createInfiniteJumpPowerUp(int x, int y);
     Entity* createInfiniteHealthPowerUp(int x, int y);
-    Entity * createTerrain(int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
+    Entity * createTerrain(Tiles tileType, int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
     Entity* createProjectile(int x, int y, int dir, int ownerID, ProjEnum projType);
     void handleSpawns();

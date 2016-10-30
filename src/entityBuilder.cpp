@@ -4,7 +4,7 @@ EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
     textureMap(10),
-    terrainTexMap(1, std::vector<Texture>(256)),
+    terrainTexMap(2, std::vector<Texture>(256)),
     fontMap(1, std::vector<TTF_Font*>(128)) {
 }
 
@@ -47,7 +47,12 @@ void EntityBuilder::loadTexture(TextureEnum texType, const char* filename) {
 }
 
 void EntityBuilder::loadTerrain(TerrainTexEnum texType, int width) {
-    SDL_Surface* image = this->loadImage("resources/tile.png"); // TODO: make mapping!
+    SDL_Surface* image;
+    if (texType == TT_BRICK) {
+        image = this->loadImage("resources/tile.png");
+    } else {
+        image = this->loadImage("resources/grass.png");
+    }
     SDL_Surface* surface = SDL_CreateRGBSurface(0, image->w * width, image->h, 32, 0, 0, 0, 0);
     for (int i = 0; i < width; i++) {
         SDL_Rect tempRect = {image->w * i, 0, image->w, image->h};
