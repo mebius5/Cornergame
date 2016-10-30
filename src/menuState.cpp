@@ -54,7 +54,7 @@ StateEnum MenuState::run() {
         lastTime = currentTime;
         milliSecElapsed += dt;
 
-        this->inputHandler.handleEvents();
+        this->inputHandler.handleEvents(dt);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
