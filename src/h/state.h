@@ -111,6 +111,24 @@ public:
     void updateResults(Entity *hero1, Entity *hero2);
 };
 
+class LevelTransitState : public State {
+private:
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
+    ControlHandler& controlHandler;
+    std::string transitionText;
+public:
+    LevelTransitState(int windowW, int windowH, EntityManager& entityManager,
+                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
+                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
+                 SoundHandler& soundHandler, ControlHandler& controlHandler);
+    void begin(int level);
+    StateEnum run();
+    void cleanup(StateEnum next);
+    void readTransitString(int level);
+};
+
 class PlayState : public State {
 private:
     DrawingHandler& drawingHandler;

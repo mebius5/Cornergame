@@ -22,6 +22,7 @@ SRCFILES = \
 	highscoreState.cpp \
 	inputHandler.cpp \
 	level.cpp \
+	levelTransitState.cpp \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
 	physicsComponent.cpp \

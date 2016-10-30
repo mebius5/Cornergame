@@ -49,6 +49,9 @@ StateEnum StartState::run() {
         if (nextState != STATE_NONE)
             return nextState;
 
+        if(this->controlHandler.isPreviewOff())
+            break;
+
         if (milliSecElapsed >= 10000)    // Return menu after 10 sec
             break;
     }

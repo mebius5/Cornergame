@@ -122,6 +122,11 @@ void GameManager::run() {
     ResultsState resultsState(this->width, this->height, entityMgr,
                               commandList, this->renderer, drawingHandler,
                               inputHandler, soundHandler, controlHandler);
+
+    LevelTransitState levelTransitState(this->width, this->height, entityMgr,
+                              commandList, this->renderer, drawingHandler,
+                              inputHandler, soundHandler, controlHandler);
+
     PlayState playState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
@@ -147,6 +152,15 @@ void GameManager::run() {
         switch (nextState) {
             case STATE_PLAY:
                 currentState = &playState;
+                /**
+                if(this->currentLevel>maxLevel){
+                    currentState = & menuState;
+                    this->currentLevel = 1;
+                }
+                 **/
+                break;
+            case STATE_LEVEL_TRANSIT:
+                currentState = & levelTransitState;
                 if(this->currentLevel>maxLevel){
                     currentState = & menuState;
                     this->currentLevel = 1;

@@ -60,12 +60,15 @@ StateEnum ResultsState::run() {
         if (nextState != STATE_NONE)
             return nextState;
 
+        if(this->controlHandler.isPreviewOff())
+            break;
+
         if (timeElapsed > 5000) {   //Return to MENU screen after 5 secs
             break;
         }
     }
 
-    return STATE_PLAY;
+    return STATE_LEVEL_TRANSIT;
 }
 
 void ResultsState::cleanup(StateEnum /*next*/) {
