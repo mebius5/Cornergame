@@ -163,10 +163,11 @@ void GameManager::run() {
                 break;
             case STATE_RESULTS:
                 currentState = &resultsState;
+                /***
                 if(this->currentLevel>maxLevel){
                     currentState = & menuState;
                     this->currentLevel = 0;
-                }
+                }***/
                 break;
             default:
                 break;

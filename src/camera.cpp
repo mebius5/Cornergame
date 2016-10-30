@@ -93,7 +93,7 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
             shift(0,entity->y-(minY+(maxY-minY)*.75));
         }
 
-        if(entity->y < levelH*32){
+        if(entity->y <= levelH*32 /*&& entity->y >= levelH*32*0.75*/){
             shift(0, - 2);
         }
 
