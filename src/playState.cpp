@@ -59,7 +59,7 @@ StateEnum PlayState::run() {
 
         previewOn=drawingHandler.previewLevel(dt);
         drawingHandler.draw(dt);
-        this->inputHandler.handleEvents();
+        this->inputHandler.handleEvents(dt);
         if(this->controlHandler.isPreviewOff())
             break;
         StateEnum nextState = this->controlHandler.handleStateCommands();
@@ -82,7 +82,7 @@ StateEnum PlayState::run() {
         lastTime = currentTime;
 
         this->aiHandler.updateAi(dt);
-        this->inputHandler.handleEvents();
+        this->inputHandler.handleEvents(dt);
         this->physicsHandler.update(dt);
         this->collisionHandler.handleCollisions(dt);
         this->soundHandler.handleSfx(dt);

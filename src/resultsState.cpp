@@ -53,7 +53,7 @@ StateEnum ResultsState::run() {
         lastTime = currentTime;
         timeElapsed+=dt;
 
-        this->inputHandler.handleEvents();
+        this->inputHandler.handleEvents(dt);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();

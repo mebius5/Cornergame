@@ -40,7 +40,7 @@ StateEnum StartState::run() {
         lastTime = currentTime;
         milliSecElapsed += dt;
 
-        this->inputHandler.handleEvents();
+        this->inputHandler.handleEvents(dt);
         this->physicsHandler.update(dt);
         this->collisionHandler.handleCollisions(0);
         this->drawingHandler.draw(dt);

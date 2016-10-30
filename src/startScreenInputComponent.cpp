@@ -11,6 +11,9 @@ StartScreenInputComponent::~StartScreenInputComponent() {
     this->entity = NULL;
 }
 
+void StartScreenInputComponent::updateTime(int /*dt*/) {
+}
+
 void StartScreenInputComponent::keyUp(SDL_Keycode /*keycode*/) {
 
 }

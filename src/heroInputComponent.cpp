@@ -8,13 +8,22 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCom
     rightKey(wasd ? SDLK_d : SDLK_RIGHT),
     shootKey(wasd ? SDLK_v : SDLK_m),
     jumpPressed(false),
-    spawnCommand(spawnCommand) {
+    spawnCommand(spawnCommand),
+    spawnTime(0),
+    spawnCooldown(1000) {
 }
 
 HeroInputComponent::~HeroInputComponent() {
     this->entity = NULL;
     if (spawnCommand) {
         delete spawnCommand;
+    }
+}
+
+void HeroInputComponent::updateTime(int dt) {
+    this->spawnTime -= dt;
+    if (this->spawnTime < 0) {
+        this->spawnTime = 0;
     }
 }
 
@@ -34,6 +43,12 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
         this->entity->physics->accelerateX(1);
         this->entity->dir = 1;
     } else if (keycode == this->shootKey) {
+        // check if enough time has passed to shoot
+        if (this->spawnTime > 0) {
+            return;
+        }
+        this->spawnTime = this->spawnCooldown;
+
         this->entity->actionState = THROW;
         this->spawnCommand->dir = this->entity->dir;
         if (this->spawnCommand->dir == 1) {

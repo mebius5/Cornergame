@@ -10,6 +10,7 @@ class InputComponent : public Component {
 public:
     InputComponent(Entity* entity);
     virtual ~InputComponent() { };
+    virtual void updateTime(int dt) = 0;
     virtual void keyDown(SDL_Keycode keycode) = 0;
     virtual void keyUp(SDL_Keycode keycode) = 0;
 };
@@ -23,9 +24,12 @@ private:
     SDL_Keycode shootKey;
     bool jumpPressed;
     SpawnEntityCommand* spawnCommand;
+    int spawnTime;
+    int spawnCooldown;
 public:
     HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand);
     ~HeroInputComponent();
+    void updateTime(int dt);
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
 };
@@ -50,6 +54,7 @@ public:
     MenuOptionInputComponent(Entity* entity, int index, int numOptions,
                              Command* nextStateCommand);
     ~MenuOptionInputComponent();
+    void updateTime(int dt);
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
 };

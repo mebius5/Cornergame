@@ -16,7 +16,7 @@ protected:
 public:
     InputHandler(std::vector<InputComponent*>& componentList,
                  std::vector<Command*>& commandList);
-    virtual void handleEvents();
+    virtual void handleEvents(int dt);
 };
 
 #endif
