@@ -10,7 +10,8 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCom
     jumpPressed(false),
     spawnCommand(spawnCommand),
     spawnTime(0),
-    spawnCooldown(1000) {
+    spawnCooldown(1000),
+    ammo(10) {
 }
 
 HeroInputComponent::~HeroInputComponent() {
@@ -48,6 +49,12 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
             return;
         }
         this->spawnTime = this->spawnCooldown;
+
+        // check if enough ammo to shoot
+        if (this->ammo <= 0) {
+            return;
+        }
+        this->ammo -= 1;
 
         this->entity->actionState = THROW;
         this->spawnCommand->dir = this->entity->dir;
