@@ -20,7 +20,7 @@ void MenuState::begin(int) {
     this->entityManager.createHorizontallyCenteredFadeInMenuText(
             FONT_GLOBAL, "Play", 80,
             255, 255, 255, 0, this->windowW, 100,
-            0, 5, STATE_PLAY);
+            0, 5, STATE_LEVEL_TRANSIT);
 
     this->entityManager.createHorizontallyCenteredFadeInMenuText(
             FONT_GLOBAL, "Adjust Visual Brightness", 80,

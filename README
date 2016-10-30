@@ -23,6 +23,8 @@ Grady
 - Added components, collsiionComopnents, and handlers for power up
 - Added infinite jump power up
 - Added infinite health power up
+- Added level transit state
+- Now players can press P to skip transit text, previews, and results
 - Added level2 that uses infinite jump in order to finish
 - Corrected result states and highscore state to get results from both heros
 - Split result state texts into two lines
@@ -74,7 +76,8 @@ spawn and despawn and allow enemies to be killed.
 CONTROLS
 - Press ESC to quit game
 - Press q to return to MENU
-- Press p to skip preview
+- Press SPACE to select option on MENU
+- Press p to skip preview, transit text, results, etc.
 
 Player 1
 - Up/down/left/right to move player 1
