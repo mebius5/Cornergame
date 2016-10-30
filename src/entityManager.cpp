@@ -184,6 +184,12 @@ Entity* EntityManager::createInfiniteJumpPowerUp(int x, int y) {
     return  entity;
 }
 
+Entity* EntityManager::createInfiniteHealthPowerUp(int x, int y) {
+    Entity * entity = this->entityBuilder.createInfiniteHealthPowerUp(x,y);
+    this->addEntity(entity);
+    return  entity;
+}
+
 Entity* EntityManager::createTerrain(int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
     Entity* entity = this->entityBuilder.createTerrain(
@@ -262,6 +268,9 @@ void EntityManager::populateLevel(Level* level) {
             }
             case PU_JUMP:{
                 createInfiniteJumpPowerUp(j*32, i*32);
+            }
+            case PU_HEALTH:{
+                createInfiniteHealthPowerUp(j*32, i*32);
             }
             default:
                 break;

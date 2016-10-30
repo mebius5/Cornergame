@@ -26,6 +26,11 @@ void InfiniteJumpCollisionComponent::onBorderCollision() {
 
 }
 
+InfiniteHealthCollisionComponent::InfiniteHealthCollisionComponent(Entity *entity, Command *deletePwrUpEntityCmd):
+    PowerUpCollisionComponent(entity, deletePwrUpEntityCmd)
+{
+}
+
 void InfiniteHealthCollisionComponent::onEntityCollision(DynamicCollisionComponent *otherComp, int) {
     if(!isClaimed){
         if(otherComp->entity->powerUp){
