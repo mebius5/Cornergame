@@ -20,9 +20,10 @@ Akshay
 Andrew
 
 Grady
-- Added power ups and power up handlers
+- Added infinite jump power ups and added the power components and handlers
+- Added level2 that uses infinite jump in order to finish
 - Corrected result states and highscore state to get results from both heros
-- Corrected result state texts
+- Split result state texts into two lines
 
 Pratyush
 
