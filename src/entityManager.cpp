@@ -268,9 +268,11 @@ void EntityManager::populateLevel(Level* level) {
             }
             case PU_JUMP:{
                 createInfiniteJumpPowerUp(j*32, i*32);
+                break;
             }
             case PU_HEALTH:{
                 createInfiniteHealthPowerUp(j*32, i*32);
+                break;
             }
             default:
                 break;
