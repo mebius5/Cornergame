@@ -13,6 +13,7 @@
 #include "scoreHandler.h"
 #include "physicsHandler.h"
 #include "level.h"
+#include "powerUpHandler.h"
 
 class State {
 protected:
@@ -86,7 +87,7 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
-    void updateHighscores(Entity* hero);
+    void updateHighscores(Entity *hero1, Entity *hero2);
 };
 
 class ResultsState : public State {
@@ -96,7 +97,8 @@ private:
     SoundHandler& soundHandler;
     ControlHandler& controlHandler;
     int score;
-    bool victory;
+    bool hero1Victory;
+
 public:
     ResultsState(int windowW, int windowH, EntityManager& entityManager,
                    std::vector<Command*>& commandList, SDL_Renderer* renderer,
@@ -106,7 +108,25 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
-    void updateResults(Entity* hero);
+    void updateResults(Entity *hero1, Entity *hero2);
+};
+
+class LevelTransitState : public State {
+private:
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
+    ControlHandler& controlHandler;
+    std::string transitionText;
+public:
+    LevelTransitState(int windowW, int windowH, EntityManager& entityManager,
+                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
+                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
+                 SoundHandler& soundHandler, ControlHandler& controlHandler);
+    void begin(int level);
+    StateEnum run();
+    void cleanup(StateEnum next);
+    void readTransitString(int level);
 };
 
 class PlayState : public State {
@@ -118,9 +138,10 @@ private:
     AiHandler& aiHandler;
     CollisionHandler& collisionHandler;
     ScoreHandler& scoreHandler;
+    PhysicsHandler& physicsHandler;
+    PowerUpHandler& powerUpHandler;
     ResultsState& resultsState;
     HighscoreState& highscoreState;
-    PhysicsHandler& physicsHandler;
     Entity* hero;
     Entity* hero2;
     int levelW;
@@ -132,7 +153,8 @@ public:
               SoundHandler& soundHandler, ControlHandler& controlHandler,
               AiHandler& aiHandler, CollisionHandler& collisionHandler,
               ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
-              ResultsState& resultsState, HighscoreState& highscoreState);
+              PowerUpHandler & powerUpHandler, ResultsState& resultsState,
+              HighscoreState& highscoreState);
     ~PlayState();
     void begin(int level);
     StateEnum run();

@@ -34,7 +34,7 @@ StateEnum HighscoreState::run() {
         lastTime = currentTime;
         timeElapsed+=dt;
 
-        this->inputHandler.handleEvents();
+        this->inputHandler.handleEvents(dt);
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
@@ -55,7 +55,13 @@ void HighscoreState::cleanup(StateEnum /*next*/) {
     this->soundHandler.stopBackgroundMusic();
 }
 
-void HighscoreState::updateHighscores(Entity* hero) {
-    if (hero->score->getScore() > this->highscore)
-        this->highscore = hero->score->getScore();
+void HighscoreState::updateHighscores(Entity *hero1, Entity *hero2) {
+    if(hero2->health->getHealth() <= 0){
+        if (hero1->score->getScore() > this->highscore)
+            this->highscore = hero1->score->getScore();
+    } else{
+        if (hero2->score->getScore() > this->highscore)
+            this->highscore = hero2->score->getScore();
+    }
+
 }

@@ -10,9 +10,20 @@ InputHandler::InputHandler(std::vector<InputComponent*>& componentList,
 {
 }
 
-void InputHandler::handleEvents() {
+void InputHandler::handleEvents(int dt) {
     std::vector<InputComponent*>::iterator it;
     SDL_Event event;
+
+    // update time passed for every input component
+    for (it = this->componentList.begin(); it != this->componentList.end(); ) {
+        if (!(*it)->isValid()) {        // remove invalid components
+            *it = this->componentList.back();
+            this->componentList.pop_back();
+            continue;
+        }
+        (*it)->updateTime(dt);
+        ++it;
+    }
 
     while (SDL_PollEvent(&event)) {
         if (event.type == SDL_QUIT)
@@ -21,12 +32,6 @@ void InputHandler::handleEvents() {
             return;
 
         for (it = this->componentList.begin(); it != this->componentList.end(); ) {
-            if (!(*it)->isValid()) {        // remove invalid components
-                *it = this->componentList.back();
-                this->componentList.pop_back();
-                continue;
-            }
-
             if (event.type == SDL_KEYUP)
                 (*it)->keyUp(event.key.keysym.sym);
             else   // if type == SDL_KEYDOWN
@@ -37,7 +42,7 @@ void InputHandler::handleEvents() {
             this->commandList.push_back(&this->quitCommand);
         else if (event.key.keysym.sym == SDLK_q)
             this->commandList.push_back(&this->switchToMenu);
-        else if (event.key.keysym.sym == SDLK_p)
+        else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_p)
             this->commandList.push_back(&this->previewOff);
     }
 }

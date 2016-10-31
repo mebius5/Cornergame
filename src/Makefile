@@ -2,6 +2,8 @@
 
 SRCFILES = \
 	aiHandler.cpp \
+    ammoBarArtComponent.cpp \
+    ammoComponent.cpp \
 	animationComponent.cpp \
 	camera.cpp \
 	collisionHandler.cpp \
@@ -22,11 +24,15 @@ SRCFILES = \
 	highscoreState.cpp \
 	inputHandler.cpp \
 	level.cpp \
+	levelTransitState.cpp \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
 	physicsComponent.cpp \
 	physicsHandler.cpp \
 	playState.cpp \
+	powerUpCollisionComponents.cpp \
+	powerUpComponent.cpp \
+	powerUpHandler.cpp \
 	projectileCollisionComponent.cpp \
 	resultsState.cpp \
 	scoreComponent.cpp \

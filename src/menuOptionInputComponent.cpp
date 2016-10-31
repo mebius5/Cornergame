@@ -19,6 +19,9 @@ MenuOptionInputComponent::~MenuOptionInputComponent() {
         delete this->nextStateCommand;
 }
 
+void MenuOptionInputComponent::updateTime(int /*dt*/) {
+}
+
 void MenuOptionInputComponent::keyUp(SDL_Keycode /*keycode*/) {
 }
 

@@ -12,7 +12,7 @@ Camera::Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentLis
     offsetY(0),
     shakeTime(0),
     maxShakeTime(1000),
-    shakeDist(7),
+    shakeDist(4),
     windowW(windowW),
     windowH(windowH),
     minX(0),                // current displayed window
@@ -119,25 +119,29 @@ void Camera::initializeCamera(int levelW, int levelH, bool previewOn) {
     this->previewOn = previewOn;
 }
 
-void Camera::detectBorderCollision(Entity *entity, int) {
+void Camera::detectBorderCollision(Entity *entity, int dt) {
+    int shiftAmount = (dt/2)+1;
+    if(shiftAmount< 8){
+        shiftAmount = 8;
+    }
     if (entity->collision) {
         if (entity->x < minX){
-            this->borderBoundX(entity, minX+7);
+            this->borderBoundX(entity, minX+shiftAmount);
             entity->health->takeDamage(4);
             entity->actionState = DAMAGE;
         }
         else if (entity->x + entity->width > maxX){
-            this->borderBoundX(entity, maxX - entity->width-7);
+            this->borderBoundX(entity, maxX - entity->width-shiftAmount);
             entity->health->takeDamage(4);
             entity->actionState = DAMAGE;
         }
         if (entity->y < minY){
-            this->borderBoundY(entity, minY+7);
+            this->borderBoundY(entity, minY+shiftAmount);
             entity->health->takeDamage(4);
             entity->actionState = DAMAGE;
         }
         else if (entity->y + entity->height > this->maxY){
-            this->borderBoundY(entity, maxY - entity->height-7);
+            this->borderBoundY(entity, maxY - entity->height-shiftAmount);
             entity->health->takeDamage(4);
             entity->actionState = DAMAGE;
         }

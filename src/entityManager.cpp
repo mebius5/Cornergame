@@ -1,6 +1,6 @@
 #include "entityManager.h"
 
-EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList) :
+EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList) :
     commandList(cmdList),
     entityBuilder(renderer),
     numCleanable(0) {
@@ -9,7 +9,12 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_ENEMY, "spritesheets/lax.png");
     this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
     this->entityBuilder.loadTexture(TEX_BACKGROUND, "resources/jhu-logo.png");
+    this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH, "resources/star.png");
+    this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
+    this->entityBuilder.loadTexture(TEX_TREE1, "resources/greentree1.png");
+    this->entityBuilder.loadTexture(TEX_TREE2, "resources/greentree2.png");
     this->entityBuilder.loadHealthBar(200, 40);
+    this->entityBuilder.loadAmmoBar(200, 40);
 }
 
 EntityManager::~EntityManager() {
@@ -50,6 +55,9 @@ void EntityManager::addEntity(Entity* entity) {
     if (entity->score) {
         this->scoreComponents.push_back(entity->score);
     }
+    if (entity->powerUp){
+        this->powerUpComponents.push_back(entity->powerUp);
+    }
 }
 
 void EntityManager::deleteEntity(int id) {
@@ -74,6 +82,8 @@ void EntityManager::deleteEntity(int id) {
         entity->health->invalidate();
     if (entity->score)
         entity->score->invalidate();
+    if (entity->powerUp)
+        entity->powerUp->invalidate();
 }
 
 void EntityManager::cleanupEntities() {
@@ -100,6 +110,7 @@ void EntityManager::clear() {
     this->scoreComponents.clear();
     this->staticCollisionComponents.clear();
     this->dynamicCollisionComponents.clear();
+    this->powerUpComponents.clear();
     this->heroEntities.clear();}
 
 /* Entity Creation Methods */
@@ -122,8 +133,20 @@ Entity* EntityManager::createBackground(TextureEnum texType, int width, int heig
     return entity;
 }
 
+Entity* EntityManager::createBackgroundArt(TextureEnum texType, int x, int y) {
+    Entity * entity = this->entityBuilder.createBackgroundArt(texType, x, y);
+    this->addEntity(entity);
+    return entity;
+}
+
 Entity* EntityManager::createHealthBar(int x, int y, Entity* owner) {
     Entity* entity = this->entityBuilder.createHealthBar(x, y, owner);
+    this->addEntity(entity);
+    return entity;
+}
+
+Entity* EntityManager::createAmmoBar(int x, int y, Entity* owner) {
+    Entity* entity = this->entityBuilder.createAmmoBar(x, y, owner);
     this->addEntity(entity);
     return entity;
 }
@@ -144,12 +167,22 @@ Entity* EntityManager::createCenteredFadeInText(FontEnum font,
     return entity;
 }
 
-Entity* EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const char* text,
-                                                            int fontSize,
-                                                            int r, int g, int b, int initialAlpha,
-                                                            int windowW, int yPos,
-                                                            int index, int numOptions, StateEnum nextState) {
-    Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInText(
+Entity* EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const char *text, int fontSize, int r, int g,
+                                                            int b, int initialAlpha, int windowW, int yPos) {
+    Entity * entity = this->entityBuilder.createHorizontallyCenteredFadeInText(
+            font, text, fontSize, r, g, b, initialAlpha,
+            windowW, yPos
+    );
+    this->addEntity(entity);
+    return entity;
+}
+
+Entity* EntityManager::createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text,
+                                                                int fontSize,
+                                                                int r, int g, int b, int initialAlpha,
+                                                                int windowW, int yPos,
+                                                                int index, int numOptions, StateEnum nextState) {
+    Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInMenuText(
             font, text, fontSize, r, g, b, initialAlpha,
             windowW, yPos, index, numOptions, nextState);
     this->addEntity(entity);
@@ -162,10 +195,28 @@ Entity* EntityManager::createVictoryZone(int x, int y) {
     return entity;
 }
 
-Entity* EntityManager::createTerrain(int x, int y, int numberHorizontal, bool freeTop,
+Entity* EntityManager::createInfiniteJumpPowerUp(int x, int y) {
+    Entity * entity = this->entityBuilder.createInfiniteJumpPowerUp(x,y);
+    this->addEntity(entity);
+    return  entity;
+}
+
+Entity* EntityManager::createInfiniteHealthPowerUp(int x, int y) {
+    Entity * entity = this->entityBuilder.createInfiniteHealthPowerUp(x,y);
+    this->addEntity(entity);
+    return  entity;
+}
+
+Entity* EntityManager::createTerrain(Tiles tileType, int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
-    Entity* entity = this->entityBuilder.createTerrain(
+    Entity* entity;
+    if (tileType == BRICK) {
+    entity = this->entityBuilder.createTerrain(
             TT_BRICK, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    } else {
+    entity = this->entityBuilder.createTerrain(
+            TT_GRASS, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    }
     this->addEntity(entity);
     return entity;
 }
@@ -197,45 +248,66 @@ void EntityManager::populateLevel(Level* level) {
     for (int i = 0; i < level->contentHeight; i++) {
         for (int j = 0; j < level->contentWidth; j++) {
             switch (level->getTile(i, j)) {
-            case TERRAIN: {
-                bool freeLeft = (j == 0 || level->getTile(i, j-1) != TERRAIN);
+            case BRICK: 
+            case GRASS: {
+                bool freeLeft = (j == 0 || level->getTile(i, j-1) != BRICK || level->getTile(i, j-1) != GRASS);
                 bool freeRight;     // assigned value later
-                bool freeTop = (i == 0 || level->getTile(i-1, j) != TERRAIN);
-                bool freeBot = (i == level->contentHeight-1 || level->getTile(i+1, j) != TERRAIN);
+                bool freeTop = (i == 0 || level->getTile(i-1, j) != BRICK || level->getTile(i-1, j) != GRASS);
+                bool freeBot = (i == level->contentHeight-1 || level->getTile(i+1, j) != BRICK || level->getTile(i+1, j) != GRASS);
                 int numberHorizontal = 1;
                 int originalJ = j;
                 // create horizontal slabs, breaking at each intersection with other terrain rectangles.
-                while (j < (level->width-1) && level->getTile(i, j+1) == TERRAIN) {
-                    if (i > 0 && level->getTile(i-1, j+1) == TERRAIN && freeTop)
+                while (j < (level->width-1) && (level->getTile(i, j+1) == BRICK || level->getTile(i, j+1) == GRASS)) {
+                    if (i > 0 && (level->getTile(i-1, j+1) == BRICK || level->getTile(i-1, j+1) == GRASS) && freeTop)
                         break;
-                    if (i > 0 && level->getTile(i-1, j+1) != TERRAIN && !freeTop)
+                    if (i > 0 && (level->getTile(i-1, j+1) != BRICK || level->getTile(i-1, j+1) != GRASS) && !freeTop)
                         break;
-                    if (i < level->contentHeight-1 && level->getTile(i+1, j+1) == TERRAIN && freeBot)
+                    if (i < level->contentHeight-1 && (level->getTile(i+1, j+1) == BRICK || level->getTile(i+1, j+1) == GRASS) && freeBot)
                         break;
-                    if (i < level->contentHeight-1 && level->getTile(i+1, j+1) != TERRAIN && !freeBot)
+                    if (i < level->contentHeight-1 && (level->getTile(i+1, j+1) != BRICK || level->getTile(i+1, j+1) != GRASS) && !freeBot)
                         break;
                     numberHorizontal++;
                     j++;
                 }
-                freeRight = (j == level->contentWidth-1 || level->getTile(i, j+1) != TERRAIN);
-                createTerrain(originalJ*32, i*32, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+                freeRight = (j == level->contentWidth-1 || level->getTile(i, j+1) != BRICK || level->getTile(i, j+1) != GRASS);
+                createTerrain(level->getTile(i, j), originalJ*32, i*32, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
                 break;
             }
-            case ENEMY:
+            case ENEMY:{
                 createEnemy(TEX_ENEMY, j * 32, i * 32);
                 break;
+            }
             case SPAWN: {
                 Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
                 Entity* hero2 = createHero(TEX_HERO2, j * 32 + 64, i * 32, SFX_ALERT, true);
-                createHealthBar(100, 100, hero);
-                createHealthBar(100, 50, hero2);
-                createScoreBox(850, 100, hero);
-                createScoreBox(850, 50, hero2);
+                createHealthBar(100, 50, hero);
+                createHealthBar(100, 100, hero2);
+                createAmmoBar(400, 50, hero);
+                createAmmoBar(400, 100, hero2);
+                createScoreBox(850, 50, hero);
+                createScoreBox(850, 100, hero2);
                 break;
             }
-            case GOAL:
+            case GOAL:{
                 createVictoryZone(j * 32, i * 32);
                 break;
+            }
+            case TREE1:{
+                createBackgroundArt(TEX_TREE1, j*32, i*32);
+                break;
+            }
+            case TREE2:{
+                createBackgroundArt(TEX_TREE2, j*32, i*32);
+                break;
+            }
+            case PU_JUMP:{
+                createInfiniteJumpPowerUp(j*32, i*32);
+                break;
+            }
+            case PU_HEALTH:{
+                createInfiniteHealthPowerUp(j*32, i*32);
+                break;
+            }
             default:
                 break;
             }

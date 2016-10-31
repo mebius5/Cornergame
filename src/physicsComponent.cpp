@@ -6,16 +6,16 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     xAccel(0.0f),
     yAccel(0.0f),
     accelAmount(.001f),
-    gravity(0.0017f),
+    gravity(0.0018f),
     slideVelocity(.1f),
     jumps(0),
     infiniteJumps(false),
     collisionComp(dynamic_cast<DynamicCollisionComponent*>(entity->collision)),
     xVelocity(0.0f),
     yVelocity(0.0f),
-    maxXVelocity(.6f),
-    maxYVelocity(5.0f),
-    jumpVelocity(.6f),
+    maxXVelocity(.55f),
+    maxYVelocity(4.0f),
+    jumpVelocity(.5f),
     deceleration(.0012f),
     maxJumps(1) {
 }
@@ -144,4 +144,8 @@ void PhysicsComponent::clearAccelerationX() {
 
 void PhysicsComponent::clearAccelerationY() {
     this->yAccel = 0;
+}
+
+bool PhysicsComponent::isInfiniteJumpOn() {
+    return this->infiniteJumps;
 }

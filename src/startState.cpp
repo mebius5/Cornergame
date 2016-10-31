@@ -40,7 +40,7 @@ StateEnum StartState::run() {
         lastTime = currentTime;
         milliSecElapsed += dt;
 
-        this->inputHandler.handleEvents();
+        this->inputHandler.handleEvents(dt);
         this->physicsHandler.update(dt);
         this->collisionHandler.handleCollisions(0);
         this->drawingHandler.draw(dt);
@@ -48,6 +48,9 @@ StateEnum StartState::run() {
         StateEnum nextState = this->controlHandler.handleStateCommands();
         if (nextState != STATE_NONE)
             return nextState;
+
+        if(this->controlHandler.isPreviewOff())
+            break;
 
         if (milliSecElapsed >= 10000)    // Return menu after 10 sec
             break;

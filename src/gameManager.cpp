@@ -1,6 +1,7 @@
 #define TWO_PI 2 * M_PI
 #define RAD_TO_DEG 180 / M_PI
 
+#include <powerUpHandler.h>
 #include "gameManager.h"
 
 /* gameManager.cpp
@@ -12,7 +13,7 @@ GameManager::GameManager() :
         title("<GAME NAME>"),
         width(1024),
         height(704),
-        currentLevel(0),
+        currentLevel(1),
         maxLevel(2)
 {
 
@@ -107,6 +108,7 @@ void GameManager::run() {
     ControlHandler controlHandler(commandList);
     ScoreHandler scoreHandler(entityMgr.scoreComponents);
     PhysicsHandler physicsHandler(entityMgr.physicsComponents);
+    PowerUpHandler powerUpHandler(entityMgr.powerUpComponents);
 
     StartState startState(this->width, this->height, entityMgr, commandList,
                           this->renderer, drawingHandler, inputHandler,
@@ -120,11 +122,16 @@ void GameManager::run() {
     ResultsState resultsState(this->width, this->height, entityMgr,
                               commandList, this->renderer, drawingHandler,
                               inputHandler, soundHandler, controlHandler);
+
+    LevelTransitState levelTransitState(this->width, this->height, entityMgr,
+                              commandList, this->renderer, drawingHandler,
+                              inputHandler, soundHandler, controlHandler);
+
     PlayState playState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
                         collisionHandler, scoreHandler, physicsHandler,
-                        resultsState, highscoreState);
+                        powerUpHandler, resultsState, highscoreState);
 
     // Load music resources
     soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);
@@ -145,22 +152,31 @@ void GameManager::run() {
         switch (nextState) {
             case STATE_PLAY:
                 currentState = &playState;
-                this->currentLevel++;
+                /**
                 if(this->currentLevel>maxLevel){
-                    currentState = & resultsState;
+                    currentState = & menuState;
+                    this->currentLevel = 1;
+                }
+                 **/
+                break;
+            case STATE_LEVEL_TRANSIT:
+                currentState = & levelTransitState;
+                if(this->currentLevel>maxLevel){
+                    currentState = & menuState;
+                    this->currentLevel = 1;
                 }
                 break;
             case STATE_HIGHSCORE:
                 currentState = &highscoreState;
-                this->currentLevel=0;
+                this->currentLevel=1;
                 break;
             case STATE_MENU:
                 currentState = &menuState;
-                this->currentLevel=0;
+                this->currentLevel=1;
                 break;
             case STATE_RESULTS:
                 currentState = &resultsState;
-                this->currentLevel=0;
+                this->currentLevel++;
                 break;
             default:
                 break;

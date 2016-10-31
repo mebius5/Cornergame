@@ -44,7 +44,10 @@ Level::Level(std::string filename, int windowW, int windowH) {
                     levelContents[i][j] = NONE;
                     break;
                 case '#':
-                    levelContents[i][j] = TERRAIN;
+                    levelContents[i][j] = BRICK;
+                    break;
+                case 'W':
+                    levelContents[i][j] = GRASS;
                     break;
                 case '@':
                     levelContents[i][j] = SPAWN;
@@ -54,6 +57,18 @@ Level::Level(std::string filename, int windowW, int windowH) {
                     break;
                 case 'O':
                     levelContents[i][j] = GOAL;
+                    break;
+                case 'J':
+                    levelContents[i][j] = PU_JUMP;
+                    break;
+                case 'H':
+                    levelContents[i][j] = PU_HEALTH;
+                    break;
+                case 'T':
+                    levelContents[i][j] = TREE1;
+                    break;
+                case 't':
+                    levelContents[i][j] = TREE2;
                     break;
                 default:
                     levelContents[i][j] = NONE;
@@ -65,7 +80,7 @@ Level::Level(std::string filename, int windowW, int windowH) {
 
     for(int i= 0 ; i<height; i++){
         for (int j = 0; j < windowW/32; j++) {
-            if(levelContents[i][j]==TERRAIN){
+            if(levelContents[i][j]==BRICK || levelContents[i][j]==GRASS){
                 levelContents[i][j+width]=levelContents[i][j];
             } else {
                 levelContents[i][j+width]= NONE;

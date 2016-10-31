@@ -1,10 +1,10 @@
 #include "entityBuilder.h"
 
-EntityBuilder::EntityBuilder(SDL_Renderer* renderer) :
+EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
-    textureMap(10),
-    terrainTexMap(1, std::vector<Texture>(256)),
+    textureMap(20),
+    terrainTexMap(2, std::vector<Texture>(256)),
     fontMap(1, std::vector<TTF_Font*>(128)) {
 }
 
@@ -23,12 +23,12 @@ SDL_Surface* EntityBuilder::loadImage(const char* filename) {
 }
 
 SDL_Surface* EntityBuilder::createText(FontEnum fontType, const char* text,
-                                       int fontSize, int r, int g, int b, int a) {
+                                       int fontSize, int r, int g, int b, int a, int windowW) {
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
 
     SDL_Color color={(Uint8)r,(Uint8) g,(Uint8) b, 255};
-    SDL_Surface* textSurf = TTF_RenderUTF8_Blended(this->fontMap[fontType][fontSize], text, color);
+    SDL_Surface* textSurf = TTF_RenderUTF8_Blended_Wrapped(this->fontMap[fontType][fontSize], text, color, (Uint32)windowW);
     if (textSurf == NULL) {
        std::cerr << "Blend font failed! TTF Error: " << TTF_GetError() << std::endl;
        return NULL;
@@ -47,7 +47,12 @@ void EntityBuilder::loadTexture(TextureEnum texType, const char* filename) {
 }
 
 void EntityBuilder::loadTerrain(TerrainTexEnum texType, int width) {
-    SDL_Surface* image = this->loadImage("resources/tile.png"); // TODO: make mapping!
+    SDL_Surface* image;
+    if (texType == TT_BRICK) {
+        image = this->loadImage("resources/tile.png");
+    } else {
+        image = this->loadImage("resources/grass.png");
+    }
     SDL_Surface* surface = SDL_CreateRGBSurface(0, image->w * width, image->h, 32, 0, 0, 0, 0);
     for (int i = 0; i < width; i++) {
         SDL_Rect tempRect = {image->w * i, 0, image->w, image->h};
@@ -69,6 +74,18 @@ void EntityBuilder::loadHealthBar(int width, int height) {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, tempSurface);
     SDL_FreeSurface(tempSurface);
     this->textureMap[TEX_HEALTHBAR] = {texture, width*2, height};
+}
+
+void EntityBuilder::loadAmmoBar(int width, int height) {
+    SDL_Surface* tempSurface = SDL_CreateRGBSurface(0, width*2, height, 32, 0, 0, 0, 0);
+    SDL_Rect tempRect = {0, 0, width, height};
+    SDL_FillRect(tempSurface, &tempRect, SDL_MapRGB(tempSurface->format, 255, 255, 0));
+    tempRect = {width, 0, width, height};
+    SDL_FillRect(tempSurface, &tempRect, SDL_MapRGB(tempSurface->format, 0, 0, 0));
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, tempSurface);
+    SDL_FreeSurface(tempSurface);
+    this->textureMap[TEX_AMMOBAR] = {texture, width*2, height};
 }
 
 void EntityBuilder::loadFont(FontEnum fontType, int fontSize) {
@@ -110,6 +127,9 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
     hero->score = new ScoreComponent(hero);
     hero->health = new HealthComponent(hero, 1000, new SwitchStateCommand(STATE_RESULTS));
     hero->physics = new PhysicsComponent(hero);
+    hero->powerUp = new PowerUpComponent(hero);
+    hero->ammo = new AmmoComponent(hero, 10);
+
     return hero;
 }
 
@@ -135,11 +155,25 @@ Entity* EntityBuilder::createBackground(TextureEnum texType, int width, int heig
     return background;
 }
 
+Entity* EntityBuilder::createBackgroundArt(TextureEnum texType, int x, int y) {
+    Texture texture = this->textureMap[texType];
+    Entity * entity = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+    entity->art = new StaticArtComponent(entity, texture.sdlTexture, 0, false);
+    return entity;
+}
+
 Entity* EntityBuilder::createHealthBar(int x, int y, Entity* owner) {
     Texture texture = this->textureMap[TEX_HEALTHBAR];
     Entity* healthBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);
     healthBar->art = new HealthBarArtComponent(healthBar, texture, owner->health, 2);
     return healthBar;
+}
+
+Entity* EntityBuilder::createAmmoBar(int x, int y, Entity* owner) {
+    Texture texture = this->textureMap[TEX_AMMOBAR];
+    Entity* ammoBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);
+    ammoBar->art = new AmmoBarArtComponent(ammoBar, owner, texture, 2);
+    return ammoBar;
 }
 
 Entity* EntityBuilder::createScoreBox(int x, int y, Entity* owner, FontEnum fontType, int fontSize) {
@@ -157,7 +191,7 @@ Entity* EntityBuilder::createCenteredFadeInText(FontEnum fontType, const char *t
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
     SDL_Surface* textSurface =
-        this->createText(fontType, text, fontSize, r, g, b, initialAlpha);
+        this->createText(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
     int x = (windowW/2 - textSurface->w/2);
     int y = (windowH/2 - textSurface->h/2);
     Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
@@ -166,15 +200,27 @@ Entity* EntityBuilder::createCenteredFadeInText(FontEnum fontType, const char *t
     return fadeInText;
 }
 
-Entity* EntityBuilder::createHorizontallyCenteredFadeInText(FontEnum fontType,
-                                                 const char *text, int fontSize,
-                                                 int r, int g, int b, int initialAlpha,
-                                                 int windowW, int yPos,
-                                                 int index, int numOptions, StateEnum nextState) {
+Entity* EntityBuilder::createHorizontallyCenteredFadeInText(FontEnum fontType, const char *text, int fontSize, int r,
+                                                            int g, int b, int initialAlpha, int windowW, int yPos) {
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
     SDL_Surface* textSurface =
-        this->createText(fontType, text, fontSize, r, g, b, initialAlpha);
+            this->createText(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
+    int x = (windowW/2 - textSurface->w/2);
+    Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
+    fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
+    return fadeInText;
+}
+
+Entity* EntityBuilder::createHorizontallyCenteredFadeInMenuText(FontEnum fontType,
+                                                                const char *text, int fontSize,
+                                                                int r, int g, int b, int initialAlpha,
+                                                                int windowW, int yPos,
+                                                                int index, int numOptions, StateEnum nextState) {
+    if (!this->fontMap[fontType][fontSize])
+        this->loadFont(fontType, fontSize);
+    SDL_Surface* textSurface =
+        this->createText(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
     int x = (windowW/2 - textSurface->w/2);
     Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
@@ -193,8 +239,24 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {        // not using map
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     SDL_FreeSurface(surface);
     zone->art = new StaticArtComponent(zone, texture, 2, false);
-    zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_PLAY));
+    zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_RESULTS));
     return zone;
+}
+
+Entity * EntityBuilder::createInfiniteJumpPowerUp(int x, int y) {
+    Texture texture = this->textureMap[TEX_PWRUP_INFJUMP];
+    Entity * entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
+    entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
+    entity->collision = new InfiniteJumpCollisionComponent(entity, new DespawnEntityCommand(entity->getId()));
+    return entity;
+}
+
+Entity* EntityBuilder::createInfiniteHealthPowerUp(int x, int y) {
+    Texture texture = this->textureMap[TEX_PWRUP_INFHEALTH];
+    Entity * entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
+    entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
+    entity->collision = new InfiniteHealthCollisionComponent(entity, new DespawnEntityCommand(entity->getId()));
+    return entity;
 }
 
 Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,

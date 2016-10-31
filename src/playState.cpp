@@ -6,7 +6,8 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
                  SoundHandler& soundHandler, ControlHandler& controlHandler,
                  AiHandler& aiHandler, CollisionHandler& collisionHandler,
                  ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
-                 ResultsState& resultsState, HighscoreState& highscoreState) :
+                 PowerUpHandler& powerUpHandler, ResultsState& resultsState,
+                 HighscoreState& highscoreState) :
     State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
@@ -15,9 +16,10 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
     aiHandler(aiHandler),
     collisionHandler(collisionHandler),
     scoreHandler(scoreHandler),
+    physicsHandler(physicsHandler),
+    powerUpHandler(powerUpHandler),
     resultsState(resultsState),
     highscoreState(highscoreState),
-    physicsHandler(physicsHandler),
     levelW(0),
     levelH(0){
 }
@@ -57,7 +59,7 @@ StateEnum PlayState::run() {
 
         previewOn=drawingHandler.previewLevel(dt);
         drawingHandler.draw(dt);
-        this->inputHandler.handleEvents();
+        this->inputHandler.handleEvents(dt);
         if(this->controlHandler.isPreviewOff())
             break;
         StateEnum nextState = this->controlHandler.handleStateCommands();
@@ -80,12 +82,13 @@ StateEnum PlayState::run() {
         lastTime = currentTime;
 
         this->aiHandler.updateAi(dt);
-        this->inputHandler.handleEvents();
+        this->inputHandler.handleEvents(dt);
         this->physicsHandler.update(dt);
         this->collisionHandler.handleCollisions(dt);
         this->soundHandler.handleSfx(dt);
         this->scoreHandler.handleScore(dt);
         this->drawingHandler.checkCameraShakes();
+        this->powerUpHandler.update(dt);
         this->drawingHandler.shift(dt);
         this->drawingHandler.draw(dt);
         this->entityManager.handleSpawns();
@@ -101,8 +104,8 @@ StateEnum PlayState::run() {
 
 void PlayState::cleanup(StateEnum nextState) {
     if (nextState == STATE_RESULTS) {  // if game complete, update other states
-        this->highscoreState.updateHighscores(this->hero);
-        this->resultsState.updateResults(this->hero);     //TODO: save sprite?
+        this->highscoreState.updateHighscores(this->hero, this->hero2);
+        this->resultsState.updateResults(this->hero, this->hero2);     //TODO: save sprite?
     }
     this->entityManager.clear();
     this->commandList.clear();
