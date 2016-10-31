@@ -44,3 +44,20 @@ void InfiniteHealthCollisionComponent::onEntityCollision(DynamicCollisionCompone
 void InfiniteHealthCollisionComponent::onBorderCollision() {
 
 }
+
+AmmoCollisionComponent::AmmoCollisionComponent(Entity* entity, Command *deletePwrUpEntityCmd) :
+    PowerUpCollisionComponent(entity, deletePwrUpEntityCmd) {
+}
+
+void AmmoCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int /*dt*/) {
+    if(!isClaimed){
+        if(otherComp->entity->powerUp){
+            otherComp->entity->ammo->addAmmo(5);
+            Component::commandList->push_back(this->deletePowerUpCmd);
+            isClaimed=true;
+        }
+    }
+}
+
+void AmmoCollisionComponent::onBorderCollision() {
+}

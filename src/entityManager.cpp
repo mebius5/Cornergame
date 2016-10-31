@@ -185,6 +185,12 @@ Entity* EntityManager::createVictoryZone(int x, int y) {
     return entity;
 }
 
+Entity* EntityManager::createAmmo(int x, int y) {
+    Entity* entity = this->entityBuilder.createAmmo(x, y);
+    this->addEntity(entity);
+    return entity;
+}
+
 Entity* EntityManager::createInfiniteJumpPowerUp(int x, int y) {
     Entity * entity = this->entityBuilder.createInfiniteJumpPowerUp(x,y);
     this->addEntity(entity);
@@ -278,10 +284,14 @@ void EntityManager::populateLevel(Level* level) {
                 createScoreBox(850, 100, hero2);
                 break;
             }
-            case GOAL:{
+            case GOAL: {
                 createVictoryZone(j * 32, i * 32);
                 break;
             }
+            case AMMO: {
+                createAmmo(j * 32, i * 32);
+                break;
+           }
             case PU_JUMP:{
                 createInfiniteJumpPowerUp(j*32, i*32);
                 break;

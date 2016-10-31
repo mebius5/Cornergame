@@ -122,4 +122,11 @@ public:
     void onBorderCollision();
 };
 
+class AmmoCollisionComponent : public PowerUpCollisionComponent {
+public:
+    AmmoCollisionComponent(Entity* entity, Command * deletePwrUpEntityCmd);
+    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
+    void onBorderCollision();
+};
+
 #endif

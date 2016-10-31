@@ -51,6 +51,7 @@ public:
                                                      int index, int numOptions,
                                                      StateEnum nextState);
     Entity* createVictoryZone(int x, int y);
+    Entity* createAmmo(int x, int y);
     Entity* createInfiniteJumpPowerUp(int x, int y);
     Entity* createInfiniteHealthPowerUp(int x, int y);
     Entity* createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
