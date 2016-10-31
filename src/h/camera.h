@@ -10,16 +10,18 @@ private:
     int levelW;
     int levelH;
     bool previewOn;
-public:
-    int minX;
-    int minY;
-    int maxX;
-    int maxY;
     int offsetX;
     int offsetY;
     int shakeTime;
     int maxShakeTime;
     int shakeDist;
+    int windowW;
+    int windowH;
+public:
+    float minX;
+    float minY;
+    float maxX;
+    float maxY;
 
     Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH);
     ~Camera();
