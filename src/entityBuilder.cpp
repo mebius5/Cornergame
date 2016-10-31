@@ -243,6 +243,18 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {        // not using map
     return zone;
 }
 
+Entity* EntityBuilder::createAmmo(int x, int y) {
+    Entity * ammo = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
+    SDL_Surface* surface = SDL_CreateRGBSurface(0, 30, 30, 32, 0, 0, 0, 0);
+    SDL_Rect tempRect = {0,0,30,30};
+    SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 255, 255, 0));
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
+    SDL_FreeSurface(surface);
+    ammo->art = new StaticArtComponent(ammo, texture, 2, false);
+    ammo->collision = new AmmoCollisionComponent(ammo, new DespawnEntityCommand(ammo->getId()));
+    return ammo;
+}
+
 Entity * EntityBuilder::createInfiniteJumpPowerUp(int x, int y) {
     Texture texture = this->textureMap[TEX_PWRUP_INFJUMP];
     Entity * entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);

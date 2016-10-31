@@ -13,6 +13,7 @@ EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmd
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
     this->entityBuilder.loadTexture(TEX_TREE1, "resources/greentree1.png");
     this->entityBuilder.loadTexture(TEX_TREE2, "resources/greentree2.png");
+    this->entityBuilder.loadTexture(TEX_BENCH, "resources/bench.png");
     this->entityBuilder.loadHealthBar(200, 40);
     this->entityBuilder.loadAmmoBar(200, 40);
 }
@@ -195,6 +196,12 @@ Entity* EntityManager::createVictoryZone(int x, int y) {
     return entity;
 }
 
+Entity* EntityManager::createAmmo(int x, int y) {
+    Entity* entity = this->entityBuilder.createAmmo(x, y);
+    this->addEntity(entity);
+    return entity;
+}
+
 Entity* EntityManager::createInfiniteJumpPowerUp(int x, int y) {
     Entity * entity = this->entityBuilder.createInfiniteJumpPowerUp(x,y);
     this->addEntity(entity);
@@ -293,16 +300,24 @@ void EntityManager::populateLevel(Level* level) {
                 createScoreBox(850, 100, hero2);
                 break;
             }
-            case GOAL:{
+            case GOAL: {
                 createVictoryZone(j * 32, i * 32);
                 break;
             }
+            case AMMO: {
+                createAmmo(j * 32, i * 32);
+                break;
+           }
             case TREE1:{
-                createStaticBackgroundObject(TEX_TREE1, j*32, i*32);
+                createBackgroundArt(TEX_TREE1, j*32, i*32);
                 break;
             }
             case TREE2:{
-                createStaticBackgroundObject(TEX_TREE2, j*32, i*32);
+                createBackgroundArt(TEX_TREE2, j*32, i*32);
+                break;
+            }
+            case BENCH:{
+                createBackgroundArt(TEX_BENCH, j*32, i*32);
                 break;
             }
             case PU_JUMP:{
