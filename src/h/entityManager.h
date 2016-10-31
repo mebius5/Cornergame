@@ -40,6 +40,7 @@ public:
     Entity* createBackground(TextureEnum texType, int width, int height);
 
     Entity* createHealthBar(int x, int y, Entity* owner);
+    Entity* createAmmoBar(int x, int y, Entity* owner);
     Entity* createScoreBox(int x, int y, Entity* owner);
 
     Entity* createCenteredFadeInText(FontEnum font,

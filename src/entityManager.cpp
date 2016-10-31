@@ -10,6 +10,7 @@ EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmd
     this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
     this->entityBuilder.loadTexture(TEX_BACKGROUND, "resources/jhu-logo.png");
     this->entityBuilder.loadHealthBar(200, 40);
+    this->entityBuilder.loadAmmoBar(200, 40);
 }
 
 EntityManager::~EntityManager() {
@@ -130,6 +131,12 @@ Entity* EntityManager::createBackground(TextureEnum texType, int width, int heig
 
 Entity* EntityManager::createHealthBar(int x, int y, Entity* owner) {
     Entity* entity = this->entityBuilder.createHealthBar(x, y, owner);
+    this->addEntity(entity);
+    return entity;
+}
+
+Entity* EntityManager::createAmmoBar(int x, int y, Entity* owner) {
+    Entity* entity = this->entityBuilder.createAmmoBar(x, y, owner);
     this->addEntity(entity);
     return entity;
 }
@@ -265,6 +272,8 @@ void EntityManager::populateLevel(Level* level) {
                 Entity* hero2 = createHero(TEX_HERO2, j * 32 + 64, i * 32, SFX_ALERT, true);
                 createHealthBar(100, 50, hero);
                 createHealthBar(100, 100, hero2);
+                createAmmoBar(400, 50, hero);
+                createAmmoBar(400, 100, hero2);
                 createScoreBox(850, 50, hero);
                 createScoreBox(850, 100, hero2);
                 break;

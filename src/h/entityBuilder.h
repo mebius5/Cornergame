@@ -24,6 +24,7 @@ public:
     EntityBuilder(SDL_Renderer *renderer);
     void loadTexture(TextureEnum texType, const char* filename);
     void loadHealthBar(int width, int height);
+    void loadAmmoBar(int width, int height);
     void loadFont(FontEnum fontType, int fontSize);
     void loadTerrain(TerrainTexEnum texType, int width);
     void freeTextures();
@@ -32,6 +33,7 @@ public:
     Entity* createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes);
     Entity* createBackground(TextureEnum texType, int width, int height);
     Entity* createHealthBar(int x, int y, Entity* owner);
+    Entity* createAmmoBar(int x, int y, Entity* owner);
     Entity* createScoreBox(int x, int y, Entity* owner, FontEnum font, int fontSize);
     Entity* createCenteredFadeInText(FontEnum fontType, const char *text, int fontSize,
                                      int r, int g, int b, int initialAlpha,
