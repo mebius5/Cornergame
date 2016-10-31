@@ -47,12 +47,12 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
     if(!previewOn && entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)) {
         detectBorderCollision(entity, dt);
         float xThresh = minX + windowW * .5;        // threshholds for camera shifting based on
-        float yLowerThresh = minY + windowH * .75;  //  hero position
-        float yUpperThresh = minY + windowH * .2;
+        float yLowerThresh = minY + windowH * .85;  //  hero position
+        float yUpperThresh = minY + windowH * .15;
         if (entity->y >= yLowerThresh) {            // shift y smoothly if past 3/4 of the way down
-            shift(0, (entity->y - yLowerThresh) * .01 * dt);
+            shift(0, (entity->y - yLowerThresh) * .05 * dt);
         } else if (entity->y <= yUpperThresh) {
-            shift(0, (entity->y - yUpperThresh) * .001 * dt);
+            shift(0, (entity->y - yUpperThresh) * .01 * dt);
         }
         if (entity->x >= (minX+(windowW)*.5)) {     // shift x smoothly if heroes past half way
             shift((entity->x - xThresh) * .0007 * dt, 0);
