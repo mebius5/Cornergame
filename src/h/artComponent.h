@@ -81,6 +81,19 @@ public:
     SDL_Rect* getNextSrcRect(int dt);
 };
 
+class AmmoBarArtComponent: public ArtComponent {
+private:
+    Entity* hero;
+    SDL_Texture* texture;
+    SDL_Rect clip;
+    float width;
+    int height;
+public:
+    AmmoBarArtComponent(Entity* entity, Entity* hero, Texture tex, int layer);
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+};
+
 class ScoreTextArtComponent: public ArtComponent{
 private:
     ScoreComponent* ownerScore;

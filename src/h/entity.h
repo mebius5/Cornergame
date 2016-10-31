@@ -10,6 +10,7 @@ class ScoreComponent;
 class HealthComponent;
 class PhysicsComponent;
 class PowerUpComponent;
+class AmmoComponent;
 
 #include "artComponent.h"
 #include "inputComponent.h"
@@ -19,6 +20,7 @@ class PowerUpComponent;
 #include "aiComponent.h"
 #include "healthComponent.h"
 #include "powerUpComponent.h"
+#include "ammoComponent.h"
 
 enum Action {IDLE, JUMP, THROW, DAMAGE, SLIDING};
 
@@ -43,6 +45,7 @@ public:
     AiComponent* ai;
     HealthComponent* health;
     PowerUpComponent * powerUp;
+    AmmoComponent * ammo;
 
     Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHeight);
     ~Entity();
