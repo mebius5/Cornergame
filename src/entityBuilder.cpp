@@ -3,7 +3,7 @@
 EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
-    textureMap(10),
+    textureMap(20),
     terrainTexMap(2, std::vector<Texture>(256)),
     fontMap(1, std::vector<TTF_Font*>(128)) {
 }
@@ -155,6 +155,13 @@ Entity* EntityBuilder::createBackground(TextureEnum texType, int width, int heig
     return background;
 }
 
+Entity* EntityBuilder::createBackgroundArt(TextureEnum texType, int x, int y) {
+    Texture texture = this->textureMap[texType];
+    Entity * entity = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+    entity->art = new StaticArtComponent(entity, texture.sdlTexture, 0, false);
+    return entity;
+}
+
 Entity* EntityBuilder::createHealthBar(int x, int y, Entity* owner) {
     Texture texture = this->textureMap[TEX_HEALTHBAR];
     Entity* healthBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);
@@ -249,27 +256,26 @@ Entity* EntityBuilder::createAmmo(int x, int y) {
 }
 
 Entity * EntityBuilder::createInfiniteJumpPowerUp(int x, int y) {
+    Texture texture = this->textureMap[TEX_PWRUP_INFJUMP];
     Entity * entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, 30, 30, 32, 0, 0, 0, 0);
-    SDL_Rect tempRect = {0,0,30,30};
-    SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 0, 0, 255));
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
-    SDL_FreeSurface(surface);
-    entity->art = new StaticArtComponent(entity, texture, 1, false);
+    entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
     entity->collision = new InfiniteJumpCollisionComponent(entity, new DespawnEntityCommand(entity->getId()));
     return entity;
 }
 
 Entity* EntityBuilder::createInfiniteHealthPowerUp(int x, int y) {
+    Texture texture = this->textureMap[TEX_PWRUP_INFHEALTH];
     Entity * entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, 30, 30, 32, 0, 0, 0, 0);
-    SDL_Rect tempRect = {0,0,30,30};
-    SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 0, 255, 0));
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
-    SDL_FreeSurface(surface);
-    entity->art = new StaticArtComponent(entity, texture, 1, false);
+    entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
     entity->collision = new InfiniteHealthCollisionComponent(entity, new DespawnEntityCommand(entity->getId()));
     return entity;
+}
+
+Entity* EntityBuilder::createStaticBackgroundObject(TextureEnum texType, int x, int y) {
+    Texture texture = this->textureMap[texType];
+    Entity* object = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+    object->art = new StaticArtComponent(object, texture.sdlTexture, 0, false);
+    return object;
 }
 
 Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,

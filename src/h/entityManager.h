@@ -38,7 +38,7 @@ public:
     Entity* createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd);
     Entity* createEnemy(TextureEnum texType, int x, int y);
     Entity* createBackground(TextureEnum texType, int width, int height);
-
+    Entity* createBackgroundArt(TextureEnum texType, int x, int y);
     Entity* createHealthBar(int x, int y, Entity* owner);
     Entity* createAmmoBar(int x, int y, Entity* owner);
     Entity* createScoreBox(int x, int y, Entity* owner);
@@ -61,6 +61,7 @@ public:
     Entity* createAmmo(int x, int y);
     Entity* createInfiniteJumpPowerUp(int x, int y);
     Entity* createInfiniteHealthPowerUp(int x, int y);
+    Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y);
     Entity * createTerrain(Tiles tileType, int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
     Entity* createProjectile(int x, int y, int dir, int ownerID, ProjEnum projType);

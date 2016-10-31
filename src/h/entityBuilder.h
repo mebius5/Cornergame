@@ -32,6 +32,7 @@ public:
     Entity* createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd);
     Entity* createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes);
     Entity* createBackground(TextureEnum texType, int width, int height);
+    Entity* createBackgroundArt(TextureEnum texType, int x, int y);
     Entity* createHealthBar(int x, int y, Entity* owner);
     Entity* createAmmoBar(int x, int y, Entity* owner);
     Entity* createScoreBox(int x, int y, Entity* owner, FontEnum font, int fontSize);
@@ -54,6 +55,7 @@ public:
     Entity* createAmmo(int x, int y);
     Entity* createInfiniteJumpPowerUp(int x, int y);
     Entity* createInfiniteHealthPowerUp(int x, int y);
+    Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y) ;
     Entity* createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
             bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
     Entity* createProjectile(TextureEnum texType, int x, int y, int dir, int ownerID);

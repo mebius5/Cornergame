@@ -31,7 +31,9 @@ void DrawingHandler::draw(int dt) {
             }
 
             ArtComponent* artComp = *it;
-            camera.draw(dt, artComp);
+            if(artComp->layer==i){
+                camera.draw(dt, artComp);
+            }
             ++it;
         }
     }

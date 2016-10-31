@@ -67,6 +67,12 @@ Level::Level(std::string filename, int windowW, int windowH) {
                 case 'A':
                     levelContents[i][j] = AMMO;
                     break;
+                case 'T':
+                    levelContents[i][j] = TREE1;
+                    break;
+                case 't':
+                    levelContents[i][j] = TREE2;
+                    break;
                 default:
                     levelContents[i][j] = NONE;
                     std::cerr << "Unrecognized symbol in level file: " << line.at(j) << std::endl;
