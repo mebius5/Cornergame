@@ -134,12 +134,6 @@ Entity* EntityManager::createBackground(TextureEnum texType, int width, int heig
     return entity;
 }
 
-Entity* EntityManager::createBackgroundArt(TextureEnum texType, int x, int y) {
-    Entity * entity = this->entityBuilder.createBackgroundArt(texType, x, y);
-    this->addEntity(entity);
-    return entity;
-}
-
 Entity* EntityManager::createHealthBar(int x, int y, Entity* owner) {
     Entity* entity = this->entityBuilder.createHealthBar(x, y, owner);
     this->addEntity(entity);
@@ -309,15 +303,15 @@ void EntityManager::populateLevel(Level* level) {
                 break;
            }
             case TREE1:{
-                createBackgroundArt(TEX_TREE1, j*32, i*32);
+                createStaticBackgroundObject(TEX_TREE1, j*32, i*32);
                 break;
             }
             case TREE2:{
-                createBackgroundArt(TEX_TREE2, j*32, i*32);
+                createStaticBackgroundObject(TEX_TREE2, j*32, i*32);
                 break;
             }
             case BENCH:{
-                createBackgroundArt(TEX_BENCH, j*32, i*32);
+                createStaticBackgroundObject(TEX_BENCH, j*32, i*32);
                 break;
             }
             case PU_JUMP:{

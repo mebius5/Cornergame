@@ -155,13 +155,6 @@ Entity* EntityBuilder::createBackground(TextureEnum texType, int width, int heig
     return background;
 }
 
-Entity* EntityBuilder::createBackgroundArt(TextureEnum texType, int x, int y) {
-    Texture texture = this->textureMap[texType];
-    Entity * entity = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
-    entity->art = new StaticArtComponent(entity, texture.sdlTexture, 0, false);
-    return entity;
-}
-
 Entity* EntityBuilder::createHealthBar(int x, int y, Entity* owner) {
     Texture texture = this->textureMap[TEX_HEALTHBAR];
     Entity* healthBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);

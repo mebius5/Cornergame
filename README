@@ -14,6 +14,14 @@ make
 ./gameManager
 
 Assignment 7 Task Writeups
+General Notes:
+- As of now, there is only two working level.
+  Level three is in here in preparation for next week.
+
+POWERUPS (all lasts 3.5 sec):
+- Yellow square is non-weapon ammo/gum balls
+- Star is infinite health
+- Wings is infinite jump
 
 Akshay
 - Created knockback when players touch and when damage taken
@@ -36,61 +44,21 @@ Andrew
 - Level1 edits for more cool obstacles
 
 Grady
-- Added components, collsiionComopnents, and handlers for power up
+- Added components, collisionComponents, and handlers for power up
 - Added infinite jump power up
 - Added infinite health power up
-- Added level transit state
+- Added level transit state to introduce each level
 - Now players can press P to skip transit text, previews, and results
 - Added level2 that uses infinite jump in order to finish
 - Corrected result states and highscore state to get results from both heroes
 - Split result state texts into two lines
+- Fixed bug in drawing handler that caused frame rate slow down due to
+  lack of layer comparison
 
 Pratyush
 -implemented hitbox that differ from artwork for more accurate collisions
 -Drew tree, grass, bench assets and added to game
 -implemented screenshake
-
-Assignment 6 Task Writeups
-
-General Notes:
-- As of now, there is only one working level.
-  Level two is in here in preparation for next week.
-
-Akshay
-- Added physics component
-- Separated physics from Input Components
-- Made physics decay based on time
-
-Andrew
-- reorganized texture pools so that copies of entities can share textures
-- added detection of entities hitting walls/ground -> will reduce (doesn't yet!)
-    number of collisions and allows things like wall jumps and sliding on
-    walls to work
-- implemented wall slides and wall jumps, but somewhat buggy (see quirks below)
-- performance updates to PhysicsHandler and PhysicsComponent
-- segfault bug fixes with PhysicsComponent, HealthComponent
-- minor bug fixes with CollisionHandler
-
-Grady
-- Modified level editor to collapse all neighboring horizontal terrain tiles into a single entity.
-  This decreases amount of collisions that need to be checked
-- Added ability to wrap a level to go on forever until a hero dies or get to the hero1Victory zone
-  Note: The hero is copied over only if it was originally on the last camera section.
-- Added ability to proceed to the next level, allowing the addition of multiple levels
-- Modified damage control so that it's based on time
-- Added border control for hero and damage for hero if colliding with border
-- Added level preview to the beginning of game play. Press p to skip preview.
-
-Pratyush
--Added projectiles to the game
--Added commands to spawn and despawn entities mid-game. This was necessary to allow projectiles to
-spawn and despawn and allow enemies to be killed.
--Drew spritesheets for attacking, taking damage, jumping, and wall sliding for player and enemy
--Updated animation component to play animations at the right time using an actionState enum
--Fixed a seg fault when an entity is deleted while colliding with multiple other objects
--Added a second hero for multiplayer and adjusted the results screen to reflect multiplayer results
-
-
 
 CONTROLS
 - Press ESC to quit game
