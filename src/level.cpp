@@ -64,6 +64,9 @@ Level::Level(std::string filename, int windowW, int windowH) {
                 case 'H':
                     levelContents[i][j] = PU_HEALTH;
                     break;
+                case 'A':
+                    levelContents[i][j] = AMMO;
+                    break;
                 case 'T':
                     levelContents[i][j] = TREE1;
                     break;

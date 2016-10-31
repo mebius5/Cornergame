@@ -70,7 +70,7 @@ Grady
 - Added level preview to the beginning of game play. Press p to skip preview.
 
 Pratyush
--Added projectiles to the game 
+-Added projectiles to the game
 -Added commands to spawn and despawn entities mid-game. This was necessary to allow projectiles to
 spawn and despawn and allow enemies to be killed.
 -Drew spritesheets for attacking, taking damage, jumping, and wall sliding for player and enemy
@@ -142,10 +142,10 @@ their sprites. If the character is moving at a velocity of more than 0.01,
 we cycle through a four frame walking animation in the direction they are
 facing. These frames are stored in the top row of the spritesheet. If the
 character is not moving, we cycle through a two frame idle animation which is
-in the second row of the spritesheet. If the character is taking damage, a 
-two frame animation is flashed twice. If the character is throwing a 
-projectile, a four frame animation is played. If the character is jumping, a 
-four frame animation is played. If the character is sliding down a wall, a 
+in the second row of the spritesheet. If the character is taking damage, a
+two frame animation is flashed twice. If the character is throwing a
+projectile, a four frame animation is played. If the character is jumping, a
+four frame animation is played. If the character is sliding down a wall, a
 four frame animation is cycled.
 
 
@@ -214,5 +214,7 @@ verify deletion was implemented properly w/ vectors!
 Move handlers to namespaces?
 revamp terrain -> fewer rectangles!
 change collision to only check static objects in certain bins?
-EntityEnum instead of dynamic casts everywhere (see camera.cpp, etc.)
-Fix inputScheme stuff
+EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
+Fix input lag on wasd player
+Change allocation to happen in groups
+Change renderCopy() of static stuff to be more efficient: group static textures

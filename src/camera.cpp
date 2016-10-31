@@ -5,19 +5,20 @@
 Camera::Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH) :
     renderer(renderer),
     componentList(componentList),
-    levelW(-1),
+    levelW(-1),             // width and height of level (without copied portion)
     levelH(-1),
     previewOn(true),
-    minX(0),
-    minY(0),
-    maxX(windowW),
-    maxY(windowH),
-    offsetX(0),
+    offsetX(0),             // offset for screen shake
     offsetY(0),
     shakeTime(0),
     maxShakeTime(1000),
-    shakeDist(4)
-{
+    shakeDist(4),
+    windowW(windowW),
+    windowH(windowH),
+    minX(0),                // current displayed window
+    minY(0),
+    maxX(windowW),
+    maxY(windowH) {
 }
 
 Camera::~Camera() {
@@ -43,33 +44,18 @@ void Camera::updateShake(int dt) {
 void Camera::draw(int dt, ArtComponent *artComponent) {
     Entity* entity = artComponent->entity;
 
-    if(entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)) {
-        if(!previewOn && levelW!=-1 && entity->x > levelW){
-            if(levelW!=-1 && minX>=levelW){
-                std::vector<ArtComponent*>::iterator it;
-                for (it = this->componentList.begin(); it != this->componentList.end(); ) {
-                    if (!(*it)->isValid()) {        // remove invalid components
-                        *it = this->componentList.back();
-                        this->componentList.pop_back();
-                        continue;
-                    }
-
-                    if((*it)->entity->collision&& !dynamic_cast<TerrainCollisionComponent*>((*it)->entity->collision)){
-                        if((*it)->entity->x>= minX && (*it)->entity->x<=maxX){
-                            (*it)->entity->x = (*it)->entity->x - levelW;
-                        }
-                    }
-
-                    ++it;
-                }
-
-                //TODO: Add command to respawn all enemy and heros at updated location
-                minX = minX - levelW;
-                maxX = maxX - levelW;
-            }
+    if(!previewOn && entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)) {
+        detectBorderCollision(entity, dt);
+        float xThresh = minX + windowW * .5;        // threshholds for camera shifting based on
+        float yLowerThresh = minY + windowH * .75;  //  hero position
+        float yUpperThresh = minY + windowH * .2;
+        if (entity->y >= yLowerThresh) {            // shift y smoothly if past 3/4 of the way down
+            shift(0, (entity->y - yLowerThresh) * .01 * dt);
+        } else if (entity->y <= yUpperThresh) {
+            shift(0, (entity->y - yUpperThresh) * .001 * dt);
         }
-        if(!previewOn){
-            detectBorderCollision(entity, dt);
+        if (entity->x >= (minX+(windowW)*.5)) {     // shift x smoothly if heroes past half way
+            shift((entity->x - xThresh) * .0007 * dt, 0);
         }
     }
 
@@ -78,29 +64,12 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
         artComponent->entity->y = this->minY+artComponent->offSetY;
     }
 
-    if(entity->x + entity->width < minX||
-            entity->y+entity->height < minY||
-            entity->x > maxX || entity->y > maxY)
+    if (entity->x + entity->width < minX || entity->y+entity->height < minY
+            || entity->x > maxX || entity->y > maxY)
         return;
 
-    if(entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)){
-        /***
-        if(entity->x >= ((maxX+minX)/2)){
-            shift(entity->x-(maxX+minX)/2,0);
-        }***/
-
-        if(entity->y >= (minY+(maxY-minY)*.75)){
-            shift(0,entity->y-(minY+(maxY-minY)*.75));
-        }
-
-        if(entity->y <= levelH*32 /*&& entity->y >= levelH*32*0.75*/){
-            shift(0, - 2);
-        }
-
-    }
-
-    SDL_Rect dest = { (int)entity->x - minX + entity->width/2 - entity->drawWidth/2 - offsetX,
-                      (int) entity->y - minY + entity->height/2 - entity->drawHeight/2 - offsetY,
+    SDL_Rect dest = { (int)entity->x - (int)minX + entity->width/2 - entity->drawWidth/2 - offsetX,
+                      (int) entity->y - (int)minY + entity->height/2 - entity->drawHeight/2 - offsetY,
                       entity->drawWidth,
                       entity->drawHeight};
 
@@ -113,16 +82,28 @@ void Camera::shift(int dx, int dy) {
     minY += dy;
     maxX += dx;
     maxY += dy;
-    /****
-if(levelW!=-1 && minX > levelW){
-    minX = minX - levelW;
-    maxX = maxX - levelW;
-}
 
-if(levelH!=-1 && minY > levelH){
-    minY = minY - levelH;
-    maxY = maxY - levelH;
-}****/
+    if (!previewOn && minX >= levelW) {
+        std::vector<ArtComponent*>::iterator it;
+        for (it = this->componentList.begin(); it != this->componentList.end(); ) {
+            if (!(*it)->isValid()) {        // remove invalid components
+                *it = this->componentList.back();
+                this->componentList.pop_back();
+                continue;
+            }
+
+            if((*it)->entity->collision&& !dynamic_cast<TerrainCollisionComponent*>((*it)->entity->collision)){
+                if((*it)->entity->x>= minX && (*it)->entity->x<=maxX){
+                    (*it)->entity->x = (*it)->entity->x - levelW;
+                }
+            }
+            ++it;
+        }
+
+        //TODO: Add command to respawn all enemy and heroes at updated location
+        minX = minX - levelW;
+        maxX = maxX - levelW;
+    }
 }
 
 void Camera::resetCamera(int minX, int minY, int maxX, int maxY) {
