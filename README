@@ -19,6 +19,14 @@ Akshay
 -Implemented screenshake
 
 Andrew
+- Fixed bugs with wall jumping, wall sliding, fast falls, sliding off of
+    terrain, sliding off of walls
+- Fixed some of the bugs relating to heroes passing through terrain
+- Fixed input lag bug for player 2
+- Added smooth camera scrolling dependent on both heroes positions
+- Fixed camera bugs in preview mode, and made reseting level on level loop more
+    efficient
+- Level1 edits for more cool obstacles
 
 Grady
 - Added components, collsiionComopnents, and handlers for power up
