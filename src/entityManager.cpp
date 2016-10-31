@@ -13,6 +13,7 @@ EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmd
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
     this->entityBuilder.loadTexture(TEX_TREE1, "resources/greentree1.png");
     this->entityBuilder.loadTexture(TEX_TREE2, "resources/greentree2.png");
+    this->entityBuilder.loadTexture(TEX_BENCH, "resources/bench.png");
     this->entityBuilder.loadHealthBar(200, 40);
     this->entityBuilder.loadAmmoBar(200, 40);
 }
@@ -298,11 +299,15 @@ void EntityManager::populateLevel(Level* level) {
                 break;
             }
             case TREE1:{
-                createStaticBackgroundObject(TEX_TREE1, j*32, i*32);
+                createBackgroundArt(TEX_TREE1, j*32, i*32);
                 break;
             }
             case TREE2:{
-                createStaticBackgroundObject(TEX_TREE2, j*32, i*32);
+                createBackgroundArt(TEX_TREE2, j*32, i*32);
+                break;
+            }
+            case BENCH:{
+                createBackgroundArt(TEX_BENCH, j*32, i*32);
                 break;
             }
             case PU_JUMP:{
