@@ -16,6 +16,7 @@ make
 Assignment 7 Task Writeups
 
 Akshay
+-Implemented screenshake
 
 Andrew
 
@@ -30,6 +31,12 @@ Grady
 - Split result state texts into two lines
 
 Pratyush
+-implemented hitbox that differ from artwork for more accurate collisions
+-Drew tree, grass, bench assets and added to resources
+-implemented screenshake
+-
+
+
 
 Assignment 6 Task Writeups
 

@@ -206,6 +206,11 @@ Entity* EntityManager::createInfiniteHealthPowerUp(int x, int y) {
     this->addEntity(entity);
     return  entity;
 }
+Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, int x, int y) {
+    Entity* entity = this->entityBuilder.createStaticBackgroundObject(texType, x,y);
+    this->addEntity(entity);
+    return entity;
+}
 
 Entity* EntityManager::createTerrain(Tiles tileType, int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
@@ -293,11 +298,11 @@ void EntityManager::populateLevel(Level* level) {
                 break;
             }
             case TREE1:{
-                createBackgroundArt(TEX_TREE1, j*32, i*32);
+                createStaticBackgroundObject(TEX_TREE1, j*32, i*32);
                 break;
             }
             case TREE2:{
-                createBackgroundArt(TEX_TREE2, j*32, i*32);
+                createStaticBackgroundObject(TEX_TREE2, j*32, i*32);
                 break;
             }
             case PU_JUMP:{

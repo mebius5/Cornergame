@@ -54,6 +54,7 @@ public:
     Entity* createVictoryZone(int x, int y);
     Entity* createInfiniteJumpPowerUp(int x, int y);
     Entity* createInfiniteHealthPowerUp(int x, int y);
+    Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y) ;
     Entity* createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
             bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
     Entity* createProjectile(TextureEnum texType, int x, int y, int dir, int ownerID);
