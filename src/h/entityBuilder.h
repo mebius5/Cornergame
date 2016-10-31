@@ -31,6 +31,7 @@ public:
     Entity* createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd);
     Entity* createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes);
     Entity* createBackground(TextureEnum texType, int width, int height);
+    Entity* createBackgroundArt(TextureEnum texType, int x, int y);
     Entity* createHealthBar(int x, int y, Entity* owner);
     Entity* createScoreBox(int x, int y, Entity* owner, FontEnum font, int fontSize);
     Entity* createCenteredFadeInText(FontEnum fontType, const char *text, int fontSize,
