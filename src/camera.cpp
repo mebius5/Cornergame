@@ -50,12 +50,12 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
         float yLowerThresh = minY + windowH * .75;  //  hero position
         float yUpperThresh = minY + windowH * .2;
         if (entity->y >= yLowerThresh) {            // shift y smoothly if past 3/4 of the way down
-            shift(0, (entity->y - yLowerThresh) * .008 * dt);
+            shift(0, (entity->y - yLowerThresh) * .01 * dt);
         } else if (entity->y <= yUpperThresh) {
             shift(0, (entity->y - yUpperThresh) * .001 * dt);
         }
         if (entity->x >= (minX+(windowW)*.5)) {     // shift x smoothly if heroes past half way
-            shift((entity->x - xThresh) * .00018 * dt, 0);
+            shift((entity->x - xThresh) * .0007 * dt, 0);
         }
     }
 
