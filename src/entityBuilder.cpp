@@ -76,6 +76,18 @@ void EntityBuilder::loadHealthBar(int width, int height) {
     this->textureMap[TEX_HEALTHBAR] = {texture, width*2, height};
 }
 
+void EntityBuilder::loadAmmoBar(int width, int height) {
+    SDL_Surface* tempSurface = SDL_CreateRGBSurface(0, width*2, height, 32, 0, 0, 0, 0);
+    SDL_Rect tempRect = {0, 0, width, height};
+    SDL_FillRect(tempSurface, &tempRect, SDL_MapRGB(tempSurface->format, 255, 255, 0));
+    tempRect = {width, 0, width, height};
+    SDL_FillRect(tempSurface, &tempRect, SDL_MapRGB(tempSurface->format, 0, 0, 0));
+
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, tempSurface);
+    SDL_FreeSurface(tempSurface);
+    this->textureMap[TEX_AMMOBAR] = {texture, width*2, height};
+}
+
 void EntityBuilder::loadFont(FontEnum fontType, int fontSize) {
     TTF_Font* font = TTF_OpenFont("resources/CaesarDressing-Regular.ttf", fontSize);
     if (!font)
@@ -116,6 +128,7 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
     hero->health = new HealthComponent(hero, 1000, new SwitchStateCommand(STATE_RESULTS));
     hero->physics = new PhysicsComponent(hero);
     hero->powerUp = new PowerUpComponent(hero);
+    hero->ammo = new AmmoComponent(hero, 10);
 
     return hero;
 }
@@ -154,6 +167,13 @@ Entity* EntityBuilder::createHealthBar(int x, int y, Entity* owner) {
     Entity* healthBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);
     healthBar->art = new HealthBarArtComponent(healthBar, texture, owner->health, 2);
     return healthBar;
+}
+
+Entity* EntityBuilder::createAmmoBar(int x, int y, Entity* owner) {
+    Texture texture = this->textureMap[TEX_AMMOBAR];
+    Entity* ammoBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);
+    ammoBar->art = new AmmoBarArtComponent(ammoBar, owner, texture, 2);
+    return ammoBar;
 }
 
 Entity* EntityBuilder::createScoreBox(int x, int y, Entity* owner, FontEnum fontType, int fontSize) {

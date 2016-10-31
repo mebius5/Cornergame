@@ -2,6 +2,8 @@
 
 SRCFILES = \
 	aiHandler.cpp \
+    ammoBarArtComponent.cpp \
+    ammoComponent.cpp \
 	animationComponent.cpp \
 	camera.cpp \
 	collisionHandler.cpp \
