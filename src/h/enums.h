@@ -22,4 +22,14 @@ enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_NONE };
 
 enum FontEnum { FONT_GLOBAL };
 
+
+//List the nums in order of its corresponding position in the array
+enum PowerUpType {
+    //Timer-based powerup
+    PWRUP_INFJUMP, PWRUP_INFHEALTH,
+
+    //Non-timer-based powerup
+    PWRUP_AMMO
+};
+
 #endif
