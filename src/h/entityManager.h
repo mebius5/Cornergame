@@ -63,7 +63,7 @@ public:
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y);
     Entity * createTerrain(Tiles tileType, int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
-    Entity* createProjectile(int x, int y, int dir, int ownerID, ProjEnum projType);
+    Entity* createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum projType);
     void handleSpawns();
     void populateLevel(Level * level);
     void printCommands();

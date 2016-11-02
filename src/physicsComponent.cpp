@@ -16,7 +16,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     maxXVelocity(.55f),
     maxYVelocity(4.0f),
     jumpVelocity(.5f),
-    deceleration(.0012f),
+    deceleration(.0018f),
     maxJumps(1) {
 }
 

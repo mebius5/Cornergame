@@ -26,6 +26,8 @@ private:
     SpawnEntityCommand* spawnCommand;
     int spawnTime;
     int spawnCooldown;
+    float holdTime;
+    float maxHold;
 public:
     HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand);
     ~HeroInputComponent();

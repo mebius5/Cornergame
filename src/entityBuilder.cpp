@@ -283,14 +283,14 @@ Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int n
     return terrain;
 }
 
-Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, int dir, int ownerId) {
+Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, float charge, int dir, int ownerId) {
     Texture texture = this->textureMap[texType];
     Entity* projectile = new Entity(this->nextId++, x, y, texture.width*2, texture.height*2, texture.width*2, texture.height*2);
     projectile->art = new StaticArtComponent(projectile, texture.sdlTexture, 1, false);
     DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
     projectile->collision = new ProjectileCollisionComponent(projectile, dCmd, ownerId);
     projectile->physics = new PhysicsComponent(projectile);
-    projectile->physics->xVelocity = dir * 0.6f;
+    projectile->physics->xVelocity = dir * charge * 0.6f;
     projectile->physics->yVelocity = -0.4f;
     projectile->physics->deceleration = 0.0f;
     return projectile;

@@ -227,8 +227,8 @@ Entity* EntityManager::createTerrain(Tiles tileType, int x, int y, int numberHor
     return entity;
 }
 
-Entity* EntityManager::createProjectile(int x, int y, int dir, int ownerID, ProjEnum /*projType*/) {
-    Entity* entity = this->entityBuilder.createProjectile(TEX_PROJECTILE, x, y, dir, ownerID);
+Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum /*projType*/) {
+    Entity* entity = this->entityBuilder.createProjectile(TEX_PROJECTILE, x, y, charge, dir, ownerID);
     this->addEntity(entity);
     return entity;
 }
@@ -237,7 +237,7 @@ void EntityManager::handleSpawns() {
     std::vector<Command*>::iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
         if (SpawnEntityCommand* eCmd = dynamic_cast<SpawnEntityCommand*>(*it)) {
-            this->createProjectile(eCmd->x, eCmd->y, eCmd->dir, eCmd->ownerID, eCmd->projType);
+            this->createProjectile(eCmd->x, eCmd->y, eCmd->charge, eCmd->dir, eCmd->ownerID, eCmd->projType);
             *it = this->commandList.back();
             this->commandList.pop_back();
         } else if (DespawnEntityCommand* dCmd = dynamic_cast<DespawnEntityCommand*>(*it)) {

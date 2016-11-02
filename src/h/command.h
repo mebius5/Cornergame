@@ -30,6 +30,7 @@ public:
     int y;
     int dir;
     int ownerID;
+    float charge;
     SpawnEntityCommand(ProjEnum projType);
 };
 

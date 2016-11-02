@@ -10,7 +10,9 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCom
     jumpPressed(false),
     spawnCommand(spawnCommand),
     spawnTime(0),
-    spawnCooldown(1000) {
+    spawnCooldown(1000),
+    holdTime(-1.0f),
+    maxHold(1000.0f) {
 }
 
 HeroInputComponent::~HeroInputComponent() {
@@ -21,9 +23,18 @@ HeroInputComponent::~HeroInputComponent() {
 }
 
 void HeroInputComponent::updateTime(int dt) {
+    // update the spawn time
     this->spawnTime -= dt;
     if (this->spawnTime < 0) {
         this->spawnTime = 0;
+    }
+
+    // update the hold time
+    if (this->holdTime >= 0) {
+        this->holdTime += dt;
+        if (this->holdTime > this->maxHold) {
+            this->holdTime = this->maxHold;
+        }
     }
 }
 
@@ -55,16 +66,11 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
         }
         this->entity->ammo->spendAmmo();
 
-        this->entity->actionState = THROW;
-        this->spawnCommand->dir = this->entity->dir;
-        if (this->spawnCommand->dir == 1) {
-            this->spawnCommand->x = entity->x + 48;
-        } else {
-            this->spawnCommand->x = entity->x + 16;
+        // start to charge the shot
+        if (this->holdTime < 0) {
+            this->holdTime = 0.0f;
         }
-        this->spawnCommand->y = entity->y+20;
-        this->spawnCommand->ownerID = entity->getId();
-        Component::commandList->push_back(this->spawnCommand);
+
     } else if (keycode == SDLK_k) {
         this->entity->health->toggleInvincibility();
         this->entity->physics->toggleInfiniteJumps();
@@ -79,5 +85,25 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
     //    this->entity->physics->clearAccelerationY();
     } else if (keycode == this->leftKey || keycode == this->rightKey) {
         this->entity->physics->clearAccelerationX();
+    } else if (keycode == this->shootKey) {
+        // don't allow a shot if not charged
+        if (this->holdTime <= 0) {
+            return;
+        }
+        
+        this->entity->actionState = THROW;
+        this->spawnCommand->dir = this->entity->dir;
+        if (this->spawnCommand->dir == 1) {
+            this->spawnCommand->x = entity->x + 48;
+        } else {
+            this->spawnCommand->x = entity->x + 16;
+        }
+        this->spawnCommand->y = entity->y+20;
+        this->spawnCommand->ownerID = entity->getId();
+        this->spawnCommand->charge = this->holdTime / this->maxHold;
+        Component::commandList->push_back(this->spawnCommand);
+
+        // reset hold time
+        this->holdTime = -1.0f;
     }
 }
