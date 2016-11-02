@@ -1,63 +1,24 @@
 #include "collisionComponent.h"
 
-PowerUpCollisionComponent::PowerUpCollisionComponent(Entity *entity, Command *deletePwrUpEntityCmd):
+PowerUpCollisionComponent::PowerUpCollisionComponent(Entity *entity, Command *deletePwrUpEntityCmd,
+                                                     PowerUpType pwrUpType):
         StaticCollisionComponent(entity),
         deletePowerUpCmd(deletePwrUpEntityCmd),
-        isClaimed(false)
+        isClaimed(false),
+        pwrUpType(pwrUpType)
 {
+
 }
 
-InfiniteJumpCollisionComponent::InfiniteJumpCollisionComponent(Entity *entity, Command * deletePwrUpEntityCmd):
-        PowerUpCollisionComponent(entity, deletePwrUpEntityCmd)
-{
-}
-
-void InfiniteJumpCollisionComponent::onEntityCollision(DynamicCollisionComponent *otherComp, int) {
+void PowerUpCollisionComponent::onEntityCollision(DynamicCollisionComponent *otherComp, int) {
     if(!isClaimed){
         if(otherComp->entity->powerUp){
-            otherComp->entity->powerUp->activateInfJumpPwrUp();
+            otherComp->entity->powerUp->activatePowerUp(this->pwrUpType);
             Component::commandList->push_back(this->deletePowerUpCmd);
             isClaimed=true;
         }
     }
 }
 
-void InfiniteJumpCollisionComponent::onBorderCollision() {
-
-}
-
-InfiniteHealthCollisionComponent::InfiniteHealthCollisionComponent(Entity *entity, Command *deletePwrUpEntityCmd):
-    PowerUpCollisionComponent(entity, deletePwrUpEntityCmd)
-{
-}
-
-void InfiniteHealthCollisionComponent::onEntityCollision(DynamicCollisionComponent *otherComp, int) {
-    if(!isClaimed){
-        if(otherComp->entity->powerUp){
-            otherComp->entity->powerUp->activateInfHealthPwrUp();
-            Component::commandList->push_back(this->deletePowerUpCmd);
-            isClaimed=true;
-        }
-    }
-}
-
-void InfiniteHealthCollisionComponent::onBorderCollision() {
-
-}
-
-AmmoCollisionComponent::AmmoCollisionComponent(Entity* entity, Command *deletePwrUpEntityCmd) :
-    PowerUpCollisionComponent(entity, deletePwrUpEntityCmd) {
-}
-
-void AmmoCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int /*dt*/) {
-    if(!isClaimed){
-        if(otherComp->entity->powerUp){
-            otherComp->entity->ammo->addAmmo(5);
-            Component::commandList->push_back(this->deletePowerUpCmd);
-            isClaimed=true;
-        }
-    }
-}
-
-void AmmoCollisionComponent::onBorderCollision() {
+void PowerUpCollisionComponent::onBorderCollision() {
 }

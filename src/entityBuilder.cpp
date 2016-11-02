@@ -244,7 +244,7 @@ Entity* EntityBuilder::createAmmo(int x, int y) {
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     SDL_FreeSurface(surface);
     ammo->art = new StaticArtComponent(ammo, texture, 2, false);
-    ammo->collision = new AmmoCollisionComponent(ammo, new DespawnEntityCommand(ammo->getId()));
+    ammo->collision = new PowerUpCollisionComponent(ammo, new DespawnEntityCommand(ammo->getId()), PWRUP_AMMO);
     return ammo;
 }
 
@@ -252,15 +252,16 @@ Entity * EntityBuilder::createInfiniteJumpPowerUp(int x, int y) {
     Texture texture = this->textureMap[TEX_PWRUP_INFJUMP];
     Entity * entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
     entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
-    entity->collision = new InfiniteJumpCollisionComponent(entity, new DespawnEntityCommand(entity->getId()));
+    entity->collision = new PowerUpCollisionComponent(entity, new DespawnEntityCommand(entity->getId()), PWRUP_INFJUMP);
     return entity;
 }
 
 Entity* EntityBuilder::createInfiniteHealthPowerUp(int x, int y) {
     Texture texture = this->textureMap[TEX_PWRUP_INFHEALTH];
-    Entity * entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
+    Entity *entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
     entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
-    entity->collision = new InfiniteHealthCollisionComponent(entity, new DespawnEntityCommand(entity->getId()));
+    entity->collision = new PowerUpCollisionComponent(entity, new DespawnEntityCommand(entity->getId()),
+                                                      PWRUP_INFHEALTH);
     return entity;
 }
 
