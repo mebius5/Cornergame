@@ -30,7 +30,7 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
     if (this->entity->actionState == IDLE) {
 
         timecount += dt;
-        timecount %= 1000;
+        timecount %= 400;
 
         // if moving, use a walking animation, else idle
         float velocity = sqrt(pow(this->entity->physics->xVelocity, 2) +
@@ -40,26 +40,26 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
             startpos = 32 * 4;
         }
         if (velocity > 0.01) {
-            clip.x = (timecount / 250) * 32 + startpos;
+            clip.x = (timecount / 125) * 32 + startpos;
             clip.y = 0;
         } else {
-            clip.x = (timecount / 500) * 32 + startpos;
+            clip.x = (timecount / 250) * 32 + startpos;
             clip.y = 32;
         }
     } else if (this->entity->actionState == THROW) {
         this->actionTime += dt;
-        if (this->actionTime > 1000) {
+        if (this->actionTime > 500) {
             this->actionTime = 0;
             this->entity->actionState = IDLE;
         }
-        clip.x = (actionTime / 250) * 32 + startpos;
+        clip.x = (actionTime / 125) * 32 + startpos;
         clip.y = 64;
 
     } else if (this->entity->actionState == JUMP) {
         this->actionTime += dt;
-        clip.x = (actionTime / 250) * 32 + startpos;
+        clip.x = (actionTime / 100) * 32 + startpos;
         clip.y = 96;
-        if (this->actionTime > 1000) {
+        if (this->actionTime > 400) {
             clip.x = 96 + startpos;
         }
         if (onGround) {

@@ -285,7 +285,7 @@ Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int n
 
 Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, int dir, int ownerId) {
     Texture texture = this->textureMap[texType];
-    Entity* projectile = new Entity(this->nextId++, x, y, texture.width*2, texture.height*2, texture.width*2, texture.height*2);
+    Entity* projectile = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
     projectile->art = new StaticArtComponent(projectile, texture.sdlTexture, 1, false);
     DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
     projectile->collision = new ProjectileCollisionComponent(projectile, dCmd, ownerId);
