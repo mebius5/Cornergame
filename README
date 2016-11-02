@@ -13,52 +13,31 @@ cd src/
 make
 ./gameManager
 
-Assignment 7 Task Writeups
+Assignment 8 Task Writeups
 General Notes:
 - As of now, there is only two working level.
   Level three is in here in preparation for next week.
 
-POWERUPS (all lasts 3.5 sec):
-- Yellow square is non-weapon ammo/gum balls
+POWERUPS:
+- Yellow square is non-weapon ammo/gum balls (3.5 sec time limit)
 - Star is infinite health
 - Wings is infinite jump
 
 Akshay
-- Created knockback when players touch and when damage taken
-- Implemented screenshake when heroes collide with projectiles or other heroes
-- Limited the frequency of tossing projectiles
-- Created an ammo component (tracks number of projectiles left to throw)
-- Added an ammo bar to HUD
-- Created ammo power up which grants additional ammo
-- Show results screen between levels
-- Separate maximum x and y velocity, which allows for more realistic physics
 
 Andrew
-- Fixed bugs with wall jumping, wall sliding, fast falls, sliding off of
-    terrain, sliding off of walls
-- Fixed some of the bugs relating to heroes passing through terrain
-- Fixed input lag bug for player 2
-- Added smooth camera scrolling dependent on both heroes positions
-- Fixed camera bugs in preview mode, and made reseting level on level loop more
-    efficient
-- Level1 edits for more cool obstacles
 
 Grady
-- Added components, collisionComponents, and handlers for power up
-- Added infinite jump power up
-- Added infinite health power up
-- Added level transit state to introduce each level
-- Now players can press P to skip transit text, previews, and results
-- Added level2 that uses infinite jump in order to finish
-- Corrected result states and highscore state to get results from both heroes
-- Split result state texts into two lines
-- Fixed bug in drawing handler that caused frame rate slow down due to
-  lack of layer comparison
+- Changed the structure of power up components and collision component
+  to allow application of multiple power ups
+- Eliminated the need of multiple different repetitive collision components
+  for power ups
+- Allow different time limits for every different types of power ups now
 
 Pratyush
--implemented hitbox that differ from artwork for more accurate collisions
--Drew tree, grass, bench assets and added to game
--implemented screenshake
+
+
+
 
 CONTROLS
 - Press ESC to quit game

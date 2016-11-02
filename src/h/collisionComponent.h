@@ -102,12 +102,14 @@ class PowerUpCollisionComponent : public StaticCollisionComponent {
 protected:
     Command * deletePowerUpCmd;
     bool isClaimed;
+    PowerUpType pwrUpType;
 public:
-    PowerUpCollisionComponent(Entity * entity, Command * deletePwrUpEntityCmd);
-    virtual void onEntityCollision(DynamicCollisionComponent* otherComp, int dt)=0;
-    virtual void onBorderCollision()=0;
+    PowerUpCollisionComponent(Entity * entity, Command * deletePwrUpEntityCmd, PowerUpType pwrUpType);
+    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
+    void onBorderCollision();
 };
 
+/****
 class InfiniteJumpCollisionComponent : public PowerUpCollisionComponent {
 public:
     InfiniteJumpCollisionComponent(Entity *entity, Command * deletePwrUpEntityCmd);
@@ -128,5 +130,6 @@ public:
     void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
     void onBorderCollision();
 };
+ ****/
 
 #endif
