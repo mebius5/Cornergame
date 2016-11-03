@@ -107,29 +107,7 @@ public:
     PowerUpCollisionComponent(Entity * entity, Command * deletePwrUpEntityCmd, PowerUpType pwrUpType);
     void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
     void onBorderCollision();
+    void setIsClaimed(bool isClaimed);
 };
-
-/****
-class InfiniteJumpCollisionComponent : public PowerUpCollisionComponent {
-public:
-    InfiniteJumpCollisionComponent(Entity *entity, Command * deletePwrUpEntityCmd);
-    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
-    void onBorderCollision();
-};
-
-class InfiniteHealthCollisionComponent : public PowerUpCollisionComponent {
-public:
-    InfiniteHealthCollisionComponent(Entity * entity, Command * deletePwrUpEntityCmd);
-    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
-    void onBorderCollision();
-};
-
-class AmmoCollisionComponent : public PowerUpCollisionComponent {
-public:
-    AmmoCollisionComponent(Entity* entity, Command * deletePwrUpEntityCmd);
-    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
-    void onBorderCollision();
-};
- ****/
 
 #endif

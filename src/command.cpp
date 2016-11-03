@@ -8,12 +8,15 @@ SwitchStateCommand::SwitchStateCommand(StateEnum newState) :
     newState(newState) {
 }
 
-SpawnEntityCommand::SpawnEntityCommand(ProjEnum projType) :
+SpawnProjCommand::SpawnProjCommand(ProjEnum projType) :
     projType(projType) {
 }
 
 DespawnEntityCommand::DespawnEntityCommand(int id) :
     id(id) {
+}
+
+RespawnPowerUpsCommand::RespawnPowerUpsCommand() {
 }
 
 PreviewOffCommand::PreviewOffCommand() {

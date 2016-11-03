@@ -1,9 +1,8 @@
 #include "camera.h"
-#include "math.h"
-#include <iostream>
 
-Camera::Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH) :
+Camera::Camera(SDL_Renderer * renderer, std::vector<Command*>& commandList, std::vector<ArtComponent*>& componentList, int windowW, int windowH) :
     renderer(renderer),
+    commandList(commandList),
     componentList(componentList),
     levelW(-1),             // width and height of level (without copied portion)
     levelH(-1),
@@ -113,6 +112,8 @@ void Camera::shift(int dx, int dy) {
         //TODO: Add command to respawn all enemy and heroes at updated location
         minX = minX - levelW;
         maxX = maxX - levelW;
+
+        this->commandList.push_back(new RespawnPowerUpsCommand());
     }
 }
 

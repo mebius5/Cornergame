@@ -26,6 +26,7 @@ public:
     std::vector<ScoreComponent*> scoreComponents;
     std::vector<PowerUpComponent*> powerUpComponents;
     std::vector<Entity *> heroEntities;
+    std::vector<PowerUpCollisionComponent*> powerUpCollisionComponents;
 
     EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList);
     ~EntityManager();
@@ -63,7 +64,7 @@ public:
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y);
     Entity * createTerrain(Tiles tileType, int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
-    Entity* createProjectile(int x, int y, int dir, int ownerID, ProjEnum projType);
+    Entity* createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum projType);
     void handleSpawns();
     void populateLevel(Level * level);
     void printCommands();

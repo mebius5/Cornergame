@@ -11,14 +11,20 @@ PowerUpCollisionComponent::PowerUpCollisionComponent(Entity *entity, Command *de
 }
 
 void PowerUpCollisionComponent::onEntityCollision(DynamicCollisionComponent *otherComp, int) {
-    if(!isClaimed){
-        if(otherComp->entity->powerUp){
-            otherComp->entity->powerUp->activatePowerUp(this->pwrUpType);
-            Component::commandList->push_back(this->deletePowerUpCmd);
-            isClaimed=true;
-        }
+    if(isClaimed)
+        return;
+
+
+    if(otherComp->entity->powerUp){
+        otherComp->entity->powerUp->activatePowerUp(this->pwrUpType);
+        this->entity->art->isVisible=false;
+        isClaimed=true;
     }
 }
 
 void PowerUpCollisionComponent::onBorderCollision() {
+}
+
+void PowerUpCollisionComponent::setIsClaimed(bool isClaimed) {
+    this->isClaimed = isClaimed;
 }

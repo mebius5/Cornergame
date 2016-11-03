@@ -1,5 +1,4 @@
 #include "physicsComponent.h"
-#include <iostream>
 
 PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
@@ -13,10 +12,10 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     collisionComp(dynamic_cast<DynamicCollisionComponent*>(entity->collision)),
     xVelocity(0.0f),
     yVelocity(0.0f),
-    maxXVelocity(.40f),
-    maxYVelocity(1.0f),
-    jumpVelocity(0.8f),
-    deceleration(.0012f),
+    maxXVelocity(.55f),
+    maxYVelocity(4.0f),
+    jumpVelocity(.5f),
+    deceleration(.0018f),
     maxJumps(1) {
 }
 
