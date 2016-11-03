@@ -67,11 +67,8 @@ bool DrawingHandler::previewLevel(int dt) {
         shiftCount=0;
     }
 
-    if(camera.minX<=0&&camera.minY<=0){
-        return false;
-    }
+    return !(camera.minX <= 0 && camera.minY <= 0);
 
-    return true;
 }
 
 void DrawingHandler::checkCameraShakes() {

@@ -14,6 +14,7 @@ make
 ./gameManager
 
 Assignment 8 Task Writeups
+
 General Notes:
 - As of now, there is only two working level.
   Level three is in here in preparation for next week.
@@ -33,6 +34,7 @@ Grady
 - Eliminated the need of multiple different repetitive collision components
   for power ups
 - Allow different time limits for every different types of power ups now
+- Added ability to respawn the power ups
 
 Pratyush
 

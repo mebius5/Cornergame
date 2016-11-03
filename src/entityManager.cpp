@@ -251,11 +251,16 @@ void EntityManager::handleSpawns() {
         } else if (dynamic_cast<RespawnPowerUpsCommand*>(*it)){
             std::vector<PowerUpCollisionComponent*>::iterator pu;
             for(pu = this->powerUpCollisionComponents.begin(); pu != this->powerUpCollisionComponents.end();){
+                if (!(*pu)->isValid()) {        // remove invalid components
+                    *pu = this->powerUpCollisionComponents.back();
+                    this->powerUpCollisionComponents.pop_back();
+                    continue;
+                }
+
                 (*pu)->setIsClaimed(false);
                 (*pu)->entity->art->isVisible=true;
 
-                (*pu) = this->powerUpCollisionComponents.back();
-                this->powerUpCollisionComponents.pop_back();
+                ++pu;
             }
 
             *it = this->commandList.back();

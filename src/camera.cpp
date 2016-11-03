@@ -1,6 +1,4 @@
 #include "camera.h"
-#include "math.h"
-#include <iostream>
 
 Camera::Camera(SDL_Renderer * renderer, std::vector<Command*>& commandList, std::vector<ArtComponent*>& componentList, int windowW, int windowH) :
     renderer(renderer),

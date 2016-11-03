@@ -46,7 +46,7 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
 
 void HeroCollisionComponent::onStaticCollision(StaticCollisionComponent* /*otherComp*/) {
     if (this->onGround || this->onLeftWall || this->onRightWall)
-        ((PhysicsComponent*)this->entity->physics)->resetJumps();
+        this->entity->physics->resetJumps();
 }
 
 void HeroCollisionComponent::onBorderCollision() {

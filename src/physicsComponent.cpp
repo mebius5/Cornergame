@@ -1,5 +1,4 @@
 #include "physicsComponent.h"
-#include <iostream>
 
 PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
