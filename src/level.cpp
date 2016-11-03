@@ -86,8 +86,12 @@ Level::Level(std::string filename, int windowW, int windowH) {
 
     for(int i= 0 ; i<height; i++){
         for (int j = 0; j < windowW/32; j++) {
-            if(levelContents[i][j]==BRICK || levelContents[i][j]==GRASS){
-                levelContents[i][j+width]=levelContents[i][j];
+            Tiles type = levelContents[i][j];
+            if(type==BRICK || type==GRASS||
+                    type==TREE1||type==TREE2||
+                    type==AMMO||type==PU_JUMP||
+                    type==PU_HEALTH){
+                levelContents[i][j+width]= type;
             } else {
                 levelContents[i][j+width]= NONE;
             }
