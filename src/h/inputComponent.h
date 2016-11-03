@@ -23,13 +23,13 @@ private:
     SDL_Keycode rightKey;
     SDL_Keycode shootKey;
     bool jumpPressed;
-    SpawnEntityCommand* spawnCommand;
+    SpawnProjCommand* spawnCommand;
     int spawnTime;
     int spawnCooldown;
     float holdTime;
     float maxHold;
 public:
-    HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand);
+    HeroInputComponent(Entity* entity, bool wasd, SpawnProjCommand* spawnCommand);
     ~HeroInputComponent();
     void updateTime(int dt);
     void keyDown(SDL_Keycode keycode);

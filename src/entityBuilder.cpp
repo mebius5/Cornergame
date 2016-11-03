@@ -123,7 +123,7 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
         command = new PlaySoundCommand(sfxType);
     hero->collision = new HeroCollisionComponent(hero, command);
     hero->art = new AnimationComponent(hero, texture, 1);
-    hero->input = new HeroInputComponent(hero, wasd, new SpawnEntityCommand(PROJ_HERO));
+    hero->input = new HeroInputComponent(hero, wasd, new SpawnProjCommand(PROJ_HERO));
     hero->score = new ScoreComponent(hero);
     hero->health = new HealthComponent(hero, 1000, new SwitchStateCommand(STATE_RESULTS));
     hero->physics = new PhysicsComponent(hero);

@@ -39,6 +39,10 @@ void EntityManager::addEntity(Entity* entity) {
         if (StaticCollisionComponent* scc =
                 dynamic_cast<StaticCollisionComponent*>(entity->collision)) {
             this->staticCollisionComponents.push_back(scc);
+
+            if(PowerUpCollisionComponent * puc = dynamic_cast<PowerUpCollisionComponent*>(entity->collision)){
+                this->powerUpCollisionComponents.push_back(puc);
+            }
         } else if (DynamicCollisionComponent* dcc =
                 dynamic_cast<DynamicCollisionComponent*>(entity->collision)) {
             this->dynamicCollisionComponents.push_back(dcc);
@@ -236,7 +240,7 @@ Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int
 void EntityManager::handleSpawns() {
     std::vector<Command*>::iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
-        if (SpawnEntityCommand* eCmd = dynamic_cast<SpawnEntityCommand*>(*it)) {
+        if (SpawnProjCommand* eCmd = dynamic_cast<SpawnProjCommand*>(*it)) {
             this->createProjectile(eCmd->x, eCmd->y, eCmd->charge, eCmd->dir, eCmd->ownerID, eCmd->projType);
             *it = this->commandList.back();
             this->commandList.pop_back();
@@ -244,7 +248,20 @@ void EntityManager::handleSpawns() {
             this->deleteEntity(dCmd->id);
             *it = this->commandList.back();
             this->commandList.pop_back();
-        } else {
+        } else if (dynamic_cast<RespawnPowerUpsCommand*>(*it)){
+            std::vector<PowerUpCollisionComponent*>::iterator pu;
+            for(pu = this->powerUpCollisionComponents.begin(); pu != this->powerUpCollisionComponents.end();){
+                (*pu)->setIsClaimed(false);
+                (*pu)->entity->art->isVisible=true;
+
+                (*pu) = this->powerUpCollisionComponents.back();
+                this->powerUpCollisionComponents.pop_back();
+            }
+
+            *it = this->commandList.back();
+            this->commandList.pop_back();
+        }
+        else {
             ++it;
         }
     }
@@ -336,7 +353,7 @@ void EntityManager::printCommands() {
             std::cout << "Switch Command " << ssCmd->newState << std::endl;
         } else if (PlaySoundCommand* psCmd = dynamic_cast<PlaySoundCommand*>(*it)) {
             std::cout << "Sound Command " << psCmd->sfxType << std::endl;
-        } else if (SpawnEntityCommand* seCmd = dynamic_cast<SpawnEntityCommand*>(*it)) {
+        } else if (SpawnProjCommand* seCmd = dynamic_cast<SpawnProjCommand*>(*it)) {
             std::cout << "Switch Command " << seCmd->projType << std::endl;
         } else if (DespawnEntityCommand* deCmd = dynamic_cast<DespawnEntityCommand*>(*it)) {
             std::cout << "Switch Command " << deCmd->id << std::endl;
