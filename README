@@ -177,3 +177,4 @@ EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
 Fix input lag on wasd player
 Change allocation to happen in groups
 Change renderCopy() of static stuff to be more efficient: group static textures
+CommandBus?
