@@ -68,13 +68,23 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
             || entity->x > maxX || entity->y > maxY)
         return;
 
+    double angle = 0;
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+    if (entity->rotates && entity->physics->xVelocity != 0) {
+        angle = atan((double)entity->physics->yVelocity/(double)entity->physics->xVelocity);
+        angle *= 180/M_PI;
+        if (entity->physics->xVelocity < 0) {
+            flip = SDL_FLIP_HORIZONTAL;
+        }
+    }
+
     SDL_Rect dest = { (int)entity->x - (int)minX + entity->width/2 - entity->drawWidth/2 - offsetX,
                       (int) entity->y - (int)minY + entity->height/2 - entity->drawHeight/2 - offsetY,
                       entity->drawWidth,
                       entity->drawHeight};
 
-    SDL_RenderCopy(this->renderer, artComponent->getNextTexture(dt),
-                   artComponent->getNextSrcRect(dt), &dest);
+    SDL_RenderCopyEx(this->renderer, artComponent->getNextTexture(dt),
+                   artComponent->getNextSrcRect(dt), &dest, angle, NULL, flip);
 }
 
 void Camera::shift(int dx, int dy) {

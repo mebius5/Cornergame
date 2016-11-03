@@ -9,6 +9,7 @@ Entity::Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHe
     drawWidth(drawWidth),
     drawHeight(drawHeight),
     actionState(IDLE),
+    rotates(false),
     collision(NULL),
     score(NULL),
     physics(NULL),
