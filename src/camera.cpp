@@ -4,6 +4,7 @@ Camera::Camera(SDL_Renderer * renderer, std::vector<Command*>& commandList, std:
     renderer(renderer),
     commandList(commandList),
     componentList(componentList),
+    respawnPowerUpsCommand(new RespawnPowerUpsCommand()),
     levelW(-1),             // width and height of level (without copied portion)
     levelH(-1),
     previewOn(true),
@@ -113,7 +114,7 @@ void Camera::shift(int dx, int dy) {
         minX = minX - levelW;
         maxX = maxX - levelW;
 
-        this->commandList.push_back(new RespawnPowerUpsCommand());
+        this->commandList.push_back(this->respawnPowerUpsCommand);
     }
 }
 
