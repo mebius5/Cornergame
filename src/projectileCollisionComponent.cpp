@@ -20,8 +20,10 @@ void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* 
     }
 }
 
-void ProjectileCollisionComponent::onStaticCollision(StaticCollisionComponent* /*otherComp*/) {
-    Component::commandList->push_back(this->entityCollisionCommand);
+void ProjectileCollisionComponent::onStaticCollision(StaticCollisionComponent* otherComp) {
+    if (dynamic_cast<TerrainCollisionComponent*>(otherComp)) {
+        Component::commandList->push_back(this->entityCollisionCommand);
+    }
 }
 
 void ProjectileCollisionComponent::onBorderCollision() {
