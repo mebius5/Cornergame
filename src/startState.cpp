@@ -20,7 +20,10 @@ StartState::~StartState() {
 void StartState::begin(int) {
     Level level1("levels/startScreenLevel.txt", windowW, windowH);
     this->entityManager.populateLevel(&level1);
-    this->entityManager.createHero(TEX_HERO, 500, 200, SFX_NONE, false);
+    Entity * hero = this->entityManager.createHero(TEX_HERO, 500, 650, SFX_NONE, false);
+    if (DynamicCollisionComponent * dcc = dynamic_cast<DynamicCollisionComponent*>(hero->collision)){
+        dcc->onGround=true;
+    }
 
     this->soundHandler.playBackgroundMusic(MUSIC_START);
 
