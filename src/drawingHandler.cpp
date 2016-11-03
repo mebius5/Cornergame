@@ -6,7 +6,7 @@ DrawingHandler::DrawingHandler(std::vector<Command*>& commandList,
     commandList(commandList),
     componentList(componentList),
     renderer(renderer),
-    camera(renderer, componentList, windowW, windowH),
+    camera(renderer, commandList, componentList, windowW, windowH),
     shiftCount(0){
 
 }
@@ -31,7 +31,7 @@ void DrawingHandler::draw(int dt) {
             }
 
             ArtComponent* artComp = *it;
-            if(artComp->layer==i){
+            if(artComp->layer==i && artComp->isVisible){
                 camera.draw(dt, artComp);
             }
             ++it;
@@ -67,11 +67,8 @@ bool DrawingHandler::previewLevel(int dt) {
         shiftCount=0;
     }
 
-    if(camera.minX<=0&&camera.minY<=0){
-        return false;
-    }
+    return !(camera.minX <= 0 && camera.minY <= 0);
 
-    return true;
 }
 
 void DrawingHandler::checkCameraShakes() {

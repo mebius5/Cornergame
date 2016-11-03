@@ -23,20 +23,26 @@ public:
     SwitchStateCommand(StateEnum newState);
 };
 
-class SpawnEntityCommand : public Command {
+class SpawnProjCommand : public Command {
 public:
     ProjEnum projType;
     int x;
     int y;
     int dir;
     int ownerID;
-    SpawnEntityCommand(ProjEnum projType);
+    float charge;
+    SpawnProjCommand(ProjEnum projType);
 };
 
 class DespawnEntityCommand : public Command {
 public:
     int id;
     DespawnEntityCommand(int id);
+};
+
+class RespawnPowerUpsCommand : public Command {
+public:
+    RespawnPowerUpsCommand();
 };
 
 class PreviewOffCommand: public Command {

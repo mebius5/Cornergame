@@ -1,9 +1,8 @@
 #include "camera.h"
-#include "math.h"
-#include <iostream>
 
-Camera::Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH) :
+Camera::Camera(SDL_Renderer * renderer, std::vector<Command*>& commandList, std::vector<ArtComponent*>& componentList, int windowW, int windowH) :
     renderer(renderer),
+    commandList(commandList),
     componentList(componentList),
     levelW(-1),             // width and height of level (without copied portion)
     levelH(-1),
@@ -68,13 +67,23 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
             || entity->x > maxX || entity->y > maxY)
         return;
 
+    double angle = 0;
+    SDL_RendererFlip flip = SDL_FLIP_NONE;
+    if (entity->rotates && entity->physics->xVelocity != 0) {
+        angle = atan((double)entity->physics->yVelocity/(double)entity->physics->xVelocity);
+        angle *= 180/M_PI;
+        if (entity->physics->xVelocity < 0) {
+            flip = SDL_FLIP_HORIZONTAL;
+        }
+    }
+
     SDL_Rect dest = { (int)entity->x - (int)minX + entity->width/2 - entity->drawWidth/2 - offsetX,
                       (int) entity->y - (int)minY + entity->height/2 - entity->drawHeight/2 - offsetY,
                       entity->drawWidth,
                       entity->drawHeight};
 
-    SDL_RenderCopy(this->renderer, artComponent->getNextTexture(dt),
-                   artComponent->getNextSrcRect(dt), &dest);
+    SDL_RenderCopyEx(this->renderer, artComponent->getNextTexture(dt),
+                   artComponent->getNextSrcRect(dt), &dest, angle, NULL, flip);
 }
 
 void Camera::shift(int dx, int dy) {
@@ -103,6 +112,8 @@ void Camera::shift(int dx, int dy) {
         //TODO: Add command to respawn all enemy and heroes at updated location
         minX = minX - levelW;
         maxX = maxX - levelW;
+
+        this->commandList.push_back(new RespawnPowerUpsCommand());
     }
 }
 

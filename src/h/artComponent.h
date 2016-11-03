@@ -14,14 +14,16 @@ class ArtComponent : public Component {
 public:
     const static int MAXLAYER = 2;
     int layer;
+    bool movesWithCamera;
+    int offsetX;
+    int offSetY;
+    bool isVisible;
+
     ArtComponent(Entity* entity, int layer, bool movesWithCamera);
     virtual ~ArtComponent() { };
     virtual SDL_Texture* getNextTexture(int dt) = 0;
     virtual SDL_Rect* getNextSrcRect(int dt) = 0;
 
-    bool movesWithCamera;
-    int offsetX;
-    int offSetY;
 };
 
 class StaticArtComponent : public ArtComponent {
