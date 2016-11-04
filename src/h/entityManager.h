@@ -26,6 +26,7 @@ public:
     std::vector<ScoreComponent*> scoreComponents;
     std::vector<PowerUpComponent*> powerUpComponents;
     std::vector<Entity *> heroEntities;
+    std::vector<PowerUpCollisionComponent*> powerUpCollisionComponents;
 
     EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList);
     ~EntityManager();

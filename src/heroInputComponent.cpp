@@ -1,6 +1,6 @@
 #include "inputComponent.h"
 
-HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnEntityCommand* spawnCommand) :
+HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnProjCommand* spawnCommand) :
     InputComponent(entity),
     upKey(wasd ? SDLK_w : SDLK_UP),
     downKey(wasd ? SDLK_s : SDLK_DOWN),

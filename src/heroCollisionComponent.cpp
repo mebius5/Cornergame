@@ -14,10 +14,10 @@ HeroCollisionComponent::~HeroCollisionComponent() {
 }
 
 void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int dt) {
-    // shake camera
-    Component::commandList->push_back(this->cameraShakeCommand);
 
     if (dynamic_cast<EnemyCollisionComponent*>(otherComp)) {
+        // shake camera
+        Component::commandList->push_back(this->cameraShakeCommand);
         timeSinceLastCollision+=dt;
 
         if (timeSinceLastCollision>=30) {
@@ -37,6 +37,8 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
 
     } else if (HeroCollisionComponent* otherHero =
                dynamic_cast<HeroCollisionComponent*>(otherComp)) {
+        // shake camera
+        Component::commandList->push_back(this->cameraShakeCommand);
         // knock back the other hero
         otherHero->entity->physics->bump(this->sign(otherHero->entity->x + otherHero->entity->width/2 -
                                                     this->entity->x - this->entity->width/2));
@@ -46,7 +48,7 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
 
 void HeroCollisionComponent::onStaticCollision(StaticCollisionComponent* /*otherComp*/) {
     if (this->onGround || this->onLeftWall || this->onRightWall)
-        ((PhysicsComponent*)this->entity->physics)->resetJumps();
+        this->entity->physics->resetJumps();
 }
 
 void HeroCollisionComponent::onBorderCollision() {

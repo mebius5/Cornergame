@@ -23,11 +23,7 @@ int HealthComponent::getMaxHealth() {
 }
 
 void HealthComponent::toggleInvincibility() {
-    if(this->isInvincible){
-        this->isInvincible=false;
-    } else{
-        this->isInvincible=true;
-    }
+    this->isInvincible= !this->isInvincible;
 }
 
 void HealthComponent::takeDamage(int damage) {

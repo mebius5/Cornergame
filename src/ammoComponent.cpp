@@ -20,11 +20,7 @@ int AmmoComponent::getMaxAmmo() {
 }
 
 void AmmoComponent::toggleUnlimited() {
-    if(this->isUnlimited){
-        this->isUnlimited=false;
-    } else{
-        this->isUnlimited=true;
-    }
+    this->isUnlimited= !this->isUnlimited;
 }
 
 void AmmoComponent::spendAmmo() {

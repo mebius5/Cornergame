@@ -123,7 +123,7 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
         command = new PlaySoundCommand(sfxType);
     hero->collision = new HeroCollisionComponent(hero, command);
     hero->art = new AnimationComponent(hero, texture, 1);
-    hero->input = new HeroInputComponent(hero, wasd, new SpawnEntityCommand(PROJ_HERO));
+    hero->input = new HeroInputComponent(hero, wasd, new SpawnProjCommand(PROJ_HERO));
     hero->score = new ScoreComponent(hero);
     hero->health = new HealthComponent(hero, 1000, new SwitchStateCommand(STATE_RESULTS));
     hero->physics = new PhysicsComponent(hero);
@@ -286,7 +286,8 @@ Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int n
 
 Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, float charge, int dir, int ownerId, Entity * closest) {
     Texture texture = this->textureMap[texType];
-    Entity* projectile = new Entity(this->nextId++, x, y, texture.width*2, texture.height*2, texture.width*2, texture.height*2);
+    Entity* projectile = new Entity(this->nextId++, x, y, 20, 20, texture.width, texture.height);
+    projectile->rotates = true;
     projectile->art = new StaticArtComponent(projectile, texture.sdlTexture, 1, false);
     DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
     projectile->collision = new ProjectileCollisionComponent(projectile, dCmd, ownerId);

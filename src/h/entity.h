@@ -36,6 +36,7 @@ public:
     int drawHeight;
     int dir;
     Action actionState;
+    bool rotates;
 
     CollisionComponent* collision;
     ScoreComponent* score;

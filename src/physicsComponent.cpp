@@ -1,12 +1,11 @@
 #include "physicsComponent.h"
-#include <iostream>
 
 PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
     xAccel(0.0f),
     yAccel(0.0f),
     accelAmount(.001f),
-    gravity(0.0018f),
+    gravity(0.0030f),
     slideVelocity(.1f),
     jumps(0),
     infiniteJumps(false),
@@ -135,9 +134,9 @@ void PhysicsComponent::jump() {
         this->jumps++;
         this->entity->actionState = JUMP;
         if (this->collisionComp->onLeftWall && !this->collisionComp->onGround)
-            this->xVelocity = .5f * this->jumpVelocity;
+            this->xVelocity = .25f * this->jumpVelocity;
         else if (this->collisionComp->onRightWall && !this->collisionComp->onGround)
-            this->xVelocity = -.5f * this->jumpVelocity;
+            this->xVelocity = -.25f * this->jumpVelocity;
     }
 }
 

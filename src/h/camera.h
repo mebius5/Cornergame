@@ -6,7 +6,9 @@
 class Camera{
 private:
     SDL_Renderer * renderer;
+    std::vector<Command*>& commandList;
     std::vector<ArtComponent*>& componentList;
+    RespawnPowerUpsCommand * respawnPowerUpsCommand;
     int levelW;
     int levelH;
     bool previewOn;
@@ -23,7 +25,7 @@ public:
     float maxX;
     float maxY;
 
-    Camera(SDL_Renderer * renderer, std::vector<ArtComponent*>& componentList, int windowW, int windowH);
+    Camera(SDL_Renderer * renderer, std::vector<Command*>& commandList, std::vector<ArtComponent*>& componentList, int windowW, int windowH);
     ~Camera();
     void startShake();
     void updateShake(int dt);
