@@ -17,7 +17,9 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     maxYVelocity(4.0f),
     jumpVelocity(.5f),
     deceleration(.0018f),
-    maxJumps(1) {
+    maxJumps(1),
+    target(NULL),
+    rotSpeed(0.01f) {
 }
 
 PhysicsComponent::~PhysicsComponent() {
@@ -38,6 +40,31 @@ void PhysicsComponent::updateLocation(int dt) {
     bool& onGround = this->collisionComp->onGround;
     bool& onLeftWall = this->collisionComp->onLeftWall;
     bool& onRightWall = this->collisionComp->onRightWall;
+
+    // rotate velocities if homing on target
+    if (target != NULL && !target->health->isValid()) {
+        target = NULL;
+    }
+    if (target != NULL) {
+        // figure out the direction to the target
+        int xDir = this->target->x - this->entity->x;
+        int yDir = this->target->y - this->entity->y;
+
+        // compute the cross product with the velocity
+        // if negative, the target is clockwise of velocity
+        // if positive, the target is counterclockwise of velocity
+        int crossprod = this->xVelocity * yDir - this->yVelocity * xDir;
+
+        // perform the rotation
+        float theta = this->rotSpeed * dt;
+        if (crossprod < 0) {
+            theta *= -1;
+        }
+        float newX = this->xVelocity * cos(theta) - this->yVelocity * sin(theta);
+        float newY = this->xVelocity * sin(theta) + this->yVelocity * cos(theta);
+        this->xVelocity = newX;
+        this->yVelocity = newY;
+    }
 
     // update velocities & flags based on acceleration
     this->xVelocity += this->xAccel * dt;

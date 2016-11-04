@@ -25,6 +25,8 @@ public:
     float jumpVelocity;
     float deceleration;
     int maxJumps;
+    Entity * target;
+    float rotSpeed;
 
     PhysicsComponent(Entity* entity);
     ~PhysicsComponent();
