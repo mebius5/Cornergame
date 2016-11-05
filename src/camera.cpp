@@ -23,6 +23,7 @@ Camera::Camera(SDL_Renderer * renderer, std::vector<Command*>& commandList, std:
 
 Camera::~Camera() {
     this->renderer=NULL;
+    delete this->respawnPowerUpsCommand;
 }
 
 void Camera::startShake() {

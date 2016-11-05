@@ -33,6 +33,7 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
                    dynamic_cast<ProjectileCollisionComponent*>(otherComp)) {
         if (projectile->ownerID != this->entity->getId()) {
             this->entity->health->takeDamage(200);
+            this->entity->actionState = DAMAGE;
         }
 
     } else if (HeroCollisionComponent* otherHero =

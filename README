@@ -176,7 +176,13 @@ Move handlers to namespaces?
 revamp terrain -> fewer rectangles!
 change collision to only check static objects in certain bins?
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
-Fix input lag on wasd player
-Change allocation to happen in groups
+Fix input lag on wasd player (still there?)
+Change allocation to happen in groups?
 Change renderCopy() of static stuff to be more efficient: group static textures
 CommandBus?
+
+TODAY:
+fix bug with collisions
+play with the physics! -> shooting decel, jumping, movement
+death on getting squished with wall
+camera warp bugs -> respawning stuff

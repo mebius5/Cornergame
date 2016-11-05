@@ -20,10 +20,11 @@ StartState::~StartState() {
 void StartState::begin(int) {
     Level level1("levels/startScreenLevel.txt", windowW, windowH);
     this->entityManager.populateLevel(&level1);
-    Entity * hero = this->entityManager.createHero(TEX_HERO, 500, 650, SFX_NONE, false);
-    if (DynamicCollisionComponent * dcc = dynamic_cast<DynamicCollisionComponent*>(hero->collision)){
-        dcc->onGround=true;
-    }
+    Entity * hero = this->entityManager.createHero(TEX_HERO, 500, 608, SFX_NONE, false);
+    DynamicCollisionComponent* dcc = static_cast<DynamicCollisionComponent*>(hero->collision);
+    dcc->onGround = true;
+    dcc->leftBound = 0;
+    dcc->rightBound = 1000;
 
     this->soundHandler.playBackgroundMusic(MUSIC_START);
 
