@@ -1,4 +1,5 @@
 #include "entityManager.h"
+#include <math.h>
 
 EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList) :
     commandList(cmdList),
@@ -232,7 +233,29 @@ Entity* EntityManager::createTerrain(Tiles tileType, int x, int y, int numberHor
 }
 
 Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum /*projType*/) {
-    Entity* entity = this->entityBuilder.createProjectile(TEX_PROJECTILE, x, y, charge, dir, ownerID);
+    // Home in on the nearest thing that takes damage
+    float min_dist = -1;
+    float dist = 0;
+    Entity * closest_entity = NULL;
+    std::vector<HealthComponent*>::iterator it;
+    for (it = this->healthComponents.begin(); it != this->healthComponents.end();) {
+        if (!(*it)->isValid()) {        // remove invalid components
+            *it = this->healthComponents.back();
+            this->healthComponents.pop_back();
+            continue;
+        }
+
+        Entity * entity = (*it)->entity;
+        if ((entity->x - x) * dir > 0 && ownerID != entity->getId()) { // only if in the right direction and not me
+            dist = pow(pow(entity->x - x, 2) + pow(entity->y - y, 2), 0.5);
+            if (min_dist == -1 || dist < min_dist) {
+                min_dist = dist;
+                closest_entity = entity;
+            }
+        }
+        ++it;
+    }
+    Entity* entity = this->entityBuilder.createProjectile(TEX_PROJECTILE, x, y, charge, dir, ownerID, closest_entity);
     this->addEntity(entity);
     return entity;
 }
