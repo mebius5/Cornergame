@@ -299,28 +299,28 @@ void EntityManager::populateLevel(Level* level) {
     for (int i = 0; i < level->contentHeight; i++) {
         for (int j = 0; j < level->contentWidth; j++) {
             switch (level->getTile(i, j)) {
-            case BRICK: 
+            case BRICK:
             case GRASS: {
-                bool freeLeft = (j == 0 || level->getTile(i, j-1) != BRICK || level->getTile(i, j-1) != GRASS);
+                bool freeLeft = (j == 0 || (level->getTile(i, j-1) != BRICK && level->getTile(i, j-1) != GRASS));
                 bool freeRight;     // assigned value later
-                bool freeTop = (i == 0 || level->getTile(i-1, j) != BRICK || level->getTile(i-1, j) != GRASS);
-                bool freeBot = (i == level->contentHeight-1 || level->getTile(i+1, j) != BRICK || level->getTile(i+1, j) != GRASS);
+                bool freeTop = (i == 0 || (level->getTile(i-1, j) != BRICK && level->getTile(i-1, j) != GRASS));
+                bool freeBot = (i == level->contentHeight-1 || (level->getTile(i+1, j) != BRICK && level->getTile(i+1, j) != GRASS));
                 int numberHorizontal = 1;
                 int originalJ = j;
                 // create horizontal slabs, breaking at each intersection with other terrain rectangles.
                 while (j < (level->width-1) && (level->getTile(i, j+1) == BRICK || level->getTile(i, j+1) == GRASS)) {
-                    if (i > 0 && (level->getTile(i-1, j+1) == BRICK || level->getTile(i-1, j+1) == GRASS) && freeTop)
+                    if (i > 0 && freeTop && (level->getTile(i-1, j+1) == BRICK || level->getTile(i-1, j+1) == GRASS))
                         break;
-                    if (i > 0 && (level->getTile(i-1, j+1) != BRICK || level->getTile(i-1, j+1) != GRASS) && !freeTop)
+                    if (i > 0 && !freeTop && (level->getTile(i-1, j+1) != BRICK && level->getTile(i-1, j+1) != GRASS))
                         break;
-                    if (i < level->contentHeight-1 && (level->getTile(i+1, j+1) == BRICK || level->getTile(i+1, j+1) == GRASS) && freeBot)
+                    if (i < level->contentHeight-1 && freeBot && (level->getTile(i+1, j+1) == BRICK || level->getTile(i+1, j+1) == GRASS))
                         break;
-                    if (i < level->contentHeight-1 && (level->getTile(i+1, j+1) != BRICK || level->getTile(i+1, j+1) != GRASS) && !freeBot)
+                    if (i < level->contentHeight-1 && !freeBot && (level->getTile(i+1, j+1) != BRICK && level->getTile(i+1, j+1) != GRASS))
                         break;
                     numberHorizontal++;
                     j++;
                 }
-                freeRight = (j == level->contentWidth-1 || level->getTile(i, j+1) != BRICK || level->getTile(i, j+1) != GRASS);
+                freeRight = (j == level->contentWidth-1 || (level->getTile(i, j+1) != BRICK && level->getTile(i, j+1) != GRASS));
                 createTerrain(level->getTile(i, j), originalJ*32, i*32, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
                 break;
             }
