@@ -12,16 +12,18 @@
 class PowerUpComponent : public Component {
 private:
     int pwrUpTimerArraySize;
-    int pwrUPTimerArray[3]; //Change the array size based on the number of PowerUpEnums
+    int pwrUPTimerArray[4]; //Change the array size based on the number of PowerUpEnums
 public:
     PowerUpComponent(Entity * owner);
     void update(int dt);
-    void activatePowerUp(PowerUpType pwrUpType);
+    void activatePowerUp(TextureEnum pwrUpType);
     void activateInfJumpPwrUp();
     void deactivateInfJumpPwrUp();
     void activateInfHealthPwrUp();
     void deactivateInfHealthPwrUp();
     void activateIncreaseAmmo();
+    void activateBeerPwrUp();
+    void deactivateBeerPwrUp();
 };
 
 #endif //CORNERGAME_POWERUPCOMPONENT_H

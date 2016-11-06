@@ -10,7 +10,7 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnProjComma
     jumpPressed(false),
     spawnCommand(spawnCommand),
     spawnTime(0),
-    spawnCooldown(10),
+    spawnCooldown(500),
     holdTime(-1.0f),
     maxHold(500.0f) {
 }
@@ -107,4 +107,15 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
         // reset hold time
         this->holdTime = -1.0f;
     }
+}
+
+void HeroInputComponent::invertControl() {
+    SDL_Keycode tempKey;
+    tempKey = this->upKey;
+    this->upKey = this->downKey;
+    this->downKey = tempKey;
+
+    tempKey = this->rightKey;
+    this->rightKey = this->leftKey;
+    this->leftKey = tempKey;
 }

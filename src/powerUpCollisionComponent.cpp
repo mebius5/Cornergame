@@ -1,7 +1,7 @@
 #include "collisionComponent.h"
 
 PowerUpCollisionComponent::PowerUpCollisionComponent(Entity *entity,
-                                                     PowerUpType pwrUpType):
+                                                     TextureEnum pwrUpType):
     StaticCollisionComponent(entity),
     isClaimed(false),
     pwrUpType(pwrUpType) {

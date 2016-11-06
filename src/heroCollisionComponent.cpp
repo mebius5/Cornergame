@@ -1,14 +1,14 @@
 #include "collisionComponent.h"
 
-HeroCollisionComponent::HeroCollisionComponent(Entity* ent, Command* onEnemy) :
+HeroCollisionComponent::HeroCollisionComponent(Entity* ent, Command* onProj) :
     DynamicCollisionComponent(ent),
-    enemyCollisionCommand(onEnemy),
+    projCollisionCommand(onProj),
     cameraShakeCommand(new CameraShakeCommand()) {
 }
 
 HeroCollisionComponent::~HeroCollisionComponent() {
-    if (this->enemyCollisionCommand)
-        delete this->enemyCollisionCommand;
+    if (this->projCollisionCommand)
+        delete this->projCollisionCommand;
     delete this->cameraShakeCommand;
 }
 
@@ -16,8 +16,6 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
     if (dynamic_cast<EnemyCollisionComponent*>(otherComp)) {
         Component::commandList->push_back(this->cameraShakeCommand);
         this->entity->score->addScore(-10);
-        if (this->enemyCollisionCommand)
-            Component::commandList->push_back(this->enemyCollisionCommand);
 
     } else if (HeroCollisionComponent* otherHero =
                dynamic_cast<HeroCollisionComponent*>(otherComp)) {
@@ -25,6 +23,9 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
         // knock back the other hero
         otherHero->entity->physics->bump(this->sign(otherHero->entity->x + otherHero->entity->width/2 -
                                                     this->entity->x - this->entity->width/2));
+    } else if (dynamic_cast<ProjectileCollisionComponent*>(otherComp)) {
+        if (this->projCollisionCommand)
+            Component::commandList->push_back(this->projCollisionCommand);
     }
 }
 
