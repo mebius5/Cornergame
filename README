@@ -23,6 +23,7 @@ POWERUPS:
 - Yellow square is non-weapon ammo/gum balls (3.5 sec time limit)
 - Star is infinite health
 - Wings is infinite jump
+- Beer inverts your control
 
 Akshay
 
@@ -33,8 +34,12 @@ Grady
   to allow application of multiple power ups
 - Eliminated the need of multiple different repetitive collision components
   for power ups
+- Refactored create power up methods to use one method to create all types of power ups
 - Allow different time limits for every different types of power ups now
 - Added ability to respawn the power ups
+- Added beer power up to invert controls
+- Added a tutorial level that can be accessed in the menu.
+- Added string capability to level editor
 
 Pratyush
 
