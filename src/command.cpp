@@ -16,7 +16,11 @@ DespawnEntityCommand::DespawnEntityCommand(int id) :
     id(id) {
 }
 
-RespawnPowerUpsCommand::RespawnPowerUpsCommand() {
+TempHideCommand::TempHideCommand(int id) :
+    id(id) {
+}
+
+LoopLevelCommand::LoopLevelCommand() {
 }
 
 PreviewOffCommand::PreviewOffCommand() {

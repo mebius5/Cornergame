@@ -7,13 +7,11 @@
  */
 
 GameManager::GameManager() :
-        title("<GAME NAME>"),
-        width(1024),
-        height(704),
-        currentLevel(1),
-        maxLevel(2)
-{
-
+    title("<GAME NAME>"),
+    width(1024),
+    height(704),
+    currentLevel(1),
+    maxLevel(2) {
     srand(time(NULL));
 }
 
@@ -95,7 +93,7 @@ void GameManager::run() {
     std::vector<Command*> commandList;
     Component::setCommandList(&commandList);
 
-    EntityManager entityMgr(this->renderer, commandList);
+    EntityManager entityMgr(this->renderer, commandList, width);
     DrawingHandler drawingHandler(commandList, entityMgr.artComponents, this->renderer, width, height);
     InputHandler inputHandler(entityMgr.inputComponents, commandList);
     AiHandler aiHandler(entityMgr.aiComponents);

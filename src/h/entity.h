@@ -51,6 +51,8 @@ public:
     Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHeight);
     ~Entity();
     int getId();
+    void validate();
+    void invalidate();
 };
 
 #endif

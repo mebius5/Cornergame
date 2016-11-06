@@ -4,7 +4,7 @@ Camera::Camera(SDL_Renderer * renderer, std::vector<Command*>& commandList, std:
     renderer(renderer),
     commandList(commandList),
     componentList(componentList),
-    respawnPowerUpsCommand(new RespawnPowerUpsCommand()),
+    loopLevelCommand(new LoopLevelCommand()),
     levelW(-1),             // width and height of level (without copied portion)
     levelH(-1),
     previewOn(true),
@@ -23,7 +23,7 @@ Camera::Camera(SDL_Renderer * renderer, std::vector<Command*>& commandList, std:
 
 Camera::~Camera() {
     this->renderer=NULL;
-    delete this->respawnPowerUpsCommand;
+    delete this->loopLevelCommand;
 }
 
 void Camera::startShake() {
@@ -114,7 +114,7 @@ void Camera::shift(int dx, int dy) {
         minX = minX - levelW;
         maxX = maxX - levelW;
 
-        this->commandList.push_back(this->respawnPowerUpsCommand);
+        this->commandList.push_back(this->loopLevelCommand);
     }
 }
 

@@ -8,7 +8,7 @@ private:
     SDL_Renderer * renderer;
     std::vector<Command*>& commandList;
     std::vector<ArtComponent*>& componentList;
-    RespawnPowerUpsCommand * respawnPowerUpsCommand;
+    LoopLevelCommand * loopLevelCommand;
     int levelW;
     int levelH;
     bool previewOn;
