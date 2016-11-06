@@ -16,7 +16,7 @@ public:
     int layer;
     bool movesWithCamera;
     int offsetX;
-    int offSetY;
+    int offsetY;
     bool isVisible;
 
     ArtComponent(Entity* entity, int layer, bool movesWithCamera);

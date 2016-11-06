@@ -4,11 +4,9 @@ EnemyCollisionComponent::EnemyCollisionComponent(Entity* entity) :
     DynamicCollisionComponent(entity) {
 }
 
-void EnemyCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int /*dt*/) {
-    if (dynamic_cast<ProjectileCollisionComponent*>(otherComp)) {
-        this->entity->health->takeDamage(200);
-        this->entity->actionState = DAMAGE;
-    }
+void EnemyCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
+    otherComp->entity->physics->bump(this->sign(otherComp->entity->x + otherComp->entity->width/2 -
+                                                this->entity->x - this->entity->width/2));
 }
 
 void EnemyCollisionComponent::onStaticCollision(StaticCollisionComponent* /*otherComp*/) {

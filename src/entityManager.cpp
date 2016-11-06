@@ -93,6 +93,15 @@ void EntityManager::deleteEntity(int id) {
 }
 
 void EntityManager::cleanupEntities() {
+    std::vector<HealthComponent*>::iterator it;
+    for (it = this->healthComponents.begin(); it != this->healthComponents.end();) {
+        if (!(*it)->isValid()) {        // remove invalid components
+            *it = this->healthComponents.back();
+            this->healthComponents.pop_back();
+        } else
+            ++it;
+    }
+
     for (int i = 0; i < this->numCleanable; i++) {
         Entity* entity = this->deletionQueue.front();
         this->deletionQueue.pop();
@@ -235,22 +244,16 @@ Entity* EntityManager::createTerrain(Tiles tileType, int x, int y, int numberHor
 Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum /*projType*/) {
     // Home in on the nearest thing that takes damage
     float min_dist = -1;
-    float dist = 0;
-    Entity * closest_entity = NULL;
+    float sqnorm = 0;
+    Entity* closest_entity = NULL;
     std::vector<HealthComponent*>::iterator it;
     for (it = this->healthComponents.begin(); it != this->healthComponents.end();) {
-        if (!(*it)->isValid()) {        // remove invalid components
-            *it = this->healthComponents.back();
-            this->healthComponents.pop_back();
-            continue;
-        }
-
-        Entity * entity = (*it)->entity;
-        if ((entity->x - x) * dir > 0 && ownerID != entity->getId()) { // only if in the right direction and not me
-            dist = pow(pow(entity->x - x, 2) + pow(entity->y - y, 2), 0.5);
-            if (min_dist == -1 || dist < min_dist) {
-                min_dist = dist;
-                closest_entity = entity;
+        Entity* hpEntity = (*it)->entity;
+        if ((hpEntity->x - x) * dir > 0 && ownerID != hpEntity->getId()) { // only if in the right direction and not me
+            sqnorm = pow(hpEntity->x - x, 2) + pow(hpEntity->y - y, 2);
+            if (min_dist == -1 || sqnorm < min_dist) {
+                min_dist = sqnorm;
+                closest_entity = hpEntity;
             }
         }
         ++it;

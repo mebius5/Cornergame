@@ -84,7 +84,7 @@ StateEnum PlayState::run() {
         this->aiHandler.updateAi(dt);
         this->inputHandler.handleEvents(dt);
         this->physicsHandler.update(dt);
-        this->collisionHandler.handleCollisions(dt);
+        this->collisionHandler.handleCollisions();
         this->soundHandler.handleSfx(dt);
         this->scoreHandler.handleScore(dt);
         this->drawingHandler.checkCameraShakes();

@@ -10,7 +10,7 @@ VictoryZoneCollisionComponent::~VictoryZoneCollisionComponent() {
         delete this->entityCollisionCommand;
 }
 
-void VictoryZoneCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int /*dt*/) {
+void VictoryZoneCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
     if (otherComp->entity->input)   // if hero, enter victory state
         Component::commandList->push_back(this->entityCollisionCommand);
 }

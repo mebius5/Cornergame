@@ -25,7 +25,7 @@ void CollisionHandler::removeInvalidComponents() {
     }
 }
 
-void CollisionHandler::handleCollisions(int dt) {
+void CollisionHandler::handleCollisions() {
     this->removeInvalidComponents();
 
     // handle dynamic components colliding with each other
@@ -37,8 +37,8 @@ void CollisionHandler::handleCollisions(int dt) {
         for (it2 = std::next(it, 1); it2 != this->dynamicList.end(); ++it2) {
             DynamicCollisionComponent* comp2 = *it2;
             if (detectOverlap(comp1->entity, comp2->entity)) {
-                comp1->onEntityCollision(comp2, dt);
-                comp2->onEntityCollision(comp1, dt);
+                comp1->onEntityCollision(comp2);
+                comp2->onEntityCollision(comp1);
             }
         }
     }
@@ -51,7 +51,7 @@ void CollisionHandler::handleCollisions(int dt) {
         for (it3 = this->staticList.begin(); it3 != this->staticList.end(); ++it3) {
             StaticCollisionComponent* comp2 = *it3;
             if (detectOverlap(comp1->entity, comp2->entity)) {
-                comp2->onEntityCollision(comp1, dt);
+                comp2->onEntityCollision(comp1);
                 comp1->onStaticCollision(comp2);
             }
         }

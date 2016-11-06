@@ -11,11 +11,13 @@ ProjectileCollisionComponent::~ProjectileCollisionComponent() {
         delete this->entityCollisionCommand;
 }
 
-void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp, int /*dt*/) {
+void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
     if (otherComp->entity->getId() != this->ownerID) {
         Component::commandList->push_back(this->entityCollisionCommand);
-
-        // knock back the other entity
+        if (otherComp->entity->health) {
+            otherComp->entity->health->takeDamage(200);
+            otherComp->entity->actionState = DAMAGE;
+        }
         otherComp->entity->physics->bump(this->sign(this->entity->physics->xVelocity));
     }
 }

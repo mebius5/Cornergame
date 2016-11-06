@@ -10,7 +10,7 @@ PowerUpCollisionComponent::PowerUpCollisionComponent(Entity *entity, Command *de
 
 }
 
-void PowerUpCollisionComponent::onEntityCollision(DynamicCollisionComponent *otherComp, int) {
+void PowerUpCollisionComponent::onEntityCollision(DynamicCollisionComponent *otherComp) {
     if(isClaimed)
         return;
 

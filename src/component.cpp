@@ -38,7 +38,7 @@ ArtComponent::ArtComponent(Entity* entity, int layer, bool movesWithCamera) :
 {
     if(this->movesWithCamera){
         this->offsetX = entity->x;
-        this->offSetY = entity->y;
+        this->offsetY = entity->y;
     }
 }
 
@@ -46,7 +46,7 @@ CollisionComponent::CollisionComponent(Entity* entity) :
     Component(entity) {
 }
 
-int CollisionComponent::sign(int x) {
+int CollisionComponent::sign(float x) {
     if (x < 0) {
         return -1;
     } else {

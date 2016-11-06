@@ -13,7 +13,7 @@ private:
 public:
     CollisionHandler(std::vector<DynamicCollisionComponent*>& dynamicList,
                      std::vector<StaticCollisionComponent*>& staticList);
-    void handleCollisions(int dt);
+    void handleCollisions();
 };
 
 #endif

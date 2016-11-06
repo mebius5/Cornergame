@@ -62,7 +62,7 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
 
     if(artComponent->movesWithCamera){
         artComponent->entity->x = this->minX+artComponent->offsetX;
-        artComponent->entity->y = this->minY+artComponent->offSetY;
+        artComponent->entity->y = this->minY+artComponent->offsetY;
     }
 
     if (entity->x + entity->width < minX || entity->y+entity->height < minY
@@ -137,27 +137,28 @@ void Camera::detectBorderCollision(Entity *entity, int dt) {
     if(shiftAmount< 8){
         shiftAmount = 8;
     }
-    if (entity->collision) {
-        if (entity->x < minX){
-            this->borderBoundX(entity, minX+shiftAmount);
-            entity->health->takeDamage(4);
-            entity->actionState = DAMAGE;
-        }
-        else if (entity->x + entity->width > maxX){
-            this->borderBoundX(entity, maxX - entity->width-shiftAmount);
-            entity->health->takeDamage(4);
-            entity->actionState = DAMAGE;
-        }
-        if (entity->y < minY){
-            this->borderBoundY(entity, minY+shiftAmount);
-            entity->health->takeDamage(4);
-            entity->actionState = DAMAGE;
-        }
-        else if (entity->y + entity->height > this->maxY){
-            this->borderBoundY(entity, maxY - entity->height-shiftAmount);
-            entity->health->takeDamage(4);
-            entity->actionState = DAMAGE;
-        }
+
+    if (entity->x < minX) {
+        if (minX - entity->x > 50)      // get squished!
+            entity->health->die();
+        entity->physics->bump(1);
+        //this->borderBoundX(entity, minX+shiftAmount);
+        entity->health->takeDamage(4);
+        entity->actionState = DAMAGE;
+    } else if (entity->x + entity->width > maxX) {
+        this->borderBoundX(entity, maxX - entity->width-shiftAmount);
+        entity->health->takeDamage(4);
+        entity->actionState = DAMAGE;
+    }
+
+    if (entity->y < minY) {
+        this->borderBoundY(entity, minY+shiftAmount);
+        entity->health->takeDamage(4);
+        entity->actionState = DAMAGE;
+    } else if (entity->y + entity->height > this->maxY) {
+        this->borderBoundY(entity, maxY - entity->height-shiftAmount);
+        entity->health->takeDamage(4);
+        entity->actionState = DAMAGE;
     }
 }
 

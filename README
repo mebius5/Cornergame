@@ -182,7 +182,6 @@ Change renderCopy() of static stuff to be more efficient: group static textures
 CommandBus?
 
 TODAY:
-fix bug with collisions
 play with the physics! -> shooting decel, jumping, movement
 death on getting squished with wall
 camera warp bugs -> respawning stuff

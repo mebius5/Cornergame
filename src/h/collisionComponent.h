@@ -11,9 +11,9 @@ public:
     CollisionComponent(Entity* entity);
     virtual ~CollisionComponent() { };
 
-    virtual void onEntityCollision(DynamicCollisionComponent* otherComp, int dt) = 0;
+    virtual void onEntityCollision(DynamicCollisionComponent* otherComp) = 0;
     virtual void onBorderCollision() = 0;
-    int sign(int x);
+    int sign(float x);
 };
 
 class StaticCollisionComponent : public CollisionComponent {
@@ -38,14 +38,13 @@ public:
 
 class HeroCollisionComponent : public DynamicCollisionComponent {
 private:
-    Command* entityCollisionCommand;
+    Command* enemyCollisionCommand;
     Command* cameraShakeCommand;
-    int timeSinceLastCollision;
 public:
     HeroCollisionComponent(Entity* entity, Command* entityCollisionCmd);
     ~HeroCollisionComponent();
 
-    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
+    void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onStaticCollision(StaticCollisionComponent* otherComp);
     void onBorderCollision();
 };
@@ -53,7 +52,7 @@ public:
 class EnemyCollisionComponent : public DynamicCollisionComponent {
 public:
     EnemyCollisionComponent(Entity* entity);
-    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
+    void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onStaticCollision(StaticCollisionComponent* otherComp);
     void onBorderCollision();
 };
@@ -65,7 +64,7 @@ public:
     int ownerID;
     ProjectileCollisionComponent(Entity* entity, Command* entCollisionCmd, int ownerID);
     ~ProjectileCollisionComponent();
-    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
+    void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onStaticCollision(StaticCollisionComponent* otherComp);
     void onBorderCollision();
 };
@@ -77,7 +76,7 @@ public:
     VictoryZoneCollisionComponent(Entity* entity, Command* entityCollisionCmd);
     ~VictoryZoneCollisionComponent();
 
-    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
+    void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onBorderCollision();
 };
 
@@ -94,7 +93,7 @@ private:
     void collideGround(DynamicCollisionComponent* otherComp, float boundValue, int leftT, int rightT);
 public:
     TerrainCollisionComponent(Entity* entity, bool top, bool bot, bool r, bool l);
-    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
+    void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onBorderCollision();
 };
 
@@ -105,7 +104,7 @@ protected:
     PowerUpType pwrUpType;
 public:
     PowerUpCollisionComponent(Entity * entity, Command * deletePwrUpEntityCmd, PowerUpType pwrUpType);
-    void onEntityCollision(DynamicCollisionComponent* otherComp, int dt);
+    void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onBorderCollision();
     void setIsClaimed(bool isClaimed);
 };
