@@ -5,6 +5,7 @@ Camera::Camera(SDL_Renderer * renderer, std::vector<Command*>& commandList, std:
     commandList(commandList),
     componentList(componentList),
     loopLevelCommand(new LoopLevelCommand()),
+    rumbleCommand(new PlaySoundCommand(SFX_RUMBLE)),
     levelW(-1),             // width and height of level (without copied portion)
     levelH(-1),
     previewOn(true),
@@ -28,6 +29,7 @@ Camera::~Camera() {
 
 void Camera::startShake() {
     this->shakeTime = this->maxShakeTime;
+    this->commandList.push_back(this->rumbleCommand);
 }
 
 void Camera::updateShake(int dt) {

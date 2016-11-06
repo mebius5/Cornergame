@@ -149,7 +149,7 @@ void GameManager::run() {
     soundHandler.loadSfx("resources/running.mp3", SFX_RUNNING);
     soundHandler.loadSfx("resources/scrape.mp3", SFX_SCRAPE);
     soundHandler.loadSfx("resources/woosh.mp3", SFX_WOOSH);
-    soundHandler.loadSfx("resources/rumble.mp3", SFX_WOOSH);
+    soundHandler.loadSfx("resources/rumble.mp3", SFX_RUMBLE);
 
     // State loop
     State* currentState = &startState;
