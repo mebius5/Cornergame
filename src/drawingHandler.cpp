@@ -7,8 +7,8 @@ DrawingHandler::DrawingHandler(std::vector<Command*>& commandList,
     componentList(componentList),
     renderer(renderer),
     camera(renderer, commandList, componentList, windowW, windowH),
-    shiftCount(0){
-
+    shiftCount(0),
+    windowW(windowW) {
 }
 
 void DrawingHandler::initializeCamera(int levelW, int levelH, bool previewOn) {
@@ -57,18 +57,18 @@ void DrawingHandler::resetCamera(int minX, int minY, int maxX, int maxY) {
 bool DrawingHandler::previewLevel(int dt) {
     shiftCount+=dt;
 
-    if(shiftCount>=2){
-        if(camera.minX>0){
-                camera.shift(-(shiftCount/4+1), 0);
+    if (shiftCount >= 2) {
+        if (this->camera.minX > this->windowW) {
+            camera.shift(-(shiftCount/4+1), 0);
+        } else if (camera.minY > 0) {
+            camera.shift(0, -(shiftCount/4+1));
+        } else {
+            return false;
         }
-        if(camera.minX<=0&&camera.minY>0){
-                camera.shift(0, -(shiftCount/4+1));
-        }
-        shiftCount=0;
+        shiftCount = 0;
     }
 
-    return !(camera.minX <= 0 && camera.minY <= 0);
-
+    return true;
 }
 
 void DrawingHandler::checkCameraShakes() {

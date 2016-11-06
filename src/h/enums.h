@@ -3,6 +3,7 @@
 
 // NOTE: keep NONE state the last one to make array indexing easier!
 enum StateEnum { STATE_QUIT, STATE_START, STATE_PLAY, STATE_LEVEL_TRANSIT,
+                 STATE_TUTORIAL,
                  STATE_MENU, STATE_HIGHSCORE, STATE_RESULTS, STATE_NONE};
 
 enum ProjEnum { PROJ_HERO, PROJ_ENEMY };

@@ -35,6 +35,8 @@ Level::Level(std::string filename, int windowW, int windowH) {
         levelContents[i] = new Tiles[this->width+(windowW/32)];
     }
 
+    int numHero=0;
+
     // read the file and build the level
     for (int i = 0; i < this->height; i++) {
         std::getline(infile, line);
@@ -50,7 +52,14 @@ Level::Level(std::string filename, int windowW, int windowH) {
                     levelContents[i][j] = GRASS;
                     break;
                 case '@':
-                    levelContents[i][j] = SPAWN;
+                    numHero++;
+                    if(numHero==1){
+                        levelContents[i][j] = SPAWN1;
+                    } else if (numHero==2){
+                        levelContents[i][j] = SPAWN2;
+                    } else{
+                        std::cerr<<"Error: More than 2 heros declared in level file."<<std::endl;
+                    }
                     break;
                 case '-':
                     levelContents[i][j] = ENEMY;
@@ -79,6 +88,9 @@ Level::Level(std::string filename, int windowW, int windowH) {
                 case 'b':
                     levelContents[i][j] = BENCH;
                     break;
+                case '1':
+                    levelContents[i][j] = S1;
+                    break;
                 default:
                     levelContents[i][j] = NONE;
                     std::cerr << "Unrecognized symbol in level file: " << line.at(j) << std::endl;
@@ -90,10 +102,8 @@ Level::Level(std::string filename, int windowW, int windowH) {
     for(int i= 0 ; i<height; i++){
         for (int j = 0; j < windowW/32; j++) {
             Tiles type = levelContents[i][j];
-            if(type==BRICK || type==GRASS||
-                    type==TREE1||type==TREE2||
-                    type==PU_AMMO||type==PU_JUMP||
-                    type==PU_HEALTH){
+            if (type==BRICK || type==GRASS || type==TREE1 || type==TREE2 || type==PU_AMMO
+                    || type==PU_BEER || type==PU_JUMP || type==PU_HEALTH || type==BENCH) {
                 levelContents[i][j+width]= type;
             } else {
                 levelContents[i][j+width]= NONE;

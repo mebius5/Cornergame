@@ -130,6 +130,12 @@ void GameManager::run() {
                         collisionHandler, scoreHandler, physicsHandler,
                         powerUpHandler, resultsState, highscoreState);
 
+    TutorialState tutorialState(this->width, this->height, entityMgr, commandList,
+                        this->renderer, drawingHandler, inputHandler,
+                        soundHandler, controlHandler, aiHandler,
+                        collisionHandler, scoreHandler, physicsHandler,
+                        powerUpHandler);
+
     // Load music resources
     soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);
     soundHandler.loadMusic("music/a_winter_kiss_menu.xm", MUSIC_MENU);
@@ -172,6 +178,10 @@ void GameManager::run() {
                     currentState = & menuState;
                     this->currentLevel = 1;
                 }
+                break;
+            case STATE_TUTORIAL:
+                currentState = &tutorialState;
+                this->currentLevel=1;
                 break;
             case STATE_HIGHSCORE:
                 currentState = &highscoreState;

@@ -169,6 +169,16 @@ Entity* EntityManager::createScoreBox(int x, int y, Entity* owner) {
     return entity;
 }
 
+Entity* EntityManager::createFadeInText(FontEnum font,
+                                                const char* text, int fontSize, int r, int g, int b,
+                                                int initialAlpha, int windowW, int x, int y) {
+    Entity* entity = this->entityBuilder.createFadeInText(
+            font, text, fontSize, r, g, b,
+            initialAlpha, windowW, x, y);
+    this->addEntity(entity);
+    return entity;
+}
+
 Entity* EntityManager::createCenteredFadeInText(FontEnum font,
                                                 const char* text, int fontSize, int r, int g, int b,
                                                 int initialAlpha, int windowW, int windowH) {
@@ -306,14 +316,17 @@ void EntityManager::populateLevel(Level* level) {
                 createEnemy(TEX_ENEMY, j * 32, i * 32);
                 break;
             }
-            case SPAWN: {
+            case SPAWN1: {
                 Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
-                Entity* hero2 = createHero(TEX_HERO2, j * 32 + 64, i * 32, SFX_ALERT, true);
                 createHealthBar(100, 50, hero);
-                createHealthBar(100, 100, hero2);
                 createAmmoBar(400, 50, hero);
-                createAmmoBar(400, 100, hero2);
                 createScoreBox(850, 50, hero);
+                break;
+            }
+            case SPAWN2: {
+                Entity* hero2 = createHero(TEX_HERO2, j * 32, i * 32, SFX_ALERT, true);
+                createHealthBar(100, 100, hero2);
+                createAmmoBar(400, 100, hero2);
                 createScoreBox(850, 100, hero2);
                 break;
             }
@@ -348,6 +361,10 @@ void EntityManager::populateLevel(Level* level) {
             case PU_BEER:{
                 createPowerUp(TEX_PWRUP_BEER, j*32, i*32);
                 break;
+            }
+            case S1:{
+                createFadeInText(FONT_GLOBAL, "WASD to move, V to shoot",
+                                 30, 255, 255, 255, 0, 900, j*32, i*32);
             }
             default:
                 break;
