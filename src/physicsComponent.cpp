@@ -18,7 +18,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     deceleration(.0018f),
     maxJumps(1),
     target(NULL),
-    rotSpeed(0.01f) {
+    rotSpeed(0.002f) {
 }
 
 PhysicsComponent::~PhysicsComponent() {
