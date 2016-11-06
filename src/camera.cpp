@@ -131,7 +131,7 @@ void Camera::initializeCamera(int levelW, int levelH, bool previewOn) {
     this->previewOn = previewOn;
 }
 
-void Camera::detectBorderCollision(Entity *entity, int dt) {
+void Camera::detectBorderCollision(Entity* entity, int dt) {
     int shiftAmount = (dt/2)+1;
     if(shiftAmount< 8){
         shiftAmount = 8;
@@ -141,23 +141,10 @@ void Camera::detectBorderCollision(Entity *entity, int dt) {
         if (minX - entity->x > 50)      // get squished!
             entity->health->die();
         entity->physics->bump(1);
-        //this->borderBoundX(entity, minX+shiftAmount);
-        entity->health->takeDamage(4);
+        entity->health->takeDamage(50);
         entity->actionState = DAMAGE;
     } else if (entity->x + entity->width > maxX) {
-        this->borderBoundX(entity, maxX - entity->width-shiftAmount);
-        entity->health->takeDamage(4);
-        entity->actionState = DAMAGE;
-    }
-
-    if (entity->y < minY) {
-        this->borderBoundY(entity, minY+shiftAmount);
-        entity->health->takeDamage(4);
-        entity->actionState = DAMAGE;
-    } else if (entity->y + entity->height > this->maxY) {
-        this->borderBoundY(entity, maxY - entity->height-shiftAmount);
-        entity->health->takeDamage(4);
-        entity->actionState = DAMAGE;
+        this->borderBoundX(entity, maxX - entity->width - shiftAmount);
     }
 }
 
