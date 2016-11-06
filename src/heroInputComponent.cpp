@@ -10,7 +10,7 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnProjComma
     jumpPressed(false),
     spawnCommand(spawnCommand),
     spawnTime(0),
-    spawnCooldown(10),
+    spawnCooldown(500),
     holdTime(-1.0f),
     maxHold(500.0f) {
 }
