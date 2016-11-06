@@ -4,6 +4,8 @@ Entity::Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHe
     id(id),
     x(x),
     y(y),
+    initialX(x),
+    initialY(y),
     width(w),
     height(h),
     drawWidth(drawWidth),

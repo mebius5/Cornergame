@@ -288,6 +288,8 @@ void EntityManager::handleSpawns() {
                 if (this->entityMap.count(entity->getId()) == 0) {
                     entity->validate();
                     this->addEntity(entity);
+                    entity->x = entity->initialX;
+                    entity->y = entity->initialY;
                 } else if (entity->x < this->windowW)
                     entity->x = this->windowW + (rand() % 100);
             }
