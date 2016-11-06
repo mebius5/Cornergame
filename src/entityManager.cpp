@@ -230,14 +230,9 @@ Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, int x, 
 
 Entity* EntityManager::createTerrain(Tiles tileType, int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
-    Entity* entity;
-    if (tileType == BRICK) {
-    entity = this->entityBuilder.createTerrain(
-            TT_BRICK, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
-    } else {
-    entity = this->entityBuilder.createTerrain(
-            TT_GRASS, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
-    }
+    TerrainTexEnum texType = (tileType == BRICK ? TT_BRICK : TT_GRASS);
+    Entity* entity = this->entityBuilder.createTerrain(
+            texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
     this->addEntity(entity);
     return entity;
 }

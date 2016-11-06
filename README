@@ -175,7 +175,5 @@ Fix input lag on wasd player (still there?)
 Change allocation to happen in groups?
 Change renderCopy() of static stuff to be more efficient: group static textures
 CommandBus?
-
-TODAY:
-play with the physics! -> shooting decel, jumping, movement
-camera warp bugs -> respawning stuff
+camera warp -> change level to start at B, one segment with no powerups/enemies
+enemy respawns? -> TempHideEntityCommand handled by GameManager.
