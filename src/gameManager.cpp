@@ -128,12 +128,28 @@ void GameManager::run() {
                         collisionHandler, scoreHandler, physicsHandler,
                         powerUpHandler, resultsState, highscoreState);
 
+    TutorialState tutorialState(this->width, this->height, entityMgr, commandList,
+                        this->renderer, drawingHandler, inputHandler,
+                        soundHandler, controlHandler, aiHandler,
+                        collisionHandler, scoreHandler, physicsHandler,
+                        powerUpHandler);
+
     // Load music resources
     soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);
     soundHandler.loadMusic("music/a_winter_kiss_menu.xm", MUSIC_MENU);
     soundHandler.loadMusic("music/cabin_fever_playscreen.xm", MUSIC_PLAY);
     soundHandler.loadMusic("music/ambient_starfield_highscore.xm", MUSIC_HIGHSCORE);
-    soundHandler.loadSfx("resources/collision_alert.wav", SFX_ALERT);
+    soundHandler.loadSfx("resources/ouch_hero.aiff", SFX_ALERT);
+    soundHandler.loadSfx("resources/ammo.wav", SFX_AMMO);
+    soundHandler.loadSfx("resources/armor.wav", SFX_ARMOR);
+    soundHandler.loadSfx("resources/drink.wav", SFX_DRINK);
+    soundHandler.loadSfx("resources/jump.wav", SFX_JUMP);
+    soundHandler.loadSfx("resources/land.mp3", SFX_LAND);
+    soundHandler.loadSfx("resources/ouch_enemy.mp3", SFX_ENEMY);
+    soundHandler.loadSfx("resources/running.mp3", SFX_RUNNING);
+    soundHandler.loadSfx("resources/scrape.mp3", SFX_SCRAPE);
+    soundHandler.loadSfx("resources/woosh.mp3", SFX_WOOSH);
+    soundHandler.loadSfx("resources/rumble.mp3", SFX_WOOSH);
 
     // State loop
     State* currentState = &startState;
@@ -160,6 +176,10 @@ void GameManager::run() {
                     currentState = & menuState;
                     this->currentLevel = 1;
                 }
+                break;
+            case STATE_TUTORIAL:
+                currentState = &tutorialState;
+                this->currentLevel=1;
                 break;
             case STATE_HIGHSCORE:
                 currentState = &highscoreState;

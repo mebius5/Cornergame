@@ -2,7 +2,7 @@
 
 SoundHandler::SoundHandler(std::vector<Command*>& cmdList) :
     commandList(cmdList),
-    sfxMap(5),             // initialized to 5 positions. Expand if needed!
+    sfxMap(20),             // initialized to 5 positions. Expand if needed!
     musicMap(5),
     timeElapsed(150),
     lastChannelUsedForSfx(0) {

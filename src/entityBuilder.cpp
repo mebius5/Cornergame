@@ -22,8 +22,8 @@ SDL_Surface* EntityBuilder::loadImage(const char* filename) {
     return finalImage;
 }
 
-SDL_Surface* EntityBuilder::createText(FontEnum fontType, const char* text,
-                                       int fontSize, int r, int g, int b, int a, int windowW) {
+SDL_Surface* EntityBuilder::createTextSurface(FontEnum fontType, const char *text,
+                                              int fontSize, int r, int g, int b, int a, int windowW) {
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
 
@@ -178,18 +178,29 @@ Entity* EntityBuilder::createScoreBox(int x, int y, Entity* owner, FontEnum font
     return scoreBox;
 }
 
+Entity* EntityBuilder::createFadeInText(FontEnum fontType, const char *text, int fontSize,
+                                        int r, int g, int b, int initialAlpha,
+                                        int windowW, int x, int y) {
+    if (!this->fontMap[fontType][fontSize])
+        this->loadFont(fontType, fontSize);
+    SDL_Surface* textSurface =
+            this->createTextSurface(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
+    Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
+    fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
+    return fadeInText;
+}
+
 Entity* EntityBuilder::createCenteredFadeInText(FontEnum fontType, const char *text, int fontSize,
                                                 int r, int g, int b, int initialAlpha,
                                                 int windowW, int windowH) {
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
     SDL_Surface* textSurface =
-        this->createText(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
+            this->createTextSurface(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
     int x = (windowW/2 - textSurface->w/2);
     int y = (windowH/2 - textSurface->h/2);
     Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
-    //fadeInText->input = new StartScreenInputComponent(fadeInText);
     return fadeInText;
 }
 
@@ -198,7 +209,7 @@ Entity* EntityBuilder::createHorizontallyCenteredFadeInText(FontEnum fontType, c
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
     SDL_Surface* textSurface =
-            this->createText(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
+            this->createTextSurface(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
     int x = (windowW/2 - textSurface->w/2);
     Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
@@ -213,7 +224,7 @@ Entity* EntityBuilder::createHorizontallyCenteredFadeInMenuText(FontEnum fontTyp
     if (!this->fontMap[fontType][fontSize])
         this->loadFont(fontType, fontSize);
     SDL_Surface* textSurface =
-        this->createText(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
+            this->createTextSurface(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
     int x = (windowW/2 - textSurface->w/2);
     Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);

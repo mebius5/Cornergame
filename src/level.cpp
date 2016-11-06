@@ -35,6 +35,8 @@ Level::Level(std::string filename, int windowW, int windowH) {
         levelContents[i] = new Tiles[this->width+(windowW/32)];
     }
 
+    int numHero=0;
+
     // read the file and build the level
     for (int i = 0; i < this->height; i++) {
         std::getline(infile, line);
@@ -50,7 +52,14 @@ Level::Level(std::string filename, int windowW, int windowH) {
                     levelContents[i][j] = GRASS;
                     break;
                 case '@':
-                    levelContents[i][j] = SPAWN;
+                    numHero++;
+                    if(numHero==1){
+                        levelContents[i][j] = SPAWN1;
+                    } else if (numHero==2){
+                        levelContents[i][j] = SPAWN2;
+                    } else{
+                        std::cerr<<"Error: More than 2 heros declared in level file."<<std::endl;
+                    }
                     break;
                 case '-':
                     levelContents[i][j] = ENEMY;
@@ -79,6 +88,12 @@ Level::Level(std::string filename, int windowW, int windowH) {
                 case 'b':
                     levelContents[i][j] = BENCH;
                     break;
+                case 'F':
+                    levelContents[i][j] = FADEINTEXT;
+                    break;
+                case 'N':
+                    levelContents[i][j] = NORMALTEXT;
+                    break;
                 default:
                     levelContents[i][j] = NONE;
                     std::cerr << "Unrecognized symbol in level file: " << line.at(j) << std::endl;
@@ -102,6 +117,12 @@ Level::Level(std::string filename, int windowW, int windowH) {
     this->contentHeight = height/*+(windowH/32)*/;
     this->contentWidth = width+(windowW/32);
 
+
+    while(!infile.eof()){
+        std::getline(infile,line);
+        this->stringList.push_back(line);
+    }
+
     infile.close();
 }
 
@@ -109,8 +130,14 @@ Level::~Level() {       // TODO: verify this is correct
     for (int i = 0; i < this->height/*+(windowH/32)*/; i++)
         delete[] levelContents[i];
     delete[] levelContents;
+
+    this->stringList.clear();
 }
 
 Tiles Level::getTile(int i, int j) {
     return this->levelContents[i][j];
+}
+
+std::vector<std::string> Level::getStringList() {
+    return this->stringList;
 }
