@@ -108,3 +108,14 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
         this->holdTime = -1.0f;
     }
 }
+
+void HeroInputComponent::invertControl() {
+    SDL_Keycode tempKey;
+    tempKey = this->upKey;
+    this->upKey = this->downKey;
+    this->downKey = tempKey;
+
+    tempKey = this->rightKey;
+    this->rightKey = this->leftKey;
+    this->leftKey = tempKey;
+}

@@ -34,6 +34,7 @@ public:
     void updateTime(int dt);
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
+    void invertControl();
 };
 
 // class StartScreenInputComponent : public InputComponent {

@@ -100,9 +100,9 @@ public:
 class PowerUpCollisionComponent : public StaticCollisionComponent {
 protected:
     bool isClaimed;
-    PowerUpType pwrUpType;
+    TextureEnum pwrUpType;
 public:
-    PowerUpCollisionComponent(Entity* entity, PowerUpType pwrUpType);
+    PowerUpCollisionComponent(Entity* entity, TextureEnum pwrUpType);
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onBorderCollision();
     void setIsClaimed(bool isClaimed);

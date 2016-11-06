@@ -15,7 +15,8 @@ enum MusicEnum { MUSIC_START, MUSIC_MENU, MUSIC_PLAY, MUSIC_HIGHSCORE };
 
 enum TextureEnum { TEX_HERO, TEX_HERO2, TEX_ENEMY, TEX_BACKGROUND, TEX_HEALTHBAR,
                    TEX_AMMOBAR, TEX_VICTORY, TEX_PROJECTILE, TEX_NONE,
-                    TEX_PWRUP_INFJUMP, TEX_PWRUP_INFHEALTH,
+                    TEX_PWRUP_INFJUMP, TEX_PWRUP_INFHEALTH, TEX_PWRUP_AMMO,
+                    TEX_PWRUP_BEER,
                     TEX_TREE1, TEX_TREE2, TEX_BENCH};
 
 enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_NONE };
@@ -24,12 +25,10 @@ enum FontEnum { FONT_GLOBAL };
 
 
 //List the nums in order of its corresponding position in the array
-enum PowerUpType {
-    //Timer-based powerup
+enum PowerUpType { //Update array size in PowerUpComponent
     PWRUP_INFJUMP, PWRUP_INFHEALTH,
-
-    //Non-timer-based powerup
-    PWRUP_AMMO
+    PWRUP_AMMO,
+    PWRUP_BEER
 };
 
 #endif

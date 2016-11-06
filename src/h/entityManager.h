@@ -58,9 +58,7 @@ public:
                                                      int windowW, int yPos,
                                                      int index, int numOptions, StateEnum nextState);
     Entity* createVictoryZone(int x, int y);
-    Entity* createAmmo(int x, int y);
-    Entity* createInfiniteJumpPowerUp(int x, int y);
-    Entity* createInfiniteHealthPowerUp(int x, int y);
+    Entity* createPowerUp(TextureEnum pwrUpType, int x, int y);
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y);
     Entity * createTerrain(Tiles tileType, int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
