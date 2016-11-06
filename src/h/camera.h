@@ -9,6 +9,7 @@ private:
     std::vector<Command*>& commandList;
     std::vector<ArtComponent*>& componentList;
     RespawnPowerUpsCommand * respawnPowerUpsCommand;
+    Command * rumbleCommand;
     int levelW;
     int levelH;
     bool previewOn;
