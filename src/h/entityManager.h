@@ -43,6 +43,10 @@ public:
     Entity* createAmmoBar(int x, int y, Entity* owner);
     Entity* createScoreBox(int x, int y, Entity* owner);
 
+    Entity* createFadeInText(FontEnum font,
+                                     const char* text, int fontSize, int r, int g, int b,
+                                     int initialAlpha, int windowW, int x, int y);
+
     Entity* createCenteredFadeInText(FontEnum font,
                             const char* text, int fontSize, int r, int g, int b,
                             int initialAlpha, int windowW, int windowH);
