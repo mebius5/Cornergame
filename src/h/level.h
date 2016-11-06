@@ -5,7 +5,12 @@
 #include <fstream>
 #include <string>
 
-enum Tiles {NONE, BRICK, GRASS, SPAWN, ENEMY, GOAL, PU_JUMP, PU_HEALTH, AMMO, TREE1, TREE2, BENCH};
+enum Tiles {NONE, BRICK, GRASS, SPAWN, ENEMY, GOAL,
+    PU_JUMP, PU_HEALTH, PU_AMMO,
+    PU_BEER,
+    TREE1, TREE2, BENCH
+
+};
 
 class Level {
 private:

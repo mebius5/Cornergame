@@ -2,8 +2,8 @@
 
 PowerUpComponent::PowerUpComponent(Entity * entity):
         Component(entity),
-        pwrUpTimerArraySize(3),
-        pwrUPTimerArray{-999,-999,-999} //Initial and default values
+        pwrUpTimerArraySize(4), //Need to initialize the array as well, also change h file
+        pwrUPTimerArray{-999,-999,-999,-999} //Initial and default values
 {
 }
 
@@ -22,6 +22,11 @@ void PowerUpComponent::update(int dt) {
                 case 1:
                     deactivateInfHealthPwrUp();
                     break;
+                case 2:
+                    break;
+                case 3:
+                    deactivateBeerPwrUp();
+                    break;
                 default:
                     break;
             }
@@ -29,18 +34,22 @@ void PowerUpComponent::update(int dt) {
     }
 }
 
-void PowerUpComponent::activatePowerUp(PowerUpType pwrUpType) {
+void PowerUpComponent::activatePowerUp(TextureEnum pwrUpType) {
     switch (pwrUpType){
-        case PWRUP_INFJUMP:{
+        case TEX_PWRUP_INFJUMP:{
             activateInfJumpPwrUp();
             break;
         }
-        case PWRUP_INFHEALTH:{
+        case TEX_PWRUP_INFHEALTH:{
             activateInfHealthPwrUp();
             break;
         }
-        case PWRUP_AMMO:{
+        case TEX_PWRUP_AMMO:{
             activateIncreaseAmmo();
+            break;
+        }
+        case TEX_PWRUP_BEER:{
+            activateBeerPwrUp();
             break;
         }
         default:
@@ -91,4 +100,25 @@ void PowerUpComponent::deactivateInfHealthPwrUp() {
 
 void PowerUpComponent::activateIncreaseAmmo() {
     entity->ammo->addAmmo(5);
+}
+
+void PowerUpComponent::activateBeerPwrUp() {
+    int timeLimit = 5000;
+
+    if(HeroInputComponent * hic = dynamic_cast<HeroInputComponent *>(entity->input)){
+        hic->invertControl();
+        this->pwrUPTimerArray[3]=timeLimit;
+    }else{ //If is already turned on
+        //If activated from power up and not from cheat
+        if(this->pwrUPTimerArray[3]!=-999){
+            this->pwrUPTimerArray[3]=timeLimit;
+        }
+    }
+}
+
+void PowerUpComponent::deactivateBeerPwrUp() {
+    if(HeroInputComponent * hic = dynamic_cast<HeroInputComponent *>(entity->input)){
+        hic->invertControl();
+        this->pwrUPTimerArray[3]=-999;
+    }
 }
