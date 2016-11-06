@@ -141,7 +141,7 @@ void Camera::detectBorderCollision(Entity* entity, int dt) {
         if (minX - entity->x > 50)      // get squished!
             entity->health->die();
         entity->physics->bump(1);
-        entity->health->takeDamage(50);
+        entity->health->takeDamage(10);
         entity->actionState = DAMAGE;
     } else if (entity->x + entity->width > maxX) {
         this->borderBoundX(entity, maxX - entity->width - shiftAmount);
