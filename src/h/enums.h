@@ -9,7 +9,9 @@ enum ProjEnum { PROJ_HERO, PROJ_ENEMY };
 
 // NOTE: if updating any of the following, MAKE SURE to update vector sizes in
 // soundHander or entityBuilder for the map vectors.
-enum SfxEnum { SFX_ALERT, SFX_NONE };
+enum SfxEnum { SFX_ALERT, SFX_AMMO, SFX_ARMOR, SFX_DRINK, SFX_JUMP,
+               SFX_LAND, SFX_ENEMY, SFX_RUMBLE, SFX_RUNNING, SFX_SCRAPE,
+               SFX_WOOSH, SFX_NONE };
 
 enum MusicEnum { MUSIC_START, MUSIC_MENU, MUSIC_PLAY, MUSIC_HIGHSCORE };
 
