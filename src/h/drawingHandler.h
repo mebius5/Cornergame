@@ -12,6 +12,7 @@ private:
     SDL_Renderer* renderer;
     Camera camera;
     int shiftCount;
+    int windowW;
 public:
     DrawingHandler(std::vector<Command*>& commandList,
                    std::vector<ArtComponent*>& componentList,
@@ -20,7 +21,7 @@ public:
     void shift(int dt);
     void resetCamera(int minX, int minY, int maxX, int maxY);
     void initializeCamera(int levelW, int levelH, bool previewOn);
-    bool previewLevel(int dt);
+    bool previewLevel(int dt);      // returns whether preview is still active.
     void checkCameraShakes();
 };
 

@@ -44,10 +44,7 @@ void PlayState::begin(int level) {
 }
 
 StateEnum PlayState::run() {
-
-    /****
-     * Preview Section
-     */
+    // Run preview
     bool previewOn = true;
     float lastTime = SDL_GetTicks();
     drawingHandler.resetCamera(this->levelW-windowW, this->levelH-windowH, this->levelW, this->levelH);
@@ -67,11 +64,9 @@ StateEnum PlayState::run() {
             return nextState;
     }
 
-    /***
-     * Gameplay section
-     */
+    // Start Gameplay
     drawingHandler.initializeCamera(this->levelW, this->levelH, false);
-    drawingHandler.resetCamera(0,0,windowW,windowH);
+    drawingHandler.resetCamera(windowW, 0, 2*windowW, windowH);
 
     bool running = true;
     lastTime = SDL_GetTicks();
