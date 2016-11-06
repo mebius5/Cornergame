@@ -284,6 +284,8 @@ void EntityManager::handleSpawns() {
 }
 
 void EntityManager::populateLevel(Level* level) {
+    int stringCount=0;
+
     for (int i = 0; i < level->contentHeight; i++) {
         for (int j = 0; j < level->contentWidth; j++) {
             switch (level->getTile(i, j)) {
@@ -362,9 +364,17 @@ void EntityManager::populateLevel(Level* level) {
                 createPowerUp(TEX_PWRUP_BEER, j*32, i*32);
                 break;
             }
-            case S1:{
-                createFadeInText(FONT_GLOBAL, "WASD to move, V to shoot",
+            case FADEINTEXT:{
+                createFadeInText(FONT_GLOBAL, level->getStringList().at(stringCount).c_str(),
                                  30, 255, 255, 255, 0, 900, j*32, i*32);
+                stringCount++;
+                break;
+            }
+            case NORMALTEXT:{
+                createFadeInText(FONT_GLOBAL, level->getStringList().at(stringCount).c_str(),
+                                 30, 255, 255, 255, 255, 900, j*32, i*32);
+                stringCount++;
+                break;
             }
             default:
                 break;
