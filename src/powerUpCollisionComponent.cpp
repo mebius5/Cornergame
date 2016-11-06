@@ -1,9 +1,8 @@
 #include "collisionComponent.h"
 
-PowerUpCollisionComponent::PowerUpCollisionComponent(Entity *entity, Command *deletePwrUpEntityCmd,
+PowerUpCollisionComponent::PowerUpCollisionComponent(Entity *entity,
                                                      PowerUpType pwrUpType):
     StaticCollisionComponent(entity),
-    deletePowerUpCmd(deletePwrUpEntityCmd),
     isClaimed(false),
     pwrUpType(pwrUpType) {
 }

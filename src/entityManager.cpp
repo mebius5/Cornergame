@@ -112,10 +112,10 @@ void EntityManager::cleanupEntities() {
 }
 
 void EntityManager::clear() {
+    this->cleanupEntities();    // delete all Entities from deletionQueue
     std::unordered_map<int, Entity*>::const_iterator it;
     for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it)
         delete it->second;      // delete all Entities from map
-    this->cleanupEntities();    // delete all Entities from deletionQueue
     this->entityMap.clear();
     this->aiComponents.clear();
     this->artComponents.clear();
@@ -126,6 +126,7 @@ void EntityManager::clear() {
     this->staticCollisionComponents.clear();
     this->dynamicCollisionComponents.clear();
     this->powerUpComponents.clear();
+    this->powerUpCollisionComponents.clear();
     this->heroEntities.clear();}
 
 /* Entity Creation Methods */
@@ -268,33 +269,21 @@ void EntityManager::handleSpawns() {
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
         if (SpawnProjCommand* eCmd = dynamic_cast<SpawnProjCommand*>(*it)) {
             this->createProjectile(eCmd->x, eCmd->y, eCmd->charge, eCmd->dir, eCmd->ownerID, eCmd->projType);
-            *it = this->commandList.back();
-            this->commandList.pop_back();
         } else if (DespawnEntityCommand* dCmd = dynamic_cast<DespawnEntityCommand*>(*it)) {
             this->deleteEntity(dCmd->id);
-            *it = this->commandList.back();
-            this->commandList.pop_back();
         } else if (dynamic_cast<RespawnPowerUpsCommand*>(*it)){
             std::vector<PowerUpCollisionComponent*>::iterator pu;
-            for(pu = this->powerUpCollisionComponents.begin(); pu != this->powerUpCollisionComponents.end();){
-                if (!(*pu)->isValid()) {        // remove invalid components
-                    *pu = this->powerUpCollisionComponents.back();
-                    this->powerUpCollisionComponents.pop_back();
-                    continue;
-                }
-
+            for(pu = this->powerUpCollisionComponents.begin(); pu != this->powerUpCollisionComponents.end(); ++pu){
                 (*pu)->setIsClaimed(false);
                 (*pu)->entity->art->isVisible=true;
-
-                ++pu;
             }
-
-            *it = this->commandList.back();
-            this->commandList.pop_back();
-        }
-        else {
+        } else {
             ++it;
+            continue;
         }
+
+        *it = this->commandList.back();
+        this->commandList.pop_back();
     }
 }
 

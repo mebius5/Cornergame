@@ -99,11 +99,10 @@ public:
 
 class PowerUpCollisionComponent : public StaticCollisionComponent {
 protected:
-    Command * deletePowerUpCmd;
     bool isClaimed;
     PowerUpType pwrUpType;
 public:
-    PowerUpCollisionComponent(Entity * entity, Command * deletePwrUpEntityCmd, PowerUpType pwrUpType);
+    PowerUpCollisionComponent(Entity* entity, PowerUpType pwrUpType);
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onBorderCollision();
     void setIsClaimed(bool isClaimed);

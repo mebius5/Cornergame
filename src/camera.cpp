@@ -103,10 +103,9 @@ void Camera::shift(int dx, int dy) {
                 continue;
             }
 
-            if((*it)->entity->collision&& !dynamic_cast<TerrainCollisionComponent*>((*it)->entity->collision)){
-                if((*it)->entity->x>= minX && (*it)->entity->x<=maxX){
-                    (*it)->entity->x = (*it)->entity->x - levelW;
-                }
+            if (dynamic_cast<DynamicCollisionComponent*>((*it)->entity->collision)
+                    && (*it)->entity->x >= levelW) {
+                (*it)->entity->x = (*it)->entity->x - levelW;
             }
             ++it;
         }
