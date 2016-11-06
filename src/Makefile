@@ -44,6 +44,7 @@ SRCFILES = \
 	staticArtComponent.cpp \
 	terrainCollisionComponent.cpp \
 	textFadeInComponent.cpp \
+	tutorialState.cpp \
 	victoryZoneCollisionComponent.cpp
 
 CXX = g++

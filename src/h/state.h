@@ -161,4 +161,32 @@ public:
     void cleanup(StateEnum next);
 };
 
+class TutorialState : public State {
+private:
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
+    ControlHandler& controlHandler;
+    AiHandler& aiHandler;
+    CollisionHandler& collisionHandler;
+    ScoreHandler& scoreHandler;
+    PhysicsHandler& physicsHandler;
+    PowerUpHandler& powerUpHandler;
+    Entity* hero;
+    Entity* hero2;
+    int levelW;
+    int levelH;
+public:
+    TutorialState(int windowW, int windowH, EntityManager& entityManager,
+              std::vector<Command*>& commandList, SDL_Renderer* renderer,
+              DrawingHandler& drawingHandler, InputHandler& inputHandler,
+              SoundHandler& soundHandler, ControlHandler& controlHandler,
+              AiHandler& aiHandler, CollisionHandler& collisionHandler,
+              ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
+              PowerUpHandler & powerUpHandler);
+    void begin(int level);
+    StateEnum run();
+    void cleanup(StateEnum next);
+};
+
 #endif
