@@ -108,6 +108,7 @@ protected:
     TextureEnum pwrUpType;
 public:
     PowerUpCollisionComponent(Entity* entity, TextureEnum pwrUpType, SfxEnum pwrSound);
+    ~PowerUpCollisionComponent();
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onBorderCollision();
     void setIsClaimed(bool isClaimed);

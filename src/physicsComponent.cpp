@@ -3,6 +3,8 @@
 PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
     jumpCommand(new PlaySoundCommand(SFX_JUMP)),
+    startSlideCommand(new PlaySoundCommand(SFX_SCRAPE)),
+    stopSlideCommand(new StopSoundCommand(SFX_SCRAPE)),
     xAccel(0.0f),
     yAccel(0.0f),
     accelAmount(.001f),
@@ -23,8 +25,14 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
 }
 
 PhysicsComponent::~PhysicsComponent() {
+    if (this->stopSlideCommand)
+        Component::commandList->push_back(this->stopSlideCommand);
     if (this->jumpCommand)
         delete this->jumpCommand;
+    if (this->startSlideCommand)
+        delete this->startSlideCommand;
+    if (this->stopSlideCommand)
+        delete this->stopSlideCommand;
     this->entity = NULL;
 }
 
@@ -42,6 +50,11 @@ void PhysicsComponent::updateLocation(int dt) {
     bool& onGround = this->collisionComp->onGround;
     bool& onLeftWall = this->collisionComp->onLeftWall;
     bool& onRightWall = this->collisionComp->onRightWall;
+
+    if (onRightWall || onLeftWall) {
+        if (this->startSlideCommand)
+            Component::commandList->push_back(this->startSlideCommand);
+    }
 
     // rotate velocities if homing on target
     if (target != NULL && !target->health->isValid()) {
@@ -128,6 +141,11 @@ void PhysicsComponent::updateLocation(int dt) {
     // TODO move this somewhere else
     if (this->entity->health && this->entity->y > 1600) {
         this->entity->health->die();
+    }
+
+    if (!onRightWall && !onLeftWall) {
+        if (this->stopSlideCommand)
+            Component::commandList->push_back(this->stopSlideCommand);
     }
 }
 

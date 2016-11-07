@@ -4,6 +4,10 @@ PlaySoundCommand::PlaySoundCommand(SfxEnum sfxType) :
     sfxType(sfxType) {
 }
 
+StopSoundCommand::StopSoundCommand(SfxEnum sfxType) :
+    sfxType(sfxType) {
+}
+
 SwitchStateCommand::SwitchStateCommand(StateEnum newState) :
     newState(newState) {
 }

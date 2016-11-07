@@ -9,6 +9,12 @@ PowerUpCollisionComponent::PowerUpCollisionComponent(Entity *entity,
     pwrUpType(pwrUpType) {
 }
 
+PowerUpCollisionComponent::~PowerUpCollisionComponent() {
+    if (pickupCommand) {
+        delete pickupCommand;
+    }
+}
+
 void PowerUpCollisionComponent::onEntityCollision(DynamicCollisionComponent *otherComp) {
     if(isClaimed)
         return;
