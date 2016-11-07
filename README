@@ -25,6 +25,16 @@ POWERUPS:
 - Beer inverts your control
 
 Akshay
+- Obtained new sound files for multiple actions
+- Created ability to start/stop looping sound effects such as running
+- Fade in music
+- Added sounds for powerups
+- Added jumping sounds
+- Updated damage sounds
+- Added a rumble sound when camera shakes
+- Allow projectiles to home in on enemies
+- Stop projectiles from colliding with projectiles
+- Projectile shoots at different speed based on how long button pressed
 
 Andrew
 
