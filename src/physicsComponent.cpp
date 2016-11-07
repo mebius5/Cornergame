@@ -25,8 +25,6 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
 }
 
 PhysicsComponent::~PhysicsComponent() {
-    if (this->stopSlideCommand)
-        Component::commandList->push_back(this->stopSlideCommand);
     if (this->jumpCommand)
         delete this->jumpCommand;
     if (this->startSlideCommand)

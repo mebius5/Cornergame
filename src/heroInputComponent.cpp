@@ -18,8 +18,6 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnProjComma
 }
 
 HeroInputComponent::~HeroInputComponent() {
-    if (this->stopCommand)
-        Component::commandList->push_back(this->stopCommand);
     this->entity = NULL;
     if (spawnCommand) {
         delete spawnCommand;
