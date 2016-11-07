@@ -7,6 +7,7 @@
 class PhysicsComponent : public Component {
 private:
     //float minVelocity;
+    Command* jumpCommand;
     float xAccel;
     float yAccel;
     float accelAmount;

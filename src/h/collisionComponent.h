@@ -52,6 +52,8 @@ public:
 class EnemyCollisionComponent : public DynamicCollisionComponent {
 public:
     EnemyCollisionComponent(Entity* entity);
+    ~EnemyCollisionComponent();
+    Command* projCollisionCommand;
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onStaticCollision(StaticCollisionComponent* otherComp);
     void onBorderCollision();
@@ -82,6 +84,7 @@ public:
 
 class TerrainCollisionComponent : public StaticCollisionComponent {
 private:
+    Command* landCommand;
     bool freeTop;
     bool freeBot;
     bool freeRight;
@@ -93,6 +96,7 @@ private:
     void collideGround(DynamicCollisionComponent* otherComp, float boundValue, int leftT, int rightT);
 public:
     TerrainCollisionComponent(Entity* entity, bool top, bool bot, bool r, bool l);
+    ~TerrainCollisionComponent();
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onBorderCollision();
 };

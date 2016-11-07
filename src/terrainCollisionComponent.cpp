@@ -3,10 +3,16 @@
 TerrainCollisionComponent::TerrainCollisionComponent(Entity *entity,
                 bool freeTop, bool freeBot, bool freeRight, bool freeLeft):
     StaticCollisionComponent(entity),
+    landCommand(new PlaySoundCommand(SFX_LAND)),
     freeTop(freeTop),
     freeBot(freeBot),
     freeRight(freeRight),
     freeLeft(freeLeft) {
+}
+
+TerrainCollisionComponent::~TerrainCollisionComponent() {
+    if (this->landCommand)
+        delete this->landCommand;
 }
 
 void TerrainCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
@@ -119,6 +125,8 @@ void TerrainCollisionComponent::collideGround(DynamicCollisionComponent* otherCo
         otherComp->rightBound = rightT;
     }
     this->boundY(otherComp, boundValue);
+    if (this->landCommand)
+        Component::commandList->push_back(this->landCommand);
 }
 
 void TerrainCollisionComponent::boundX(DynamicCollisionComponent* otherComp,
