@@ -5,6 +5,11 @@ EnemyCollisionComponent::EnemyCollisionComponent(Entity* entity) :
     projCollisionCommand(new PlaySoundCommand(SFX_ENEMY)) {
 }
 
+EnemyCollisionComponent::~EnemyCollisionComponent() {
+    if (this->projCollisionCommand)
+        delete this->projCollisionCommand;
+}
+
 void EnemyCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
     if (dynamic_cast<ProjectileCollisionComponent*>(otherComp)) {
         if (this->projCollisionCommand)

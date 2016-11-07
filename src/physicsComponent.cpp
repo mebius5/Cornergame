@@ -23,6 +23,8 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
 }
 
 PhysicsComponent::~PhysicsComponent() {
+    if (this->jumpCommand)
+        delete this->jumpCommand;
     this->entity = NULL;
 }
 
