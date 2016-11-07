@@ -138,7 +138,7 @@ Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vecto
     enemy->collision = new EnemyCollisionComponent(enemy);
     enemy->art = new AnimationComponent(enemy, texture, 1);
     enemy->ai = new EnemyAiComponent(enemy, heroes);
-    enemy->health = new HealthComponent(enemy, 200, new DespawnEntityCommand(enemy->getId()));
+    enemy->health = new HealthComponent(enemy, 200, new TempHideCommand(enemy->getId()));
     enemy->physics = new PhysicsComponent(enemy);
     enemy->physics->deceleration = 0.0f;
     enemy->physics->maxXVelocity = 0.1f;
@@ -246,11 +246,11 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {        // not using map
     return zone;
 }
 
-Entity* EntityBuilder::createPowerUp(TextureEnum pwrUpType, int x, int y) {
+Entity* EntityBuilder::createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y) {
     Texture texture = this->textureMap[pwrUpType];
     Entity *entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
     entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
-    entity->collision = new PowerUpCollisionComponent(entity, pwrUpType);
+    entity->collision = new PowerUpCollisionComponent(entity, pwrUpType, pwrSound);
     return entity;
 }
 

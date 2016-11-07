@@ -30,6 +30,8 @@ private:
 public:
     float x;                    // coordinates of top left corner
     float y;
+    float initialX;
+    float initialY;
     int width;
     int height;
     int drawWidth;
@@ -45,12 +47,14 @@ public:
     InputComponent* input;
     AiComponent* ai;
     HealthComponent* health;
-    PowerUpComponent * powerUp;
-    AmmoComponent * ammo;
+    PowerUpComponent* powerUp;
+    AmmoComponent* ammo;
 
     Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHeight);
     ~Entity();
     int getId();
+    void validate();
+    void invalidate();
 };
 
 #endif

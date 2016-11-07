@@ -15,6 +15,7 @@ private:
     int timeElapsed;               // time passed since a sound was played
     int lastChannelUsedForSfx;
     void playSfx(SfxEnum sfxType);
+    int stopSfx(SfxEnum sfxType);
 public:
     SoundHandler(std::vector<Command*>& commandList);
     ~SoundHandler();

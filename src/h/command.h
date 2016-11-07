@@ -15,6 +15,11 @@ public:
     SfxEnum sfxType;
     PlaySoundCommand(SfxEnum sfxType);
 };
+class StopSoundCommand : public Command {
+public:
+    SfxEnum sfxType;
+    StopSoundCommand(SfxEnum sfxType);
+};
 
 /* CONTROL COMMANDS */
 class SwitchStateCommand : public Command {
@@ -49,9 +54,15 @@ public:
     DespawnEntityCommand(int id);
 };
 
-class RespawnPowerUpsCommand : public Command {
+class TempHideCommand : public Command {
 public:
-    RespawnPowerUpsCommand();
+    int id;
+    TempHideCommand(int id);
+};
+
+class LoopLevelCommand : public Command {
+public:
+    LoopLevelCommand();
 };
 
 class PreviewOffCommand: public Command {

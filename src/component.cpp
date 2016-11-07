@@ -14,6 +14,10 @@ Component::Component(Entity* entity) :
     entity(entity) {
 }
 
+void Component::validate() {
+    this->valid = true;
+}
+
 void Component::invalidate() {
     this->valid = false;
 }

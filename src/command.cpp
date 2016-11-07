@@ -4,6 +4,10 @@ PlaySoundCommand::PlaySoundCommand(SfxEnum sfxType) :
     sfxType(sfxType) {
 }
 
+StopSoundCommand::StopSoundCommand(SfxEnum sfxType) :
+    sfxType(sfxType) {
+}
+
 SwitchStateCommand::SwitchStateCommand(StateEnum newState) :
     newState(newState) {
 }
@@ -16,7 +20,11 @@ DespawnEntityCommand::DespawnEntityCommand(int id) :
     id(id) {
 }
 
-RespawnPowerUpsCommand::RespawnPowerUpsCommand() {
+TempHideCommand::TempHideCommand(int id) :
+    id(id) {
+}
+
+LoopLevelCommand::LoopLevelCommand() {
 }
 
 PreviewOffCommand::PreviewOffCommand() {

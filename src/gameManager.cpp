@@ -7,13 +7,11 @@
  */
 
 GameManager::GameManager() :
-        title("<GAME NAME>"),
-        width(1024),
-        height(704),
-        currentLevel(1),
-        maxLevel(2)
-{
-
+    title("<GAME NAME>"),
+    width(1024),
+    height(704),
+    currentLevel(1),
+    maxLevel(4) {
     srand(time(NULL));
 }
 
@@ -95,7 +93,7 @@ void GameManager::run() {
     std::vector<Command*> commandList;
     Component::setCommandList(&commandList);
 
-    EntityManager entityMgr(this->renderer, commandList);
+    EntityManager entityMgr(this->renderer, commandList, width);
     DrawingHandler drawingHandler(commandList, entityMgr.artComponents, this->renderer, width, height);
     InputHandler inputHandler(entityMgr.inputComponents, commandList);
     AiHandler aiHandler(entityMgr.aiComponents);
@@ -141,7 +139,17 @@ void GameManager::run() {
     soundHandler.loadMusic("music/a_winter_kiss_menu.xm", MUSIC_MENU);
     soundHandler.loadMusic("music/cabin_fever_playscreen.xm", MUSIC_PLAY);
     soundHandler.loadMusic("music/ambient_starfield_highscore.xm", MUSIC_HIGHSCORE);
-    soundHandler.loadSfx("resources/collision_alert.wav", SFX_ALERT);
+    soundHandler.loadSfx("resources/ouch_hero.aiff", SFX_ALERT);
+    soundHandler.loadSfx("resources/ammo.wav", SFX_AMMO);
+    soundHandler.loadSfx("resources/armor.wav", SFX_ARMOR);
+    soundHandler.loadSfx("resources/drink.wav", SFX_DRINK);
+    soundHandler.loadSfx("resources/jump.wav", SFX_JUMP);
+    soundHandler.loadSfx("resources/land.aiff", SFX_LAND);
+    soundHandler.loadSfx("resources/ouch_enemy.aiff", SFX_ENEMY);
+    soundHandler.loadSfx("resources/rumble.aiff", SFX_RUMBLE);
+    soundHandler.loadSfx("resources/running.aiff", SFX_RUNNING);
+    soundHandler.loadSfx("resources/scrape.aiff", SFX_SCRAPE);
+    soundHandler.loadSfx("resources/woosh.aiff", SFX_WOOSH);
 
     // State loop
     State* currentState = &startState;
@@ -155,12 +163,6 @@ void GameManager::run() {
         switch (nextState) {
             case STATE_PLAY:
                 currentState = &playState;
-                /**
-                if(this->currentLevel>maxLevel){
-                    currentState = & menuState;
-                    this->currentLevel = 1;
-                }
-                 **/
                 break;
             case STATE_LEVEL_TRANSIT:
                 currentState = & levelTransitState;

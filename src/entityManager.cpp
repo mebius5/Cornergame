@@ -1,9 +1,11 @@
 #include "entityManager.h"
 #include <math.h>
+#include <iostream>
 
-EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList) :
+EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW) :
     commandList(cmdList),
     entityBuilder(renderer),
+    windowW(windowW),
     numCleanable(0) {
     this->entityBuilder.loadTexture(TEX_HERO, "spritesheets/hero.png");
     this->entityBuilder.loadTexture(TEX_HERO2, "spritesheets/hero2.png");
@@ -71,30 +73,27 @@ void EntityManager::addEntity(Entity* entity) {
     }
 }
 
+void EntityManager::initRespawns() {
+    std::unordered_map<int, Entity*>::const_iterator it;
+    for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it)
+        if (dynamic_cast<EnemyCollisionComponent*>(it->second->collision))
+            this->respawnEntities.push_back(it->second);
+}
+
 void EntityManager::deleteEntity(int id) {
+    Entity* entity = this->hideEntity(id);
+    if (entity)
+        this->deletionQueue.push(entity);
+}
+
+Entity* EntityManager::hideEntity(int id) {
     if (this->entityMap.count(id) == 0) {
-        return;
+        return NULL;
     }
     Entity* entity = this->entityMap[id];
-    this->deletionQueue.push(entity);
     this->entityMap.erase(id);
-
-    if (entity->ai)
-        entity->ai->invalidate();
-    if (entity->art)
-        entity->art->invalidate();
-    if (entity->collision)
-        entity->collision->invalidate();
-    if (entity->input)
-        entity->input->invalidate();
-    if (entity->physics)
-        entity->physics->invalidate();
-    if (entity->health)
-        entity->health->invalidate();
-    if (entity->score)
-        entity->score->invalidate();
-    if (entity->powerUp)
-        entity->powerUp->invalidate();
+    entity->invalidate();
+    return entity;
 }
 
 void EntityManager::cleanupEntities() {
@@ -118,6 +117,12 @@ void EntityManager::cleanupEntities() {
 
 void EntityManager::clear() {
     this->cleanupEntities();    // delete all Entities from deletionQueue
+    std::vector<Entity*>::const_iterator ents;
+    for (ents = this->respawnEntities.begin(); ents != this->respawnEntities.end(); ++ents) {
+        if (this->entityMap.count((*ents)->getId()) == 0)
+            delete *ents;
+    }
+
     std::unordered_map<int, Entity*>::const_iterator it;
     for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it)
         delete it->second;      // delete all Entities from map
@@ -132,7 +137,9 @@ void EntityManager::clear() {
     this->dynamicCollisionComponents.clear();
     this->powerUpComponents.clear();
     this->powerUpCollisionComponents.clear();
-    this->heroEntities.clear();}
+    this->heroEntities.clear();
+    this->respawnEntities.clear();
+}
 
 /* Entity Creation Methods */
 Entity* EntityManager::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
@@ -226,8 +233,8 @@ Entity* EntityManager::createVictoryZone(int x, int y) {
     return entity;
 }
 
-Entity* EntityManager::createPowerUp(TextureEnum pwrUpType, int x, int y) {
-    Entity * entity = this->entityBuilder.createPowerUp(pwrUpType, x, y);
+Entity* EntityManager::createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y) {
+    Entity * entity = this->entityBuilder.createPowerUp(pwrUpType, pwrSound, x, y);
     this->addEntity(entity);
     return entity;
 }
@@ -276,11 +283,24 @@ void EntityManager::handleSpawns() {
             this->createProjectile(eCmd->x, eCmd->y, eCmd->charge, eCmd->dir, eCmd->ownerID, eCmd->projType);
         } else if (DespawnEntityCommand* dCmd = dynamic_cast<DespawnEntityCommand*>(*it)) {
             this->deleteEntity(dCmd->id);
-        } else if (dynamic_cast<RespawnPowerUpsCommand*>(*it)){
+        } else if (TempHideCommand* tCmd = dynamic_cast<TempHideCommand*>(*it)) {
+            this->hideEntity(tCmd->id);
+        } else if (dynamic_cast<LoopLevelCommand*>(*it)){
             std::vector<PowerUpCollisionComponent*>::iterator pu;
             for(pu = this->powerUpCollisionComponents.begin(); pu != this->powerUpCollisionComponents.end(); ++pu){
                 (*pu)->setIsClaimed(false);
                 (*pu)->entity->art->isVisible=true;
+            }
+            std::vector<Entity*>::iterator ents;
+            for (ents = this->respawnEntities.begin(); ents != this->respawnEntities.end(); ++ents) {
+                Entity* entity = *ents;
+                if (this->entityMap.count(entity->getId()) == 0) {
+                    entity->validate();
+                    this->addEntity(entity);
+                    entity->x = entity->initialX;
+                    entity->y = entity->initialY;
+                } else if (entity->x < this->windowW)
+                    entity->x = this->windowW + (rand() % 100);
             }
         } else {
             ++it;
@@ -293,11 +313,14 @@ void EntityManager::handleSpawns() {
 }
 
 void EntityManager::populateLevel(Level* level) {
+    int stringCount=0;
+
     for (int i = 0; i < level->contentHeight; i++) {
         for (int j = 0; j < level->contentWidth; j++) {
             switch (level->getTile(i, j)) {
             case BRICK:
             case GRASS: {
+                Tiles type = level->getTile(i, j);
                 bool freeLeft = (j == 0 || (level->getTile(i, j-1) != BRICK && level->getTile(i, j-1) != GRASS));
                 bool freeRight;     // assigned value later
                 bool freeTop = (i == 0 || (level->getTile(i-1, j) != BRICK && level->getTile(i-1, j) != GRASS));
@@ -305,7 +328,7 @@ void EntityManager::populateLevel(Level* level) {
                 int numberHorizontal = 1;
                 int originalJ = j;
                 // create horizontal slabs, breaking at each intersection with other terrain rectangles.
-                while (j < (level->width-1) && (level->getTile(i, j+1) == BRICK || level->getTile(i, j+1) == GRASS)) {
+                while (j < (level->width-1) && level->getTile(i, j+1) == type) {
                     if (i > 0 && freeTop && (level->getTile(i-1, j+1) == BRICK || level->getTile(i-1, j+1) == GRASS))
                         break;
                     if (i > 0 && !freeTop && (level->getTile(i-1, j+1) != BRICK && level->getTile(i-1, j+1) != GRASS))
@@ -344,7 +367,7 @@ void EntityManager::populateLevel(Level* level) {
                 break;
             }
             case PU_AMMO: {
-                createPowerUp(TEX_PWRUP_AMMO, j*32, i*32);
+                createPowerUp(TEX_PWRUP_AMMO, SFX_AMMO, j*32, i*32);
                 break;
            }
             case TREE1:{
@@ -360,20 +383,28 @@ void EntityManager::populateLevel(Level* level) {
                 break;
             }
             case PU_JUMP:{
-                createPowerUp(TEX_PWRUP_INFJUMP, j*32, i*32);
+                createPowerUp(TEX_PWRUP_INFJUMP, SFX_WOOSH, j*32, i*32);
                 break;
             }
             case PU_HEALTH:{
-                createPowerUp(TEX_PWRUP_INFHEALTH, j*32, i*32);
+                createPowerUp(TEX_PWRUP_INFHEALTH, SFX_ARMOR, j*32, i*32);
                 break;
             }
             case PU_BEER:{
-                createPowerUp(TEX_PWRUP_BEER, j*32, i*32);
+                createPowerUp(TEX_PWRUP_BEER, SFX_DRINK, j*32, i*32);
                 break;
             }
-            case S1:{
-                createFadeInText(FONT_GLOBAL, "WASD to move, V to shoot",
-                                 30, 255, 255, 255, 0, 900, j*32, i*32);
+            case FADEINTEXT:{
+                createFadeInText(FONT_GLOBAL, level->getStringList().at(stringCount).c_str(),
+                                 30, 255, 255, 255, 0, windowW, j*32, i*32);
+                stringCount++;
+                break;
+            }
+            case NORMALTEXT:{
+                createFadeInText(FONT_GLOBAL, level->getStringList().at(stringCount).c_str(),
+                                 30, 255, 255, 255, 255, windowW, j*32, i*32);
+                stringCount++;
+                break;
             }
             default:
                 break;

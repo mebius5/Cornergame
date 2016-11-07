@@ -1,10 +1,18 @@
 #include "collisionComponent.h"
 
 PowerUpCollisionComponent::PowerUpCollisionComponent(Entity *entity,
-                                                     TextureEnum pwrUpType):
+                                                     TextureEnum pwrUpType,
+                                                     SfxEnum pwrSound):
     StaticCollisionComponent(entity),
+    pickupCommand(new PlaySoundCommand(pwrSound)),
     isClaimed(false),
     pwrUpType(pwrUpType) {
+}
+
+PowerUpCollisionComponent::~PowerUpCollisionComponent() {
+    if (pickupCommand) {
+        delete pickupCommand;
+    }
 }
 
 void PowerUpCollisionComponent::onEntityCollision(DynamicCollisionComponent *otherComp) {
@@ -15,6 +23,8 @@ void PowerUpCollisionComponent::onEntityCollision(DynamicCollisionComponent *oth
         otherComp->entity->powerUp->activatePowerUp(this->pwrUpType);
         this->entity->art->isVisible=false;
         isClaimed=true;
+        if (this->pickupCommand)
+            Component::commandList->push_back(this->pickupCommand);
     }
 }
 

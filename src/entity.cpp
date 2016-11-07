@@ -4,6 +4,8 @@ Entity::Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHe
     id(id),
     x(x),
     y(y),
+    initialX(x),
+    initialY(y),
     width(w),
     height(h),
     drawWidth(drawWidth),
@@ -18,8 +20,7 @@ Entity::Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHe
     ai(NULL),
     health(NULL),
     powerUp(NULL),
-    ammo(NULL)
-{
+    ammo(NULL) {
 }
 
 Entity::~Entity() {
@@ -45,4 +46,46 @@ Entity::~Entity() {
 
 int Entity::getId() {
     return this->id;
+}
+
+void Entity::validate() {
+    if (this->ai)
+        this->ai->validate();
+    if (this->art)
+        this->art->validate();
+    if (this->collision)
+        this->collision->validate();
+    if (this->input)
+        this->input->validate();
+    if (this->physics)
+        this->physics->validate();
+    if (this->health)
+        this->health->validate();
+    if (this->score)
+        this->score->validate();
+    if (this->powerUp)
+        this->powerUp->validate();
+    if (this->ammo)
+        this->ammo->validate();
+}
+
+void Entity::invalidate() {
+    if (this->ai)
+        this->ai->invalidate();
+    if (this->art)
+        this->art->invalidate();
+    if (this->collision)
+        this->collision->invalidate();
+    if (this->input)
+        this->input->invalidate();
+    if (this->physics)
+        this->physics->invalidate();
+    if (this->health)
+        this->health->invalidate();
+    if (this->score)
+        this->score->invalidate();
+    if (this->powerUp)
+        this->powerUp->invalidate();
+    if (this->ammo)
+        this->ammo->invalidate();
 }

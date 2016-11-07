@@ -88,8 +88,11 @@ Level::Level(std::string filename, int windowW, int windowH) {
                 case 'b':
                     levelContents[i][j] = BENCH;
                     break;
-                case '1':
-                    levelContents[i][j] = S1;
+                case 'F':
+                    levelContents[i][j] = FADEINTEXT;
+                    break;
+                case 'N':
+                    levelContents[i][j] = NORMALTEXT;
                     break;
                 default:
                     levelContents[i][j] = NONE;
@@ -114,6 +117,12 @@ Level::Level(std::string filename, int windowW, int windowH) {
     this->contentHeight = height/*+(windowH/32)*/;
     this->contentWidth = width+(windowW/32);
 
+
+    while(!infile.eof()){
+        std::getline(infile,line);
+        this->stringList.push_back(line);
+    }
+
     infile.close();
 }
 
@@ -121,8 +130,14 @@ Level::~Level() {       // TODO: verify this is correct
     for (int i = 0; i < this->height/*+(windowH/32)*/; i++)
         delete[] levelContents[i];
     delete[] levelContents;
+
+    this->stringList.clear();
 }
 
 Tiles Level::getTile(int i, int j) {
     return this->levelContents[i][j];
+}
+
+std::vector<std::string> Level::getStringList() {
+    return this->stringList;
 }
