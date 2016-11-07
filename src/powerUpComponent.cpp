@@ -23,7 +23,7 @@ void PowerUpComponent::update(int dt) {
                     deactivateInfHealthPwrUp();
                     break;
                 case (int)TEX_PWRUP_AMMO:
-                    break;
+                    break; //One time thing for ammo, so no deactivation
                 case (int)TEX_PWRUP_BEER:
                     deactivateBeerPwrUp();
                     break;
