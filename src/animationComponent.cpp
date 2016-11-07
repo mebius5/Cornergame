@@ -30,7 +30,7 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
     if (this->entity->actionState == IDLE) {
 
         timecount += dt;
-        timecount %= 400;
+        timecount %= 500;
 
         // if moving, use a walking animation, else idle
         float velocity = sqrt(pow(this->entity->physics->xVelocity, 2) +

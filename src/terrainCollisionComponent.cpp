@@ -125,8 +125,6 @@ void TerrainCollisionComponent::collideGround(DynamicCollisionComponent* otherCo
         otherComp->rightBound = rightT;
     }
     this->boundY(otherComp, boundValue);
-    if (this->landCommand)
-        Component::commandList->push_back(this->landCommand);
 }
 
 void TerrainCollisionComponent::boundX(DynamicCollisionComponent* otherComp,

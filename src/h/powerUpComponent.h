@@ -12,8 +12,8 @@
 class PowerUpComponent : public Component {
 private:
     int pwrUpTimerArraySize;
-    int pwrUPTimerArray[4]; //Change the array size based on the number of PowerUpEnums
 public:
+    int pwrUPTimerArray[4]; //Change the array size based on the number of PowerUpEnums
     PowerUpComponent(Entity * owner);
     void update(int dt);
     void activatePowerUp(TextureEnum pwrUpType);
