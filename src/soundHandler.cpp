@@ -49,7 +49,7 @@ void SoundHandler::freeSfx() {
 }
 
 void SoundHandler::playBackgroundMusic(MusicEnum music) {
-    Mix_PlayMusic(this->musicMap[music], -1);
+    Mix_FadeInMusic(this->musicMap[music], -1, 10000);
 }
 
 void SoundHandler::stopBackgroundMusic() {
