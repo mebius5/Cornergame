@@ -52,6 +52,7 @@ public:
 class EnemyCollisionComponent : public DynamicCollisionComponent {
 public:
     EnemyCollisionComponent(Entity* entity);
+    Command* projCollisionCommand;
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onStaticCollision(StaticCollisionComponent* otherComp);
     void onBorderCollision();
