@@ -19,7 +19,7 @@ SDL_Rect* PowerUpArtComponent::getNextSrcRect(int dt) {
 	
 	entity->x = powerUp->entity->x;
 	entity->y = powerUp->entity->y;
-	if (powerUp->pwrUPTimerArray[index]>=0) {
+	if (powerUp->pwrUPTimerArray[index]!=-999) {
 		timecount += dt;
 		timecount %= 500;
         clip.x = (timecount / 125) * 32;
