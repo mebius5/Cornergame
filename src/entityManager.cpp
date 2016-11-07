@@ -311,6 +311,7 @@ void EntityManager::populateLevel(Level* level) {
             switch (level->getTile(i, j)) {
             case BRICK:
             case GRASS: {
+                Tiles type = level->getTile(i, j);
                 bool freeLeft = (j == 0 || (level->getTile(i, j-1) != BRICK && level->getTile(i, j-1) != GRASS));
                 bool freeRight;     // assigned value later
                 bool freeTop = (i == 0 || (level->getTile(i-1, j) != BRICK && level->getTile(i-1, j) != GRASS));
@@ -318,7 +319,7 @@ void EntityManager::populateLevel(Level* level) {
                 int numberHorizontal = 1;
                 int originalJ = j;
                 // create horizontal slabs, breaking at each intersection with other terrain rectangles.
-                while (j < (level->width-1) && (level->getTile(i, j+1) == BRICK || level->getTile(i, j+1) == GRASS)) {
+                while (j < (level->width-1) && level->getTile(i, j+1) == type) {
                     if (i > 0 && freeTop && (level->getTile(i-1, j+1) == BRICK || level->getTile(i-1, j+1) == GRASS))
                         break;
                     if (i > 0 && !freeTop && (level->getTile(i-1, j+1) != BRICK && level->getTile(i-1, j+1) != GRASS))
