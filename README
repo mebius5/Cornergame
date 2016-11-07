@@ -53,8 +53,11 @@ Grady
 - Added a new level
 
 Pratyush
-
-
+-Drew animations for different power ups
+-Added code to allow power up visuals to display while active
+-Added ability to rotate entities
+-Drew new projectile 
+-Adjusted physics values to make jumps and running feel better
 
 
 CONTROLS
