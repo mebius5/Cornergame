@@ -30,6 +30,7 @@ SRCFILES = \
 	physicsComponent.cpp \
 	physicsHandler.cpp \
 	playState.cpp \
+	powerUpArtComponent.cpp \
 	powerUpCollisionComponent.cpp \
 	powerUpComponent.cpp \
 	powerUpHandler.cpp \

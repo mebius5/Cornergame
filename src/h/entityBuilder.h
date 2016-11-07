@@ -57,6 +57,7 @@ public:
                                                      StateEnum nextState);
     Entity* createVictoryZone(int x, int y);
     Entity* createPowerUp(TextureEnum pwrUpType, int x, int y);
+    Entity* createPowerUpOverlay(TextureEnum pwrUpType, int x, int y, PowerUpComponent *powerUp, int index);
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y) ;
     Entity* createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
             bool freeTop, bool freeBot, bool freeRight, bool freeLeft);

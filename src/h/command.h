@@ -34,6 +34,15 @@ public:
     SpawnProjCommand(ProjEnum projType);
 };
 
+class SpawnPwrupOverlay : public Command {
+public:
+    TextureEnum pwrtype;
+    int x;
+    int y;
+    int ownerID;
+    SpawnPwrupOverlay(TextureEnum pwrtype);
+};
+
 class DespawnEntityCommand : public Command {
 public:
     int id;
