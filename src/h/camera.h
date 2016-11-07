@@ -5,11 +5,11 @@
 
 class Camera{
 private:
-    SDL_Renderer * renderer;
+    SDL_Renderer* renderer;
     std::vector<Command*>& commandList;
     std::vector<ArtComponent*>& componentList;
-    RespawnPowerUpsCommand * respawnPowerUpsCommand;
-    Command * rumbleCommand;
+    LoopLevelCommand* loopLevelCommand;
+    Command* rumbleCommand;
     int levelW;
     int levelH;
     bool previewOn;

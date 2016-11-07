@@ -14,6 +14,7 @@ private:
     std::unordered_map<int, Entity*> entityMap;
     EntityBuilder entityBuilder;
     std::queue<Entity*> deletionQueue;
+    int windowW;
     int numCleanable;                   // # of entities ready for deletion
 public:
     std::vector<AiComponent*> aiComponents;
@@ -25,14 +26,17 @@ public:
     std::vector<HealthComponent*> healthComponents;
     std::vector<ScoreComponent*> scoreComponents;
     std::vector<PowerUpComponent*> powerUpComponents;
-    std::vector<Entity *> heroEntities;
+    std::vector<Entity*> heroEntities;
+    std::vector<Entity*> respawnEntities;   // only contains dynamic entities
     std::vector<PowerUpCollisionComponent*> powerUpCollisionComponents;
 
-    EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList);
+    EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW);
     ~EntityManager();
 
     void addEntity(Entity* entity);     // add entity/components to map/vectors
-    void deleteEntity(int id);          // put entity on queue for deletion on
+    void initRespawns();                // note which entities can respawn (dynamic only)
+    Entity* hideEntity(int id);         // remove entity from lists, but don't delete
+    void deleteEntity(int id);          // put entity on queue for deletion on next round
     void cleanupEntities();             // delete entities when ready
     void clear();                       // delete all entities
 

@@ -40,9 +40,15 @@ public:
     DespawnEntityCommand(int id);
 };
 
-class RespawnPowerUpsCommand : public Command {
+class TempHideCommand : public Command {
 public:
-    RespawnPowerUpsCommand();
+    int id;
+    TempHideCommand(int id);
+};
+
+class LoopLevelCommand : public Command {
+public:
+    LoopLevelCommand();
 };
 
 class PreviewOffCommand: public Command {

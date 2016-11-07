@@ -16,6 +16,7 @@ public:
     Entity* entity;
     Component(Entity* entity);
     virtual ~Component() { };
+    void validate();
     void invalidate();
     bool isValid();
     static void setCommandList(std::vector<Command*>* commandListPtr);

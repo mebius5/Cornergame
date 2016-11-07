@@ -139,7 +139,7 @@ Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vecto
     enemy->collision = new EnemyCollisionComponent(enemy);
     enemy->art = new AnimationComponent(enemy, texture, 1);
     enemy->ai = new EnemyAiComponent(enemy, heroes);
-    enemy->health = new HealthComponent(enemy, 200, new DespawnEntityCommand(enemy->getId()));
+    enemy->health = new HealthComponent(enemy, 200, new TempHideCommand(enemy->getId()));
     enemy->physics = new PhysicsComponent(enemy);
     enemy->physics->deceleration = 0.0f;
     enemy->physics->maxXVelocity = 0.1f;
