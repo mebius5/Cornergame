@@ -12,7 +12,7 @@
 
 class ArtComponent : public Component {
 public:
-    const static int MAXLAYER = 2;
+    const static int MAXLAYER = 3;
     int layer;
     bool movesWithCamera;
     int offsetX;
@@ -47,6 +47,19 @@ private:
     DynamicCollisionComponent* collisionComp;
 public:
     AnimationComponent(Entity* entity, Texture texture, int layer);
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+};
+
+class PowerUpArtComponent : public ArtComponent {
+private:
+    SDL_Texture* texture;
+    PowerUpComponent * powerUp;
+    int index;
+    int timecount;
+    SDL_Rect clip;
+public:
+    PowerUpArtComponent(Entity* entity, Texture texture, int layer, PowerUpComponent *powerUp, int index);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };

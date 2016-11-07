@@ -32,6 +32,7 @@ void PowerUpComponent::update(int dt) {
             }
         }
     }
+
 }
 
 void PowerUpComponent::activatePowerUp(TextureEnum pwrUpType) {

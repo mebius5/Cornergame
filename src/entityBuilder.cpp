@@ -3,7 +3,7 @@
 EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
-    textureMap(20),
+    textureMap(30),
     terrainTexMap(2, std::vector<Texture>(256)),
     fontMap(1, std::vector<TTF_Font*>(128)) {
 }
@@ -117,12 +117,11 @@ void EntityBuilder::freeFonts() {
 Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
     Texture texture = this->textureMap[texType];
     Entity* hero = new Entity(this->nextId++, x, y, 32, 64, 64, 64);
-
     PlaySoundCommand* command = NULL;
     if (sfxType != SFX_NONE)
         command = new PlaySoundCommand(sfxType);
     hero->collision = new HeroCollisionComponent(hero, command);
-    hero->art = new AnimationComponent(hero, texture, 1);
+    hero->art = new AnimationComponent(hero, texture, 2);
     hero->input = new HeroInputComponent(hero, wasd, new SpawnProjCommand(PROJ_HERO));
     hero->score = new ScoreComponent(hero);
     hero->health = new HealthComponent(hero, 1000, new SwitchStateCommand(STATE_RESULTS));
@@ -252,6 +251,17 @@ Entity* EntityBuilder::createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, in
     Entity *entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
     entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
     entity->collision = new PowerUpCollisionComponent(entity, pwrUpType, pwrSound);
+    return entity;
+}
+
+Entity* EntityBuilder::createPowerUpOverlay(TextureEnum pwrUpType, int x, int y, PowerUpComponent *powerUp, int index) {
+    Texture texture = this->textureMap[pwrUpType];
+    Entity *entity = new Entity(this->nextId++, x, y, 32, 64, 64, 64);
+    if (pwrUpType == TEX_PWRUP_INFJUMP_OVERLAY) {
+        entity->art = new PowerUpArtComponent(entity, texture, 1, powerUp, index);
+    } else {
+        entity->art = new PowerUpArtComponent(entity, texture, 3, powerUp, index);
+    }
     return entity;
 }
 

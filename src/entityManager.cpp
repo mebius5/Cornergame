@@ -13,9 +13,12 @@ EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmd
     this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
     this->entityBuilder.loadTexture(TEX_BACKGROUND, "resources/jhu-logo.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH, "resources/star.png");
+    this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH_OVERLAY, "resources/starOverlay.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
+    this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP_OVERLAY, "resources/wingsOverlay.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_AMMO, "resources/paper.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_BEER, "resources/beer.png");
+    this->entityBuilder.loadTexture(TEX_PWRUP_BEER_OVERLAY, "resources/beerOverlay.png");
     this->entityBuilder.loadTexture(TEX_TREE1, "resources/greentree1.png");
     this->entityBuilder.loadTexture(TEX_TREE2, "resources/greentree2.png");
     this->entityBuilder.loadTexture(TEX_BENCH, "resources/bench.png");
@@ -143,6 +146,12 @@ Entity* EntityManager::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
     Entity* entity = this->entityBuilder.createHero(texType, x, y, sfxType, wasd);
     this->addEntity(entity);
     this->heroEntities.push_back(entity);
+    Entity *pwr1 = this->entityBuilder.createPowerUpOverlay(TEX_PWRUP_INFJUMP_OVERLAY, x, y, entity->powerUp, 0);
+    this->addEntity(pwr1);
+    Entity *pwr2 = this->entityBuilder.createPowerUpOverlay(TEX_PWRUP_INFHEALTH_OVERLAY, x, y, entity->powerUp, 1);
+    this->addEntity(pwr2);
+    Entity *pwr4 = this->entityBuilder.createPowerUpOverlay(TEX_PWRUP_BEER_OVERLAY, x, y, entity->powerUp, 3);
+    this->addEntity(pwr4);
     return entity;
 }
 
