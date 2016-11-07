@@ -16,15 +16,15 @@ void PowerUpComponent::update(int dt) {
 
         if(pwrUPTimerArray[i]!=-999 && pwrUPTimerArray[i]<=0){
             switch (i){
-                case 0:
+                case (int)TEX_PWRUP_INFJUMP:
                     deactivateInfJumpPwrUp();
                     break;
-                case 1:
+                case (int)TEX_PWRUP_INFHEALTH:
                     deactivateInfHealthPwrUp();
                     break;
-                case 2:
-                    break;
-                case 3:
+                case (int)TEX_PWRUP_AMMO:
+                    break; //One time thing for ammo, so no deactivation
+                case (int)TEX_PWRUP_BEER:
                     deactivateBeerPwrUp();
                     break;
                 default:
@@ -61,11 +61,11 @@ void PowerUpComponent::activateInfJumpPwrUp() {
     int timeLimit = 3500;
     if(!entity->physics->isInfiniteJumpOn()){
         entity->physics->toggleInfiniteJumps();
-        this->pwrUPTimerArray[0]=timeLimit;
+        this->pwrUPTimerArray[(int)TEX_PWRUP_INFJUMP]=timeLimit;
     }else{
         //If activated from power up and not from cheat
-        if(this->pwrUPTimerArray[0]!=-999){
-            this->pwrUPTimerArray[0]=timeLimit;
+        if(this->pwrUPTimerArray[(int)TEX_PWRUP_INFJUMP]!=-999){
+            this->pwrUPTimerArray[(int)TEX_PWRUP_INFJUMP]=timeLimit;
         }
     }
 }
@@ -73,7 +73,7 @@ void PowerUpComponent::activateInfJumpPwrUp() {
 void PowerUpComponent::deactivateInfJumpPwrUp() {
     if(entity->physics->isInfiniteJumpOn()){
         entity->physics->toggleInfiniteJumps();
-        this->pwrUPTimerArray[0]=-999;
+        this->pwrUPTimerArray[(int)TEX_PWRUP_INFJUMP]=-999;
     }
 }
 
@@ -81,12 +81,12 @@ void PowerUpComponent::activateInfHealthPwrUp() {
     int timeLimit = 5000;
     if(!entity->health->isIsInvincible()){
         entity->health->toggleInvincibility();
-        this->pwrUPTimerArray[1]=timeLimit;
+        this->pwrUPTimerArray[(int)TEX_PWRUP_INFHEALTH]=timeLimit;
     }else{ //If is already turned on
         //If activated from power up and not from cheat
-        if(this->pwrUPTimerArray[0]!=-999){
+        if(this->pwrUPTimerArray[(int)TEX_PWRUP_INFHEALTH]!=-999){
 
-            this->pwrUPTimerArray[0]=timeLimit;
+            this->pwrUPTimerArray[(int)TEX_PWRUP_INFHEALTH]=timeLimit;
         }
     }
 }
@@ -94,7 +94,7 @@ void PowerUpComponent::activateInfHealthPwrUp() {
 void PowerUpComponent::deactivateInfHealthPwrUp() {
     if(entity->health->isIsInvincible()){
         entity->health->toggleInvincibility();
-        this->pwrUPTimerArray[1]=-999;
+        this->pwrUPTimerArray[(int)TEX_PWRUP_INFHEALTH]=-999;
     }
 }
 
@@ -107,11 +107,11 @@ void PowerUpComponent::activateBeerPwrUp() {
 
     if(HeroInputComponent * hic = dynamic_cast<HeroInputComponent *>(entity->input)){
         hic->invertControl();
-        this->pwrUPTimerArray[3]=timeLimit;
+        this->pwrUPTimerArray[(int)TEX_PWRUP_BEER]=timeLimit;
     }else{ //If is already turned on
         //If activated from power up and not from cheat
-        if(this->pwrUPTimerArray[3]!=-999){
-            this->pwrUPTimerArray[3]=timeLimit;
+        if(this->pwrUPTimerArray[(int)TEX_PWRUP_BEER]!=-999){
+            this->pwrUPTimerArray[(int)TEX_PWRUP_BEER]=timeLimit;
         }
     }
 }
@@ -119,6 +119,6 @@ void PowerUpComponent::activateBeerPwrUp() {
 void PowerUpComponent::deactivateBeerPwrUp() {
     if(HeroInputComponent * hic = dynamic_cast<HeroInputComponent *>(entity->input)){
         hic->invertControl();
-        this->pwrUPTimerArray[3]=-999;
+        this->pwrUPTimerArray[(int)TEX_PWRUP_BEER]=-999;
     }
 }
