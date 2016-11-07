@@ -15,6 +15,11 @@ public:
     SfxEnum sfxType;
     PlaySoundCommand(SfxEnum sfxType);
 };
+class StopSoundCommand : public Command {
+public:
+    SfxEnum sfxType;
+    StopSoundCommand(SfxEnum sfxType);
+};
 
 /* CONTROL COMMANDS */
 class SwitchStateCommand : public Command {

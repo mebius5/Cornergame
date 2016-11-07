@@ -17,6 +17,8 @@ public:
 
 class HeroInputComponent: public InputComponent {
 private:
+    Command* runCommand;
+    Command* stopCommand;
     SDL_Keycode upKey;
     SDL_Keycode downKey;
     SDL_Keycode leftKey;
