@@ -172,7 +172,6 @@ QUIRKS
 
 TODOS
 verify deletion was implemented properly w/ vectors!
-Move handlers to namespaces?
 revamp terrain -> fewer rectangles!
 change collision to only check static objects in certain bins?
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
@@ -181,4 +180,5 @@ Change allocation to happen in groups?
 Change renderCopy() of static stuff to be more efficient: group static textures
 CommandBus?
 camera warp -> change level to start at B, one segment with no powerups/enemies
+-> shift camera based on both heroes simultaneously
 RespawnEntity class? (take out initialX, initialY from everyone)
