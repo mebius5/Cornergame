@@ -6,6 +6,7 @@ SoundHandler::SoundHandler(std::vector<Command*>& cmdList) :
     musicMap(5),
     timeElapsed(150),
     lastChannelUsedForSfx(0) {
+        Mix_VolumeMusic(MIX_MAX_VOLUME/5);
 }
 
 SoundHandler::~SoundHandler() {
