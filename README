@@ -16,8 +16,7 @@ make
 Assignment 8 Task Writeups
 
 General Notes:
-- As of now, there is only two working level.
-  Level three is in here in preparation for next week.
+- As of now, there are 4 working levels and one tutorial
 
 POWERUPS:
 - Yellow square is non-weapon ammo/gum balls (3.5 sec time limit)
@@ -40,6 +39,7 @@ Grady
 - Added beer power up to invert controls
 - Added a tutorial level that can be accessed in the menu.
 - Added string capability to level editor
+- Added a new level
 
 Pratyush
 

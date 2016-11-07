@@ -247,11 +247,11 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {        // not using map
     return zone;
 }
 
-Entity* EntityBuilder::createPowerUp(TextureEnum pwrUpType, int x, int y) {
+Entity* EntityBuilder::createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y) {
     Texture texture = this->textureMap[pwrUpType];
     Entity *entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
     entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
-    entity->collision = new PowerUpCollisionComponent(entity, pwrUpType);
+    entity->collision = new PowerUpCollisionComponent(entity, pwrUpType, pwrSound);
     return entity;
 }
 

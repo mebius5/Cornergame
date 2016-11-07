@@ -6,6 +6,7 @@ SoundHandler::SoundHandler(std::vector<Command*>& cmdList) :
     musicMap(5),
     timeElapsed(150),
     lastChannelUsedForSfx(0) {
+        Mix_VolumeMusic(MIX_MAX_VOLUME/5);
 }
 
 SoundHandler::~SoundHandler() {
@@ -49,7 +50,7 @@ void SoundHandler::freeSfx() {
 }
 
 void SoundHandler::playBackgroundMusic(MusicEnum music) {
-    Mix_PlayMusic(this->musicMap[music], -1);
+    Mix_FadeInMusic(this->musicMap[music], -1, 10000);
 }
 
 void SoundHandler::stopBackgroundMusic() {

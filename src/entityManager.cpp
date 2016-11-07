@@ -224,8 +224,8 @@ Entity* EntityManager::createVictoryZone(int x, int y) {
     return entity;
 }
 
-Entity* EntityManager::createPowerUp(TextureEnum pwrUpType, int x, int y) {
-    Entity * entity = this->entityBuilder.createPowerUp(pwrUpType, x, y);
+Entity* EntityManager::createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y) {
+    Entity * entity = this->entityBuilder.createPowerUp(pwrUpType, pwrSound, x, y);
     this->addEntity(entity);
     return entity;
 }
@@ -358,7 +358,7 @@ void EntityManager::populateLevel(Level* level) {
                 break;
             }
             case PU_AMMO: {
-                createPowerUp(TEX_PWRUP_AMMO, j*32, i*32);
+                createPowerUp(TEX_PWRUP_AMMO, SFX_AMMO, j*32, i*32);
                 break;
            }
             case TREE1:{
@@ -374,15 +374,15 @@ void EntityManager::populateLevel(Level* level) {
                 break;
             }
             case PU_JUMP:{
-                createPowerUp(TEX_PWRUP_INFJUMP, j*32, i*32);
+                createPowerUp(TEX_PWRUP_INFJUMP, SFX_WOOSH, j*32, i*32);
                 break;
             }
             case PU_HEALTH:{
-                createPowerUp(TEX_PWRUP_INFHEALTH, j*32, i*32);
+                createPowerUp(TEX_PWRUP_INFHEALTH, SFX_ARMOR, j*32, i*32);
                 break;
             }
             case PU_BEER:{
-                createPowerUp(TEX_PWRUP_BEER, j*32, i*32);
+                createPowerUp(TEX_PWRUP_BEER, SFX_DRINK, j*32, i*32);
                 break;
             }
             case FADEINTEXT:{
