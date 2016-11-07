@@ -78,7 +78,7 @@ void PowerUpComponent::deactivateInfJumpPwrUp() {
 }
 
 void PowerUpComponent::activateInfHealthPwrUp() {
-    int timeLimit = 3500;
+    int timeLimit = 5000;
     if(!entity->health->isIsInvincible()){
         entity->health->toggleInvincibility();
         this->pwrUPTimerArray[1]=timeLimit;

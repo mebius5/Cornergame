@@ -11,7 +11,7 @@ GameManager::GameManager() :
     width(1024),
     height(704),
     currentLevel(1),
-    maxLevel(2) {
+    maxLevel(4) {
     srand(time(NULL));
 }
 
