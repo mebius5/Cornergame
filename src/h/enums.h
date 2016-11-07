@@ -16,14 +16,17 @@ enum SfxEnum { SFX_ALERT, SFX_AMMO, SFX_ARMOR, SFX_DRINK, SFX_JUMP,
 
 enum MusicEnum { MUSIC_START, MUSIC_MENU, MUSIC_PLAY, MUSIC_HIGHSCORE };
 
-enum TextureEnum { TEX_HERO, TEX_HERO2, TEX_ENEMY, TEX_BACKGROUND, TEX_HEALTHBAR,
-                   TEX_AMMOBAR, TEX_VICTORY, TEX_PROJECTILE, TEX_NONE,
-                    TEX_TREE1, TEX_TREE2, TEX_BENCH,
+enum TextureEnum {
+    //Update array size in PowerUpComponent
+    //List the powerups in order of its corresponding position in the array
+    TEX_PWRUP_INFJUMP=0, TEX_PWRUP_INFHEALTH=1, TEX_PWRUP_AMMO=2,
+    TEX_PWRUP_BEER=3,
 
-                //Update array size in PowerUpComponent
-                //List the powerups in order of its corresponding position in the array
-                TEX_PWRUP_INFJUMP, TEX_PWRUP_INFHEALTH, TEX_PWRUP_AMMO,
-                TEX_PWRUP_BEER,
+    //MAKE SURE TO LIST POWER UPS BEFORE TEXTURES
+    TEX_HERO, TEX_HERO2, TEX_ENEMY, TEX_BACKGROUND, TEX_HEALTHBAR,
+                   TEX_AMMOBAR, TEX_VICTORY, TEX_PROJECTILE, TEX_NONE,
+                    TEX_TREE1, TEX_TREE2, TEX_BENCH
+
 };
 
 enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_NONE };
