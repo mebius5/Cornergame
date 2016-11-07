@@ -89,7 +89,7 @@ void EntityBuilder::loadAmmoBar(int width, int height) {
 }
 
 void EntityBuilder::loadFont(FontEnum fontType, int fontSize) {
-    TTF_Font* font = TTF_OpenFont("resources/CaesarDressing-Regular.ttf", fontSize);
+    TTF_Font* font = TTF_OpenFont("resources/varsity_regular.ttf", fontSize);
     if (!font)
        std::cerr << "Load font failed! TTF Error: " << TTF_GetError() << std::endl;
     this->fontMap[fontType][fontSize] = font;   // TODO: make mapping from enum to filename
