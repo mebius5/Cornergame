@@ -50,6 +50,11 @@ StateEnum StartState::run() {
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
+
+        if(nextState==STATE_RESULTS){
+            return STATE_MENU;
+        }
+
         if (nextState != STATE_NONE)
             return nextState;
 
