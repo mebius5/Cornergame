@@ -16,17 +16,29 @@ make
 Assignment 8 Task Writeups
 
 General Notes:
-- As of now, there are 4 working levels and one tutorial
+- As of now, there are 4 working levels and one tutorial -> level 4 is the
+    new level that we are submitting as our "level 3"
 
 POWERUPS:
 - Yellow square is non-weapon ammo/gum balls (3.5 sec time limit)
 - Star is infinite health
 - Wings is infinite jump
 - Beer inverts your control
+- these powerups have new animations that overlay on the character that picks
+    them up.
 
 Akshay
 
 Andrew
+- Fixed bugs with collisions and getting stuck in the borders/terrain
+- Fixed segfault issues with projectiles and looping enemies
+- Updated camera and level looping to never show things being spawned in the
+    middle of the screen (always spawning offscreen) -> added respawning enemies
+- Created level 4
+- Updated all level files to work with new camera mechanics
+- fixed animations for damage and sliding
+- updated physics mechanics during border and enemy collisions, and tuned
+    physics parameters.
 
 Grady
 - Changed the structure of power up components and collision component
@@ -175,10 +187,10 @@ verify deletion was implemented properly w/ vectors!
 revamp terrain -> fewer rectangles!
 change collision to only check static objects in certain bins?
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
-Fix input lag on wasd player (still there?)
-Change allocation to happen in groups?
 Change renderCopy() of static stuff to be more efficient: group static textures
 CommandBus?
 camera warp -> change level to start at B, one segment with no powerups/enemies
 -> shift camera based on both heroes simultaneously
 RespawnEntity class? (take out initialX, initialY from everyone)
+Make sure sound uses commands properly
+Segfault with fonts?
