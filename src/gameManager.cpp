@@ -11,7 +11,7 @@ GameManager::GameManager() :
     width(1024),
     height(704),
     currentLevel(1),
-    maxLevel(2) {
+    maxLevel(4) {
     srand(time(NULL));
 }
 
@@ -144,12 +144,12 @@ void GameManager::run() {
     soundHandler.loadSfx("resources/armor.wav", SFX_ARMOR);
     soundHandler.loadSfx("resources/drink.wav", SFX_DRINK);
     soundHandler.loadSfx("resources/jump.wav", SFX_JUMP);
-    soundHandler.loadSfx("resources/land.mp3", SFX_LAND);
-    soundHandler.loadSfx("resources/ouch_enemy.mp3", SFX_ENEMY);
-    soundHandler.loadSfx("resources/running.mp3", SFX_RUNNING);
-    soundHandler.loadSfx("resources/scrape.mp3", SFX_SCRAPE);
-    soundHandler.loadSfx("resources/woosh.mp3", SFX_WOOSH);
-    soundHandler.loadSfx("resources/rumble.mp3", SFX_RUMBLE);
+    soundHandler.loadSfx("resources/land.aiff", SFX_LAND);
+    soundHandler.loadSfx("resources/ouch_enemy.aiff", SFX_ENEMY);
+    soundHandler.loadSfx("resources/rumble.aiff", SFX_RUMBLE);
+    soundHandler.loadSfx("resources/running.aiff", SFX_RUNNING);
+    soundHandler.loadSfx("resources/scrape.aiff", SFX_SCRAPE);
+    soundHandler.loadSfx("resources/woosh.aiff", SFX_WOOSH);
 
     // State loop
     State* currentState = &startState;
