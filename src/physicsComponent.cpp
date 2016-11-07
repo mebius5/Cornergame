@@ -2,6 +2,7 @@
 
 PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
+    jumpCommand(new PlaySoundCommand(SFX_JUMP)),
     xAccel(0.0f),
     yAccel(0.0f),
     accelAmount(.001f),
@@ -137,6 +138,8 @@ void PhysicsComponent::jump() {
             this->xVelocity = .25f * this->jumpVelocity;
         else if (this->collisionComp->onRightWall && !this->collisionComp->onGround)
             this->xVelocity = -.25f * this->jumpVelocity;
+        if (this->jumpCommand)
+            Component::commandList->push_back(this->jumpCommand);
     }
 }
 
