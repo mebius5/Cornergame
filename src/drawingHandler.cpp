@@ -58,10 +58,10 @@ bool DrawingHandler::previewLevel(int dt) {
     shiftCount+=dt;
 
     if (shiftCount >= 2) {
-        if (this->camera.minX > this->windowW) {
-            camera.shift(-(shiftCount/4+1), 0);
-        } else if (camera.minY > 0) {
+        if (camera.minY > 0) {
             camera.shift(0, -(shiftCount/4+1));
+        } else if (this->camera.minX > this->windowW) {
+            camera.shift(-(shiftCount/4+1), 0);
         } else {
             return false;
         }

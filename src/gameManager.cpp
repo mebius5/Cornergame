@@ -163,12 +163,6 @@ void GameManager::run() {
         switch (nextState) {
             case STATE_PLAY:
                 currentState = &playState;
-                /**
-                if(this->currentLevel>maxLevel){
-                    currentState = & menuState;
-                    this->currentLevel = 1;
-                }
-                 **/
                 break;
             case STATE_LEVEL_TRANSIT:
                 currentState = & levelTransitState;
