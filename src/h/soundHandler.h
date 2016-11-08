@@ -9,13 +9,13 @@
 
 class SoundHandler {
 private:
+    static const int NCHANS = 20;
     std::vector<Command*>& commandList;
     std::vector<Mix_Chunk*> sfxMap;
     std::vector<Mix_Music*> musicMap;
-    int timeElapsed;               // time passed since a sound was played
-    int lastChannelUsedForSfx;
+    std::vector<int> timeElapsed;        // time passed since a sound was played
     void playSfx(SfxEnum sfxType);
-    int stopSfx(SfxEnum sfxType);
+    void stopSfx(int channel);           // note that channel number = sfxType
 public:
     SoundHandler(std::vector<Command*>& commandList);
     ~SoundHandler();

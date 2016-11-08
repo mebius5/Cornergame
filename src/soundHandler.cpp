@@ -2,17 +2,16 @@
 
 SoundHandler::SoundHandler(std::vector<Command*>& cmdList) :
     commandList(cmdList),
-    sfxMap(20),             // initialized to 5 positions. Expand if needed!
+    sfxMap(NCHANS),              // Expand if needed!
     musicMap(5),
-    timeElapsed(150),
-    lastChannelUsedForSfx(0) {
-        Mix_VolumeMusic(MIX_MAX_VOLUME / 10);
-        Mix_AllocateChannels(20);
+    timeElapsed(NCHANS, 150) {   // Expand this too!!
+    Mix_VolumeMusic(MIX_MAX_VOLUME / 10);
+    Mix_AllocateChannels(NCHANS);
 }
 
 SoundHandler::~SoundHandler() {
-    if (Mix_Playing(this->lastChannelUsedForSfx))
-        Mix_HaltChannel(this->lastChannelUsedForSfx);
+    for (int i = 0; i < NCHANS; i++)
+        this->stopSfx(i);
     this->stopBackgroundMusic();
     this->freeMusic();
     this->freeSfx();
@@ -59,43 +58,43 @@ void SoundHandler::stopBackgroundMusic() {
 }
 
 void SoundHandler::playSfx(SfxEnum sfxType) {
-    if (this->timeElapsed < 150)      // Don't play too often!
-        return;     //TODO: FIX THIS
-    this->timeElapsed = 0;
+    if (this->timeElapsed[sfxType] < 150)      // Don't play too often!
+        return;
+    this->timeElapsed[sfxType] = 0;
 
-    int channel = this->stopSfx(sfxType);
+    this->stopSfx(sfxType);
     int num_loops = 0;
     if (sfxType == SFX_RUNNING || sfxType == SFX_SCRAPE)
         num_loops = -1;
-    this->lastChannelUsedForSfx = Mix_PlayChannel(channel, this->sfxMap[sfxType], num_loops);
-    if (this->lastChannelUsedForSfx == -1) {
+    int ret = Mix_PlayChannel(sfxType, this->sfxMap[sfxType], num_loops);
+    if (ret == -1) {
         std::cerr << "Mix_PlayChannel: " << Mix_GetError() << std::endl;
         // may be critical error, or maybe just no channels were free.
         // you could allocated another channel in that case...
     }
 }
 
-int SoundHandler::stopSfx(SfxEnum sfxType) {
-    int channel = (int) sfxType;
+void SoundHandler::stopSfx(int channel) {
     if (Mix_Playing(channel))
         Mix_HaltChannel(channel);
-    return channel;
 }
 
 void SoundHandler::handleSfx(int dt) {
-    this->timeElapsed += dt;
+    for (int i = 0; i < NCHANS; i++)
+        this->timeElapsed[i] += dt;
+
     std::vector<Command*>::iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
         if (PlaySoundCommand* sCmd = dynamic_cast<PlaySoundCommand*>(*it)) {
             this->playSfx(sCmd->sfxType);
-            *it = this->commandList.back();
-            this->commandList.pop_back();
         } else if (StopSoundCommand* sCmd = dynamic_cast<StopSoundCommand*>(*it)) {
             this->stopSfx(sCmd->sfxType);
-            *it = this->commandList.back();
-            this->commandList.pop_back();
         } else {
             ++it;
+            continue;
         }
+
+        *it = this->commandList.back();
+        this->commandList.pop_back();
     }
 }

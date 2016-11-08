@@ -81,12 +81,12 @@ StateEnum PlayState::run() {
         this->inputHandler.handleEvents(dt);
         this->physicsHandler.update(dt);
         this->collisionHandler.handleCollisions();
-        this->soundHandler.handleSfx(dt);
         this->scoreHandler.handleScore(dt);
         this->drawingHandler.checkCameraShakes();
         this->powerUpHandler.update(dt);
         this->drawingHandler.shift(dt);
         this->drawingHandler.draw(dt);
+        this->soundHandler.handleSfx(dt);
         this->entityManager.handleSpawns();
         this->entityManager.cleanupEntities();
 
