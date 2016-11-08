@@ -96,7 +96,7 @@ void Camera::shift(int dx, int dy) {
     maxX += dx;
     maxY += dy;
 
-    if (!previewOn && minX >= levelW) {
+    if (!previewOn && minX >= levelW) {     // perform level loop
         std::vector<ArtComponent*>::iterator it;
         for (it = this->componentList.begin(); it != this->componentList.end(); ) {
             if (!(*it)->isValid()) {        // remove invalid components
@@ -105,8 +105,9 @@ void Camera::shift(int dx, int dy) {
                 continue;
             }
 
-            if (dynamic_cast<DynamicCollisionComponent*>((*it)->entity->collision)
-                    && (*it)->entity->x >= levelW) {
+            if (dynamic_cast<PowerUpArtComponent*>(*it) // shift dynamic entities & overlays
+                    || (dynamic_cast<DynamicCollisionComponent*>((*it)->entity->collision)
+                    && (*it)->entity->x + (*it)->entity->width >= levelW)) {
                 (*it)->entity->x = (*it)->entity->x - levelW;
             }
             ++it;

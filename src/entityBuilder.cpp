@@ -134,7 +134,7 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
 
 Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes) {
     Texture texture = this->textureMap[texType];
-    Entity* enemy = new Entity(this->nextId++, x, y, 48, 64, 64, 64);
+    Entity* enemy = new Entity(this->nextId++, x, y, 56, 64, 64, 64);
     enemy->collision = new EnemyCollisionComponent(enemy);
     enemy->art = new AnimationComponent(enemy, texture, 1);
     enemy->ai = new EnemyAiComponent(enemy, heroes);
@@ -256,12 +256,9 @@ Entity* EntityBuilder::createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, in
 
 Entity* EntityBuilder::createPowerUpOverlay(TextureEnum pwrUpType, int x, int y, PowerUpComponent *powerUp, int index) {
     Texture texture = this->textureMap[pwrUpType];
-    Entity *entity = new Entity(this->nextId++, x, y, 32, 64, 64, 64);
-    if (pwrUpType == TEX_PWRUP_INFJUMP_OVERLAY) {
-        entity->art = new PowerUpArtComponent(entity, texture, 1, powerUp, index);
-    } else {
-        entity->art = new PowerUpArtComponent(entity, texture, 3, powerUp, index);
-    }
+    Entity* entity = new Entity(this->nextId++, x, y, 32, 64, 64, 64);
+    int layer = (pwrUpType == TEX_PWRUP_INFJUMP_OVERLAY ? 1 : 3);
+    entity->art = new PowerUpArtComponent(entity, texture, layer, powerUp, index);
     return entity;
 }
 

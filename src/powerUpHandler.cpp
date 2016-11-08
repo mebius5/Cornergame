@@ -1,9 +1,7 @@
+#include "powerUpHandler.h"
 
-#include <powerUpHandler.h>
-
-PowerUpHandler::PowerUpHandler(std::vector < PowerUpComponent * > &componentList):
-    componentList(componentList)
-{
+PowerUpHandler::PowerUpHandler(std::vector<PowerUpComponent*>& componentList):
+    componentList(componentList) {
 }
 
 void PowerUpHandler::update(int dt) {

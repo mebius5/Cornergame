@@ -7,7 +7,6 @@ Andrew Zhu azhu8@jhu.edu
 Grady Xiao gxiao2@jhu.edu
 Pratyush Trivedi ptrived8@jhu.edu
 
-
 To compile and run, type the following:
 cd src/
 make
@@ -41,15 +40,7 @@ Akshay
 - Updated the font
 
 Andrew
-- Fixed bugs with collisions and getting stuck in the borders/terrain
-- Fixed segfault issues with projectiles and looping enemies
-- Updated camera and level looping to never show things being spawned in the
-    middle of the screen (always spawning offscreen) -> added respawning enemies
-- Created level 4
-- Updated all level files to work with new camera mechanics
-- fixed animations for damage and sliding
-- updated physics mechanics during border and enemy collisions, and tuned
-    physics parameters.
+- for beta: fixed issue with powerup overlay disappearing
 
 Grady
 - Changed the structure of power up components and collision component
@@ -68,7 +59,7 @@ Pratyush
 -Drew animations for different power ups
 -Added code to allow power up visuals to display while active
 -Added ability to rotate entities
--Drew new projectile 
+-Drew new projectile
 -Adjusted physics values to make jumps and running feel better
 
 
@@ -208,3 +199,10 @@ camera warp -> change level to start at B, one segment with no powerups/enemies
 RespawnEntity class? (take out initialX, initialY from everyone)
 Make sure sound uses commands properly
 Segfault with fonts?
+Tuning of camera speed/character speed
+Overlay Animation stuff not always working
+Sounds not always working
+Scrolling lag
+level tile usage (dirt vs brick)
+GAME NAME - STOP PUNTING
+revamp layers -> enum/drawingHandler has vector<vector<>>
