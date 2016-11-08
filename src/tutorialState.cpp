@@ -94,5 +94,6 @@ void TutorialState::cleanup(StateEnum) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
+    this->soundHandler.stopAllSfx();
     this->drawingHandler.resetCamera(0, 0, windowW,windowH);
 }

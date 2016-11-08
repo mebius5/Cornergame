@@ -25,6 +25,7 @@ public:
     void freeSfx();
     void playBackgroundMusic(MusicEnum musicType);
     void stopBackgroundMusic();
+    void stopAllSfx();
     void handleSfx(int dt);
 };
 

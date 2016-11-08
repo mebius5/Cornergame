@@ -106,5 +106,6 @@ void PlayState::cleanup(StateEnum nextState) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
+    this->soundHandler.stopAllSfx();
     this->drawingHandler.resetCamera(0, 0, windowW,windowH);
 }

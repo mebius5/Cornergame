@@ -10,8 +10,7 @@ SoundHandler::SoundHandler(std::vector<Command*>& cmdList) :
 }
 
 SoundHandler::~SoundHandler() {
-    for (int i = 0; i < NCHANS; i++)
-        this->stopSfx(i);
+    this->stopAllSfx();
     this->stopBackgroundMusic();
     this->freeMusic();
     this->freeSfx();
@@ -77,6 +76,11 @@ void SoundHandler::playSfx(SfxEnum sfxType) {
 void SoundHandler::stopSfx(int channel) {
     if (Mix_Playing(channel))
         Mix_HaltChannel(channel);
+}
+
+void SoundHandler::stopAllSfx() {
+    for (int i = 0; i < NCHANS; i++)
+        this->stopSfx(i);
 }
 
 void SoundHandler::handleSfx(int dt) {

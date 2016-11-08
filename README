@@ -197,16 +197,15 @@ CommandBus/ComponentList?
 camera warp -> change level to start at B, one segment with no powerups/enemies
 -> shift camera based on both heroes simultaneously
 RespawnEntity class? (take out initialX, initialY from everyone)
-Make sure sound uses commands properly
 Segfault with fonts?
 Tuning of camera speed/character speed
-Sounds: create a method to stop all sfx (similar to stopBackgroundMusic)
 Sounds: handle stop sounds before start sounds?
 Scrolling lag
 level tile usage (dirt vs brick)
 GAME NAME - STOP PUNTING
 revamp layers -> enum/drawingHandler has vector<vector<>>
 change powerup enum to be separate?
-powerups lagging behind player?
-Use State inheritance + begin() method instead of switch case
-transition to std::for_each + lamdbas where possible
+powerup overlays lagging behind player?
+Use State inheritance + begin() method instead of switch case in GameManager
+transition to std::for_each + lamdbas where useful
+verify animation w/ sliding works properly
