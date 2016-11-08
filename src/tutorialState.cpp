@@ -83,11 +83,8 @@ StateEnum TutorialState::run() {
         this->entityManager.cleanupEntities();
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
-        if (nextState == STATE_RESULTS){
-            return STATE_MENU;
-        }
         if (nextState != STATE_NONE)
-            return nextState;
+            break;
     }
 
     return STATE_MENU;

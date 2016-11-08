@@ -1,4 +1,3 @@
-#include <powerUpHandler.h>
 #include "gameManager.h"
 
 /* gameManager.cpp
@@ -165,9 +164,9 @@ void GameManager::run() {
                 currentState = &playState;
                 break;
             case STATE_LEVEL_TRANSIT:
-                currentState = & levelTransitState;
-                if(this->currentLevel>maxLevel){
-                    currentState = & menuState;
+                currentState = &levelTransitState;
+                if (this->currentLevel > maxLevel) {
+                    currentState = &menuState;
                     this->currentLevel = 1;
                 }
                 break;

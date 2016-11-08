@@ -200,9 +200,10 @@ RespawnEntity class? (take out initialX, initialY from everyone)
 Make sure sound uses commands properly
 Segfault with fonts?
 Tuning of camera speed/character speed
-Overlay Animation stuff not always working
 Sounds not always working
 Scrolling lag
 level tile usage (dirt vs brick)
 GAME NAME - STOP PUNTING
 revamp layers -> enum/drawingHandler has vector<vector<>>
+change powerup enum to be separate?
+powerups lagging behind player?

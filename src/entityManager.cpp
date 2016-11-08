@@ -1,6 +1,4 @@
 #include "entityManager.h"
-#include <math.h>
-#include <iostream>
 
 EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW) :
     commandList(cmdList),

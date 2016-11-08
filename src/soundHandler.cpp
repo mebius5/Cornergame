@@ -60,7 +60,7 @@ void SoundHandler::stopBackgroundMusic() {
 
 void SoundHandler::playSfx(SfxEnum sfxType) {
     if (this->timeElapsed < 150)      // Don't play too often!
-        return;
+        return;     //TODO: FIX THIS
     this->timeElapsed = 0;
 
     int channel = this->stopSfx(sfxType);

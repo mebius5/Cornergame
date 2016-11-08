@@ -3,7 +3,7 @@
 
 #include "artComponent.h"
 
-class Camera{
+class Camera {
 private:
     SDL_Renderer* renderer;
     std::vector<Command*>& commandList;
@@ -39,4 +39,4 @@ public:
     void borderBoundY(Entity* entity, float boundValue);
 };
 
-#endif //CORNERGAME_CAMERA_H
+#endif

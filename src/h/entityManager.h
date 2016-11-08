@@ -4,6 +4,7 @@
 #include <queue>
 #include <unordered_map>
 #include <vector>
+#include <cmath>
 #include "entityBuilder.h"
 #include "level.h"
 #include "enums.h"
