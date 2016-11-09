@@ -6,8 +6,6 @@
 
 class HealthComponent : public Component {
 private:
-    Command* stopSlideCommand;
-    Command* stopRunCommand;
     int health;
     int maxHealth;
     bool isInvincible;
