@@ -6,7 +6,7 @@
 #include <string>
 #include <vector>
 
-enum Tiles {NONE, BRICK, GRASS, SPAWN1, SPAWN2, ENEMY, GOAL,
+enum Tiles {NONE, BRICK, GRASS, DIRT, SPAWN1, SPAWN2, ENEMY, GOAL,
     PU_JUMP, PU_HEALTH, PU_AMMO,
     PU_BEER,
     TREE1, TREE2, BENCH, FADEINTEXT, NORMALTEXT

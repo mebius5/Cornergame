@@ -32,7 +32,7 @@ enum TextureEnum {
 
 };
 
-enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_NONE };
+enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_DIRT, TT_NONE };
 
 enum FontEnum { FONT_GLOBAL };
 
