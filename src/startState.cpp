@@ -29,7 +29,7 @@ void StartState::begin(int) {
     this->soundHandler.playBackgroundMusic(MUSIC_START);
 
     this->entityManager.createCenteredFadeInText(
-            FONT_GLOBAL, "CornerGame", 100,
+            FONT_GLOBAL, "CornerStone", 100,
             255, 255, 255, 0, this->windowW, this->windowH);
 }
 

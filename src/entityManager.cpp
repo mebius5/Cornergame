@@ -245,7 +245,7 @@ Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, int x, 
 
 Entity* EntityManager::createTerrain(Tiles tileType, int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
-    TerrainTexEnum texType;
+    TerrainTexEnum texType = TT_NONE;
     switch (tileType){
         case BRICK:{
             texType = TT_BRICK;
