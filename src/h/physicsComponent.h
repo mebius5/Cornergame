@@ -17,6 +17,7 @@ private:
     float slideVelocity;
     int jumps;
     bool infiniteJumps;
+    bool frozen;
     DynamicCollisionComponent* collisionComp;
     float clipVelocity(float velocity, float max);
 
@@ -35,6 +36,8 @@ public:
     ~PhysicsComponent();
 
     void updateLocation(int dt);
+    void freeze();
+    bool isFrozen();
     void jump();
     void toggleInfiniteJumps();
     bool isInfiniteJumpOn();

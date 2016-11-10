@@ -61,7 +61,7 @@ public:
 
 class ProjectileCollisionComponent : public DynamicCollisionComponent {
 private:
-    Command* entityCollisionCommand;
+    Command* despawnCommand;
 public:
     int ownerID;
     ProjectileCollisionComponent(Entity* entity, Command* entCollisionCmd, int ownerID);

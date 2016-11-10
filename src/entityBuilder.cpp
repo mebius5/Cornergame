@@ -129,7 +129,7 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
     hero->health = new HealthComponent(hero, 1000, new SwitchStateCommand(STATE_RESULTS));
     hero->physics = new PhysicsComponent(hero);
     hero->powerUp = new PowerUpComponent(hero);
-    hero->ammo = new AmmoComponent(hero, 10);
+    hero->ammo = new AmmoComponent(hero, 4);
 
     return hero;
 }
