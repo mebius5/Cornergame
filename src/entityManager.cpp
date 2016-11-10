@@ -21,7 +21,7 @@ EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmd
     this->entityBuilder.loadTexture(TEX_TREE2, "resources/greentree2.png");
     this->entityBuilder.loadTexture(TEX_BENCH, "resources/bench.png");
     this->entityBuilder.loadHealthBar(200, 40);
-    this->entityBuilder.loadAmmoBar(200, 40);
+    this->entityBuilder.loadAmmoBar(50, 8);
 }
 
 EntityManager::~EntityManager() {
@@ -144,11 +144,11 @@ Entity* EntityManager::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
     Entity* entity = this->entityBuilder.createHero(texType, x, y, sfxType, wasd);
     this->addEntity(entity);
     this->heroEntities.push_back(entity);
-    Entity *pwr1 = this->entityBuilder.createPowerUpOverlay(TEX_PWRUP_INFJUMP_OVERLAY, x, y, entity->powerUp, TEX_PWRUP_INFJUMP);
+    Entity *pwr1 = this->entityBuilder.createPowerUpOverlay(TEX_PWRUP_INFJUMP_OVERLAY, x, y, entity, TEX_PWRUP_INFJUMP);
     this->addEntity(pwr1);
-    Entity *pwr2 = this->entityBuilder.createPowerUpOverlay(TEX_PWRUP_INFHEALTH_OVERLAY, x, y, entity->powerUp, TEX_PWRUP_INFHEALTH);
+    Entity *pwr2 = this->entityBuilder.createPowerUpOverlay(TEX_PWRUP_INFHEALTH_OVERLAY, x, y, entity, TEX_PWRUP_INFHEALTH);
     this->addEntity(pwr2);
-    Entity *pwr4 = this->entityBuilder.createPowerUpOverlay(TEX_PWRUP_BEER_OVERLAY, x, y, entity->powerUp, TEX_PWRUP_BEER);
+    Entity *pwr4 = this->entityBuilder.createPowerUpOverlay(TEX_PWRUP_BEER_OVERLAY, x, y, entity, TEX_PWRUP_BEER);
     this->addEntity(pwr4);
     return entity;
 }

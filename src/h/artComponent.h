@@ -51,15 +51,49 @@ public:
     SDL_Rect* getNextSrcRect(int dt);
 };
 
-class PowerUpArtComponent : public ArtComponent {
+class OverlayArtComponent : public ArtComponent {
+protected:
+    SDL_Texture * texture;
+public:
+    OverlayArtComponent(Entity* entity, Texture texture, int layer);
+    virtual SDL_Texture* getNextTexture(int dt)=0;
+    virtual SDL_Rect* getNextSrcRect(int dt)=0;
+};
+
+class PowerUpArtComponent : public OverlayArtComponent {
 private:
-    SDL_Texture* texture;
     PowerUpComponent * powerUp;
     int index;
     int timecount;
     SDL_Rect clip;
 public:
-    PowerUpArtComponent(Entity* entity, Texture texture, int layer, PowerUpComponent *powerUp, int index);
+    PowerUpArtComponent(Entity* entity, Entity * owner, Texture texture, int layer, int index);
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+};
+
+class HealthBarArtComponent: public ArtComponent {
+private:
+    SDL_Texture * texture;
+    SDL_Rect clip;
+    HealthComponent* ownerHealth;
+    float width;
+    int height;
+    int lastHealth;
+public:
+    HealthBarArtComponent(Entity* entity, Entity * owner, Texture tex, int layer);
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+};
+
+class AmmoBarArtComponent: public OverlayArtComponent {
+private:
+    AmmoComponent * ownerAmmo;
+    SDL_Rect clip;
+    float width;
+    int height;
+public:
+    AmmoBarArtComponent(Entity* entity, Entity* owner, Texture tex, int layer);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
@@ -81,33 +115,9 @@ public:
     void deselectMenuItem();
 };
 
-class HealthBarArtComponent: public ArtComponent {
-private:
-    SDL_Texture* texture;
-    SDL_Rect clip;
-    HealthComponent* ownerHealth;
-    float width;
-    int height;
-    int lastHealth;
-public:
-    HealthBarArtComponent(Entity* entity, Texture tex,
-                          HealthComponent* ownerHealth, int layer);
-    SDL_Texture* getNextTexture(int dt);
-    SDL_Rect* getNextSrcRect(int dt);
-};
 
-class AmmoBarArtComponent: public ArtComponent {
-private:
-    Entity* hero;
-    SDL_Texture* texture;
-    SDL_Rect clip;
-    float width;
-    int height;
-public:
-    AmmoBarArtComponent(Entity* entity, Entity* hero, Texture tex, int layer);
-    SDL_Texture* getNextTexture(int dt);
-    SDL_Rect* getNextSrcRect(int dt);
-};
+
+
 
 class ScoreTextArtComponent: public ArtComponent{
 private:
