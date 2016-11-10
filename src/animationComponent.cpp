@@ -44,11 +44,11 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         }
     } else if (this->entity->actionState == THROW) {
         this->actionTime += dt;
-        if (this->actionTime > 500) {
+        if (this->actionTime > 240) {
             this->actionTime = 0;
             this->entity->actionState = IDLE;
         }
-        clip.x = (actionTime / 125) * 32 + startpos;
+        clip.x = (actionTime / 60) * 32 + startpos;
         clip.y = 64;
 
     } else if (this->entity->actionState == JUMP) {

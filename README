@@ -12,7 +12,7 @@ cd src/
 make
 ./gameManager
 
-Assignment 8 Task Writeups
+Assignment 9 Task Writeups
 
 General Notes:
 - As of now, there are 4 working levels and one tutorial -> level 4 is the
@@ -27,41 +27,18 @@ POWERUPS:
     them up.
 
 Akshay
-- Obtained new sound files for multiple actions
-- Created ability to start/stop looping sound effects such as running
-- Fade in music
-- Added sounds for powerups
-- Added jumping sounds
-- Updated damage sounds
-- Added a rumble sound when camera shakes
-- Allow projectiles to home in on enemies
-- Stop projectiles from colliding with projectiles
-- Projectile shoots at different speed based on how long button pressed
-- Updated the font
+
 
 Andrew
 - for beta: fixed issue with powerup overlay disappearing, fixed sound effects
     to play properly, and not loop infinitely.
 
 Grady
-- Changed the structure of power up components and collision component
-  to allow application of multiple power ups
-- Eliminated the need of multiple different repetitive collision components
-  for power ups
-- Refactored create power up methods to use one method to create all types of power ups
-- Allow different time limits for every different types of power ups now
-- Added ability to respawn the power ups
-- Added beer power up to invert controls
-- Added a tutorial level that can be accessed in the menu.
-- Added string capability to level editor
-- Added a new level
+- Refactored art components so we can have overlay that's tied to the hero position.
+  This is extended to be used for power up art component and ammo bar art component.
 
 Pratyush
--Drew animations for different power ups
--Added code to allow power up visuals to display while active
--Added ability to rotate entities
--Drew new projectile
--Adjusted physics values to make jumps and running feel better
+
 
 
 CONTROLS
@@ -191,21 +168,17 @@ QUIRKS
 TODOS
 verify deletion was implemented properly w/ vectors!
 revamp terrain -> fewer rectangles!
-change collision to only check static objects in certain bins?
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
 Change renderCopy() of static stuff to be more efficient: group static textures
--> see SDL_CreateTexture()
 CommandBus/ComponentList?
-camera warp -> change level to start at B, one segment with no powerups/enemies
--> shift camera based on both heroes simultaneously
+Shift camera based on both heroes simultaneously
 RespawnEntity class? (take out initialX, initialY from everyone)
 Segfault with fonts?
 Tuning of camera speed/character speed
-Sounds: handle stop sounds before start sounds? or ordered commands.
-Scrolling lag
+Sounds: handle stop sounds before start sounds?
 level tile usage (dirt vs brick)
 GAME NAME - STOP PUNTING
-revamp art layers -> use enum + give drawingHandler vector<vector<>>
+revamp layers -> enum/drawingHandler has vector<vector<>>
 change powerup enum to be separate?
 powerup overlays lagging behind player?
 Use State inheritance + begin() method instead of switch case in GameManager
