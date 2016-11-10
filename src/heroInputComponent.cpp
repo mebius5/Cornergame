@@ -95,9 +95,9 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
         this->entity->actionState = THROW;
         this->spawnCommand->dir = this->entity->dir;
         if (this->spawnCommand->dir == 1) {
-            this->spawnCommand->x = entity->x + 48; // TODO remove magic numbers
+            this->spawnCommand->x = entity->x + this->entity->width + 16; // TODO remove magic numbers
         } else {
-            this->spawnCommand->x = entity->x + 16;
+            this->spawnCommand->x = entity->x - 32;
         }
         this->spawnCommand->y = entity->y+20;
         this->spawnCommand->ownerID = entity->getId();
