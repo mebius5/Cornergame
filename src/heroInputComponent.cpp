@@ -11,8 +11,6 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnProjComma
     shootKey(wasd ? SDLK_v : SDLK_m),
     jumpPressed(false),
     spawnCommand(spawnCommand),
-    spawnTime(0),
-    spawnCooldown(500),
     holdTime(-1.0f),
     maxHold(500.0f) {
 }
@@ -31,12 +29,6 @@ HeroInputComponent::~HeroInputComponent() {
 }
 
 void HeroInputComponent::updateTime(int dt) {
-    // update the spawn time
-    this->spawnTime -= dt;
-    if (this->spawnTime < 0) {
-        this->spawnTime = 0;
-    }
-
     // update the hold time
     if (this->holdTime >= 0) {
         this->holdTime += dt;
@@ -66,12 +58,6 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
         if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
             Component::commandList->push_back(this->runCommand);
     } else if (keycode == this->shootKey) {
-        // check if enough time has passed to shoot
-        if (this->spawnTime > 0) {
-            return;
-        }
-        this->spawnTime = this->spawnCooldown;
-
         // start to charge the shot
         if (this->holdTime < 0) {
             this->holdTime = 0.0f;
