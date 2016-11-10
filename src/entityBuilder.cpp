@@ -159,13 +159,13 @@ Entity* EntityBuilder::createBackground(TextureEnum texType, int width, int heig
 Entity* EntityBuilder::createHealthBar(int x, int y, Entity* owner) {
     Texture texture = this->textureMap[TEX_HEALTHBAR];
     Entity* healthBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);
-    healthBar->art = new HealthBarArtComponent(healthBar, texture, owner->health, 2);
+    healthBar->art = new HealthBarArtComponent(healthBar, owner, texture, 2);
     return healthBar;
 }
 
-Entity* EntityBuilder::createAmmoBar(int x, int y, Entity* owner) {
+Entity* EntityBuilder::createAmmoBar(int, int, Entity* owner) {
     Texture texture = this->textureMap[TEX_AMMOBAR];
-    Entity* ammoBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);
+    Entity* ammoBar = new Entity(this->nextId++, owner->x, owner->y, texture.width / 2, texture.height, texture.width / 2, texture.height);
     ammoBar->art = new AmmoBarArtComponent(ammoBar, owner, texture, 2);
     return ammoBar;
 }
@@ -256,11 +256,11 @@ Entity* EntityBuilder::createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, in
     return entity;
 }
 
-Entity* EntityBuilder::createPowerUpOverlay(TextureEnum pwrUpType, int x, int y, PowerUpComponent *powerUp, int index) {
+Entity* EntityBuilder::createPowerUpOverlay(TextureEnum pwrUpType, int x, int y, Entity * owner, int index) {
     Texture texture = this->textureMap[pwrUpType];
     Entity* entity = new Entity(this->nextId++, x, y, 32, 64, 64, 64);
     int layer = (pwrUpType == TEX_PWRUP_INFJUMP_OVERLAY ? 1 : 3);
-    entity->art = new PowerUpArtComponent(entity, texture, layer, powerUp, index);
+    entity->art = new PowerUpArtComponent(entity, owner, texture, layer, index);
     return entity;
 }
 

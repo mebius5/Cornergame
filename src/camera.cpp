@@ -105,7 +105,7 @@ void Camera::shift(int dx, int dy) {
                 continue;
             }
 
-            if (dynamic_cast<PowerUpArtComponent*>(*it) // shift dynamic entities & overlays
+            if (dynamic_cast<OverlayArtComponent*>(*it) // shift dynamic entities & overlays
                     || (dynamic_cast<DynamicCollisionComponent*>((*it)->entity->collision)
                     && (*it)->entity->x + (*it)->entity->width >= levelW)) {
                 (*it)->entity->x = (*it)->entity->x - levelW;

@@ -1,9 +1,8 @@
 #include "artComponent.h"
 
-PowerUpArtComponent::PowerUpArtComponent(Entity* entity, Texture tex, int layer, PowerUpComponent *powerUp, int index):
-    ArtComponent(entity, layer, false),
-    texture(tex.sdlTexture),
-    powerUp(powerUp),
+PowerUpArtComponent::PowerUpArtComponent(Entity* entity, Entity * owner, Texture tex, int layer, int index):
+    OverlayArtComponent(entity, tex, layer),
+    powerUp(owner->powerUp),
     index(index) {
     this->clip = {0,0,32,32};
     this->timecount = 0;
