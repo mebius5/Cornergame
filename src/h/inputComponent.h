@@ -26,8 +26,6 @@ private:
     SDL_Keycode shootKey;
     bool jumpPressed;
     SpawnProjCommand* spawnCommand;
-    int spawnTime;
-    int spawnCooldown;
     float holdTime;
     float maxHold;
 public:

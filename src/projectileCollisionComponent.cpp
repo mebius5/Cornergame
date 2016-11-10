@@ -12,21 +12,24 @@ ProjectileCollisionComponent::~ProjectileCollisionComponent() {
 }
 
 void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
-    // if we're frozen, we can only get picked up by heros
-    if (this->entity->physics->isFrozen()) {
-        if (dynamic_cast<HeroCollisionComponent*>(otherComp)) {
-            otherComp->entity->ammo->addAmmo(1);
-            Component::commandList->push_back(this->despawnCommand);
-        }
-
-    // if not frozen, get destroyed and deal damage
-    } else if (otherComp->entity->getId() != this->ownerID) {
+    // if we're frozen, we can only get picked up by heroes
+    if (this->entity->physics->isFrozen() &&
+            dynamic_cast<HeroCollisionComponent*>(otherComp)) {
+        otherComp->entity->ammo->addAmmo(1);
         Component::commandList->push_back(this->despawnCommand);
-        if (otherComp->entity->health) {
-            otherComp->entity->health->takeDamage(250);
-            otherComp->entity->actionState = DAMAGE;
-        }
+
+    // if not frozen and collision with damagable, get destroyed and deal damage
+    } else if (otherComp->entity->getId() != this->ownerID &&
+            otherComp->entity->health) {
+        otherComp->entity->health->takeDamage(250);
+        otherComp->entity->actionState = DAMAGE;
         otherComp->entity->physics->bump(this->sign(this->entity->physics->xVelocity));
+        Component::commandList->push_back(this->despawnCommand);
+
+    // if collision with owner, return as ammo
+    } else if (otherComp->entity->getId() == this->ownerID) {
+        otherComp->entity->ammo->addAmmo(1);
+        Component::commandList->push_back(this->despawnCommand);
     }
 }
 
