@@ -142,7 +142,6 @@ void PhysicsComponent::updateLocation(int dt) {
     this->entity->y += this->yVelocity * dt;
 
     // apply death if out of bounds
-    // TODO move this somewhere else
     if (this->entity->health && this->entity->y > 1600) {
         this->entity->health->die();
     }

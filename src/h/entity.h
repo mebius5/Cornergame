@@ -36,7 +36,7 @@ public:
     int height;
     int drawWidth;
     int drawHeight;
-    int dir;
+    int dir;                    // direction player is facing (1 or -1)
     Action actionState;
     bool rotates;
 

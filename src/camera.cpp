@@ -113,10 +113,8 @@ void Camera::shift(int dx, int dy) {
             ++it;
         }
 
-        //TODO: Add command to respawn all enemy and heroes at updated location
         minX = minX - levelW;
         maxX = maxX - levelW;
-
         this->commandList.push_back(this->loopLevelCommand);
     }
 }

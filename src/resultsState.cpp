@@ -9,39 +9,52 @@ ResultsState::ResultsState(int windowW, int windowH, EntityManager& entMgr,
     inputHandler(inputHandler),
     soundHandler(soundHandler),
     controlHandler(controlHandler),
-    score(0),
-    hero1Victory(true)
-{
+    hero1Victory(true) {
 }
 
-ResultsState::~ResultsState() {
+void ResultsState::setVictorious(Entity* winner, Entity* loser) {
+    winner->drawHeight *= 3;
+    winner->drawWidth *= 3;
+    winner->actionState = JUMP;
+    static_cast<DynamicCollisionComponent*>(winner->collision)->onGround = false;
+    loser->actionState = IDLE;
 }
 
-void ResultsState::begin(int) {
+void ResultsState::begin(int /*level*/) {
     this->soundHandler.playBackgroundMusic(MUSIC_HIGHSCORE);
+    this->drawingHandler.initializeCamera(1024, 704, true);
+
+    // Update entities based on PlayState results
     this->entityManager.addEntity(this->hero1);
     this->entityManager.addEntity(this->hero2);
+    this->hero1->dir = 1;
+    this->hero1->x = 400;
+    this->hero1->y = 120;
+    this->hero1->physics->xVelocity = 0.0f;
+    this->hero1->physics->yVelocity = 0.0f;
+    this->hero2->dir = -1;
+    this->hero2->x = 624;
+    this->hero2->y = 120;
+    this->hero2->physics->xVelocity = 0.0f;
+    this->hero2->physics->yVelocity = 0.0f;
 
     std::string victoryString;
     std::string scoreString;
-    if (this->hero1Victory){
+    if (this->hero1Victory) {
         victoryString = "Player 1 Wins!";
-        scoreString = "Score: " + std::to_string(this->score);
-    }
-    else{
+        scoreString = "Score: " + std::to_string(this->hero1->score->getScore());
+        this->setVictorious(this->hero1, this->hero2);
+    } else {
         victoryString = "Player 2 Wins!";
-        scoreString = "Score: " + std::to_string(this->score);
+        scoreString = "Score: " + std::to_string(this->hero2->score->getScore());
+        this->setVictorious(this->hero2, this->hero1);
     }
-
     this->entityManager.createHorizontallyCenteredFadeInText(
             FONT_GLOBAL, victoryString.c_str(),
-            100, 255, 255, 255, 0, this->windowW, 200
-    );
-
+            100, 255, 255, 255, 0, this->windowW, 300);
     this->entityManager.createHorizontallyCenteredFadeInText(
             FONT_GLOBAL, scoreString.c_str(),
-            100, 255, 255, 255, 0, this->windowW, 400
-    );
+            100, 255, 255, 255, 0, this->windowW, 500);
 }
 
 StateEnum ResultsState::run() {
@@ -53,7 +66,7 @@ StateEnum ResultsState::run() {
         int currentTime = SDL_GetTicks();
         int dt = currentTime - lastTime;
         lastTime = currentTime;
-        timeElapsed+=dt;
+        timeElapsed += dt;
 
         this->inputHandler.handleEvents(dt);
         this->drawingHandler.draw(dt);
@@ -62,12 +75,10 @@ StateEnum ResultsState::run() {
         if (nextState != STATE_NONE)
             return nextState;
 
-        if(this->controlHandler.isPreviewOff())
+        if (this->controlHandler.isPreviewOff())    // user pressed 'P'
             break;
-
-        if (timeElapsed > 5000) {   //Return to MENU screen after 5 secs
+        if (timeElapsed > 5000)      // return to MENU screen after 5 secs
             break;
-        }
     }
 
     return STATE_LEVEL_TRANSIT;
@@ -79,21 +90,10 @@ void ResultsState::cleanup(StateEnum /*next*/) {
     this->soundHandler.stopBackgroundMusic();
 }
 
-void ResultsState::updateResults(Entity *hero1, Entity *hero2) {
-    this->hero1 = hero1;
+void ResultsState::updateResults(Entity* hero1, Entity* hero2) {
+    this->hero1 = hero1;     // save heroes to place in EntityMap during begin()
     this->hero2 = hero2;
     hero1->art->validate();
     hero2->art->validate();
-    hero1->x = 50;
-    hero1->y = 100;
-    hero2->x = 300;
-    hero2->y = 300;
-    if (hero2->health->getHealth() <= 0){
-        this->hero1Victory = true;
-        this->score = hero1->score->getScore();
-    }
-    else{
-        this->hero1Victory = false;
-        this->score = hero2->score->getScore();
-    }
+    this->hero1Victory = (hero2->health->getHealth() <= 0);
 }

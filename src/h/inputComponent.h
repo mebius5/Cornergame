@@ -37,15 +37,6 @@ public:
     void invertControl();
 };
 
-// class StartScreenInputComponent : public InputComponent {
-// public:
-//     StartScreenInputComponent(Entity* entity);
-//     ~StartScreenInputComponent();
-//     void keyDown(SDL_Keycode keycode);
-//     void keyUp(SDL_Keycode keycode);
-//     void update(int dt);
-// };
-
 class MenuOptionInputComponent : public InputComponent {
 private:
     int index;                  // index of this menu option

@@ -183,8 +183,14 @@ change powerup enum to be separate?
 powerup overlays lagging behind player?
 Use State inheritance + begin() method instead of switch case in GameManager
 transition to std::for_each + lamdbas where useful
-verify animation w/ sliding works properly
+verify animation w/ sliding works properly!
 revamp enums: embed type code into enum?
 use auto for iterators
 victory screen
 die cheat code
+transition from at() to operator[]
+update score with something else
+remove unnecessary destructors (State?)
+change previewOn to autoShiftOn (invert stuff...)
+consolidate enums into enum.h -> change setting timcount in AnimationComponent
+sliding in results state?

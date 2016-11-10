@@ -96,16 +96,15 @@ private:
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
     ControlHandler& controlHandler;
-    int score;
     bool hero1Victory;
     Entity* hero1;
     Entity* hero2;
+    void setVictorious(Entity* winner, Entity* loser);
 public:
     ResultsState(int windowW, int windowH, EntityManager& entityManager,
                    std::vector<Command*>& commandList, SDL_Renderer* renderer,
                    DrawingHandler& drawingHandler, InputHandler& inputHandler,
                    SoundHandler& soundHandler, ControlHandler& controlHandler);
-    ~ResultsState();
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
