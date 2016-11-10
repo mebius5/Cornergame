@@ -100,8 +100,10 @@ StateEnum PlayState::run() {
 
 void PlayState::cleanup(StateEnum nextState) {
     if (nextState == STATE_RESULTS) {  // if game complete, update other states
+        this->entityManager.hideEntity(this->hero->getId());
+        this->entityManager.hideEntity(this->hero2->getId());
         this->highscoreState.updateHighscores(this->hero, this->hero2);
-        this->resultsState.updateResults(this->hero, this->hero2);     //TODO: save sprite?
+        this->resultsState.updateResults(this->hero, this->hero2);
     }
     this->entityManager.clear();
     this->commandList.clear();

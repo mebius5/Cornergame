@@ -19,6 +19,8 @@ ResultsState::~ResultsState() {
 
 void ResultsState::begin(int) {
     this->soundHandler.playBackgroundMusic(MUSIC_HIGHSCORE);
+    this->entityManager.addEntity(this->hero1);
+    this->entityManager.addEntity(this->hero2);
 
     std::string victoryString;
     std::string scoreString;
@@ -78,6 +80,14 @@ void ResultsState::cleanup(StateEnum /*next*/) {
 }
 
 void ResultsState::updateResults(Entity *hero1, Entity *hero2) {
+    this->hero1 = hero1;
+    this->hero2 = hero2;
+    hero1->art->validate();
+    hero2->art->validate();
+    hero1->x = 50;
+    hero1->y = 100;
+    hero2->x = 300;
+    hero2->y = 300;
     if (hero2->health->getHealth() <= 0){
         this->hero1Victory = true;
         this->score = hero1->score->getScore();

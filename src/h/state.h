@@ -98,7 +98,8 @@ private:
     ControlHandler& controlHandler;
     int score;
     bool hero1Victory;
-
+    Entity* hero1;
+    Entity* hero2;
 public:
     ResultsState(int windowW, int windowH, EntityManager& entityManager,
                    std::vector<Command*>& commandList, SDL_Renderer* renderer,

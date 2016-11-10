@@ -213,3 +213,5 @@ transition to std::for_each + lamdbas where useful
 verify animation w/ sliding works properly
 revamp enums: embed type code into enum?
 use auto for iterators
+victory screen
+die cheat code
