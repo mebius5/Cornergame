@@ -12,6 +12,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     slideVelocity(.1f),
     jumps(0),
     infiniteJumps(false),
+    frozen(false),
     collisionComp(dynamic_cast<DynamicCollisionComponent*>(entity->collision)),
     xVelocity(0.0f),
     yVelocity(0.0f),
@@ -48,6 +49,11 @@ void PhysicsComponent::updateLocation(int dt) {
     bool& onGround = this->collisionComp->onGround;
     bool& onLeftWall = this->collisionComp->onLeftWall;
     bool& onRightWall = this->collisionComp->onRightWall;
+
+    // if we're frozen don't move
+    if (this->frozen) {
+        return;
+    }
 
     if (onRightWall || onLeftWall) {
         if (this->startSlideCommand)
@@ -145,6 +151,15 @@ void PhysicsComponent::updateLocation(int dt) {
         if (this->stopSlideCommand)
             Component::commandList->push_back(this->stopSlideCommand);
     }
+}
+
+void PhysicsComponent::freeze() {
+    // let it go
+    this->frozen = true;
+}
+
+bool PhysicsComponent::isFrozen() {
+    return this->frozen;
 }
 
 void PhysicsComponent::jump() {

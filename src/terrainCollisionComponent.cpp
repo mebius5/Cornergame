@@ -41,6 +41,11 @@ void TerrainCollisionComponent::onEntityCollision(DynamicCollisionComponent* oth
     bool collideBottomLeft = collideBottom && collideLeft && !collideTop && !collideRight;
     bool collideBottomRight = collideBottom && collideRight && !collideTop && !collideLeft;
 
+    // ignore projectiles
+    if (dynamic_cast<ProjectileCollisionComponent*>(otherComp)) {
+        return;
+    }
+
     // resolve collisions
     float crossProduct;
     if (collideTopLeft) {
