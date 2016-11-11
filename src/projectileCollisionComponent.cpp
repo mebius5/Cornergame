@@ -3,7 +3,7 @@
 ProjectileCollisionComponent::ProjectileCollisionComponent(Entity* entity, Command* cmd, int ownerID) :
     DynamicCollisionComponent(entity),
     despawnCommand(cmd),
-    timeFreezeCommand(new TimeFreezeCommand(100)),
+    timeFreezeCommand(new TimeFreezeCommand(20)),
     ownerID(ownerID) {
 }
 
