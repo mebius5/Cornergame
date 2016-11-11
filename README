@@ -15,16 +15,7 @@ make
 Assignment 9 Task Writeups
 
 General Notes:
-- As of now, there are 4 working levels and one tutorial -> level 4 is the
-    new level that we are submitting as our "level 3"
 
-POWERUPS:
-- Yellow square is non-weapon ammo/gum balls (3.5 sec time limit)
-- Star is infinite health
-- Wings is infinite jump
-- Beer inverts your control
-- these powerups have new animations that overlay on the character that picks
-    them up.
 
 Akshay
 
@@ -34,6 +25,9 @@ Andrew
     to play properly, and not loop infinitely.
 - implemented passing entities between states: used for keeping heroes around
     when going into results state
+- updated README with up to date stuff!
+- code readability changes (refactoring!)
+- performance updates to level reading, text display
 
 Grady
 - Refactored art components so we can have overlay that's tied to the hero position.
@@ -43,61 +37,40 @@ Pratyush
 
 
 
-CONTROLS
+GENERAL CONTROLS
 - Press ESC to quit game
 - Press q to return to MENU
-- Press SPACE to select option on MENU
 - Press p to skip preview, transit text, results, etc.
 
-Player 1
-- Up/down/left/right to move player 1
-- Jump(up) can perform double jump in air, or infinite wall jumps (must be next to terrain)
-- Press M to throw projectiles (there's knock back present)
+GAMEPLAY CONTROLS
+- Player 1 uses wasd to move and v to shoot
+- Player 2 uses arrows to move and m to shoot.
+- Cheatcodes: press k to grant invincibility and infinite jumps, l to skip level
 
-Player 2
-- WASD to move player 2
-- Jump (W) can perform double jump in air, or infinite wall jumps (must be next to terrain)
-- Press V to throw projectiles (there's knock back present)
+MENU CONTROLS
+- Press up and down to change options, SPACE to select
+
+GAMEPLAY
+Defeat your classmates and rise to college fame! Avoid obstacles and enemies,
+and progress through the level using well timed jumps. Use powerups and quick
+maneuvers to outrun, outgun, and outsmart your opponents!
+
+POWERUPS
+- Airplane in box is non-weapon ammo
+- Chemical flask is infinite health
+- Red bull is infinite jump
+- Beer inverts your control
 
 CAMERA
 - Allows for preview of levels and scrolling of levels
 - Camera moves with at a constant speed from left to right during gameplay
-  Incurs damage on heroes if collision happens.
-
-TERRAIN
-- static object with art and collision ability
-- collisions with moving entities are calculated -> with corner cases considered
+- Players incurs damage on collision with left border, incurs death if squished
+    between left border and a wall.
 
 LEVEL EDITOR
 - the game reads in a text file to determine the layout of the level
-- all players, enemies, terrain, hero1Victory zones are placed this way. See
+- all players, enemies, terrain and powerups are placed this way. See
     EntityManager's populateLevel() method.
-
-SCREENS
-StartScreen
-- Currently has our game production logo that fades in from black
-- Also has our hero just walking to show progress and as something related
-    to the game
-- Switches to the menu screen in 10 secs
-
-MenuScreen
-- Has the options for play, adjust brightness, adjust volume, highscore, and
-    quit
-- The texts fade in from black and is centered horizontally
-- Use SPACE to select options (currently SPACE is disabled for adjust
-    brightness and adjust volume)
-
-PlayScreen
-- Has the game play
-- Pressing Q will bring you back to the main menu.
-
-HighscoreScreen
-- Shows the highscore (fade in from black)
-- Proceeds to the menu screen after 5 secs
-- Pressing Q will bring you back to the main menu.
-
-Press ESC at any time to quit the game. You can also select QUIT from the main
-    menu.
 
 ANIMATION
 The hero and the enemy each have an AnimationComponent that will update
@@ -111,9 +84,7 @@ projectile, a four frame animation is played. If the character is jumping, a
 four frame animation is played. If the character is sliding down a wall, a
 four frame animation is cycled.
 
-
 CLASS STRUCTURE
-
 Entity
     This is a skeleton for any object that appears on the screen. To add
     functionality, various Components are attached to an Entity. The
@@ -121,12 +92,11 @@ Entity
 
 Handlers (aka. Systems)
     These objects handle entities, performing various functions depending on
-    the entity's components. For example, the LocationHandler will look at
-    each entity's current LocationComponent and PhysicsComponent to calculate
-    where the entity should move to. Once these calculations are made, the
-    Handler will update that Entity's LocationComponent and PhysicsComponent.
-    Handlers can emit commands if they want another Handler to do something
-    for them. ControlHandler is new, and handles changing states.
+    the entity's components. For example, the PhysicsHandler will look at
+    each entity's PhysicsComponent to calculate where the entity should move to.
+    Once these calculations are made, the Handler will update that Entity's
+    PhysicsComponent. Handlers can emit commands if they want another Handler
+    to do something for them.
 
 Components
     These define certain types of behavior for an entity. Their fields are used
@@ -137,31 +107,13 @@ Components
 
 Commands
     These are used to by Handlers to communicate with each other. Each handler
-    handles a different set of commands.
+    handles a different set of commands. Some handlers don't process components,
+    and only handle commands.
 
 GameManager
     The game manager maintains the game loop, all entities, and all commands.
     It is also responsible for startup and shutdown of the game.
 
-GAMEPLAY
-
-You are now a dude in a blue shirt. Maybe a TA? You are trying to dodge the
-LAX bros who wander in a more sophisticated manner than last time. They now
-independently pick a X and Y direction, so they can move diagonally. Your player
-is also more sophisticated: you can accelerate in any direction. Hitting a wall
-will reset your corresponding velocity direction. There is also some friction
-so you will come to a stop if you stop inputting.
-
-The enemy will move towards the hero if the hero is within a certain range.
-Else, the enemy moves randomly and freely on its own.
-
-If your hero gets hit, an alarm noise will play.
-
-SCORE
-The hero1Score increments with time of survival and decrements with each collision
-with enemy. In order to get the highest hero1Score, you want to try to survive as
-long as possible while avoiding the enemy, and then go to the hero1Victory zone
-when you absolutely can't hold on.
 
 QUIRKS
 - no game name yet!
@@ -186,7 +138,6 @@ transition to std::for_each + lamdbas where useful
 verify animation w/ sliding works properly!
 revamp enums: embed type code into enum?
 use auto for iterators
-die cheat code
 update score with something else
 change previewOn to autoShiftOn (invert stuff...)
 consolidate enums into enum.h -> change setting timecount in AnimationComponent

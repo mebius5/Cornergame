@@ -66,6 +66,8 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
     } else if (keycode == SDLK_k) {
         this->entity->health->toggleInvincibility();
         this->entity->physics->toggleInfiniteJumps();
+    } else if (keycode == SDLK_l) {
+        this->entity->health->die();
     }
 }
 
@@ -91,7 +93,6 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
         }
         this->entity->ammo->spendAmmo();
 
-        
         this->entity->actionState = THROW;
         this->spawnCommand->dir = this->entity->dir;
         if (this->spawnCommand->dir == 1) {
