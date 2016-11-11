@@ -11,9 +11,6 @@ MenuState::MenuState(int windowW, int windowH, EntityManager& entityManager,
     controlHandler(controlHandler) {
 }
 
-MenuState::~MenuState() {
-}
-
 void MenuState::begin(int) {
     this->soundHandler.playBackgroundMusic(MUSIC_MENU);
 

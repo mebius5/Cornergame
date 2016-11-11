@@ -25,9 +25,6 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
     levelH(0){
 }
 
-PlayState::~PlayState() {
-}
-
 void PlayState::begin(int level) {
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
     this->entityManager.createBackground(TEX_BACKGROUND, this->windowW,

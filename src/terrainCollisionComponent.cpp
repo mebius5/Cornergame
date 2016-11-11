@@ -85,19 +85,11 @@ void TerrainCollisionComponent::onEntityCollision(DynamicCollisionComponent* oth
 void TerrainCollisionComponent::onBorderCollision() {
 }
 
-int max(int a, int b) {
-    return (a < b ? b : a);
-}
-
-int min(int a, int b) {
-    return (a < b ? a : b);
-}
-
 void TerrainCollisionComponent::collideLeftWall(DynamicCollisionComponent* otherComp,
                                                   float boundValue, int topT, int bottomT) {
     if (otherComp->onLeftWall) {
-        otherComp->topBound = min(otherComp->topBound, topT);
-        otherComp->bottomBound = max(otherComp->bottomBound, bottomT);
+        otherComp->topBound = std::min(otherComp->topBound, topT);
+        otherComp->bottomBound = std::max(otherComp->bottomBound, bottomT);
     } else {
         otherComp->onLeftWall = true;
         otherComp->topBound = topT;
@@ -109,8 +101,8 @@ void TerrainCollisionComponent::collideLeftWall(DynamicCollisionComponent* other
 void TerrainCollisionComponent::collideRightWall(DynamicCollisionComponent* otherComp,
                                                    float boundValue, int topT, int bottomT) {
     if (otherComp->onRightWall) {
-        otherComp->topBound = min(otherComp->topBound, topT);
-        otherComp->bottomBound = max(otherComp->bottomBound, bottomT);
+        otherComp->topBound = std::min(otherComp->topBound, topT);
+        otherComp->bottomBound = std::max(otherComp->bottomBound, bottomT);
     } else {
         otherComp->onRightWall = true;
         otherComp->topBound = topT;
@@ -122,8 +114,8 @@ void TerrainCollisionComponent::collideRightWall(DynamicCollisionComponent* othe
 void TerrainCollisionComponent::collideGround(DynamicCollisionComponent* otherComp,
                                              float boundValue, int leftT, int rightT) {
     if (otherComp->onGround) {
-        otherComp->leftBound = min(otherComp->leftBound, leftT);
-        otherComp->rightBound = max(otherComp->rightBound, rightT);
+        otherComp->leftBound = std::min(otherComp->leftBound, leftT);
+        otherComp->rightBound = std::max(otherComp->rightBound, rightT);
     } else {
         otherComp->onGround = true;
         otherComp->leftBound = leftT;

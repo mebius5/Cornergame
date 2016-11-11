@@ -26,7 +26,6 @@ protected:
 public:
     State(EntityManager& entityManager, std::vector<Command*>& commandList,
           SDL_Renderer* renderer, int windowW, int windowH);
-    virtual ~State() { };
     static int center(int large, int small);
     static SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
     virtual void begin(int level) = 0;
@@ -48,7 +47,6 @@ public:
                DrawingHandler& drawingHandler, InputHandler& inputHandler,
                SoundHandler& soundHandler, ControlHandler& controlHandler,
                CollisionHandler& collisionHandler, PhysicsHandler& physicsHandler);
-    ~StartState();
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
@@ -66,7 +64,6 @@ public:
               std::vector<Command*>& commandList, SDL_Renderer* renderer,
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler);
-    ~MenuState();
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
@@ -84,7 +81,6 @@ public:
                    std::vector<Command*>& commandList, SDL_Renderer* renderer,
                    DrawingHandler& drawingHandler, InputHandler& inputHandler,
                    SoundHandler& soundHandler, ControlHandler& controlHandler);
-    ~HighscoreState();
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
@@ -157,7 +153,6 @@ public:
               ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
               PowerUpHandler& powerUpHandler, TimeHandler& timeHandler,
               ResultsState& resultsState, HighscoreState& highscoreState);
-    ~PlayState();
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);

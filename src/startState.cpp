@@ -14,9 +14,6 @@ StartState::StartState(int windowW, int windowH, EntityManager& entityManager,
     physicsHandler(physicsHandler) {
 }
 
-StartState::~StartState() {
-}
-
 void StartState::begin(int) {
     Level level1("levels/startScreenLevel.txt", windowW, windowH);
     this->entityManager.populateLevel(&level1);

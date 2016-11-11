@@ -12,9 +12,6 @@ HighscoreState::HighscoreState(int windowW, int windowH, EntityManager& entMgr,
     highscore(0) {
 }
 
-HighscoreState::~HighscoreState() {
-}
-
 void HighscoreState::begin(int) {
     this->soundHandler.playBackgroundMusic(MUSIC_HIGHSCORE);
     std::string hsText = "High Score:\n" + std::to_string(this->highscore);

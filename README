@@ -189,8 +189,9 @@ use auto for iterators
 die cheat code
 transition from at() to operator[]
 update score with something else
-remove unnecessary destructors (State?)
 change previewOn to autoShiftOn (invert stuff...)
 consolidate enums into enum.h -> change setting timecount in AnimationComponent
 sliding in results state?
 Normal text? (see level.cpp)
+
+TIME TO BEAT (average dt level 2 over 23 trials): 25.69
