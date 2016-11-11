@@ -28,8 +28,8 @@ void TutorialState::begin(int) {
     std::string levelFile = "levels/tutorial.txt";
     Level level1(levelFile.c_str(), windowW, windowH);
     this->entityManager.populateLevel(&level1);
-    this->hero = entityManager.heroEntities.at(0);
-    this->hero2 = entityManager.heroEntities.at(1);
+    this->hero = entityManager.heroEntities[0];
+    this->hero2 = entityManager.heroEntities[1];
     this->levelW = level1.width*32;
     this->levelH = level1.height*32;
 }

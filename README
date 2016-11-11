@@ -187,11 +187,10 @@ verify animation w/ sliding works properly!
 revamp enums: embed type code into enum?
 use auto for iterators
 die cheat code
-transition from at() to operator[]
 update score with something else
 change previewOn to autoShiftOn (invert stuff...)
 consolidate enums into enum.h -> change setting timecount in AnimationComponent
 sliding in results state?
-Normal text? (see level.cpp)
+slow-mo nesting (multiple projectiles in kill range)
 
 TIME TO BEAT (average dt level 2 over 23 trials): 25.69

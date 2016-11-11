@@ -31,8 +31,10 @@ Level::Level(std::string filename, int windowW, int windowH) {
     Tiles tile = NONE;
     for (int i = 0; i < this->height; i++) {
         std::getline(infile, line);
+        if ((int)line.length() < this->width)
+            std::cerr << "Error: Level file line " << i+2 << " is too short." << std::endl;
         for (int j = 0; j < this->width; j++) {
-            switch (line.at(j)) {
+            switch (line[j]) {
             case '^': tile = NONE; break;
             case '#': tile = BRICK; break;
             case 'W': tile = GRASS; break;
@@ -60,7 +62,7 @@ Level::Level(std::string filename, int windowW, int windowH) {
             case 'N': tile = NORMALTEXT; break;
             default:
                 tile = NONE;
-                std::cerr << "Unrecognized symbol in level file: " << line.at(j) << std::endl;
+                std::cerr << "Unrecognized symbol in level file: " << line[j] << std::endl;
             }
             this->levelContents[i][j] = tile;
         }
