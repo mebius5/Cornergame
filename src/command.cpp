@@ -8,6 +8,12 @@ StopSoundCommand::StopSoundCommand(SfxEnum sfxType) :
     sfxType(sfxType) {
 }
 
+LowerVolumeCommand::LowerVolumeCommand() {
+}
+
+RaiseVolumeCommand::RaiseVolumeCommand() {
+}
+
 SwitchStateCommand::SwitchStateCommand(StateEnum newState) :
     newState(newState) {
 }
