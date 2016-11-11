@@ -20,6 +20,14 @@ public:
     SfxEnum sfxType;
     StopSoundCommand(SfxEnum sfxType);
 };
+class LowerVolumeCommand : public Command {
+public:
+    LowerVolumeCommand();
+};
+class RaiseVolumeCommand : public Command {
+public:
+    RaiseVolumeCommand();
+};
 
 /* CONTROL COMMANDS */
 class SwitchStateCommand : public Command {

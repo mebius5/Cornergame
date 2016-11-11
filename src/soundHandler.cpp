@@ -89,10 +89,18 @@ void SoundHandler::handleSfx(int dt) {
 
     std::vector<Command*>::iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
+        // play and stop sfx
         if (PlaySoundCommand* sCmd = dynamic_cast<PlaySoundCommand*>(*it)) {
             this->playSfx(sCmd->sfxType);
         } else if (StopSoundCommand* sCmd = dynamic_cast<StopSoundCommand*>(*it)) {
             this->stopSfx(sCmd->sfxType);
+
+        // lower and raise volume
+        } else if (dynamic_cast<LowerVolumeCommand*>(*it)) {
+            Mix_VolumeMusic(MIX_MAX_VOLUME / 30);
+        } else if (dynamic_cast<RaiseVolumeCommand*>(*it)) {
+            Mix_VolumeMusic(MIX_MAX_VOLUME / 10);
+
         } else {
             ++it;
             continue;

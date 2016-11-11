@@ -8,6 +8,8 @@
 class TimeHandler {
 private:
     std::vector<Command*>& commandList;
+    Command* lowerVolumeCommand;
+    Command* raiseVolumeCommand;
     int frozenTime;
     bool slowMotion;
 public:
