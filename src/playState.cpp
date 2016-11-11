@@ -6,8 +6,8 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
                  SoundHandler& soundHandler, ControlHandler& controlHandler,
                  AiHandler& aiHandler, CollisionHandler& collisionHandler,
                  ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
-                 PowerUpHandler& powerUpHandler, ResultsState& resultsState,
-                 HighscoreState& highscoreState) :
+                 PowerUpHandler& powerUpHandler, TimeHandler& timeHandler,
+                 ResultsState& resultsState, HighscoreState& highscoreState) :
     State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
@@ -18,6 +18,7 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
     scoreHandler(scoreHandler),
     physicsHandler(physicsHandler),
     powerUpHandler(powerUpHandler),
+    timeHandler(timeHandler),
     resultsState(resultsState),
     highscoreState(highscoreState),
     levelW(0),
@@ -77,22 +78,27 @@ StateEnum PlayState::run() {
         int dt = currentTime - lastTime;
         lastTime = currentTime;
 
-        this->aiHandler.updateAi(dt);
-        this->inputHandler.handleEvents(dt);
-        this->physicsHandler.update(dt);
-        this->collisionHandler.handleCollisions();
-        this->scoreHandler.handleScore(dt);
-        this->drawingHandler.checkCameraShakes();
-        this->powerUpHandler.update(dt);
-        this->drawingHandler.shift(dt);
-        this->drawingHandler.draw(dt);
-        this->soundHandler.handleSfx(dt);
-        this->entityManager.handleSpawns();
-        this->entityManager.cleanupEntities();
+        // freeze time if necessary
+        this->timeHandler.handleTimeCommands();
+        dt = this->timeHandler.forward(dt);
+        if (dt > 0) {
+            this->aiHandler.updateAi(dt);
+            this->inputHandler.handleEvents(dt);
+            this->physicsHandler.update(dt);
+            this->collisionHandler.handleCollisions();
+            this->scoreHandler.handleScore(dt);
+            this->drawingHandler.checkCameraShakes();
+            this->powerUpHandler.update(dt);
+            this->drawingHandler.shift(dt);
+            this->drawingHandler.draw(dt);
+            this->soundHandler.handleSfx(dt);
+            this->entityManager.handleSpawns();
+            this->entityManager.cleanupEntities();
 
-        StateEnum nextState = this->controlHandler.handleStateCommands();
-        if (nextState != STATE_NONE)
-            return nextState;
+            StateEnum nextState = this->controlHandler.handleStateCommands();
+            if (nextState != STATE_NONE)
+                return nextState;
+        }
     }
 
     return STATE_HIGHSCORE;
@@ -108,4 +114,5 @@ void PlayState::cleanup(StateEnum nextState) {
     this->soundHandler.stopBackgroundMusic();
     this->soundHandler.stopAllSfx();
     this->drawingHandler.resetCamera(0, 0, windowW,windowH);
+    this->timeHandler.stopSlowMotion();
 }

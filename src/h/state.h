@@ -14,6 +14,7 @@
 #include "physicsHandler.h"
 #include "level.h"
 #include "powerUpHandler.h"
+#include "timeHandler.h"
 
 class State {
 protected:
@@ -140,6 +141,7 @@ private:
     ScoreHandler& scoreHandler;
     PhysicsHandler& physicsHandler;
     PowerUpHandler& powerUpHandler;
+    TimeHandler& timeHandler;
     ResultsState& resultsState;
     HighscoreState& highscoreState;
     Entity* hero;
@@ -153,8 +155,8 @@ public:
               SoundHandler& soundHandler, ControlHandler& controlHandler,
               AiHandler& aiHandler, CollisionHandler& collisionHandler,
               ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
-              PowerUpHandler & powerUpHandler, ResultsState& resultsState,
-              HighscoreState& highscoreState);
+              PowerUpHandler& powerUpHandler, TimeHandler& timeHandler,
+              ResultsState& resultsState, HighscoreState& highscoreState);
     ~PlayState();
     void begin(int level);
     StateEnum run();

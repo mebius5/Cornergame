@@ -1,10 +1,13 @@
 #include "physicsComponent.h"
+#include <stdlib.h>
 
 PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
     jumpCommand(new PlaySoundCommand(SFX_JUMP)),
     startSlideCommand(new PlaySoundCommand(SFX_SCRAPE)),
     stopSlideCommand(new StopSoundCommand(SFX_SCRAPE)),
+    timeSlowCommand(new TimeSlowCommand()),
+    timeNormalCommand(new TimeNormalCommand()),
     xAccel(0.0f),
     yAccel(0.0f),
     accelAmount(.001f),
@@ -13,6 +16,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     jumps(0),
     infiniteJumps(false),
     frozen(false),
+    slow(false),
     collisionComp(dynamic_cast<DynamicCollisionComponent*>(entity->collision)),
     xVelocity(0.0f),
     yVelocity(0.0f),
@@ -32,6 +36,10 @@ PhysicsComponent::~PhysicsComponent() {
         delete this->startSlideCommand;
     if (this->stopSlideCommand)
         delete this->stopSlideCommand;
+    if (this->timeSlowCommand)
+        delete this->timeSlowCommand;
+    if (this->timeNormalCommand)
+        delete this->timeNormalCommand;
     this->entity = NULL;
 }
 
@@ -52,6 +60,10 @@ void PhysicsComponent::updateLocation(int dt) {
 
     // if we're frozen don't move
     if (this->frozen) {
+        if (this->slow) {
+            Component::commandList->push_back(this->timeNormalCommand);
+            this->slow = false;
+        }
         return;
     }
 
@@ -150,6 +162,19 @@ void PhysicsComponent::updateLocation(int dt) {
     if (!onRightWall && !onLeftWall) {
         if (this->stopSlideCommand)
             Component::commandList->push_back(this->stopSlideCommand);
+    }
+
+    // apply slow motion if close to target
+    if (this->target && !this->target->health->isIsInvincible() &&
+            this->target->health->getHealth() <= 250) {
+        if (abs(this->entity->x - this->target->x) < 100 &&
+                abs(this->entity->y - this->target->y) < 100) {
+            Component::commandList->push_back(this->timeSlowCommand);
+            this->slow = true;
+        } else if (this->slow) {
+            Component::commandList->push_back(this->timeNormalCommand);
+            this->slow = false;
+        }
     }
 }
 

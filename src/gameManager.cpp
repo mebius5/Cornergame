@@ -103,6 +103,7 @@ void GameManager::run() {
     ScoreHandler scoreHandler(entityMgr.scoreComponents);
     PhysicsHandler physicsHandler(entityMgr.physicsComponents);
     PowerUpHandler powerUpHandler(entityMgr.powerUpComponents);
+    TimeHandler timeHandler(commandList);
 
     StartState startState(this->width, this->height, entityMgr, commandList,
                           this->renderer, drawingHandler, inputHandler,
@@ -125,7 +126,7 @@ void GameManager::run() {
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
                         collisionHandler, scoreHandler, physicsHandler,
-                        powerUpHandler, resultsState, highscoreState);
+                        powerUpHandler, timeHandler, resultsState, highscoreState);
 
     TutorialState tutorialState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
