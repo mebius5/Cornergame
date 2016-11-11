@@ -17,11 +17,9 @@ void DrawingHandler::initializeCamera(int levelW, int levelH, bool previewOn) {
 
 void DrawingHandler::draw(int dt) {
     SDL_RenderClear(this->renderer);
-    std::vector<ArtComponent*>::iterator it;
-
-    // shake the camera
     camera.updateShake(dt);
 
+    std::vector<ArtComponent*>::iterator it;
     for (int i = 0; i <= ArtComponent::MAXLAYER; i++) {
         for (it = this->componentList.begin(); it != this->componentList.end(); ) {
             if (!(*it)->isValid()) {        // remove invalid components
@@ -31,8 +29,10 @@ void DrawingHandler::draw(int dt) {
             }
 
             ArtComponent* artComp = *it;
-            if(artComp->layer==i && artComp->isVisible){
-                camera.draw(dt, artComp);
+            if (artComp->layer == i) {
+                artComp->updateLocation();
+                if (artComp->isVisible)
+                    camera.draw(dt, artComp);
             }
             ++it;
         }

@@ -164,8 +164,9 @@ void PhysicsComponent::updateLocation(int dt) {
     }
 
     // apply slow motion if close to target
-    if (this->target && !this->target->health->isIsInvincible() &&
-            this->target->health->getHealth() <= 250) {
+    if (this->target && dynamic_cast<HeroInputComponent*>(this->target->input)
+            && !this->target->health->isIsInvincible()
+            && this->target->health->getHealth() <= 250) {
         if (abs(this->entity->x - this->target->x) < 100 &&
                 abs(this->entity->y - this->target->y) < 100) {
             Component::commandList->push_back(this->timeSlowCommand);

@@ -27,7 +27,6 @@ SRCFILES = \
 	levelTransitState.cpp \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
-	overlayArtComponent.cpp \
 	physicsComponent.cpp \
 	physicsHandler.cpp \
 	playState.cpp \

@@ -1,11 +1,17 @@
 #include "artComponent.h"
 
 PowerUpArtComponent::PowerUpArtComponent(Entity* entity, Entity * owner, Texture tex, int layer, int index):
-    OverlayArtComponent(entity, tex, layer),
+    ArtComponent(entity, layer, false),
+    texture(tex.sdlTexture),
     powerUp(owner->powerUp),
     index(index) {
     this->clip = {0,0,32,32};
     this->timecount = 0;
+}
+
+void PowerUpArtComponent::updateLocation() {
+    entity->x = powerUp->entity->x;
+    entity->y = powerUp->entity->y;
 }
 
 SDL_Texture* PowerUpArtComponent::getNextTexture(int /*dt*/) {
@@ -13,8 +19,6 @@ SDL_Texture* PowerUpArtComponent::getNextTexture(int /*dt*/) {
 }
 
 SDL_Rect* PowerUpArtComponent::getNextSrcRect(int dt) {
-    entity->x = powerUp->entity->x;
-    entity->y = powerUp->entity->y;
     if (powerUp->pwrUPTimerArray[index]!=-999) {
         timecount += dt;
         timecount %= 500;

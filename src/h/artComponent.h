@@ -21,6 +21,7 @@ public:
 
     ArtComponent(Entity* entity, int layer, bool movesWithCamera);
     virtual ~ArtComponent() { };
+    virtual void updateLocation() { };      // for ArtComponents with owners
     virtual SDL_Texture* getNextTexture(int dt) = 0;
     virtual SDL_Rect* getNextSrcRect(int dt) = 0;
 
@@ -51,23 +52,16 @@ public:
     SDL_Rect* getNextSrcRect(int dt);
 };
 
-class OverlayArtComponent : public ArtComponent {
-protected:
-    SDL_Texture * texture;
-public:
-    OverlayArtComponent(Entity* entity, Texture texture, int layer);
-    virtual SDL_Texture* getNextTexture(int dt)=0;
-    virtual SDL_Rect* getNextSrcRect(int dt)=0;
-};
-
-class PowerUpArtComponent : public OverlayArtComponent {
+class PowerUpArtComponent : public ArtComponent {
 private:
-    PowerUpComponent * powerUp;
+    SDL_Texture* texture;
+    PowerUpComponent* powerUp;
     int index;
     int timecount;
     SDL_Rect clip;
 public:
-    PowerUpArtComponent(Entity* entity, Entity * owner, Texture texture, int layer, int index);
+    PowerUpArtComponent(Entity* entity, Entity* owner, Texture tex, int layer, int index);
+    void updateLocation();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
@@ -86,14 +80,16 @@ public:
     SDL_Rect* getNextSrcRect(int dt);
 };
 
-class AmmoBarArtComponent: public OverlayArtComponent {
+class AmmoBarArtComponent: public ArtComponent {
 private:
-    AmmoComponent * ownerAmmo;
+    SDL_Texture* texture;
+    AmmoComponent* ownerAmmo;
     SDL_Rect clip;
     float width;
     int height;
 public:
     AmmoBarArtComponent(Entity* entity, Entity* owner, Texture tex, int layer);
+    void updateLocation();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
@@ -115,7 +111,7 @@ public:
     void deselectMenuItem();
 };
 
-class ScoreTextArtComponent: public ArtComponent{
+class ScoreTextArtComponent: public ArtComponent {
 private:
     ScoreComponent* ownerScore;
     SDL_Renderer* renderer;

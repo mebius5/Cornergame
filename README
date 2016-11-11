@@ -124,7 +124,7 @@ verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
 revamp terrain -> fewer rectangles!
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
 CommandBus/ComponentList?
-Shift camera based on both heroes simultaneously
+Camera shift -> split screen when too far?
 RespawnEntity class? (take out initialX, initialY from everyone)
 Segfault with fonts (on mac only?)
 Tuning of camera speed/character speed
@@ -134,7 +134,6 @@ revamp layers -> enum/drawingHandler has vector<vector<>>
 change powerup enum to be separate?
 powerup overlays lagging behind player?
 Use State inheritance + begin() method instead of switch case in GameManager
-transition to std::for_each + lamdbas where useful
 verify animation w/ sliding works properly!
 revamp enums: embed type code into enum?
 use auto for iterators
