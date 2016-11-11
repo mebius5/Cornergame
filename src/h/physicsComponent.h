@@ -10,6 +10,8 @@ private:
     Command* jumpCommand;
     Command* startSlideCommand;
     Command* stopSlideCommand;
+    Command* timeSlowCommand;
+    Command* timeNormalCommand;
     float xAccel;
     float yAccel;
     float accelAmount;
@@ -18,6 +20,7 @@ private:
     int jumps;
     bool infiniteJumps;
     bool frozen;
+    bool slow;
     DynamicCollisionComponent* collisionComp;
     float clipVelocity(float velocity, float max);
 

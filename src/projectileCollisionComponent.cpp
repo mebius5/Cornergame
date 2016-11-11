@@ -3,6 +3,7 @@
 ProjectileCollisionComponent::ProjectileCollisionComponent(Entity* entity, Command* cmd, int ownerID) :
     DynamicCollisionComponent(entity),
     despawnCommand(cmd),
+    timeFreezeCommand(new TimeFreezeCommand(100)),
     ownerID(ownerID) {
 }
 
@@ -25,6 +26,7 @@ void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* 
         otherComp->entity->actionState = DAMAGE;
         otherComp->entity->physics->bump(this->sign(this->entity->physics->xVelocity));
         Component::commandList->push_back(this->despawnCommand);
+        Component::commandList->push_back(this->timeFreezeCommand);
 
     // if collision with owner, return as ammo
     } else if (otherComp->entity->getId() == this->ownerID) {
@@ -38,6 +40,7 @@ void ProjectileCollisionComponent::onStaticCollision(StaticCollisionComponent* o
     if (dynamic_cast<TerrainCollisionComponent*>(otherComp)) {
         // stop moving
         this->entity->physics->freeze();
+        this->entity->physics->target = NULL;
     }
 }
 

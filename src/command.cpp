@@ -33,3 +33,13 @@ PreviewOffCommand::PreviewOffCommand() {
 
 CameraShakeCommand::CameraShakeCommand() {
 }
+
+TimeFreezeCommand::TimeFreezeCommand(int time) :
+    time(time) {
+}
+
+TimeSlowCommand::TimeSlowCommand() {
+}
+
+TimeNormalCommand::TimeNormalCommand() {
+}

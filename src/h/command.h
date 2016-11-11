@@ -75,4 +75,20 @@ public:
     CameraShakeCommand();
 };
 
+class TimeFreezeCommand: public Command {
+public:
+    int time;
+    TimeFreezeCommand(int time);
+};
+
+class TimeSlowCommand: public Command {
+public:
+    TimeSlowCommand();
+};
+
+class TimeNormalCommand: public Command {
+public:
+    TimeNormalCommand();
+};
+
 #endif
