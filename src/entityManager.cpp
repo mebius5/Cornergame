@@ -426,13 +426,13 @@ void EntityManager::populateLevel(Level* level) {
                 break;
             }
             case FADEINTEXT:{
-                createFadeInText(FONT_GLOBAL, level->getStringList().at(stringCount).c_str(),
+                createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
                                  30, 255, 255, 255, 0, windowW, j*32, i*32);
                 stringCount++;
                 break;
             }
             case NORMALTEXT:{
-                createFadeInText(FONT_GLOBAL, level->getStringList().at(stringCount).c_str(),
+                createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
                                  30, 255, 255, 255, 255, windowW, j*32, i*32);
                 stringCount++;
                 break;

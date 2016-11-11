@@ -5,7 +5,7 @@ Level::Level(std::string filename, int windowW, int windowH) {
     std::ifstream infile(filename);
     if(!infile.is_open()){
         std::cerr << "Cannot open level file: " << filename << std::endl;
-        return ;
+        return;
     }
 
     // get the size of the level from first line
@@ -20,92 +20,53 @@ Level::Level(std::string filename, int windowW, int windowH) {
         return;
     }
 
-    /***
-    if(this->width<(windowW/32)*3){
-        std::cerr<<"Level width needs to be at least three times bigger than camera width ( at least "
-                 <<std::to_string((windowW/32)*3).c_str()<< ")"<<std::endl;
-        return ;
-    }***/
-
-    // initialize level contents
-
     // Add enough room for another copy of camera size on the right of the level
     levelContents = new Tiles * [this->height/*+(windowH/32)*/];
     for (int i = 0; i < this->height/*+(windowH/32)*/; i++) {
         levelContents[i] = new Tiles[this->width+(windowW/32)];
     }
 
-    int numHero=0;
-
     // read the file and build the level
+    int numHero = 0;    // number of heroes that have been declared
+    Tiles tile = NONE;
     for (int i = 0; i < this->height; i++) {
         std::getline(infile, line);
         for (int j = 0; j < this->width; j++) {
             switch (line.at(j)) {
-                case '^':
-                    levelContents[i][j] = NONE;
-                    break;
-                case '#':
-                    levelContents[i][j] = BRICK;
-                    break;
-                case 'W':
-                    levelContents[i][j] = GRASS;
-                    break;
-                case 'D':
-                    levelContents[i][j] = DIRT;
-                    break;
-                case '@':
-                    numHero++;
-                    if(numHero==1){
-                        levelContents[i][j] = SPAWN1;
-                    } else if (numHero==2){
-                        levelContents[i][j] = SPAWN2;
-                    } else{
-                        std::cerr<<"Error: More than 2 heros declared in level file."<<std::endl;
-                    }
-                    break;
-                case '-':
-                    levelContents[i][j] = ENEMY;
-                    break;
-                case 'O':
-                    levelContents[i][j] = GOAL;
-                    break;
-                case 'J':
-                    levelContents[i][j] = PU_JUMP;
-                    break;
-                case 'H':
-                    levelContents[i][j] = PU_HEALTH;
-                    break;
-                case 'B':
-                    levelContents[i][j] = PU_BEER;
-                    break;
-                case 'A':
-                    levelContents[i][j] = PU_AMMO;
-                    break;
-                case 'T':
-                    levelContents[i][j] = TREE1;
-                    break;
-                case 't':
-                    levelContents[i][j] = TREE2;
-                    break;
-                case 'b':
-                    levelContents[i][j] = BENCH;
-                    break;
-                case 'F':
-                    levelContents[i][j] = FADEINTEXT;
-                    break;
-                case 'N':
-                    levelContents[i][j] = NORMALTEXT;
-                    break;
-                default:
-                    levelContents[i][j] = NONE;
-                    std::cerr << "Unrecognized symbol in level file: " << line.at(j) << std::endl;
-                    break;
+            case '^': tile = NONE; break;
+            case '#': tile = BRICK; break;
+            case 'W': tile = GRASS; break;
+            case 'D': tile = DIRT; break;
+            case '@':
+                numHero++;
+                if (numHero == 1) {
+                    tile = SPAWN1;
+                } else if (numHero == 2) {
+                    tile = SPAWN2;
+                } else {
+                    std::cerr << "Error: More than 2 heroes declared in level file." << std::endl;
+                }
+                break;
+            case '-': tile = ENEMY; break;
+            case 'O': tile = GOAL; break;
+            case 'J': tile = PU_JUMP; break;
+            case 'H': tile = PU_HEALTH; break;
+            case 'B': tile = PU_BEER; break;
+            case 'A': tile = PU_AMMO; break;
+            case 'T': tile = TREE1; break;
+            case 't': tile = TREE2; break;
+            case 'b': tile = BENCH; break;
+            case 'F': tile = FADEINTEXT; break;
+            case 'N': tile = NORMALTEXT; break;
+            default:
+                tile = NONE;
+                std::cerr << "Unrecognized symbol in level file: " << line.at(j) << std::endl;
             }
+            this->levelContents[i][j] = tile;
         }
     }
 
-    for(int i= 0 ; i<height; i++){
+    for (int i = 0; i < height; i++) {
         for (int j = 0; j < windowW/32; j++) {
             Tiles type = levelContents[i][j];
             if (type==BRICK || type==GRASS || type==DIRT || type==TREE1 || type==TREE2 || type==PU_AMMO
@@ -119,7 +80,6 @@ Level::Level(std::string filename, int windowW, int windowH) {
 
     this->contentHeight = height/*+(windowH/32)*/;
     this->contentWidth = width+(windowW/32);
-
 
     while(!infile.eof()){
         std::getline(infile,line);
@@ -141,6 +101,6 @@ Tiles Level::getTile(int i, int j) {
     return this->levelContents[i][j];
 }
 
-std::vector<std::string> Level::getStringList() {
+std::vector<std::string>& Level::getStringList() {
     return this->stringList;
 }

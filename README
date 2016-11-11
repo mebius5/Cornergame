@@ -169,14 +169,12 @@ TODOS
 verify deletion was implemented properly w/ vectors!
 revamp terrain -> fewer rectangles!
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
-Change renderCopy() of static stuff to be more efficient: group static textures
 CommandBus/ComponentList?
 Shift camera based on both heroes simultaneously
 RespawnEntity class? (take out initialX, initialY from everyone)
-Segfault with fonts?
+Segfault with fonts (on mac only?)
 Tuning of camera speed/character speed
 Sounds: handle stop sounds before start sounds?
-level tile usage (dirt vs brick)
 GAME NAME - STOP PUNTING
 revamp layers -> enum/drawingHandler has vector<vector<>>
 change powerup enum to be separate?
@@ -186,11 +184,11 @@ transition to std::for_each + lamdbas where useful
 verify animation w/ sliding works properly!
 revamp enums: embed type code into enum?
 use auto for iterators
-victory screen
 die cheat code
 transition from at() to operator[]
 update score with something else
 remove unnecessary destructors (State?)
 change previewOn to autoShiftOn (invert stuff...)
-consolidate enums into enum.h -> change setting timcount in AnimationComponent
+consolidate enums into enum.h -> change setting timecount in AnimationComponent
 sliding in results state?
+Normal text? (see level.cpp)
