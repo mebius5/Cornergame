@@ -2,39 +2,33 @@
 
 TextFadeInComponent::TextFadeInComponent(Entity* entity, SDL_Renderer *renderer,
                                          SDL_Surface *surface,
-                                         int layer, int initialAlpha):
+                                         int layer, float initialAlpha):
     ArtComponent(entity, layer, false),
     surface(surface),
     renderer(renderer),
-    lastTexture(NULL),
-    alpha((double)initialAlpha) {
+    alpha(initialAlpha) {
+    SDL_SetSurfaceAlphaMod(this->surface, (int)this->alpha);
+    this->lastTexture = SDL_CreateTextureFromSurface(this->renderer, this->surface);
 }
 
 TextFadeInComponent::~TextFadeInComponent() {
-    if(this->surface){
+    if (this->surface)
         SDL_FreeSurface(this->surface);
-        this->surface=NULL;
-    }
-    if(this->lastTexture){
+    if (this->lastTexture)
         SDL_DestroyTexture(this->lastTexture);
-        this->lastTexture=NULL;
-    }
-    this->renderer = NULL;
 }
 
 /* Need to destroy texture after use */
-SDL_Texture * TextFadeInComponent::getNextTexture(int dt) {
-    this->alpha += (double) dt/10;
-    if (this->alpha>255)
-        this->alpha=255;
-    SDL_SetSurfaceAlphaMod(this->surface,(int)this->alpha);
+SDL_Texture* TextFadeInComponent::getNextTexture(int dt) {
+    if (this->alpha < 255.0f) {     // reconstruct texture if necessary
+        this->alpha += dt / 8.0f;
+        this->alpha = std::min(this->alpha, 255.0f);
+        SDL_SetSurfaceAlphaMod(this->surface, (int)this->alpha);
 
-    if (this->lastTexture) { //Destroy the previously created texture
-        SDL_DestroyTexture(this->lastTexture);
-        this->lastTexture=NULL;
+        if (this->lastTexture)      // destroy the previously created texture
+            SDL_DestroyTexture(this->lastTexture);
+        this->lastTexture = SDL_CreateTextureFromSurface(this->renderer, this->surface);
     }
-
-    this->lastTexture = SDL_CreateTextureFromSurface(this->renderer,this->surface);
     return this->lastTexture;
 }
 
@@ -44,9 +38,11 @@ SDL_Rect* TextFadeInComponent::getNextSrcRect(int /*dt*/) {
 }
 
 void TextFadeInComponent::selectMenuItem() {
-    SDL_SetSurfaceColorMod(this->surface, (Uint8) 255, (Uint8)0, (Uint8) 0);
+    SDL_SetSurfaceColorMod(this->surface, (Uint8)255, (Uint8)0, (Uint8)0);
+    this->alpha = std::max(this->alpha - 1.0f, 0.0f);
 }
 
 void TextFadeInComponent::deselectMenuItem() {
-    SDL_SetSurfaceColorMod(this->surface, (Uint8) 255, (Uint8)255, (Uint8) 255);
+    SDL_SetSurfaceColorMod(this->surface, (Uint8)255, (Uint8)255, (Uint8)255);
+    this->alpha = std::max(this->alpha - 1.0f, 0.0f);
 }

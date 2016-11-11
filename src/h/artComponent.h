@@ -103,10 +103,10 @@ private:
     SDL_Surface* surface;
     SDL_Renderer* renderer;
     SDL_Texture* lastTexture;
-    double alpha;
+    float alpha;
 public:
     TextFadeInComponent(Entity* entity, SDL_Renderer* renderer,
-                        SDL_Surface* surface, int layer, int initialAlpha);
+                        SDL_Surface* surface, int layer, float initialAlpha);
     ~TextFadeInComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
@@ -114,10 +114,6 @@ public:
     void selectMenuItem();
     void deselectMenuItem();
 };
-
-
-
-
 
 class ScoreTextArtComponent: public ArtComponent{
 private:

@@ -32,6 +32,8 @@ Akshay
 Andrew
 - for beta: fixed issue with powerup overlay disappearing, fixed sound effects
     to play properly, and not loop infinitely.
+- implemented passing entities between states: used for keeping heroes around
+    when going into results state
 
 Grady
 - Refactored art components so we can have overlay that's tied to the hero position.
@@ -166,7 +168,7 @@ QUIRKS
 - disabled the down key due to bugs that allow you to sink into the terrain
 
 TODOS
-verify deletion was implemented properly w/ vectors!
+verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
 revamp terrain -> fewer rectangles!
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
 CommandBus/ComponentList?
