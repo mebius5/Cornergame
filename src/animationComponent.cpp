@@ -19,7 +19,8 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
     bool& onGround = this->collisionComp->onGround;
     bool& onLeftWall = this->collisionComp->onLeftWall;
     bool& onRightWall = this->collisionComp->onRightWall;
-    if (onLeftWall || onRightWall) {
+    if ((onLeftWall && this->entity->dir == -1)
+            || (onRightWall && this->entity->dir == 1)) {
         this->entity->actionState = ACTION_SLIDING;
     }
     int startpos = 0;
@@ -27,14 +28,13 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         startpos = 128;
     }
     if (this->entity->actionState == ACTION_IDLE) {
-
         timecount += dt;
         timecount %= 500;
 
         // if moving, use a walking animation, else idle
-        float velocity = sqrt(pow(this->entity->physics->xVelocity, 2) +
-                              pow(this->entity->physics->yVelocity, 2));
-        if (velocity > 0.01) {
+        float sqnorm = pow(this->entity->physics->xVelocity, 2)
+                       + pow(this->entity->physics->yVelocity, 2);
+        if (sqnorm > 0.0001) {
             clip.x = (timecount / 125) * 32 + startpos;
             clip.y = 0;
         } else {
@@ -66,7 +66,7 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         clip.x = (actionTime / 250) * 32 + startpos;
         clip.y = 128;
         this->actionTime %= 1000;
-        if (onGround) {
+        if (onGround || (!onLeftWall && !onRightWall)) {
             this->entity->actionState = ACTION_IDLE;
             this->actionTime = 0;
         }

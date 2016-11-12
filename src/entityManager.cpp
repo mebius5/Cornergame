@@ -245,23 +245,7 @@ Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, int x, 
 
 Entity* EntityManager::createTerrain(Tile tileType, int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
-    TerrainTexEnum texType = TT_NONE;
-    switch (tileType){
-        case BRICK:{
-            texType = TT_BRICK;
-            break;
-        }
-        case GRASS: {
-            texType = TT_GRASS;
-            break;
-        }
-        case DIRT: {
-            texType = TT_DIRT;
-            break;
-        }
-        default:
-            break;
-    }
+    TerrainTexEnum texType = (TerrainTexEnum)tileType;
     Entity* entity = this->entityBuilder.createTerrain(
             texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
     this->addEntity(entity);
@@ -334,110 +318,83 @@ void EntityManager::populateLevel(Level* level) {
     for (int i = 0; i < level->contentHeight; i++) {
         for (int j = 0; j < level->contentWidth; j++) {
             switch (level->getTile(i, j)) {
-            case DIRT:
-            case BRICK:
-            case GRASS: {
-                bool freeLeft = (j == 0 || (level->getTile(i, j-1) != BRICK
-                                            && level->getTile(i, j-1) != GRASS
-                                            && level->getTile(i,j-1) != DIRT));
+            case TILE_DIRT:
+            case TILE_BRICK:
+            case TILE_GRASS: {
+                bool freeLeft = (j == 0 || level->getTile(i, j-1) >= TILE_NONE);
                 bool freeRight;     // assigned value later
-                bool freeTop = (i == 0 || (level->getTile(i-1, j) != BRICK
-                                           && level->getTile(i-1, j) != GRASS
-                                          && level->getTile(i-1, j) != DIRT));
-                bool freeBot = (i == level->contentHeight-1 || (level->getTile(i+1, j) != BRICK
-                                                                && level->getTile(i+1, j) != GRASS
-                                                               && level->getTile(i+1, j) != DIRT));
+                bool freeTop = (i == 0 || level->getTile(i-1, j) >= TILE_NONE);
+                bool freeBot = (i == level->contentHeight-1 || level->getTile(i+1, j) >= TILE_NONE);
                 int numberHorizontal = 1;
                 int originalJ = j;
                 // create horizontal slabs, breaking at each intersection with other terrain rectangles.
                 while (j < (level->width-1) && level->getTile(i, j+1) == level->getTile(i, j)) {
-                    if (i > 0 && freeTop && (level->getTile(i-1, j+1) == BRICK
-                                             || level->getTile(i-1, j+1) == GRASS
-                                             || level->getTile(i-1, j+1) == DIRT))
+                    if (i > 0 && freeTop && level->getTile(i-1, j+1) < TILE_NONE)
                         break;
-                    if (i > 0 && !freeTop && (level->getTile(i-1, j+1) != BRICK
-                                              && level->getTile(i-1, j+1) != GRASS
-                                              && level->getTile(i-1, j+1) != DIRT))
+                    if (i > 0 && !freeTop && level->getTile(i-1, j+1) >= TILE_NONE)
                         break;
-                    if (i < level->contentHeight-1 && freeBot && (level->getTile(i+1, j+1) == BRICK
-                                                                  || level->getTile(i+1, j+1) == GRASS
-                                                                  || level->getTile(i+1, j+1) == DIRT))
+                    if (i < level->contentHeight-1 && freeBot && level->getTile(i+1, j+1) < TILE_NONE)
                         break;
-                    if (i < level->contentHeight-1 && !freeBot && (level->getTile(i+1, j+1) != BRICK
-                                                                   && level->getTile(i+1, j+1) != GRASS
-                                                                      && level->getTile(i+1, j+1) != DIRT))
+                    if (i < level->contentHeight-1 && !freeBot && level->getTile(i+1, j+1) >= TILE_NONE)
                         break;
                     numberHorizontal++;
                     j++;
                 }
-                freeRight = (j == level->contentWidth-1 || (level->getTile(i, j+1) != BRICK
-                                                            && level->getTile(i, j+1) != GRASS
-                                                               && level->getTile(i, j+1) != DIRT));
+                freeRight = (j == level->contentWidth-1 || level->getTile(i, j+1) >= TILE_NONE);
                 createTerrain(level->getTile(i, j), originalJ*32, i*32, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
                 break;
             }
-            case ENEMY:{
+            case TILE_ENEMY:
                 createEnemy(TEX_ENEMY, j * 32, i * 32);
                 break;
-            }
-            case SPAWN1: {
+            case TILE_SPAWN1: {
                 Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
                 createHealthBar(100, 50, hero);
                 createAmmoBar(400, 50, hero);
                 createScoreBox(850, 50, hero);
                 break;
             }
-            case SPAWN2: {
+            case TILE_SPAWN2: {
                 Entity* hero2 = createHero(TEX_HERO2, j * 32, i * 32, SFX_ALERT, true);
                 createHealthBar(100, 100, hero2);
                 createAmmoBar(400, 100, hero2);
                 createScoreBox(850, 100, hero2);
                 break;
             }
-            case GOAL: {
+            case TILE_GOAL:
                 createVictoryZone(j * 32, i * 32);
                 break;
-            }
-            case PU_AMMO: {
+            case TILE_PU_AMMO:
                 createPowerUp(TEX_PWRUP_AMMO, SFX_AMMO, j*32, i*32);
                 break;
-           }
-            case TREE1:{
+            case TILE_TREE1:
                 createStaticBackgroundObject(TEX_TREE1, j*32, i*32);
                 break;
-            }
-            case TREE2:{
+            case TILE_TREE2:
                 createStaticBackgroundObject(TEX_TREE2, j*32, i*32);
                 break;
-            }
-            case BENCH:{
+            case TILE_BENCH:
                 createStaticBackgroundObject(TEX_BENCH, j*32, i*32);
                 break;
-            }
-            case PU_JUMP:{
+            case TILE_PU_JUMP:
                 createPowerUp(TEX_PWRUP_INFJUMP, SFX_WOOSH, j*32, i*32);
                 break;
-            }
-            case PU_HEALTH:{
+            case TILE_PU_HEALTH:
                 createPowerUp(TEX_PWRUP_INFHEALTH, SFX_ARMOR, j*32, i*32);
                 break;
-            }
-            case PU_BEER:{
+            case TILE_PU_BEER:
                 createPowerUp(TEX_PWRUP_BEER, SFX_DRINK, j*32, i*32);
                 break;
-            }
-            case FADEINTEXT:{
+            case TILE_FADEINTEXT:
                 createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
                                  30, 255, 255, 255, 0, windowW, j*32, i*32);
                 stringCount++;
                 break;
-            }
-            case NORMALTEXT:{
+            case TILE_NORMALTEXT:
                 createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
                                  30, 255, 255, 255, 255, windowW, j*32, i*32);
                 stringCount++;
                 break;
-            }
             default:
                 break;
             }

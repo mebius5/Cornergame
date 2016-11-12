@@ -1,13 +1,21 @@
 #ifndef CORNERGAME_ENUMS_H
 #define CORNERGAME_ENUMS_H
 
+enum Tile {
+    // Put texture enums first to match with TerrainTexEnum
+    TILE_BRICK, TILE_GRASS, TILE_DIRT, TILE_NONE,
+    // Other tiles
+    TILE_SPAWN1, TILE_SPAWN2, TILE_ENEMY, TILE_GOAL,
+    TILE_PU_JUMP, TILE_PU_HEALTH, TILE_PU_AMMO, TILE_PU_BEER,
+    TILE_TREE1, TILE_TREE2, TILE_BENCH, TILE_FADEINTEXT, TILE_NORMALTEXT };
+
 enum ActionEnum { ACTION_IDLE, ACTION_JUMP, ACTION_THROW, ACTION_DAMAGE,
                   ACTION_SLIDING };
 
 // NOTE: keep NONE state the last one to make array indexing easier!
 enum StateEnum { STATE_QUIT, STATE_START, STATE_PLAY, STATE_LEVEL_TRANSIT,
-                 STATE_TUTORIAL,
-                 STATE_MENU, STATE_HIGHSCORE, STATE_RESULTS, STATE_NONE};
+                 STATE_TUTORIAL, STATE_MENU, STATE_HIGHSCORE, STATE_RESULTS,
+                 STATE_NONE };
 
 enum ProjEnum { PROJ_HERO, PROJ_ENEMY };
 
@@ -20,12 +28,9 @@ enum SfxEnum { SFX_ALERT, SFX_AMMO, SFX_ARMOR, SFX_DRINK, SFX_JUMP,
 enum MusicEnum { MUSIC_START, MUSIC_MENU, MUSIC_PLAY, MUSIC_HIGHSCORE };
 
 enum TextureEnum {
-    //Update array size in PowerUpComponent
-    //List the powerups in order of its corresponding position in the array
-    TEX_PWRUP_INFJUMP=0, TEX_PWRUP_INFHEALTH=1, TEX_PWRUP_AMMO=2,
-    TEX_PWRUP_BEER=3,
-
-    //MAKE SURE TO LIST POWER UPS BEFORE TEXTURES
+    // List the powerups in order of its corresponding position in the array
+    TEX_PWRUP_INFJUMP, TEX_PWRUP_INFHEALTH, TEX_PWRUP_AMMO, TEX_PWRUP_BEER,
+    // MAKE SURE TO LIST POWER UPS BEFORE TEXTURES
     TEX_HERO, TEX_HERO2, TEX_ENEMY, TEX_BACKGROUND, TEX_HEALTHBAR,
     TEX_AMMOBAR, TEX_VICTORY, TEX_PROJECTILE,
     TEX_PWRUP_INFJUMP_OVERLAY, TEX_PWRUP_INFHEALTH_OVERLAY,

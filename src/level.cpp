@@ -27,40 +27,40 @@ Level::Level(std::string filename, int windowW, int windowH) {
 
     // read the file and build the level
     int numHero = 0;    // number of heroes that have been declared
-    Tile tile = NONE;
+    Tile tile = TILE_NONE;
     for (int i = 0; i < this->height; i++) {
         std::getline(infile, line);
         if ((int)line.length() < this->width)
             std::cerr << "Error: Level file line " << i+2 << " is too short." << std::endl;
         for (int j = 0; j < this->width; j++) {
             switch (line[j]) {
-            case '^': tile = NONE; break;
-            case '#': tile = BRICK; break;
-            case 'W': tile = GRASS; break;
-            case 'D': tile = DIRT; break;
+            case '^': tile = TILE_NONE; break;
+            case '#': tile = TILE_BRICK; break;
+            case 'W': tile = TILE_GRASS; break;
+            case 'D': tile = TILE_DIRT; break;
             case '@':
                 numHero++;
                 if (numHero == 1) {
-                    tile = SPAWN1;
+                    tile = TILE_SPAWN1;
                 } else if (numHero == 2) {
-                    tile = SPAWN2;
+                    tile = TILE_SPAWN2;
                 } else {
                     std::cerr << "Error: More than 2 heroes declared in level file." << std::endl;
                 }
                 break;
-            case '-': tile = ENEMY; break;
-            case 'O': tile = GOAL; break;
-            case 'J': tile = PU_JUMP; break;
-            case 'H': tile = PU_HEALTH; break;
-            case 'B': tile = PU_BEER; break;
-            case 'A': tile = PU_AMMO; break;
-            case 'T': tile = TREE1; break;
-            case 't': tile = TREE2; break;
-            case 'b': tile = BENCH; break;
-            case 'F': tile = FADEINTEXT; break;
-            case 'N': tile = NORMALTEXT; break;
+            case '-': tile = TILE_ENEMY; break;
+            case 'O': tile = TILE_GOAL; break;
+            case 'J': tile = TILE_PU_JUMP; break;
+            case 'H': tile = TILE_PU_HEALTH; break;
+            case 'B': tile = TILE_PU_BEER; break;
+            case 'A': tile = TILE_PU_AMMO; break;
+            case 'T': tile = TILE_TREE1; break;
+            case 't': tile = TILE_TREE2; break;
+            case 'b': tile = TILE_BENCH; break;
+            case 'F': tile = TILE_FADEINTEXT; break;
+            case 'N': tile = TILE_NORMALTEXT; break;
             default:
-                tile = NONE;
+                tile = TILE_NONE;
                 std::cerr << "Unrecognized symbol in level file: " << line[j] << std::endl;
             }
             this->getTile(i, j) = tile;
@@ -70,11 +70,11 @@ Level::Level(std::string filename, int windowW, int windowH) {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < windowW/32; j++) {
             Tile type = this->getTile(i, j);
-            if (type==BRICK || type==GRASS || type==DIRT || type==TREE1 || type==TREE2 || type==PU_AMMO
-                    || type==PU_BEER || type==PU_JUMP || type==PU_HEALTH || type==BENCH) {
+            if (type == TILE_BRICK || type == TILE_GRASS || type == TILE_DIRT
+                    || type == TILE_TREE1 || type == TILE_TREE2 || type == TILE_BENCH) {
                 this->getTile(i, j + this->width) = type;
             } else {
-                this->getTile(i, j + this->width) = NONE;
+                this->getTile(i, j + this->width) = TILE_NONE;
             }
         }
     }

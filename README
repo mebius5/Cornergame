@@ -29,6 +29,7 @@ Andrew
 - code refactoring! -> removed unused methods, consolidated existing methods
 - performance updates to level reading, text display, AI, projectile collisions,
     fixed overlay lag
+- bug fixes for sliding animation, slow motion activation
 
 Grady
 - Refactored art components so we can have overlay that's tied to the hero position.
@@ -121,8 +122,6 @@ QUIRKS
 - disabled the down key due to bugs that allow you to sink into the terrain
 
 TODOS
-Up next -> layers! :)
-
 verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
 revamp terrain -> fewer rectangles!
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
@@ -139,7 +138,6 @@ verify animation w/ sliding works properly!
 revamp enums: embed type code into enum?
 update score with something else
 change previewOn to autoShiftOn (invert stuff...)
-consolidate enums into enum.h -> change setting timecount in AnimationComponent
 sliding in results state?
 slow-mo nesting (multiple projectiles in kill range)
 
