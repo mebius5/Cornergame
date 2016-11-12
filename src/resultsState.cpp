@@ -16,7 +16,6 @@ void ResultsState::setVictorious(Entity* winner, Entity* loser) {
     winner->drawHeight *= 3;
     winner->drawWidth *= 3;
     winner->actionState = ACTION_JUMP;
-    static_cast<DynamicCollisionComponent*>(winner->collision)->onGround = false;
     loser->actionState = ACTION_IDLE;
 }
 
@@ -27,11 +26,20 @@ void ResultsState::begin(int /*level*/) {
     // Update entities based on PlayState results
     this->entityManager.addEntity(this->hero1);
     this->entityManager.addEntity(this->hero2);
+    DynamicCollisionComponent* comp1 = static_cast<DynamicCollisionComponent*>(this->hero1->collision);
+    comp1->onGround = false;
+    comp1->onLeftWall = false;
+    comp1->onRightWall = false;
     this->hero1->dir = 1;
     this->hero1->x = 400;
     this->hero1->y = 120;
     this->hero1->physics->xVelocity = 0.0f;
     this->hero1->physics->yVelocity = 0.0f;
+
+    DynamicCollisionComponent* comp2 = static_cast<DynamicCollisionComponent*>(this->hero2->collision);
+    comp2->onGround = false;
+    comp2->onLeftWall = false;
+    comp2->onRightWall = false;
     this->hero2->dir = -1;
     this->hero2->x = 624;
     this->hero2->y = 120;
