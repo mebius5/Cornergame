@@ -35,8 +35,6 @@ public:
     void resetCamera(int minX, int minY, int maxX, int maxY);
     void initializeCamera(int levelW, int levelH, bool previewOn);
     void detectBorderCollision(Entity *entity, int dt);
-    void borderBoundX(Entity* entity, float boundValue);
-    void borderBoundY(Entity* entity, float boundValue);
 };
 
 #endif

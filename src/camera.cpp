@@ -143,18 +143,7 @@ void Camera::detectBorderCollision(Entity* entity, int dt) {
         entity->health->takeDamage(10);
         entity->actionState = DAMAGE;
     } else if (entity->x + entity->width > maxX) {
-        this->borderBoundX(entity, maxX - entity->width - shiftAmount);
+        entity->x = maxX - entity->width - shiftAmount;
+        entity->physics->xVelocity = 0.0f;
     }
-}
-
-void Camera::borderBoundX(Entity* entity, float boundValue) {
-    entity->x = boundValue;
-    entity->physics->xVelocity = 0.0f;
-    entity->collision->onBorderCollision();
-}
-
-void Camera::borderBoundY(Entity* entity, float boundValue) {
-    entity->y = boundValue;
-    entity->physics->yVelocity = 0.0f;
-    entity->collision->onBorderCollision();
 }

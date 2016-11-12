@@ -14,6 +14,3 @@ void VictoryZoneCollisionComponent::onEntityCollision(DynamicCollisionComponent*
     if (otherComp->entity->input)   // if hero, enter victory state
         Component::commandList->push_back(this->entityCollisionCommand);
 }
-
-void VictoryZoneCollisionComponent::onBorderCollision() {
-}

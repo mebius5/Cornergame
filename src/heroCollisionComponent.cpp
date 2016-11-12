@@ -33,6 +33,3 @@ void HeroCollisionComponent::onStaticCollision(StaticCollisionComponent* /*other
     if (this->onGround || this->onLeftWall || this->onRightWall)
         this->entity->physics->resetJumps();
 }
-
-void HeroCollisionComponent::onBorderCollision() {
-}

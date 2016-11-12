@@ -43,6 +43,3 @@ void ProjectileCollisionComponent::onStaticCollision(StaticCollisionComponent* o
         this->entity->physics->target = NULL;
     }
 }
-
-void ProjectileCollisionComponent::onBorderCollision() {
-}

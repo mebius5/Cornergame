@@ -28,9 +28,6 @@ void PowerUpCollisionComponent::onEntityCollision(DynamicCollisionComponent *oth
     }
 }
 
-void PowerUpCollisionComponent::onBorderCollision() {
-}
-
 void PowerUpCollisionComponent::setIsClaimed(bool isClaimed) {
     this->isClaimed = isClaimed;
 }

@@ -12,7 +12,6 @@ public:
     virtual ~CollisionComponent() { };
 
     virtual void onEntityCollision(DynamicCollisionComponent* otherComp) = 0;
-    virtual void onBorderCollision() = 0;
     int sign(float x);
 };
 
@@ -46,7 +45,6 @@ public:
 
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onStaticCollision(StaticCollisionComponent* otherComp);
-    void onBorderCollision();
 };
 
 class EnemyCollisionComponent : public DynamicCollisionComponent {
@@ -56,7 +54,6 @@ public:
     Command* projCollisionCommand;
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onStaticCollision(StaticCollisionComponent* otherComp);
-    void onBorderCollision();
 };
 
 class ProjectileCollisionComponent : public DynamicCollisionComponent {
@@ -69,7 +66,6 @@ public:
     ~ProjectileCollisionComponent();
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onStaticCollision(StaticCollisionComponent* otherComp);
-    void onBorderCollision();
 };
 
 class VictoryZoneCollisionComponent : public StaticCollisionComponent {
@@ -78,9 +74,7 @@ private:
 public:
     VictoryZoneCollisionComponent(Entity* entity, Command* entityCollisionCmd);
     ~VictoryZoneCollisionComponent();
-
     void onEntityCollision(DynamicCollisionComponent* otherComp);
-    void onBorderCollision();
 };
 
 class TerrainCollisionComponent : public StaticCollisionComponent {
@@ -99,7 +93,6 @@ public:
     TerrainCollisionComponent(Entity* entity, bool top, bool bot, bool r, bool l);
     ~TerrainCollisionComponent();
     void onEntityCollision(DynamicCollisionComponent* otherComp);
-    void onBorderCollision();
 };
 
 class PowerUpCollisionComponent : public StaticCollisionComponent {
@@ -111,7 +104,6 @@ public:
     PowerUpCollisionComponent(Entity* entity, TextureEnum pwrUpType, SfxEnum pwrSound);
     ~PowerUpCollisionComponent();
     void onEntityCollision(DynamicCollisionComponent* otherComp);
-    void onBorderCollision();
     void setIsClaimed(bool isClaimed);
 };
 

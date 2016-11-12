@@ -17,10 +17,9 @@ private:
     std::vector<Entity*>* heroEntities;
 public:
     EnemyAiComponent(Entity* entity, std::vector<Entity*>* heroEntities);
-    ~EnemyAiComponent();
     void resetAi();
     void updateLocation(int dt);
-    void update(int dt, Entity *hero);
+    void update(Entity *hero);
 };
 
 #endif

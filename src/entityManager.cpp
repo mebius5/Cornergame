@@ -313,7 +313,9 @@ void EntityManager::handleSpawns() {
                     this->addEntity(entity);
                     entity->x = entity->initialX;
                     entity->y = entity->initialY;
-                } else if (entity->x < this->windowW)
+                } else if (entity->x <= 0)
+                    entity->x += 2 * this->windowW;
+                else if (entity->x < this->windowW)     //TODO: ADD RESPAWNENTITY MOVE FLAG!
                     entity->x = this->windowW + (rand() % 100);
             }
         } else {

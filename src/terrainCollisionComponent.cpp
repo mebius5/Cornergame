@@ -16,6 +16,9 @@ TerrainCollisionComponent::~TerrainCollisionComponent() {
 }
 
 void TerrainCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
+    if (dynamic_cast<ProjectileCollisionComponent*>(otherComp))     // ignore projectiles
+        return;
+
     Entity* other = otherComp->entity;
     //Calculate the sides of entity 1
     int leftT = this->entity->x;
@@ -40,11 +43,6 @@ void TerrainCollisionComponent::onEntityCollision(DynamicCollisionComponent* oth
     bool collideTopRight = collideTop && collideRight && !collideBottom && !collideLeft;
     bool collideBottomLeft = collideBottom && collideLeft && !collideTop && !collideRight;
     bool collideBottomRight = collideBottom && collideRight && !collideTop && !collideLeft;
-
-    // ignore projectiles
-    if (dynamic_cast<ProjectileCollisionComponent*>(otherComp)) {
-        return;
-    }
 
     // resolve collisions
     float crossProduct;
@@ -80,9 +78,6 @@ void TerrainCollisionComponent::onEntityCollision(DynamicCollisionComponent* oth
         this->collideLeftWall(otherComp, rightT, topT, bottomT);
     else if (collideLeft && !collideRight)       // object collide from left
         this->collideRightWall(otherComp, leftT - other->width, topT, bottomT);
-}
-
-void TerrainCollisionComponent::onBorderCollision() {
 }
 
 void TerrainCollisionComponent::collideLeftWall(DynamicCollisionComponent* otherComp,

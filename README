@@ -125,18 +125,16 @@ revamp terrain -> fewer rectangles!
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
 CommandBus/ComponentList?
 Camera shift -> split screen when too far?
-RespawnEntity class? (take out initialX, initialY from everyone)
+RespawnEntity class! (take out initialX, initialY from everyone, add "moved")
 Segfault with fonts (on mac only?)
 Tuning of camera speed/character speed
 Sounds: handle stop sounds before start sounds?
 GAME NAME - STOP PUNTING
 revamp layers -> enum/drawingHandler has vector<vector<>>
 change powerup enum to be separate?
-powerup overlays lagging behind player?
 Use State inheritance + begin() method instead of switch case in GameManager
 verify animation w/ sliding works properly!
 revamp enums: embed type code into enum?
-use auto for iterators
 update score with something else
 change previewOn to autoShiftOn (invert stuff...)
 consolidate enums into enum.h -> change setting timecount in AnimationComponent
