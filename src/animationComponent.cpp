@@ -20,13 +20,13 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
     bool& onLeftWall = this->collisionComp->onLeftWall;
     bool& onRightWall = this->collisionComp->onRightWall;
     if (onLeftWall || onRightWall) {
-        this->entity->actionState = SLIDING;
+        this->entity->actionState = ACTION_SLIDING;
     }
     int startpos = 0;
     if (this->entity->dir == -1) {
         startpos = 128;
     }
-    if (this->entity->actionState == IDLE) {
+    if (this->entity->actionState == ACTION_IDLE) {
 
         timecount += dt;
         timecount %= 500;
@@ -41,16 +41,16 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
             clip.x = (timecount / 250) * 32 + startpos;
             clip.y = 32;
         }
-    } else if (this->entity->actionState == THROW) {
+    } else if (this->entity->actionState == ACTION_THROW) {
         this->actionTime += dt;
         if (this->actionTime > 240) {
             this->actionTime = 0;
-            this->entity->actionState = IDLE;
+            this->entity->actionState = ACTION_IDLE;
         }
         clip.x = (actionTime / 60) * 32 + startpos;
         clip.y = 64;
 
-    } else if (this->entity->actionState == JUMP) {
+    } else if (this->entity->actionState == ACTION_JUMP) {
         this->actionTime += dt;
         clip.x = (actionTime / 100) * 32 + startpos;
         clip.y = 96;
@@ -58,23 +58,23 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
             clip.x = 96 + startpos;
         }
         if (onGround) {
-            this->entity->actionState = IDLE;
+            this->entity->actionState = ACTION_IDLE;
             this->actionTime = 0;
         }
-    } else if (this->entity->actionState == SLIDING) {
+    } else if (this->entity->actionState == ACTION_SLIDING) {
         this->actionTime += dt;
         clip.x = (actionTime / 250) * 32 + startpos;
         clip.y = 128;
         this->actionTime %= 1000;
         if (onGround) {
-            this->entity->actionState = IDLE;
+            this->entity->actionState = ACTION_IDLE;
             this->actionTime = 0;
         }
-    } else if (this->entity->actionState == DAMAGE) {
+    } else if (this->entity->actionState == ACTION_DAMAGE) {
         this->actionTime += dt;
         if (this->actionTime > 1000) {
             this->actionTime = 0;
-            this->entity->actionState = IDLE;
+            this->entity->actionState = ACTION_IDLE;
         }
         clip.x = ((actionTime / 250) % 2) * 32 + startpos + 32;
         clip.y = 32;

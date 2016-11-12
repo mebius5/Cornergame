@@ -48,32 +48,28 @@ public:
     Entity* createAmmoBar(int x, int y, Entity* owner);
     Entity* createScoreBox(int x, int y, Entity* owner);
 
-    Entity* createFadeInText(FontEnum font,
-                                     const char* text, int fontSize, int r, int g, int b,
-                                     int initialAlpha, int windowW, int x, int y);
+    Entity* createFadeInText(FontEnum font, const char* text, int fontSize, int r, int g, int b,
+                             int initialAlpha, int windowW, int x, int y);
 
-    Entity* createCenteredFadeInText(FontEnum font,
-                            const char* text, int fontSize, int r, int g, int b,
-                            int initialAlpha, int windowW, int windowH);
+    Entity* createCenteredFadeInText(FontEnum font, const char* text, int fontSize, int r, int g, int b,
+                                     int initialAlpha, int windowW, int windowH);
 
-    Entity* createHorizontallyCenteredFadeInText(FontEnum font,
-                                                     const char *text, int fontSize,
-                                                     int r, int g, int b, int initialAlpha,
-                                                     int windowW, int yPos);
+    Entity* createHorizontallyCenteredFadeInText(FontEnum font, const char *text, int fontSize,
+                                                 int r, int g, int b, int initialAlpha,
+                                                 int windowW, int yPos);
 
-    Entity* createHorizontallyCenteredFadeInMenuText(FontEnum font,
-                                                     const char *text, int fontSize,
+    Entity* createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text, int fontSize,
                                                      int r, int g, int b, int initialAlpha,
                                                      int windowW, int yPos,
                                                      int index, int numOptions, StateEnum nextState);
     Entity* createVictoryZone(int x, int y);
     Entity* createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y);
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y);
-    Entity * createTerrain(Tiles tileType, int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
+    Entity* createTerrain(Tile tileType, int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
     Entity* createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum projType);
     void handleSpawns();
-    void populateLevel(Level * level);
+    void populateLevel(Level* level);
     void printCommands();
 };
 

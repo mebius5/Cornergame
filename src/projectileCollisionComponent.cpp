@@ -23,7 +23,7 @@ void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* 
     } else if (otherComp->entity->getId() != this->ownerID &&
             otherComp->entity->health) {
         otherComp->entity->health->takeDamage(250);
-        otherComp->entity->actionState = DAMAGE;
+        otherComp->entity->actionState = ACTION_DAMAGE;
         otherComp->entity->physics->bump(this->sign(this->entity->physics->xVelocity));
         Component::commandList->push_back(this->despawnCommand);
         Component::commandList->push_back(this->timeFreezeCommand);

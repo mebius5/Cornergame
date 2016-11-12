@@ -15,9 +15,9 @@ ResultsState::ResultsState(int windowW, int windowH, EntityManager& entMgr,
 void ResultsState::setVictorious(Entity* winner, Entity* loser) {
     winner->drawHeight *= 3;
     winner->drawWidth *= 3;
-    winner->actionState = JUMP;
+    winner->actionState = ACTION_JUMP;
     static_cast<DynamicCollisionComponent*>(winner->collision)->onGround = false;
-    loser->actionState = IDLE;
+    loser->actionState = ACTION_IDLE;
 }
 
 void ResultsState::begin(int /*level*/) {

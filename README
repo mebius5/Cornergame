@@ -25,9 +25,10 @@ Andrew
     to play properly, and not loop infinitely.
 - implemented passing entities between states: used for keeping heroes around
     when going into results state
-- updated README with up to date stuff!
-- code readability changes (refactoring!)
-- performance updates to level reading, text display
+- updated README with up to date instructions and TODOs!
+- code refactoring! -> removed unused methods, consolidated existing methods
+- performance updates to level reading, text display, AI, projectile collisions,
+    fixed overlay lag
 
 Grady
 - Refactored art components so we can have overlay that's tied to the hero position.
@@ -120,11 +121,13 @@ QUIRKS
 - disabled the down key due to bugs that allow you to sink into the terrain
 
 TODOS
+Up next -> layers! :)
+
 verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
 revamp terrain -> fewer rectangles!
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
 CommandBus/ComponentList?
-Camera shift -> split screen when too far?
+Camera shift -> split screen when too far? zoom out?
 RespawnEntity class! (take out initialX, initialY from everyone, add "moved")
 Segfault with fonts (on mac only?)
 Tuning of camera speed/character speed
@@ -132,7 +135,6 @@ Sounds: handle stop sounds before start sounds?
 GAME NAME - STOP PUNTING
 revamp layers -> enum/drawingHandler has vector<vector<>>
 change powerup enum to be separate?
-Use State inheritance + begin() method instead of switch case in GameManager
 verify animation w/ sliding works properly!
 revamp enums: embed type code into enum?
 update score with something else

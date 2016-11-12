@@ -93,7 +93,7 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
         }
         this->entity->ammo->spendAmmo();
 
-        this->entity->actionState = THROW;
+        this->entity->actionState = ACTION_THROW;
         this->spawnCommand->dir = this->entity->dir;
         if (this->spawnCommand->dir == 1) {
             this->spawnCommand->x = entity->x + this->entity->width + 16; // TODO remove magic numbers

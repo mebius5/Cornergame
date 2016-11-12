@@ -22,8 +22,6 @@ class AmmoComponent;
 #include "powerUpComponent.h"
 #include "ammoComponent.h"
 
-enum Action {IDLE, JUMP, THROW, DAMAGE, SLIDING};
-
 class Entity {
 private:
     int id;
@@ -37,7 +35,7 @@ public:
     int drawWidth;
     int drawHeight;
     int dir;                    // direction player is facing (1 or -1)
-    Action actionState;
+    ActionEnum actionState;
     bool rotates;
 
     CollisionComponent* collision;

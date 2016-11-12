@@ -4,9 +4,6 @@
 #include "entity.h"
 #include "component.h"
 
-//Must include entity.h before component.h
-
-
 //REFER TO PowerUpEnums in the enums.h
 
 class PowerUpComponent : public Component {
@@ -26,4 +23,4 @@ public:
     void deactivateBeerPwrUp();
 };
 
-#endif //CORNERGAME_POWERUPCOMPONENT_H
+#endif

@@ -13,7 +13,7 @@ Level::Level(std::string filename, int windowW, int windowH) {
     infile >> this->width;
     std::getline(infile, line);
 
-    if((this->height%(windowH/32))!=0||(this->width%(windowW/32))!=0){
+    if ((this->height % (windowH/32)) != 0 || (this->width % (windowW/32)) != 0) {
         std::cerr << "Level width needs to be multiple of " << windowW/32
                   << "Level height needs to be multiple of " << windowH/32
                   << std::endl;
@@ -21,14 +21,13 @@ Level::Level(std::string filename, int windowW, int windowH) {
     }
 
     // Add enough room for another copy of camera size on the right of the level
-    levelContents = new Tiles * [this->height/*+(windowH/32)*/];
-    for (int i = 0; i < this->height/*+(windowH/32)*/; i++) {
-        levelContents[i] = new Tiles[this->width+(windowW/32)];
-    }
+    this->contentHeight = height/*+(windowH/32)*/;
+    this->contentWidth = width+(windowW/32);
+    levelContents = new Tile[this->contentHeight * this->contentWidth];
 
     // read the file and build the level
     int numHero = 0;    // number of heroes that have been declared
-    Tiles tile = NONE;
+    Tile tile = NONE;
     for (int i = 0; i < this->height; i++) {
         std::getline(infile, line);
         if ((int)line.length() < this->width)
@@ -64,43 +63,37 @@ Level::Level(std::string filename, int windowW, int windowH) {
                 tile = NONE;
                 std::cerr << "Unrecognized symbol in level file: " << line[j] << std::endl;
             }
-            this->levelContents[i][j] = tile;
+            this->getTile(i, j) = tile;
         }
     }
 
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < windowW/32; j++) {
-            Tiles type = levelContents[i][j];
+            Tile type = this->getTile(i, j);
             if (type==BRICK || type==GRASS || type==DIRT || type==TREE1 || type==TREE2 || type==PU_AMMO
                     || type==PU_BEER || type==PU_JUMP || type==PU_HEALTH || type==BENCH) {
-                levelContents[i][j+width]= type;
+                this->getTile(i, j + this->width) = type;
             } else {
-                levelContents[i][j+width]= NONE;
+                this->getTile(i, j + this->width) = NONE;
             }
         }
     }
 
-    this->contentHeight = height/*+(windowH/32)*/;
-    this->contentWidth = width+(windowW/32);
-
-    while(!infile.eof()){
-        std::getline(infile,line);
+    while (!infile.eof()) {
+        std::getline(infile, line);
         this->stringList.push_back(line);
     }
 
     infile.close();
 }
 
-Level::~Level() {       // TODO: verify this is correct
-    for (int i = 0; i < this->height/*+(windowH/32)*/; i++)
-        delete[] levelContents[i];
-    delete[] levelContents;
-
+Level::~Level() {
+    delete[] this->levelContents;
     this->stringList.clear();
 }
 
-Tiles Level::getTile(int i, int j) {
-    return this->levelContents[i][j];
+Tile& Level::getTile(int i, int j) {
+    return this->levelContents[i * this->contentWidth + j];
 }
 
 std::vector<std::string>& Level::getStringList() {

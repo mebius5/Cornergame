@@ -141,7 +141,7 @@ void Camera::detectBorderCollision(Entity* entity, int dt) {
             entity->health->die();
         entity->physics->bump(1);
         entity->health->takeDamage(10);
-        entity->actionState = DAMAGE;
+        entity->actionState = ACTION_DAMAGE;
     } else if (entity->x + entity->width > maxX) {
         entity->x = maxX - entity->width - shiftAmount;
         entity->physics->xVelocity = 0.0f;

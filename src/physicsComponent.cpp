@@ -191,7 +191,7 @@ void PhysicsComponent::jump() {
     if (this->jumps < this->maxJumps || this->infiniteJumps) {
         this->yVelocity = -1 * this->jumpVelocity;
         this->jumps++;
-        this->entity->actionState = JUMP;
+        this->entity->actionState = ACTION_JUMP;
         if (this->collisionComp->onLeftWall && !this->collisionComp->onGround)
             this->xVelocity = .25f * this->jumpVelocity;
         else if (this->collisionComp->onRightWall && !this->collisionComp->onGround)

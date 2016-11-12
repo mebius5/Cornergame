@@ -11,7 +11,7 @@ Entity::Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHe
     drawWidth(drawWidth),
     drawHeight(drawHeight),
     dir(1),
-    actionState(IDLE),
+    actionState(ACTION_IDLE),
     rotates(false),
     collision(NULL),
     score(NULL),
