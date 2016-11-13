@@ -27,7 +27,7 @@ StateEnum HighscoreState::run() {
 
     while (running) {
         int currentTime = SDL_GetTicks();
-        int dt = currentTime - lastTime;
+        int dt = (int) (currentTime - lastTime);
         lastTime = currentTime;
         timeElapsed+=dt;
 

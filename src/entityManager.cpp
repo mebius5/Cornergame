@@ -110,7 +110,7 @@ void EntityManager::cleanupEntities() {
         delete entity;
     }
 
-    this->numCleanable = this->deletionQueue.size();
+    this->numCleanable = (int) this->deletionQueue.size();
 }
 
 void EntityManager::clear() {
@@ -261,7 +261,7 @@ Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int
     for (it = this->healthComponents.begin(); it != this->healthComponents.end();) {
         Entity* hpEntity = (*it)->entity;
         if ((hpEntity->x - x) * dir > 0 && ownerID != hpEntity->getId()) { // only if in the right direction and not me
-            sqnorm = pow(hpEntity->x - x, 2) + pow(hpEntity->y - y, 2);
+            sqnorm = (float) (pow(hpEntity->x - x, 2) + pow(hpEntity->y - y, 2));
             if (min_dist == -1 || sqnorm < min_dist) {
                 min_dist = sqnorm;
                 closest_entity = hpEntity;

@@ -34,6 +34,10 @@ Andrew
 Grady
 - Refactored art components so we can have overlay that's tied to the hero position.
   This is extended to be used for power up art component and ammo bar art component.
+- Centered ammo bar above hero
+- Added dirt into terrain tiles and cleaned up powerup art component
+- Fixed bug in physics component produced by abs function.
+- Refactored code and cleaned up unused classes and instructions
 
 Pratyush
 

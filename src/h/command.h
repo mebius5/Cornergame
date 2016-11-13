@@ -39,21 +39,12 @@ public:
 class SpawnProjCommand : public Command {
 public:
     ProjEnum projType;
-    int x;
-    int y;
+    float x;
+    float y;
     int dir;
     int ownerID;
     float charge;
     SpawnProjCommand(ProjEnum projType);
-};
-
-class SpawnPwrupOverlay : public Command {
-public:
-    TextureEnum pwrtype;
-    int x;
-    int y;
-    int ownerID;
-    SpawnPwrupOverlay(TextureEnum pwrtype);
 };
 
 class DespawnEntityCommand : public Command {

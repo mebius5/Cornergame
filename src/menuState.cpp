@@ -47,7 +47,7 @@ StateEnum MenuState::run() {
 
     while (running) {
         int currentTime = SDL_GetTicks();
-        int dt = currentTime - lastTime;
+        int dt = (int) (currentTime - lastTime);
         lastTime = currentTime;
         milliSecElapsed += dt;
 

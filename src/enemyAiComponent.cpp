@@ -16,8 +16,8 @@ void EnemyAiComponent::updateLocation(int dt) {
     Entity* closestHero = NULL;
     for (it = this->heroEntities->begin(); it != this->heroEntities->end(); ++it) {
         Entity* hero = *it;
-        int sqnorm = (hero->x - this->entity->x) * (hero->x - this->entity->x)
-                     + (hero->y - this->entity->y) * (hero->y - this->entity->y);
+        int sqnorm = (int) ((hero->x - this->entity->x) * (hero->x - this->entity->x)
+                            + (hero->y - this->entity->y) * (hero->y - this->entity->y));
 
         //If the enemy gets within 300 pixel and is the hero is the closest hero to the enemy
         //Then we update the distance of the enemy with respect to the location of the hero
@@ -33,7 +33,7 @@ void EnemyAiComponent::updateLocation(int dt) {
 
 void EnemyAiComponent::update(Entity *hero) {
     if (hero != NULL) {
-        int xNewDir = (hero->x - this->entity->x);
+        int xNewDir = (int) (hero->x - this->entity->x);
         if (xNewDir > 0) {
             this->entity->physics->xVelocity = this->entity->physics->maxXVelocity;
             this->entity->dir = 1;
@@ -41,7 +41,7 @@ void EnemyAiComponent::update(Entity *hero) {
             this->entity->physics->xVelocity = -this->entity->physics->maxXVelocity;
             this->entity->dir = -1;
         }
-        int yNewDir = (hero->y - this->entity->y);
+        int yNewDir = (int) (hero->y - this->entity->y);
         if (yNewDir < 0) {
             this->entity->physics->jump();
         }

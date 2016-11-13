@@ -35,8 +35,8 @@ void Camera::startShake() {
 void Camera::updateShake(int dt) {
     this->shakeTime -= dt;
     if (this->shakeTime > 0) {
-        this->offsetX = cos(this->shakeTime) * this->shakeDist * (((float) this->shakeTime) / this->maxShakeTime);
-        this->offsetY = sin(this->shakeTime) * this->shakeDist * (((float) this->shakeTime) / this->maxShakeTime);
+        this->offsetX = (int) (cos(this->shakeTime) * this->shakeDist * (((float) this->shakeTime) / this->maxShakeTime));
+        this->offsetY = (int) (sin(this->shakeTime) * this->shakeDist * (((float) this->shakeTime) / this->maxShakeTime));
     } else {
         this->offsetX = 0;
         this->offsetY = 0;
@@ -49,16 +49,16 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
 
     if(!previewOn && entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)) {
         detectBorderCollision(entity, dt);
-        float xThresh = minX + windowW * .5;        // threshholds for camera shifting based on
-        float yLowerThresh = minY + windowH * .85;  //  hero position
-        float yUpperThresh = minY + windowH * .15;
+        float xThresh = (float) (minX + windowW * .5);        // threshholds for camera shifting based on
+        float yLowerThresh = (float) (minY + windowH * .85);  //  hero position
+        float yUpperThresh = (float) (minY + windowH * .15);
         if (entity->y >= yLowerThresh) {            // shift y smoothly if past 3/4 of the way down
-            shift(0, (entity->y - yLowerThresh) * .05 * dt);
+            shift(0, (int) ((entity->y - yLowerThresh) * .05 * dt));
         } else if (entity->y <= yUpperThresh) {
-            shift(0, (entity->y - yUpperThresh) * .01 * dt);
+            shift(0, (int) ((entity->y - yUpperThresh) * .01 * dt));
         }
         if (entity->x >= (minX+(windowW)*.5)) {     // shift x smoothly if heroes past half way
-            shift((entity->x - xThresh) * .0007 * dt, 0);
+            shift((int) ((entity->x - xThresh) * .0007 * dt), 0);
         }
     }
 

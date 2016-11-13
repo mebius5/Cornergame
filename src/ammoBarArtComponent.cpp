@@ -10,7 +10,7 @@ AmmoBarArtComponent::AmmoBarArtComponent(Entity* entity, Entity* owner, Texture 
 }
 
 void AmmoBarArtComponent::updateLocation() {
-    this->entity->x = ownerAmmo->entity->x;
+    this->entity->x = ownerAmmo->entity->x+(ownerAmmo->entity->width)/2-(this->width/2);
     this->entity->y = ownerAmmo->entity->y-this->height;
 }
 

@@ -1,5 +1,4 @@
 #include "physicsComponent.h"
-#include <stdlib.h>
 
 PhysicsComponent::PhysicsComponent(Entity* entity) :
     Component(entity),
@@ -78,13 +77,13 @@ void PhysicsComponent::updateLocation(int dt) {
     }
     if (target != NULL) {
         // figure out the direction to the target
-        int xDir = this->target->x - this->entity->x;
-        int yDir = this->target->y - this->entity->y;
+        float xDir = this->target->x - this->entity->x;
+        float yDir = this->target->y - this->entity->y;
 
         // compute the cross product with the velocity
         // if negative, the target is clockwise of velocity
         // if positive, the target is counterclockwise of velocity
-        int crossprod = this->xVelocity * yDir - this->yVelocity * xDir;
+        float crossprod = this->xVelocity * yDir - this->yVelocity * xDir;
 
         // perform the rotation
         float theta = this->rotSpeed * dt;
@@ -167,8 +166,8 @@ void PhysicsComponent::updateLocation(int dt) {
     if (this->target && dynamic_cast<HeroInputComponent*>(this->target->input)
             && !this->target->health->isIsInvincible()
             && this->target->health->getHealth() <= 250) {
-        if (abs(this->entity->x - this->target->x) < 100 &&
-                abs(this->entity->y - this->target->y) < 100) {
+        if (abs((int)(this->entity->x - this->target->x)) < 100 &&
+                abs((int)(this->entity->y - this->target->y)) < 100) {
             Component::commandList->push_back(this->timeSlowCommand);
             this->slow = true;
         } else if (this->slow) {

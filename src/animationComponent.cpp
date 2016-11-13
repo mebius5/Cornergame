@@ -32,8 +32,8 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         timecount %= 500;
 
         // if moving, use a walking animation, else idle
-        float sqnorm = pow(this->entity->physics->xVelocity, 2)
-                       + pow(this->entity->physics->yVelocity, 2);
+        float sqnorm = (float) (pow(this->entity->physics->xVelocity, 2)
+                                + pow(this->entity->physics->yVelocity, 2));
         if (sqnorm > 0.0001) {
             clip.x = (timecount / 125) * 32 + startpos;
             clip.y = 0;

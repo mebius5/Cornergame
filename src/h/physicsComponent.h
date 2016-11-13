@@ -3,6 +3,7 @@
 
 #include "entity.h"
 #include "component.h"
+#include <cmath>
 
 class PhysicsComponent : public Component {
 private:

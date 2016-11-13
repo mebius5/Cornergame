@@ -11,7 +11,7 @@ GameManager::GameManager() :
     height(704),
     currentLevel(1),
     maxLevel(4) {
-    srand(time(NULL));
+    srand((unsigned int) time(NULL));
 }
 
 // Setup the instance of SDL2
@@ -53,7 +53,7 @@ void GameManager::setup() {
 
     // Initialize renderer
     int rendererFlags = SDL_RENDERER_ACCELERATED;
-    this->renderer = SDL_CreateRenderer(this->window, -1, rendererFlags);
+    this->renderer = SDL_CreateRenderer(this->window, -1, (Uint32) rendererFlags);
 
     if (!this->renderer) {
         std::cerr << "Unable to initialize renderer: "

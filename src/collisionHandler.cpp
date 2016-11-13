@@ -61,16 +61,16 @@ void CollisionHandler::handleCollisions() {
 // returns true if two entities overlap, false otherwise
 bool CollisionHandler::detectOverlap(Entity* entity1, Entity* entity2) {
     //Calculate the sides of entity 1
-    int leftA = entity1->x;
-    int rightA = entity1->x + entity1->width - 1;
-    int topA = entity1->y;
-    int bottomA = entity1->y + entity1->height - 1;
+    int leftA = (int) entity1->x;
+    int rightA = (int) (entity1->x + entity1->width - 1);
+    int topA = (int) entity1->y;
+    int bottomA = (int) (entity1->y + entity1->height - 1);
 
     //Calculate the sides of entity 2
-    int leftB = entity2->x;
-    int rightB = entity2->x + entity2->width - 1;
-    int topB = entity2->y;
-    int bottomB = entity2->y + entity2->height - 1;
+    int leftB = (int) entity2->x;
+    int rightB = (int) (entity2->x + entity2->width - 1);
+    int topB = (int) entity2->y;
+    int bottomB = (int) (entity2->y + entity2->height - 1);
 
     //If any of the sides from A are outside of B, no overlap
     if (bottomA <= topB)
@@ -79,8 +79,6 @@ bool CollisionHandler::detectOverlap(Entity* entity1, Entity* entity2) {
         return false;
     if (rightA <= leftB)
         return false;
-    if (leftA >= rightB)
-        return false;
+    return leftA < rightB;
 
-    return true;
 }

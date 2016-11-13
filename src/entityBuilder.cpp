@@ -34,7 +34,7 @@ SDL_Surface* EntityBuilder::createTextSurface(FontEnum font, const char *text,
         return NULL;
     }
 
-    SDL_SetSurfaceAlphaMod(textSurf, a);
+    SDL_SetSurfaceAlphaMod(textSurf, (Uint8) a);
     return textSurf;
 }
 
@@ -87,7 +87,7 @@ SDL_Surface* EntityBuilder::createTextSurfacePerLine(FontEnum fontType, const ch
         SDL_Surface* textSurf = createTextSurfacePerLine(fontType, tempText.c_str(), fontSize, r, g, b, a, windowW);
         SDL_Surface* surface = SDL_CreateRGBSurface(0,textSurf->w, textSurf->h, 32, 0,0,0,0);
         SDL_SetSurfaceBlendMode(surface,SDL_BLENDMODE_ADD);
-        SDL_SetSurfaceAlphaMod(surface,a);
+        SDL_SetSurfaceAlphaMod(surface, (Uint8) a);
         SDL_Rect tempRect = {0,0,textSurf->w, textSurf->h};
         SDL_BlitSurface(textSurf, NULL, surface, &tempRect);
         return surface;
@@ -155,19 +155,19 @@ void EntityBuilder::loadFont(FontEnum fontType, int fontSize) {
 }
 
 void EntityBuilder::freeTextures() {
-    for (int i = this->textureMap.size()-1; i >= 0; i--)
+    for (int i = (int) (this->textureMap.size() - 1); i >= 0; i--)
         if (this->textureMap[i].sdlTexture)
             SDL_DestroyTexture(this->textureMap[i].sdlTexture);
 
-    for (int i = this->terrainTexMap.size()-1; i >= 0; i--)
-        for (int j = this->terrainTexMap[i].size()-1; j >= 0; j--)
+    for (int i = (int) (this->terrainTexMap.size() - 1); i >= 0; i--)
+        for (int j = (int) (this->terrainTexMap[i].size() - 1); j >= 0; j--)
             if (this->terrainTexMap[i][j].sdlTexture)
                 SDL_DestroyTexture(this->terrainTexMap[i][j].sdlTexture);
 }
 
 void EntityBuilder::freeFonts() {
-    for (int i = fontMap.size()-1; i >= 0; i--)
-        for (int j = fontMap[i].size()-1; j >= 0; j--)
+    for (int i = (int) (fontMap.size() - 1); i >= 0; i--)
+        for (int j = (int) (fontMap[i].size() - 1); j >= 0; j--)
             if (fontMap[i][j])
                 TTF_CloseFont(fontMap[i][j]);
 }
