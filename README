@@ -18,7 +18,17 @@ General Notes:
 
 
 Akshay
-
+- Stop the hero from playing a noise if picking up a projectile
+- Created a time handler that can change the speed of time based on commands
+- Used time handler to implement a 20ms freeze when a projectile collides
+  with a hero, creating a more impactful collision
+- Used time handler to slow down time when a projectile is close to hitting
+  a target that it would kill
+- Fixed a bug where hero didn't have a default direction, causing projectiles
+  to fall flat if hero doesn't move
+- Tuned projectile speed
+- Allow projectiles to stick around after being fired, and also collected
+  when walked over or grabbed out of air for extra ammo
 
 Andrew
 - for beta: fixed issue with powerup overlay disappearing, fixed sound effects
