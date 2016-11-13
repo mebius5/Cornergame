@@ -68,14 +68,14 @@ public:
 
 class HealthBarArtComponent: public ArtComponent {
 private:
-    SDL_Texture * texture;
+    SDL_Texture* texture;
     SDL_Rect clip;
     HealthComponent* ownerHealth;
     float width;
     int height;
     int lastHealth;
 public:
-    HealthBarArtComponent(Entity* entity, Entity * owner, Texture tex, int layer);
+    HealthBarArtComponent(Entity* entity, Entity* owner, Texture tex, int layer);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
@@ -111,19 +111,19 @@ public:
     void deselectMenuItem();
 };
 
-class ScoreTextArtComponent: public ArtComponent {
-private:
-    ScoreComponent* ownerScore;
-    SDL_Renderer* renderer;
-    SDL_Texture* lastTexture;
-    int lastScore;
-    TTF_Font* font;
-public:
-    ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer, TTF_Font* font,
-                          ScoreComponent* ownerScore, int layer);
-    ~ScoreTextArtComponent();
-    SDL_Texture* getNextTexture(int dt);
-    SDL_Rect* getNextSrcRect(int dt);
-};
+// class ScoreTextArtComponent: public ArtComponent {
+// private:
+//     ScoreComponent* ownerScore;
+//     SDL_Renderer* renderer;
+//     SDL_Texture* lastTexture;
+//     int lastScore;
+//     TTF_Font* font;
+// public:
+//     ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer, TTF_Font* font,
+//                           ScoreComponent* ownerScore, int layer);
+//     ~ScoreTextArtComponent();
+//     SDL_Texture* getNextTexture(int dt);
+//     SDL_Rect* getNextSrcRect(int dt);
+// };
 
 #endif

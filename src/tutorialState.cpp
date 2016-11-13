@@ -1,29 +1,28 @@
 #include "state.h"
 
-TutorialState::TutorialState(int windowW, int windowH, EntityManager &entityManager,
-                             std::vector<Command *> &commandList, SDL_Renderer *renderer,
-                             DrawingHandler &drawingHandler, InputHandler &inputHandler, SoundHandler &soundHandler,
-                             ControlHandler &controlHandler, AiHandler &aiHandler, CollisionHandler &collisionHandler,
-                             ScoreHandler &scoreHandler, PhysicsHandler &physicsHandler,
-                             PowerUpHandler &powerUpHandler):
-        State(entityManager, commandList, renderer, windowW, windowH),
-        drawingHandler(drawingHandler),
-        inputHandler(inputHandler),
-        soundHandler(soundHandler),
-        controlHandler(controlHandler),
-        aiHandler(aiHandler),
-        collisionHandler(collisionHandler),
-        scoreHandler(scoreHandler),
-        physicsHandler(physicsHandler),
-        powerUpHandler(powerUpHandler),
-        levelW(0),
-        levelH(0){
+TutorialState::TutorialState(int windowW, int windowH, EntityManager& entityManager,
+                             std::vector<Command*>& commandList, SDL_Renderer* renderer,
+                             DrawingHandler& drawingHandler, InputHandler& inputHandler, SoundHandler& soundHandler,
+                             ControlHandler& controlHandler, AiHandler& aiHandler, CollisionHandler& collisionHandler,
+                             ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
+                             PowerUpHandler& powerUpHandler):
+    State(entityManager, commandList, renderer, windowW, windowH),
+    drawingHandler(drawingHandler),
+    inputHandler(inputHandler),
+    soundHandler(soundHandler),
+    controlHandler(controlHandler),
+    aiHandler(aiHandler),
+    collisionHandler(collisionHandler),
+    scoreHandler(scoreHandler),
+    physicsHandler(physicsHandler),
+    powerUpHandler(powerUpHandler),
+    levelW(0),
+    levelH(0) {
 }
 
-void TutorialState::begin(int) {
+void TutorialState::begin(int /*level*/) {
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
-    this->entityManager.createBackground(TEX_BACKGROUND, this->windowW,
-                                         this->windowH);
+    this->entityManager.createBackground(TEX_BACKGROUND, this->windowW, this->windowH);
 
     std::string levelFile = "levels/tutorial.txt";
     Level level1(levelFile.c_str(), windowW, windowH);
@@ -35,7 +34,6 @@ void TutorialState::begin(int) {
 }
 
 StateEnum TutorialState::run() {
-
     float lastTime = SDL_GetTicks();
 
     // Run preview
@@ -54,7 +52,7 @@ StateEnum TutorialState::run() {
             break;
         StateEnum nextState = this->controlHandler.handleStateCommands();
         if (nextState != STATE_NONE)
-            return nextState;
+            return STATE_MENU;
     }
 
     // Start Gameplay
@@ -84,7 +82,7 @@ StateEnum TutorialState::run() {
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
         if (nextState != STATE_NONE)
-            break;
+            return STATE_MENU;
     }
 
     return STATE_MENU;

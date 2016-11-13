@@ -193,7 +193,7 @@ Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfx
 
 Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes) {
     Texture texture = this->textureMap[texType];
-    Entity* enemy = new Entity(this->nextId++, x, y, 56, 64, 64, 64);
+    Entity* enemy = new RespawnEntity(this->nextId++, x, y, 56, 64, 64, 64);
     enemy->collision = new EnemyCollisionComponent(enemy);
     enemy->art = new AnimationComponent(enemy, texture, 1);
     enemy->ai = new EnemyAiComponent(enemy, heroes);
@@ -227,14 +227,14 @@ Entity* EntityBuilder::createAmmoBar(int, int, Entity* owner) {
     return ammoBar;
 }
 
-Entity* EntityBuilder::createScoreBox(int x, int y, Entity* owner, FontEnum fontType, int fontSize) {
-    if (!this->fontMap[fontType][fontSize])
-        this->loadFont(fontType, fontSize);
-    Entity* scoreBox = new Entity(this->nextId++, x, y, 100, 100, 100, 100);
-    scoreBox->art = new ScoreTextArtComponent(scoreBox, this->renderer,
-                                              this->fontMap[fontType][fontSize], owner->score, 2);
-    return scoreBox;
-}
+// Entity* EntityBuilder::createScoreBox(int x, int y, Entity* owner, FontEnum fontType, int fontSize) {
+//     if (!this->fontMap[fontType][fontSize])
+//         this->loadFont(fontType, fontSize);
+//     Entity* scoreBox = new Entity(this->nextId++, x, y, 100, 100, 100, 100);
+//     scoreBox->art = new ScoreTextArtComponent(scoreBox, this->renderer,
+//                                               this->fontMap[fontType][fontSize], owner->score, 2);
+//     return scoreBox;
+// }
 
 Entity* EntityBuilder::createFadeInText(FontEnum fontType, const char *text, int fontSize,
                                         int r, int g, int b, int initialAlpha,

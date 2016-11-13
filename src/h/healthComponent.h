@@ -9,12 +9,6 @@ private:
     int health;
     int maxHealth;
     bool isInvincible;
-public:
-    bool isIsInvincible() const;
-
-    void setIsInvincible(bool isInvincible);
-
-private:
     Command* onDeath;
 public:
     HealthComponent(Entity* entity, int maxHealth, Command* onDeath);
@@ -24,6 +18,8 @@ public:
     void toggleInvincibility();
     void takeDamage(int damage);
     void die();
+    bool isIsInvincible() const;
+    void setIsInvincible(bool isInvincible);
 };
 
 #endif

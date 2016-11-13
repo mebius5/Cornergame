@@ -105,9 +105,12 @@ void Camera::shift(int dx, int dy) {
                 continue;
             }
 
-            if (dynamic_cast<DynamicCollisionComponent*>((*it)->entity->collision)
-                    && (*it)->entity->x + (*it)->entity->width >= levelW) {
-                (*it)->entity->x = (*it)->entity->x - levelW;
+            Entity* entity = (*it)->entity;
+            if (dynamic_cast<DynamicCollisionComponent*>(entity->collision)
+                    && entity->x +  entity->width >= levelW) {
+                entity->x = entity->x - levelW;
+                if (RespawnEntity* reEnt = dynamic_cast<RespawnEntity*>(entity))
+                    reEnt->shifted = true;
             }
             ++it;
         }

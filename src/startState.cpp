@@ -14,7 +14,7 @@ StartState::StartState(int windowW, int windowH, EntityManager& entityManager,
     physicsHandler(physicsHandler) {
 }
 
-void StartState::begin(int) {
+void StartState::begin(int /*level*/) {
     Level level1("levels/startScreenLevel.txt", windowW, windowH);
     this->entityManager.populateLevel(&level1);
     Entity * hero = this->entityManager.createHero(TEX_HERO, 500, 608, SFX_NONE, false);

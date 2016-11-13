@@ -17,6 +17,7 @@ void ResultsState::setVictorious(Entity* winner, Entity* loser) {
     winner->drawWidth *= 3;
     winner->actionState = ACTION_JUMP;
     loser->actionState = ACTION_IDLE;
+    winner->score->wins++;
 }
 
 void ResultsState::begin(int /*level*/) {
@@ -48,15 +49,12 @@ void ResultsState::begin(int /*level*/) {
 
     std::string victoryString;
     std::string scoreString;
-    if (this->hero1Victory) {
+    if (this->hero1Victory)
         victoryString = "Player 1 Wins!";
-        scoreString = "Score: " + std::to_string(this->hero1->score->getScore());
-        this->setVictorious(this->hero1, this->hero2);
-    } else {
+    else
         victoryString = "Player 2 Wins!";
-        scoreString = "Score: " + std::to_string(this->hero2->score->getScore());
-        this->setVictorious(this->hero2, this->hero1);
-    }
+    scoreString = "Record: " + std::to_string(this->hero1->score->wins)
+                  + " - " + std::to_string(this->hero2->score->wins);
     this->entityManager.createHorizontallyCenteredFadeInText(
             FONT_GLOBAL, victoryString.c_str(),
             100, 255, 255, 255, 0, this->windowW, 300);
@@ -104,4 +102,8 @@ void ResultsState::updateResults(Entity* hero1, Entity* hero2) {
     hero1->art->validate();
     hero2->art->validate();
     this->hero1Victory = (hero2->health->getHealth() <= 0);
+    if (this->hero1Victory)
+        this->setVictorious(this->hero1, this->hero2);
+    else
+        this->setVictorious(this->hero2, this->hero1);
 }

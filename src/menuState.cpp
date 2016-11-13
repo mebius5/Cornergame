@@ -11,7 +11,7 @@ MenuState::MenuState(int windowW, int windowH, EntityManager& entityManager,
     controlHandler(controlHandler) {
 }
 
-void MenuState::begin(int) {
+void MenuState::begin(int /*level*/) {
     this->soundHandler.playBackgroundMusic(MUSIC_MENU);
 
     this->entityManager.createHorizontallyCenteredFadeInMenuText(

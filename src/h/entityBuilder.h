@@ -36,7 +36,7 @@ public:
     Entity* createBackground(TextureEnum texType, int width, int height);
     Entity* createHealthBar(int x, int y, Entity* owner);
     Entity* createAmmoBar(int x, int y, Entity* owner);
-    Entity* createScoreBox(int x, int y, Entity* owner, FontEnum font, int fontSize);
+    // Entity* createScoreBox(int x, int y, Entity* owner, FontEnum font, int fontSize);
 
     Entity* createFadeInText(FontEnum fontType, const char *text, int fontSize,
                              int r, int g, int b, int initialAlpha,
@@ -46,10 +46,10 @@ public:
                                      int r, int g, int b, int initialAlpha,
                                      int windowW, int windowH);
 
-    Entity * createHorizontallyCenteredFadeInText(FontEnum fontType,
-                                                      const char *text, int fontSize,
-                                                      int r, int g, int b, int initialAlpha,
-                                                      int windowW, int yPos);
+    Entity* createHorizontallyCenteredFadeInText(FontEnum fontType,
+                                                 const char *text, int fontSize,
+                                                 int r, int g, int b, int initialAlpha,
+                                                 int windowW, int yPos);
 
     Entity* createHorizontallyCenteredFadeInMenuText(FontEnum fontType,
                                                      const char *text, int fontSize,

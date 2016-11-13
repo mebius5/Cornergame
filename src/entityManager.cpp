@@ -1,6 +1,6 @@
 #include "entityManager.h"
 
-EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW) :
+EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList, int windowW) :
     commandList(cmdList),
     entityBuilder(renderer),
     windowW(windowW),
@@ -74,8 +74,8 @@ void EntityManager::addEntity(Entity* entity) {
 void EntityManager::initRespawns() {
     std::unordered_map<int, Entity*>::const_iterator it;
     for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it)
-        if (dynamic_cast<EnemyCollisionComponent*>(it->second->collision))
-            this->respawnEntities.push_back(it->second);
+        if (RespawnEntity* entity = dynamic_cast<RespawnEntity*>(it->second))
+            this->respawnEntities.push_back(entity);
 }
 
 void EntityManager::deleteEntity(int id) {
@@ -115,7 +115,7 @@ void EntityManager::cleanupEntities() {
 
 void EntityManager::clear() {
     this->cleanupEntities();    // delete all Entities from deletionQueue
-    std::vector<Entity*>::const_iterator ents;
+    std::vector<RespawnEntity*>::const_iterator ents;
     for (ents = this->respawnEntities.begin(); ents != this->respawnEntities.end(); ++ents) {
         if (this->entityMap.count((*ents)->getId()) == 0)
             delete *ents;
@@ -177,11 +177,11 @@ Entity* EntityManager::createAmmoBar(int x, int y, Entity* owner) {
     return entity;
 }
 
-Entity* EntityManager::createScoreBox(int x, int y, Entity* owner) {
-    Entity* entity = this->entityBuilder.createScoreBox(x, y, owner, FONT_GLOBAL, 32);
-    this->addEntity(entity);
-    return entity;
-}
+// Entity* EntityManager::createScoreBox(int x, int y, Entity* owner) {
+//     Entity* entity = this->entityBuilder.createScoreBox(x, y, owner, FONT_GLOBAL, 32);
+//     this->addEntity(entity);
+//     return entity;
+// }
 
 Entity* EntityManager::createFadeInText(FontEnum font,
                                                 const char* text, int fontSize, int r, int g, int b,
@@ -285,22 +285,23 @@ void EntityManager::handleSpawns() {
             this->hideEntity(tCmd->id);
         } else if (dynamic_cast<LoopLevelCommand*>(*it)){
             std::vector<PowerUpCollisionComponent*>::iterator pu;
-            for(pu = this->powerUpCollisionComponents.begin(); pu != this->powerUpCollisionComponents.end(); ++pu){
+            for (pu = this->powerUpCollisionComponents.begin(); pu != this->powerUpCollisionComponents.end(); ++pu) {
                 (*pu)->setIsClaimed(false);
-                (*pu)->entity->art->isVisible=true;
+                (*pu)->entity->art->isVisible = true;
             }
-            std::vector<Entity*>::iterator ents;
+            std::vector<RespawnEntity*>::iterator ents;
             for (ents = this->respawnEntities.begin(); ents != this->respawnEntities.end(); ++ents) {
-                Entity* entity = *ents;
+                RespawnEntity* entity = *ents;
                 if (this->entityMap.count(entity->getId()) == 0) {
                     entity->validate();
                     this->addEntity(entity);
                     entity->x = entity->initialX;
                     entity->y = entity->initialY;
-                } else if (entity->x <= 0)
-                    entity->x += 2 * this->windowW;
-                else if (entity->x < this->windowW)     //TODO: ADD RESPAWNENTITY MOVE FLAG!
+                } else if (entity->x + entity->width <= 0)
+                    entity->x += 2 * this->windowW + (rand() % 100);
+                else if (entity->x < this->windowW && !entity->shifted)
                     entity->x = this->windowW + (rand() % 100);
+                entity->shifted = false;
             }
         } else {
             ++it;
@@ -351,14 +352,12 @@ void EntityManager::populateLevel(Level* level) {
                 Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
                 createHealthBar(100, 50, hero);
                 createAmmoBar(400, 50, hero);
-                createScoreBox(850, 50, hero);
                 break;
             }
             case TILE_SPAWN2: {
                 Entity* hero2 = createHero(TEX_HERO2, j * 32, i * 32, SFX_ALERT, true);
                 createHealthBar(100, 100, hero2);
                 createAmmoBar(400, 100, hero2);
-                createScoreBox(850, 100, hero2);
                 break;
             }
             case TILE_GOAL:

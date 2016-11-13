@@ -28,7 +28,7 @@ public:
     std::vector<ScoreComponent*> scoreComponents;
     std::vector<PowerUpComponent*> powerUpComponents;
     std::vector<Entity*> heroEntities;
-    std::vector<Entity*> respawnEntities;   // only contains dynamic entities
+    std::vector<RespawnEntity*> respawnEntities;
     std::vector<PowerUpCollisionComponent*> powerUpCollisionComponents;
 
     EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW);
@@ -46,7 +46,7 @@ public:
     Entity* createBackground(TextureEnum texType, int width, int height);
     Entity* createHealthBar(int x, int y, Entity* owner);
     Entity* createAmmoBar(int x, int y, Entity* owner);
-    Entity* createScoreBox(int x, int y, Entity* owner);
+    // Entity* createScoreBox(int x, int y, Entity* owner);
 
     Entity* createFadeInText(FontEnum font, const char* text, int fontSize, int r, int g, int b,
                              int initialAlpha, int windowW, int x, int y);

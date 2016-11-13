@@ -1,11 +1,9 @@
-
-#ifndef CORNERGAME_SCOREHANDLER_H
-#define CORNERGAME_SCOREHANDLER_H
+#ifndef CORNERGAME_SCORE_HANDLER_H
+#define CORNERGAME_SCORE_HANDLER_H
 
 #include "scoreComponent.h"
 
 class ScoreHandler {
-private:
 private:
     std::vector<ScoreComponent*>& componentList;
 public:
@@ -13,4 +11,4 @@ public:
     void handleScore(int dt);
 };
 
-#endif //CORNERGAME_SCOREHANDLER_H
+#endif

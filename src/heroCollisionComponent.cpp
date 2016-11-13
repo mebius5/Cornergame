@@ -15,7 +15,6 @@ HeroCollisionComponent::~HeroCollisionComponent() {
 void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
     if (dynamic_cast<EnemyCollisionComponent*>(otherComp)) {
         Component::commandList->push_back(this->cameraShakeCommand);
-        this->entity->score->addScore(-10);
 
     } else if (HeroCollisionComponent* otherHero =
                dynamic_cast<HeroCollisionComponent*>(otherComp)) {

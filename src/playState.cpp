@@ -22,24 +22,29 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
     resultsState(resultsState),
     highscoreState(highscoreState),
     levelW(0),
-    levelH(0){
+    levelH(0),
+    p1wins(0),
+    p2wins(0) {
 }
 
-void PlayState::begin(int level) {
+void PlayState::begin(int levelnum) {
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
-    this->entityManager.createBackground(TEX_BACKGROUND, this->windowW,
-                                         this->windowH);
+    this->entityManager.createBackground(TEX_BACKGROUND, this->windowW, this->windowH);
 
     std::string levelFile = "levels/level";
-    levelFile.append(std::to_string(level));
+    levelFile.append(std::to_string(levelnum));
     levelFile.append(".txt");
-    Level level1(levelFile.c_str(), windowW, windowH);
-    this->entityManager.populateLevel(&level1);
+    Level level(levelFile.c_str(), windowW, windowH);
+    this->entityManager.populateLevel(&level);
     this->entityManager.initRespawns();
-    this->hero = entityManager.heroEntities[0];
+    this->hero1 = entityManager.heroEntities[0];
     this->hero2 = entityManager.heroEntities[1];
-    this->levelW = level1.width*32;
-    this->levelH = level1.height*32;
+    if (levelnum != 1) {
+        this->hero1->score->wins = this->p1wins;
+        this->hero2->score->wins = this->p2wins;
+    }
+    this->levelW = level.width * 32;
+    this->levelH = level.height * 32;
 }
 
 StateEnum PlayState::run() {
@@ -48,7 +53,7 @@ StateEnum PlayState::run() {
     float lastTime = SDL_GetTicks();
     drawingHandler.resetCamera(this->levelW-windowW, this->levelH-windowH, this->levelW, this->levelH);
     drawingHandler.initializeCamera(this->levelW, this->levelH, true);
-    while(previewOn){
+    while (previewOn) {
         int currentTime = SDL_GetTicks();
         int dt = currentTime - lastTime;
         lastTime = currentTime;
@@ -56,7 +61,7 @@ StateEnum PlayState::run() {
         previewOn=drawingHandler.previewLevel(dt);
         drawingHandler.draw(dt);
         this->inputHandler.handleEvents(dt);
-        if(this->controlHandler.isPreviewOff())
+        if (this->controlHandler.isPreviewOff())
             break;
         StateEnum nextState = this->controlHandler.handleStateCommands();
         if (nextState != STATE_NONE)
@@ -103,15 +108,17 @@ StateEnum PlayState::run() {
 
 void PlayState::cleanup(StateEnum nextState) {
     if (nextState == STATE_RESULTS) {  // if game complete, update other states
-        this->entityManager.hideEntity(this->hero->getId());
+        this->entityManager.hideEntity(this->hero1->getId());
         this->entityManager.hideEntity(this->hero2->getId());
-        this->highscoreState.updateHighscores(this->hero, this->hero2);
-        this->resultsState.updateResults(this->hero, this->hero2);
+        this->highscoreState.updateHighscores(this->hero1, this->hero2);
+        this->resultsState.updateResults(this->hero1, this->hero2);
     }
+    this->p1wins = this->hero1->score->wins;
+    this->p2wins = this->hero2->score->wins;
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
     this->soundHandler.stopAllSfx();
-    this->drawingHandler.resetCamera(0, 0, windowW,windowH);
+    this->drawingHandler.resetCamera(0, 0, windowW, windowH);
     this->timeHandler.stopSlowMotion();
 }

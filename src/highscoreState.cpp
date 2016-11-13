@@ -9,12 +9,14 @@ HighscoreState::HighscoreState(int windowW, int windowH, EntityManager& entMgr,
     inputHandler(inputHandler),
     soundHandler(soundHandler),
     controlHandler(controlHandler),
-    highscore(0) {
+    p1wins(0),
+    p2wins(0) {
 }
 
-void HighscoreState::begin(int) {
+void HighscoreState::begin(int /*level*/) {
     this->soundHandler.playBackgroundMusic(MUSIC_HIGHSCORE);
-    std::string hsText = "High Score:\n" + std::to_string(this->highscore);
+    std::string hsText = "Overall Record:\n" + std::to_string(this->p1wins)
+                         + " - " + std::to_string(this->p2wins);
     this->entityManager.createCenteredFadeInText(
             FONT_GLOBAL, hsText.c_str(),
             100, 255, 255, 255, 0, this->windowW, this->windowH);
@@ -52,13 +54,9 @@ void HighscoreState::cleanup(StateEnum /*next*/) {
     this->soundHandler.stopBackgroundMusic();
 }
 
-void HighscoreState::updateHighscores(Entity *hero1, Entity *hero2) {
-    if(hero2->health->getHealth() <= 0){
-        if (hero1->score->getScore() > this->highscore)
-            this->highscore = hero1->score->getScore();
-    } else{
-        if (hero2->score->getScore() > this->highscore)
-            this->highscore = hero2->score->getScore();
-    }
-
+void HighscoreState::updateHighscores(Entity* /*hero1*/, Entity* hero2) {
+    if (hero2->health->getHealth() <= 0)
+        this->p1wins++;
+    else
+        this->p2wins++;
 }

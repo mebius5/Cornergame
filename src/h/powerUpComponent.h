@@ -1,10 +1,10 @@
-#ifndef CORNERGAME_POWERUPCOMPONENT_H
-#define CORNERGAME_POWERUPCOMPONENT_H
+#ifndef CORNERGAME_POWERUP_COMPONENT_H
+#define CORNERGAME_POWERUP_COMPONENT_H
 
 #include "entity.h"
 #include "component.h"
 
-//REFER TO PowerUpEnums in the enums.h
+// NOTE: REFER TO PowerUpEnums in the enums.h
 
 class PowerUpComponent : public Component {
 private:
