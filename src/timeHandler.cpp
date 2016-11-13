@@ -22,7 +22,11 @@ int TimeHandler::forward(int dt) {
 
     // handle slow motion
     if (this->slowMotion) {
-        dt /= 4.0;
+        dt /= 4;
+        // never let dt = 0 or else we're screwed
+        if (dt == 0) {
+            dt = 1;
+        }
     }
 
     return dt;
