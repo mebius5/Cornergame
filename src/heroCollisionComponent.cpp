@@ -22,9 +22,13 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
         // knock back the other hero
         otherHero->entity->physics->bump(this->sign(otherHero->entity->x + otherHero->entity->width/2 -
                                                     this->entity->x - this->entity->width/2));
-    } else if (dynamic_cast<ProjectileCollisionComponent*>(otherComp)) {
-        if (this->projCollisionCommand)
+    } else if (ProjectileCollisionComponent* projComp =
+               dynamic_cast<ProjectileCollisionComponent*>(otherComp)) {
+        // don't play sound if it's frozen or mine
+        if (this->projCollisionCommand && !projComp->entity->physics->isFrozen() &&
+                this->entity->getId() != projComp->ownerID) {
             Component::commandList->push_back(this->projCollisionCommand);
+        }
     }
 }
 
