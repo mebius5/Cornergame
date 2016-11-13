@@ -10,6 +10,9 @@ ProjectileCollisionComponent::ProjectileCollisionComponent(Entity* entity, Comma
 ProjectileCollisionComponent::~ProjectileCollisionComponent() {
     if (this->despawnCommand)
         delete this->despawnCommand;
+    if (this->timeFreezeCommand){
+        delete this->timeFreezeCommand;
+    }
 }
 
 void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {

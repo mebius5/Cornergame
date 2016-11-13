@@ -8,6 +8,15 @@ TimeHandler::TimeHandler(std::vector<Command*>& commandList) :
     slowMotion(false) {
 }
 
+TimeHandler::~TimeHandler() {
+    if(lowerVolumeCommand){
+        delete this->lowerVolumeCommand;
+    }
+    if(raiseVolumeCommand){
+        delete this->raiseVolumeCommand;
+    }
+}
+
 int TimeHandler::forward(int dt) {
     // if there is still time to be frozen
     if (this->frozenTime > dt) {

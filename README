@@ -37,7 +37,8 @@ Grady
 - Centered ammo bar above hero
 - Added dirt into terrain tiles and cleaned up powerup art component
 - Fixed bug in physics component produced by abs function.
-- Refactored code and cleaned up unused classes and instructions
+- Refactored code and cleaned up unused classes and instructions. Also free up
+  dynamically memory.
 
 Pratyush
 

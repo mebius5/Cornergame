@@ -7,9 +7,12 @@ HeroCollisionComponent::HeroCollisionComponent(Entity* ent, Command* onProj) :
 }
 
 HeroCollisionComponent::~HeroCollisionComponent() {
-    if (this->projCollisionCommand)
+    if (this->projCollisionCommand){
         delete this->projCollisionCommand;
-    delete this->cameraShakeCommand;
+    }
+    if (this->cameraShakeCommand){
+        delete this->cameraShakeCommand;
+    }
 }
 
 void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {

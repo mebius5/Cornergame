@@ -14,6 +14,7 @@ private:
     bool slowMotion;
 public:
     TimeHandler(std::vector<Command*>& commandList);
+    ~TimeHandler();
     int forward(int dt);
     void stopSlowMotion();
     void handleTimeCommands();
