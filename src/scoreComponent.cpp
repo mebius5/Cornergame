@@ -1,30 +1,10 @@
 #include "scoreComponent.h"
 
-ScoreComponent::ScoreComponent(Entity * entity):
+ScoreComponent::ScoreComponent(Entity* entity):
     Component(entity),
-    score(0),
-    multiplier(1) {
+    wins(0) {
 }
 
 ScoreComponent::~ScoreComponent() {
     this->entity = NULL;
-}
-
-void ScoreComponent::addScore(float scoreIncrease) {
-    this->score += (this->multiplier * scoreIncrease);
-    if(this->score<0){
-        this->score=0;
-    }
-}
-
-int ScoreComponent::getScore() {
-    return (int) this->score;
-}
-
-void ScoreComponent::resetScore() {
-    this->score = 0;
-}
-
-void ScoreComponent::setMultiplier(float multiplier) {
-    this->multiplier = multiplier;
 }

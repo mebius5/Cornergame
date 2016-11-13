@@ -1,5 +1,6 @@
 #include "artComponent.h"
 
+// NOTE: not currently in Makefile, not updated to current ScoreComponent
 ScoreTextArtComponent::ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer,
                             TTF_Font* font, ScoreComponent *ownerScore, int layer):
     ArtComponent(entity, layer, true),

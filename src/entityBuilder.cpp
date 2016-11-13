@@ -227,14 +227,14 @@ Entity* EntityBuilder::createAmmoBar(int, int, Entity* owner) {
     return ammoBar;
 }
 
-Entity* EntityBuilder::createScoreBox(int x, int y, Entity* owner, FontEnum fontType, int fontSize) {
-    if (!this->fontMap[fontType][fontSize])
-        this->loadFont(fontType, fontSize);
-    Entity* scoreBox = new Entity(this->nextId++, x, y, 100, 100, 100, 100);
-    scoreBox->art = new ScoreTextArtComponent(scoreBox, this->renderer,
-                                              this->fontMap[fontType][fontSize], owner->score, 2);
-    return scoreBox;
-}
+// Entity* EntityBuilder::createScoreBox(int x, int y, Entity* owner, FontEnum fontType, int fontSize) {
+//     if (!this->fontMap[fontType][fontSize])
+//         this->loadFont(fontType, fontSize);
+//     Entity* scoreBox = new Entity(this->nextId++, x, y, 100, 100, 100, 100);
+//     scoreBox->art = new ScoreTextArtComponent(scoreBox, this->renderer,
+//                                               this->fontMap[fontType][fontSize], owner->score, 2);
+//     return scoreBox;
+// }
 
 Entity* EntityBuilder::createFadeInText(FontEnum fontType, const char *text, int fontSize,
                                         int r, int g, int b, int initialAlpha,

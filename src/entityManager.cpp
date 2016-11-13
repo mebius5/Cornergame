@@ -1,6 +1,6 @@
 #include "entityManager.h"
 
-EntityManager::EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW) :
+EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList, int windowW) :
     commandList(cmdList),
     entityBuilder(renderer),
     windowW(windowW),
@@ -177,11 +177,11 @@ Entity* EntityManager::createAmmoBar(int x, int y, Entity* owner) {
     return entity;
 }
 
-Entity* EntityManager::createScoreBox(int x, int y, Entity* owner) {
-    Entity* entity = this->entityBuilder.createScoreBox(x, y, owner, FONT_GLOBAL, 32);
-    this->addEntity(entity);
-    return entity;
-}
+// Entity* EntityManager::createScoreBox(int x, int y, Entity* owner) {
+//     Entity* entity = this->entityBuilder.createScoreBox(x, y, owner, FONT_GLOBAL, 32);
+//     this->addEntity(entity);
+//     return entity;
+// }
 
 Entity* EntityManager::createFadeInText(FontEnum font,
                                                 const char* text, int fontSize, int r, int g, int b,
@@ -351,14 +351,12 @@ void EntityManager::populateLevel(Level* level) {
                 Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
                 createHealthBar(100, 50, hero);
                 createAmmoBar(400, 50, hero);
-                createScoreBox(850, 50, hero);
                 break;
             }
             case TILE_SPAWN2: {
                 Entity* hero2 = createHero(TEX_HERO2, j * 32, i * 32, SFX_ALERT, true);
                 createHealthBar(100, 100, hero2);
                 createAmmoBar(400, 100, hero2);
-                createScoreBox(850, 100, hero2);
                 break;
             }
             case TILE_GOAL:

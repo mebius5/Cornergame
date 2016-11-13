@@ -1,6 +1,5 @@
-
-#ifndef CORNERGAME_POWERUPHANDLER_H
-#define CORNERGAME_POWERUPHANDLER_H
+#ifndef CORNERGAME_POWERUP_HANDLER_H
+#define CORNERGAME_POWERUP_HANDLER_H
 
 #include "powerUpComponent.h"
 
@@ -12,4 +11,4 @@ public:
     void update(int dt);
 };
 
-#endif //CORNERGAME_POWERUPHANDLER_H
+#endif

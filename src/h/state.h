@@ -75,7 +75,8 @@ private:
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
     ControlHandler& controlHandler;
-    int highscore;
+    int p1wins;
+    int p2wins;
 public:
     HighscoreState(int windowW, int windowH, EntityManager& entityManager,
                    std::vector<Command*>& commandList, SDL_Renderer* renderer,
@@ -84,7 +85,7 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
-    void updateHighscores(Entity *hero1, Entity *hero2);
+    void updateHighscores(Entity* hero1, Entity* hero2);
 };
 
 class ResultsState : public State {
@@ -105,7 +106,7 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
-    void updateResults(Entity *hero1, Entity *hero2);
+    void updateResults(Entity* hero1, Entity* hero2);
 };
 
 class LevelTransitState : public State {
@@ -140,10 +141,12 @@ private:
     TimeHandler& timeHandler;
     ResultsState& resultsState;
     HighscoreState& highscoreState;
-    Entity* hero;
+    Entity* hero1;
     Entity* hero2;
     int levelW;
     int levelH;
+    int p1wins;
+    int p2wins;
 public:
     PlayState(int windowW, int windowH, EntityManager& entityManager,
               std::vector<Command*>& commandList, SDL_Renderer* renderer,
@@ -180,7 +183,7 @@ public:
               SoundHandler& soundHandler, ControlHandler& controlHandler,
               AiHandler& aiHandler, CollisionHandler& collisionHandler,
               ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
-              PowerUpHandler & powerUpHandler);
+              PowerUpHandler& powerUpHandler);
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
