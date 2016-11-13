@@ -74,8 +74,8 @@ void EntityManager::addEntity(Entity* entity) {
 void EntityManager::initRespawns() {
     std::unordered_map<int, Entity*>::const_iterator it;
     for (it = this->entityMap.begin(); it != this->entityMap.end(); ++it)
-        if (dynamic_cast<EnemyCollisionComponent*>(it->second->collision))
-            this->respawnEntities.push_back(it->second);
+        if (RespawnEntity* entity = dynamic_cast<RespawnEntity*>(it->second))
+            this->respawnEntities.push_back(entity);
 }
 
 void EntityManager::deleteEntity(int id) {
@@ -115,7 +115,7 @@ void EntityManager::cleanupEntities() {
 
 void EntityManager::clear() {
     this->cleanupEntities();    // delete all Entities from deletionQueue
-    std::vector<Entity*>::const_iterator ents;
+    std::vector<RespawnEntity*>::const_iterator ents;
     for (ents = this->respawnEntities.begin(); ents != this->respawnEntities.end(); ++ents) {
         if (this->entityMap.count((*ents)->getId()) == 0)
             delete *ents;
@@ -285,22 +285,23 @@ void EntityManager::handleSpawns() {
             this->hideEntity(tCmd->id);
         } else if (dynamic_cast<LoopLevelCommand*>(*it)){
             std::vector<PowerUpCollisionComponent*>::iterator pu;
-            for(pu = this->powerUpCollisionComponents.begin(); pu != this->powerUpCollisionComponents.end(); ++pu){
+            for (pu = this->powerUpCollisionComponents.begin(); pu != this->powerUpCollisionComponents.end(); ++pu) {
                 (*pu)->setIsClaimed(false);
-                (*pu)->entity->art->isVisible=true;
+                (*pu)->entity->art->isVisible = true;
             }
-            std::vector<Entity*>::iterator ents;
+            std::vector<RespawnEntity*>::iterator ents;
             for (ents = this->respawnEntities.begin(); ents != this->respawnEntities.end(); ++ents) {
-                Entity* entity = *ents;
+                RespawnEntity* entity = *ents;
                 if (this->entityMap.count(entity->getId()) == 0) {
                     entity->validate();
                     this->addEntity(entity);
                     entity->x = entity->initialX;
                     entity->y = entity->initialY;
-                } else if (entity->x <= 0)
-                    entity->x += 2 * this->windowW;
-                else if (entity->x < this->windowW)     //TODO: ADD RESPAWNENTITY MOVE FLAG!
+                } else if (entity->x + entity->width <= 0)
+                    entity->x += 2 * this->windowW + (rand() % 100);
+                else if (entity->x < this->windowW && !entity->shifted)
                     entity->x = this->windowW + (rand() % 100);
+                entity->shifted = false;
             }
         } else {
             ++it;

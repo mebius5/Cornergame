@@ -23,13 +23,11 @@ class AmmoComponent;
 #include "ammoComponent.h"
 
 class Entity {
-private:
+protected:
     int id;
 public:
     float x;                    // coordinates of top left corner
     float y;
-    float initialX;
-    float initialY;
     int width;
     int height;
     int drawWidth;
@@ -49,10 +47,19 @@ public:
     AmmoComponent* ammo;
 
     Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHeight);
-    ~Entity();
-    int getId();
-    void validate();
-    void invalidate();
+    virtual ~Entity();
+    virtual int getId();
+    virtual void validate();
+    virtual void invalidate();
+};
+
+class RespawnEntity : public Entity {
+public:
+    float initialX;
+    float initialY;
+    bool shifted;
+
+    RespawnEntity(int id, float x, float y, int w, int h, int drawWidth, int drawHeight);
 };
 
 #endif

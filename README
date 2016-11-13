@@ -122,14 +122,11 @@ QUIRKS
 - disabled the down key due to bugs that allow you to sink into the terrain
 
 TODOS
-Up next: test record victory. actually save number of victories. save hero?
-
 Kill acceleration? -> more responsive w/ velocity based.
 verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
 revamp terrain -> fewer rectangles!
 CommandBus/ComponentList?
 Camera shift -> split screen when too far? zoom out?
-*RespawnEntity class! (take out initialX, initialY from everyone, add "moved")
 Segfault with fonts (on mac only?)
 *Tuning of camera speed/character speed
 Sounds: handle stop sounds before start sounds?

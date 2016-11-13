@@ -28,7 +28,7 @@ public:
     std::vector<ScoreComponent*> scoreComponents;
     std::vector<PowerUpComponent*> powerUpComponents;
     std::vector<Entity*> heroEntities;
-    std::vector<Entity*> respawnEntities;   // only contains dynamic entities
+    std::vector<RespawnEntity*> respawnEntities;
     std::vector<PowerUpCollisionComponent*> powerUpCollisionComponents;
 
     EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW);
