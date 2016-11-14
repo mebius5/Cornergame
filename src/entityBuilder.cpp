@@ -206,10 +206,10 @@ Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vecto
     return enemy;
 }
 
-Entity* EntityBuilder::createBackground(TextureEnum texType, int width, int height) {
+Entity* EntityBuilder::createBackground(TextureEnum texType, int x, int y, float speed) {
     Texture texture = this->textureMap[texType];
-    Entity* background = new Entity(this->nextId++, 0, 0, width, height, width, height);
-    background->art = new StaticArtComponent(background, texture.sdlTexture, 0, true);
+    Entity* background = new Entity(this->nextId++, x, y, 2816, 704, 2816, 704);
+    background->art = new BackgroundArtComponent(background, texture.sdlTexture, 0, speed);
     return background;
 }
 

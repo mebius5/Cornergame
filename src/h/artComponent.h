@@ -52,6 +52,16 @@ public:
     SDL_Rect* getNextSrcRect(int dt);
 };
 
+class BackgroundArtComponent : public ArtComponent {
+private:
+    SDL_Texture* texture;
+public:
+    float speed;
+    BackgroundArtComponent(Entity* entity, SDL_Texture* texture, int layer, float speed);
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+};
+
 class PowerUpArtComponent : public ArtComponent {
 private:
     SDL_Texture* texture;

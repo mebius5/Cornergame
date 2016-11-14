@@ -9,7 +9,8 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_HERO2, "spritesheets/hero2.png");
     this->entityBuilder.loadTexture(TEX_ENEMY, "spritesheets/lax.png");
     this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
-    this->entityBuilder.loadTexture(TEX_BACKGROUND, "resources/jhu-logo.png");
+    this->entityBuilder.loadTexture(TEX_BACKGROUND1, "resources/background1.png");
+    this->entityBuilder.loadTexture(TEX_BACKGROUND2, "resources/background2.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH, "resources/star.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH_OVERLAY, "resources/starOverlay.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
@@ -159,8 +160,8 @@ Entity* EntityManager::createEnemy(TextureEnum texType, int x, int y) {
     return entity;
 }
 
-Entity* EntityManager::createBackground(TextureEnum texType, int width, int height) {
-    Entity* entity = this->entityBuilder.createBackground(texType, width, height);
+Entity* EntityManager::createBackground(TextureEnum texType, int x, int y, float speed) {
+    Entity* entity = this->entityBuilder.createBackground(texType, x, y, speed);
     this->addEntity(entity);
     return entity;
 }

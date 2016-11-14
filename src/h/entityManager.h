@@ -43,7 +43,7 @@ public:
 
     Entity* createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd);
     Entity* createEnemy(TextureEnum texType, int x, int y);
-    Entity* createBackground(TextureEnum texType, int width, int height);
+    Entity* createBackground(TextureEnum texType, int x, int y, float speed);
     Entity* createHealthBar(int x, int y, Entity* owner);
     Entity* createAmmoBar(int x, int y, Entity* owner);
     // Entity* createScoreBox(int x, int y, Entity* owner);
