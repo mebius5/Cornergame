@@ -9,8 +9,6 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_HERO2, "spritesheets/hero2.png");
     this->entityBuilder.loadTexture(TEX_ENEMY, "spritesheets/lax.png");
     this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
-    this->entityBuilder.loadTexture(TEX_BACKGROUND1, "resources/background1.png");
-    this->entityBuilder.loadTexture(TEX_BACKGROUND2, "resources/background2.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH, "resources/star.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH_OVERLAY, "resources/starOverlay.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
@@ -21,6 +19,8 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_TREE1, "resources/greentree1.png");
     this->entityBuilder.loadTexture(TEX_TREE2, "resources/greentree2.png");
     this->entityBuilder.loadTexture(TEX_BENCH, "resources/bench.png");
+    this->entityBuilder.loadBackground(TEX_BACKGROUND1, "resources/background1.png");
+    this->entityBuilder.loadBackground(TEX_BACKGROUND2, "resources/background2.png");
     this->entityBuilder.loadHealthBar(200, 40);
     this->entityBuilder.loadAmmoBar(50, 8);
 }

@@ -13,3 +13,7 @@ SDL_Texture* BackgroundArtComponent::getNextTexture(int /*dt*/) {
 SDL_Rect* BackgroundArtComponent::getNextSrcRect(int /*dt*/) {
     return NULL;
 }
+
+void BackgroundArtComponent::shift(float cameraXShift) {
+
+}

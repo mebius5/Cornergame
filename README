@@ -12,51 +12,19 @@ cd src/
 make
 ./gameManager
 
-Assignment 9 Task Writeups
-
-General Notes:
-
+Assignment 10 Task Writeups
 
 Akshay
-- Stop the hero from playing a noise if picking up a projectile
-- Created a time handler that can change the speed of time based on commands
-- Used time handler to implement a 20ms freeze when a projectile collides
-  with a hero, creating a more impactful collision
-- Used time handler to slow down time when a projectile is close to hitting
-  a target that it would kill
-- Fixed a bug where hero didn't have a default direction, causing projectiles
-  to fall flat if hero doesn't move
-- Tuned projectile speed
-- Allow projectiles to stick around after being fired, and also collected
-  when walked over or grabbed out of air for extra ammo
+
 
 Andrew
-- for beta: fixed issue with powerup overlay disappearing, fixed sound effects
-    to play properly, and not loop infinitely.
-- implemented passing entities between states: used for keeping heroes around
-    when going into results state
-- updated README with up to date instructions and TODOs!
-- code refactoring! -> removed unused methods, consolidated existing methods
-- performance updates to level reading, text display, AI, projectile collisions,
-    fixed overlay lag
-- bug fixes for sliding animation, slow motion activation
+
 
 Grady
-- Refactored art components so we can have overlay that's tied to the hero position.
-  This is extended to be used for power up art component and ammo bar art component.
-- Centered ammo bar above hero
-- Added dirt into terrain tiles and cleaned up powerup art component
-- Fixed bug in physics component produced by abs function.
-- Refactored code and cleaned up unused classes and instructions. Also free up
-  dynamically memory.
+
 
 Pratyush
--added new asset for wings power up
--added new asset for invincibility power up
--added new asset for beer power up
--added new asset for ammo power up
--added two new backgrounds for parallax
--implemented semi working parallax background
+
 
 
 GENERAL CONTROLS
@@ -151,12 +119,15 @@ Segfault with fonts (on mac only?)
 *Tuning of camera speed/character speed
 Sounds: handle stop sounds before start sounds?
 GAME NAME - STOP PUNTING
-*revamp layers -> enum/drawingHandler has vector<vector<>>
+*revamp layers -> enum/drawingHandler has vector<vector<>> (use the consts!)
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
 change powerup enum to be separate?
 revamp enums: embed type code into enum?
+consts for vector sizes: put in enum.h
+Refactor level.cpp, entityManager, entityBuilder responsibilities
 change previewOn to autoShiftOn (invert stuff...)
 slow-mo nesting (multiple projectiles in kill range)
 *separate characterPhysics from projectilePhysics
 
 TIME TO BEAT (average dt level 2 over 23 trials): 25.69
+IMPROVED TO 24.73 :) MORE TO GO!

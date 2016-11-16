@@ -24,7 +24,6 @@ public:
     virtual void updateLocation() { };      // for ArtComponents with owners
     virtual SDL_Texture* getNextTexture(int dt) = 0;
     virtual SDL_Rect* getNextSrcRect(int dt) = 0;
-
 };
 
 class StaticArtComponent : public ArtComponent {
@@ -60,6 +59,7 @@ public:
     BackgroundArtComponent(Entity* entity, SDL_Texture* texture, int layer, float speed);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
+    void shift(float cameraXShift);
 };
 
 class PowerUpArtComponent : public ArtComponent {

@@ -30,9 +30,7 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
 void PlayState::begin(int levelnum) {
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
     this->entityManager.createBackground(TEX_BACKGROUND1, 0, 0, 0.4);
-    this->entityManager.createBackground(TEX_BACKGROUND1, 2816, 0, 0.4);
     this->entityManager.createBackground(TEX_BACKGROUND2, 0, 0, 0.7);
-    this->entityManager.createBackground(TEX_BACKGROUND2, 2816, 0, 0.7);
 
     std::string levelFile = "levels/level";
     levelFile.append(std::to_string(levelnum));

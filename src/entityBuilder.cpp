@@ -147,6 +147,19 @@ void EntityBuilder::loadAmmoBar(int width, int height) {
     this->textureMap[TEX_AMMOBAR] = {texture, width*2, height};
 }
 
+void EntityBuilder::loadBackground(TextureEnum texType, const char* filename) {
+    SDL_Surface* image = this->loadImage(filename);
+    SDL_Surface* surface = SDL_CreateRGBSurface(0, image->w * 2, image->h, 32, 0, 0, 0, 0);
+    SDL_Rect tempRect = {0, 0, image->w, image->h};
+    SDL_BlitSurface(image, NULL, surface, &tempRect);
+    tempRect.x = image->w;
+    SDL_BlitSurface(image, NULL, surface, &tempRect);       // copy image side by side
+    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
+    this->textureMap[texType] = {texture, image->w * 2, image->h};
+    SDL_FreeSurface(image);
+    SDL_FreeSurface(surface);
+}
+
 void EntityBuilder::loadFont(FontEnum fontType, int fontSize) {
     TTF_Font* font = TTF_OpenFont("resources/varsity_regular.ttf", fontSize);
     if (!font)
@@ -207,9 +220,9 @@ Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vecto
 }
 
 Entity* EntityBuilder::createBackground(TextureEnum texType, int x, int y, float speed) {
-    Texture texture = this->textureMap[texType];
-    Entity* background = new Entity(this->nextId++, x, y, 2816, 704, 2816, 704);
-    background->art = new BackgroundArtComponent(background, texture.sdlTexture, 0, speed);
+    Texture tex = this->textureMap[texType];
+    Entity* background = new Entity(this->nextId++, x, y, tex.width*2, tex.height*2, tex.width*2, tex.height*2);
+    background->art = new BackgroundArtComponent(background, tex.sdlTexture, 0, speed);
     return background;
 }
 
