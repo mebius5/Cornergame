@@ -95,7 +95,7 @@ void Camera::shift(int dx, int dy) {
     minY += dy;
     maxX += dx;
     maxY += dy;
-
+    /*
     std::vector<ArtComponent*>::iterator it;
     for (it = this->componentList.begin(); it != this->componentList.end(); ) {
         if (!(*it)->isValid()) {        // remove invalid components
@@ -103,6 +103,7 @@ void Camera::shift(int dx, int dy) {
             this->componentList.pop_back();
             continue;
         }
+        
         if (dynamic_cast<BackgroundArtComponent*>(*it)) {
             (*it)->entity->x = (*it)->entity->x + dx * dynamic_cast<BackgroundArtComponent*>(*it)->speed;
             (*it)->entity->y = this->minY;
@@ -111,7 +112,7 @@ void Camera::shift(int dx, int dy) {
             }
         }
         ++it;
-    }
+    } */
 
 
 
@@ -126,8 +127,7 @@ void Camera::shift(int dx, int dy) {
             }
 
             Entity* entity = (*it)->entity;
-            if (dynamic_cast<BackgroundArtComponent*>(entity->art)
-                    && entity->x + entity->width >= levelW) {
+            if (dynamic_cast<BackgroundArtComponent*>(entity->art)) {
                 entity->x = entity->x - levelW;
             }
             if (dynamic_cast<DynamicCollisionComponent*>(entity->collision)

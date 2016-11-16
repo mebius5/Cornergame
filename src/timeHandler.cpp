@@ -1,4 +1,5 @@
 #include "timeHandler.h"
+#include <iostream>
 
 TimeHandler::TimeHandler(std::vector<Command*>& commandList) :
     commandList(commandList),
@@ -18,6 +19,7 @@ TimeHandler::~TimeHandler() {
 }
 
 int TimeHandler::forward(int dt) {
+
     // if there is still time to be frozen
     if (this->frozenTime > dt) {
         this->frozenTime -= dt;
@@ -32,10 +34,11 @@ int TimeHandler::forward(int dt) {
     // handle slow motion
     if (this->slowMotion) {
         dt /= 4;
-        // never let dt = 0 or else we're screwed
         if (dt == 0) {
             dt = 1;
         }
+        // never let dt = 0 or else we're screwed
+       
     }
 
     return dt;
