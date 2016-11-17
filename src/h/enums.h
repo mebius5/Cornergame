@@ -3,7 +3,7 @@
 
 enum Tile {
     // Put texture enums first to match with TerrainTexEnum
-    TILE_BRICK, TILE_GRASS, TILE_DIRT, TILE_NONE,
+    TILE_BRICK, TILE_GRASS, TILE_DIRT, TILE_SAND, TILE_NONE,
     // Other tiles
     TILE_SPAWN1, TILE_SPAWN2, TILE_ENEMY, TILE_GOAL,
     TILE_PU_JUMP, TILE_PU_HEALTH, TILE_PU_AMMO, TILE_PU_BEER,
@@ -38,7 +38,7 @@ enum TextureEnum {
     TEX_TREE1, TEX_TREE2, TEX_BENCH, TEX_NONE
 };
 
-enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_DIRT, TT_NONE };
+enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_DIRT, TT_SAND, TT_NONE };
 
 enum FontEnum { FONT_GLOBAL };
 

@@ -28,6 +28,7 @@ Grady
 - Refactored entity manager's create text methods in order to eliminate repetitive methods in
   entity builder. Now, entity builder only has createFadeInText() and createMenuText() for all
   texts
+- Added fading terrain type where the hero can trigger terrain to shake and then disappear
 
 Pratyush
 

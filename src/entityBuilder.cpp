@@ -4,7 +4,7 @@ EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
     textureMap(30),
-    terrainTexMap(3, std::vector<Texture>(256)),
+    terrainTexMap(4, std::vector<Texture>(256)),
     fontMap(1, std::vector<TTF_Font*>(128)) {
 }
 
@@ -53,6 +53,8 @@ void EntityBuilder::loadTerrain(TerrainTexEnum texType, int width) {
         image = this->loadImage("resources/tile.png");
     } else if (texType == TT_GRASS) {
         image = this->loadImage("resources/grass.png");
+    } else if (texType == TT_SAND) {
+        image = this->loadImage("resources/sand.png");
     } else {
         image = this->loadImage("resources/dirt.png");
     }
@@ -248,6 +250,18 @@ Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int n
 
     terrain->art = new StaticArtComponent(terrain, texture.sdlTexture, 1, false);
     terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
+    return terrain;
+}
+
+Entity* EntityBuilder::createFadingTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal, bool freeTop,
+                                           bool freeBot, bool freeRight, bool freeLeft) {
+    if (!this->terrainTexMap[texType][numberHorizontal].sdlTexture)
+        this->loadTerrain(texType, numberHorizontal);
+    Texture texture = this->terrainTexMap[texType][numberHorizontal];
+    Entity* terrain = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+
+    terrain->art = new FadingTerrainArtComponent(terrain, texture.sdlTexture, 1);
+    terrain->collision = new FadingTerrainColComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
     return terrain;
 }
 

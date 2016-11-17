@@ -294,8 +294,15 @@ Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, int x, 
 Entity* EntityManager::createTerrain(Tile tileType, int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
     TerrainTexEnum texType = (TerrainTexEnum)tileType;
-    Entity* entity = this->entityBuilder.createTerrain(
-            texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    Entity * entity;
+    if(texType!=TT_SAND){
+        entity = this->entityBuilder.createTerrain(
+                texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    } else{
+        entity = this->entityBuilder.createFadingTerrain(
+                texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    }
+
     this->addEntity(entity);
     return entity;
 }
@@ -368,6 +375,7 @@ void EntityManager::populateLevel(Level* level) {
         for (int j = 0; j < level->contentWidth; j++) {
             switch (level->getTile(i, j)) {
             case TILE_DIRT:
+            case TILE_SAND:
             case TILE_BRICK:
             case TILE_GRASS: {
                 bool freeLeft = (j == 0 || level->getTile(i, j-1) >= TILE_NONE);

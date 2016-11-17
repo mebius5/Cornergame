@@ -17,6 +17,8 @@ SRCFILES = \
 	entity.cpp \
 	entityBuilder.cpp \
 	entityManager.cpp \
+	fadingTerrainArtComponent.cpp \
+	fadingTerrainColComponent.cpp \
 	gameManager.cpp \
 	healthComponent.cpp \
 	healthBarArtComponent.cpp \

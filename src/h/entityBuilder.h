@@ -51,6 +51,8 @@ public:
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y) ;
     Entity* createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
             bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
+    Entity* createFadingTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
+                          bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
     Entity* createProjectile(TextureEnum texType, int x, int y, float charge, int dir, int ownerID, Entity * closest);
 };
 
