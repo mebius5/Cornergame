@@ -20,6 +20,7 @@ private:
 public:
     std::vector<AiComponent*> aiComponents;
     std::vector<ArtComponent*> artComponents;
+    std::vector<BackgroundArtComponent*> bgComponents;
     std::vector<StaticCollisionComponent*> staticCollisionComponents;
     std::vector<DynamicCollisionComponent*> dynamicCollisionComponents;
     std::vector<InputComponent*> inputComponents;
@@ -48,17 +49,17 @@ public:
     Entity* createAmmoBar(int x, int y, Entity* owner);
     // Entity* createScoreBox(int x, int y, Entity* owner);
 
-    Entity* createFadeInText(FontEnum font, const char* text, int fontSize, int r, int g, int b,
+    void createFadeInText(FontEnum font, const char* text, int fontSize, int r, int g, int b,
                              int initialAlpha, int windowW, int x, int y);
 
-    Entity* createCenteredFadeInText(FontEnum font, const char* text, int fontSize, int r, int g, int b,
+    void createCenteredFadeInText(FontEnum font, const char* text, int fontSize, int r, int g, int b,
                                      int initialAlpha, int windowW, int windowH);
 
-    Entity* createHorizontallyCenteredFadeInText(FontEnum font, const char *text, int fontSize,
+    void createHorizontallyCenteredFadeInText(FontEnum font, const char *text, int fontSize,
                                                  int r, int g, int b, int initialAlpha,
                                                  int windowW, int yPos);
 
-    Entity* createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text, int fontSize,
+    void createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text, int fontSize,
                                                      int r, int g, int b, int initialAlpha,
                                                      int windowW, int yPos,
                                                      int index, int numOptions, StateEnum nextState);

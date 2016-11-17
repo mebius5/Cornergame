@@ -39,62 +39,6 @@ SDL_Surface* EntityBuilder::createTextSurface(FontEnum font, const char *text,
 }
 
 
-SDL_Surface* EntityBuilder::createTextSurfacePerLine(FontEnum fontType, const char *text, int fontSize, int r, int g, int b,
-                                                     int a, int windowW) {
-    std::string tempText = text;
-    int count=1;
-    std::string::size_type  i=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
-        tempText = tempText.substr(i+1, tempText.length());
-        count++;
-    }
-
-    if(count!=1){
-        std::vector<SDL_Surface*> textSurfaces;
-        tempText = text;
-
-        int maxWidth = 0;
-        int maxHeight = 0;
-        while((i = tempText.find("\n"))!=std::string::npos){
-            SDL_Surface * textSurf = createTextSurfacePerLine(fontType, tempText.substr(0,i).c_str(), fontSize, r, g, b, a, windowW);
-            textSurfaces.push_back(textSurf);
-            if(textSurf->w>maxWidth){
-                maxWidth = textSurf->w;
-            }
-            if(textSurf->h>maxHeight){
-                maxHeight = textSurf->h;
-            }
-            tempText = tempText.substr(i+1, tempText.length());
-        }
-        SDL_Surface* surface = SDL_CreateRGBSurface(0, maxWidth, maxHeight*count, 32, 0, 0, 0, 0);
-        SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_ADD);
-        int k=0;
-        std::vector<SDL_Surface*>::iterator it;
-        for(it=textSurfaces.begin();it!=textSurfaces.end();++it){
-            SDL_Surface * textSurf = (*it);
-            SDL_Rect tempRect{(maxWidth / 2) - textSurf->w /2, k * maxHeight, textSurf->w, textSurf->h};
-            //SDL_SetSurfaceColorMod(surface,(Uint8)r, (Uint8)g, (Uint8)b);
-            //SDL_SetSurfaceAlphaMod(surface,a);
-            std::cout<<"Here"<<std::endl;
-            SDL_BlitSurface(textSurf, NULL, surface, &tempRect);
-            k++;
-        }
-
-        textSurfaces.clear();
-
-        return surface;
-    } else {
-        SDL_Surface* textSurf = createTextSurfacePerLine(fontType, tempText.c_str(), fontSize, r, g, b, a, windowW);
-        SDL_Surface* surface = SDL_CreateRGBSurface(0,textSurf->w, textSurf->h, 32, 0,0,0,0);
-        SDL_SetSurfaceBlendMode(surface,SDL_BLENDMODE_ADD);
-        SDL_SetSurfaceAlphaMod(surface, (Uint8) a);
-        SDL_Rect tempRect = {0,0,textSurf->w, textSurf->h};
-        SDL_BlitSurface(textSurf, NULL, surface, &tempRect);
-        return surface;
-    }
-}
-
-
 /* Load and free operations for texture maps */
 void EntityBuilder::loadTexture(TextureEnum texType, const char* filename) {
     SDL_Surface* image = this->loadImage(filename);
@@ -111,6 +55,8 @@ void EntityBuilder::loadTerrain(TerrainTexEnum texType, int width) {
         image = this->loadImage("resources/grass.png");
     } else if (texType == TT_DIRT) {
         image = this->loadImage("resources/dirt.png");
+    } else if (texType == TT_SAND) {
+        image = this->loadImage("resources/sand.png");
     } else if (texType == TT_BOUNCE) {
         image = this->loadImage("spritesheets/bounce.png");
     }
@@ -212,9 +158,9 @@ Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vecto
 }
 
 Entity* EntityBuilder::createBackground(TextureEnum texType, int x, int y, float speed) {
-    Texture texture = this->textureMap[texType];
-    Entity* background = new Entity(this->nextId++, x, y, 2816, 704, 2816, 704);
-    background->art = new BackgroundArtComponent(background, texture.sdlTexture, 0, speed);
+    Texture tex = this->textureMap[texType];
+    Entity* background = new Entity(this->nextId++, x, y, tex.width*2, tex.height*2, tex.width*2, tex.height*2);
+    background->art = new BackgroundArtComponent(background, tex.sdlTexture, 0, speed);
     return background;
 }
 
@@ -246,26 +192,6 @@ Entity* EntityBuilder::createFadeInText(FontEnum fontType, const char *text, int
                                         int windowW, int x, int y) {
     SDL_Surface* textSurface = this->createTextSurface(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
     Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
-    fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
-    return fadeInText;
-}
-
-Entity* EntityBuilder::createCenteredFadeInText(FontEnum fontType, const char *text, int fontSize,
-                                                int r, int g, int b, int initialAlpha,
-                                                int windowW, int windowH) {
-    SDL_Surface* textSurface = this->createTextSurface(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
-    int x = (windowW/2 - textSurface->w/2);
-    int y = (windowH/2 - textSurface->h/2);
-    Entity * fadeInText = new Entity(this->nextId++, x, y, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
-    fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
-    return fadeInText;
-}
-
-Entity* EntityBuilder::createHorizontallyCenteredFadeInText(FontEnum fontType, const char *text, int fontSize, int r,
-                                                            int g, int b, int initialAlpha, int windowW, int yPos) {
-    SDL_Surface* textSurface = this->createTextSurface(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
-    int x = (windowW/2 - textSurface->w/2);
-    Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
     fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
     return fadeInText;
 }
@@ -341,6 +267,18 @@ Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int n
         terrain->art = new StaticArtComponent(terrain, texture.sdlTexture, 1, false);
         terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
     }
+    return terrain;
+}
+
+Entity* EntityBuilder::createFadingTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal, bool freeTop,
+                                           bool freeBot, bool freeRight, bool freeLeft) {
+    if (!this->terrainTexMap[texType][numberHorizontal].sdlTexture)
+        this->loadTerrain(texType, numberHorizontal);
+    Texture texture = this->terrainTexMap[texType][numberHorizontal];
+    Entity* terrain = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+
+    terrain->art = new FadingTerrainArtComponent(terrain, texture.sdlTexture, 1);
+    terrain->collision = new FadingTerrainColComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
     return terrain;
 }
 

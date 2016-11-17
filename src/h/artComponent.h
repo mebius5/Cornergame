@@ -24,11 +24,10 @@ public:
     virtual void updateLocation() { };      // for ArtComponents with owners
     virtual SDL_Texture* getNextTexture(int dt) = 0;
     virtual SDL_Rect* getNextSrcRect(int dt) = 0;
-
 };
 
 class StaticArtComponent : public ArtComponent {
-private:
+protected:
     SDL_Texture* texture;
 public:
     StaticArtComponent(Entity* entity, SDL_Texture* texture, int layer,
@@ -82,6 +81,18 @@ public:
     void updateLocation();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
+};
+
+class FadingTerrainArtComponent : public ArtComponent {
+private:
+    SDL_Texture* texture;
+    int shakeTime;
+    int maxShakeTime;
+public:
+    FadingTerrainArtComponent(Entity* entity, SDL_Texture* texture, int layer);
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+    void startShake();
 };
 
 class HealthBarArtComponent: public ArtComponent {

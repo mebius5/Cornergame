@@ -39,6 +39,7 @@ Level::Level(std::string filename, int windowW, int windowH) {
             case 'W': tile = TILE_GRASS; break;
             case 'D': tile = TILE_DIRT; break;
             case '_': tile = TILE_BOUNCE; break;
+            case 'S': tile = TILE_SAND; break;
             case '@':
                 numHero++;
                 if (numHero == 1) {
@@ -71,7 +72,7 @@ Level::Level(std::string filename, int windowW, int windowH) {
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < windowW/32; j++) {
             Tile type = this->getTile(i, j);
-            if (type == TILE_BRICK || type == TILE_GRASS || type == TILE_DIRT
+            if (type == TILE_BRICK || type == TILE_GRASS || type == TILE_DIRT || type == TILE_SAND
                     || type == TILE_TREE1 || type == TILE_TREE2 || type == TILE_BENCH ||
                     type == TILE_BOUNCE) {
                 this->getTile(i, j + this->width) = type;
