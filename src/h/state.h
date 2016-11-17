@@ -52,6 +52,22 @@ public:
     void cleanup(StateEnum next);
 };
 
+class LevelSelectState : public State {
+private: 
+    DrawingHandler& drawingHandler;
+    InputHandler& inputHandler;
+    SoundHandler& soundHandler;
+    ControlHandler& controlHandler;
+public:
+    LevelSelectState(int windowW, int windowH, EntityManager& entityManager,
+              std::vector<Command*>& commandList, SDL_Renderer* renderer,
+              DrawingHandler& drawingHandler, InputHandler& inputHandler,
+              SoundHandler& soundHandler, ControlHandler& controlHandler);
+    void begin(int level);
+    StateEnum run();
+    void cleanup(StateEnum next);
+};
+
 
 class MenuState : public State {
 private:

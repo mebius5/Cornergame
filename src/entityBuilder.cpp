@@ -3,7 +3,7 @@
 EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
-    textureMap(30),
+    textureMap(35),
     terrainTexMap(3, std::vector<Texture>(256)),
     fontMap(1, std::vector<TTF_Font*>(128)) {
 }
@@ -278,6 +278,13 @@ Entity* EntityBuilder::createHorizontallyCenteredFadeInMenuText(FontEnum fontTyp
         nextStateCmd = new SwitchStateCommand(nextState);
     fadeInText->input = new MenuOptionInputComponent(fadeInText, index, numOptions, nextStateCmd);
     return fadeInText;
+}
+
+Entity* EntityBuilder::createLevelPreview(TextureEnum tex, int x, int y) {
+    Texture texture = this->textureMap[tex];
+    Entity* entity = new Entity(this->nextId++, x, y, 800, 150, 800, 150);
+    entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
+    return entity;
 }
 
 Entity* EntityBuilder::createVictoryZone(int x, int y) {        // not using maps, since its a

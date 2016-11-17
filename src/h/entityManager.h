@@ -62,6 +62,8 @@ public:
                                                      int r, int g, int b, int initialAlpha,
                                                      int windowW, int yPos,
                                                      int index, int numOptions, StateEnum nextState);
+
+    Entity* createLevelPreview(TextureEnum tex, int x, int y);
     Entity* createVictoryZone(int x, int y);
     Entity* createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y);
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y);

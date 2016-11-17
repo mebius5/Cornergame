@@ -122,6 +122,10 @@ void GameManager::run() {
                               commandList, this->renderer, drawingHandler,
                               inputHandler, soundHandler, controlHandler);
 
+    LevelSelectState LevelSelectState(this->width, this->height, entityMgr, commandList,
+                        this->renderer, drawingHandler, inputHandler,
+                        soundHandler, controlHandler);
+
     PlayState playState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
@@ -163,6 +167,9 @@ void GameManager::run() {
         switch (nextState) {
             case STATE_PLAY:
                 currentState = &playState;
+                break;
+            case STATE_LEVEL_SELECT:
+                currentState = &LevelSelectState;
                 break;
             case STATE_LEVEL_TRANSIT:
                 currentState = &levelTransitState;

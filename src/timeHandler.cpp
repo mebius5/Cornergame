@@ -6,7 +6,8 @@ TimeHandler::TimeHandler(std::vector<Command*>& commandList) :
     lowerVolumeCommand(new LowerVolumeCommand()),
     raiseVolumeCommand(new RaiseVolumeCommand()),
     frozenTime(0),
-    slowMotion(false) {
+    slowMotion(false),
+    remainder(0) {
 }
 
 TimeHandler::~TimeHandler() {
@@ -33,12 +34,18 @@ int TimeHandler::forward(int dt) {
 
     // handle slow motion
     if (this->slowMotion) {
-        dt /= 4;
-        if (dt == 0) {
-            dt = 1;
-        }
-        // never let dt = 0 or else we're screwed
        
+        // keep track of remainder so we don't lose time
+        remainder += dt % 4;
+        if (remainder > 4) {
+            dt += 4; // this cannot change the remainder
+            remainder -= 4;
+        }
+        dt /= 4;
+
+    // if no longer slow motion clear remainder for next time
+    } else {
+        remainder = 0;
     }
 
     return dt;
