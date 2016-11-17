@@ -12,6 +12,7 @@ private:
     Command* raiseVolumeCommand;
     int frozenTime;
     bool slowMotion;
+    int remainder;
 public:
     TimeHandler(std::vector<Command*>& commandList);
     ~TimeHandler();
