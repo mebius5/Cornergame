@@ -187,46 +187,93 @@ Entity* EntityManager::createAmmoBar(int x, int y, Entity* owner) {
 //     return entity;
 // }
 
-Entity* EntityManager::createFadeInText(FontEnum font,
+void EntityManager::createFadeInText(FontEnum font,
                                                 const char* text, int fontSize, int r, int g, int b,
                                                 int initialAlpha, int windowW, int x, int y) {
-    Entity* entity = this->entityBuilder.createFadeInText(
-            font, text, fontSize, r, g, b,
-            initialAlpha, windowW, x, y);
-    this->addEntity(entity);
-    return entity;
+    std::string tempText = text;
+    std::string::size_type  i=0;
+    int yOffset=0;
+    while((i = tempText.find("\n"))!=std::string::npos){
+        Entity * entity = this->entityBuilder.createFadeInText(
+                font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha, windowW, x, y+yOffset);
+        this->addEntity(entity);
+        tempText = tempText.substr(i+1, tempText.length());
+        yOffset += entity->drawHeight;
+    }
+    if(tempText.length()!=0){
+        Entity * entity = this->entityBuilder.createFadeInText(
+                font, tempText.c_str(), fontSize, r, g, b, initialAlpha, windowW, x, y+yOffset);
+        this->addEntity(entity);
+    }
 }
 
-Entity* EntityManager::createCenteredFadeInText(FontEnum font,
+void EntityManager::createCenteredFadeInText(FontEnum font,
                                                 const char* text, int fontSize, int r, int g, int b,
                                                 int initialAlpha, int windowW, int windowH) {
-    Entity* entity = this->entityBuilder.createCenteredFadeInText(
-            font, text, fontSize, r, g, b,
-            initialAlpha, windowW, windowH);
-    this->addEntity(entity);
-    return entity;
+    std::string tempText = text;
+    std::string::size_type  i=0;
+    int yOffset=0;
+    while((i = tempText.find("\n"))!=std::string::npos){
+        Entity * entity = this->entityBuilder.createFadeInText(
+                font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha, windowW, 0, 0);
+        entity->x = (windowW/2 - entity->width/2);
+        entity->y = (windowH/2 - entity->height/2)+yOffset;
+        this->addEntity(entity);
+        tempText = tempText.substr(i+1, tempText.length());
+        yOffset += entity->drawHeight;
+    }
+    if(tempText.length()!=0){
+        Entity * entity = this->entityBuilder.createFadeInText(
+                font, tempText.c_str(), fontSize, r, g, b, initialAlpha, windowW, 0, 0);
+        entity->x = (windowW/2 - entity->width/2);
+        entity->y = (windowH/2 - entity->height/2)+yOffset;
+        this->addEntity(entity);
+    }
 }
 
-Entity* EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const char *text, int fontSize, int r, int g,
+void EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const char *text, int fontSize, int r, int g,
                                                             int b, int initialAlpha, int windowW, int yPos) {
-    Entity * entity = this->entityBuilder.createHorizontallyCenteredFadeInText(
-            font, text, fontSize, r, g, b, initialAlpha,
-            windowW, yPos
-    );
-    this->addEntity(entity);
-    return entity;
+    std::string tempText = text;
+    std::string::size_type  i=0;
+    int yOffset=0;
+    while((i = tempText.find("\n"))!=std::string::npos){
+        Entity * entity = this->entityBuilder.createFadeInText(
+                font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha, windowW, 0, yPos+yOffset);
+        entity->x = (windowW/2 - entity->width/2);
+        this->addEntity(entity);
+        tempText = tempText.substr(i+1, tempText.length());
+        yOffset += entity->drawHeight;
+    }
+    if(tempText.length()!=0){
+        Entity * entity = this->entityBuilder.createFadeInText(
+                font, tempText.c_str(), fontSize, r, g, b, initialAlpha, windowW, 0, yPos+yOffset);
+        entity->x = (windowW/2 - entity->width/2);
+        this->addEntity(entity);
+    }
 }
 
-Entity* EntityManager::createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text,
+void EntityManager::createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text,
                                                                 int fontSize,
                                                                 int r, int g, int b, int initialAlpha,
                                                                 int windowW, int yPos,
                                                                 int index, int numOptions, StateEnum nextState) {
-    Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInMenuText(
-            font, text, fontSize, r, g, b, initialAlpha,
-            windowW, yPos, index, numOptions, nextState);
-    this->addEntity(entity);
-    return entity;
+    std::string tempText = text;
+    std::string::size_type  i=0;
+    int yOffset=0;
+    while((i = tempText.find("\n"))!=std::string::npos){
+        Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInMenuText(
+                font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha,
+                windowW, yPos+yOffset, index, numOptions, nextState);
+        this->addEntity(entity);
+        tempText = tempText.substr(i+1, tempText.length());
+        yOffset += entity->drawHeight;
+    }
+    if(tempText.length()!=0){
+        Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInMenuText(
+                font, tempText.c_str(), fontSize, r, g, b, initialAlpha,
+                windowW, yPos+yOffset, index, numOptions, nextState);
+        this->addEntity(entity);
+    }
 }
 
 Entity* EntityManager::createVictoryZone(int x, int y) {
@@ -250,8 +297,15 @@ Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, int x, 
 Entity* EntityManager::createTerrain(Tile tileType, int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
     TerrainTexEnum texType = (TerrainTexEnum)tileType;
-    Entity* entity = this->entityBuilder.createTerrain(
-            texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    Entity * entity;
+    if(texType!=TT_SAND){
+        entity = this->entityBuilder.createTerrain(
+                texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    } else{
+        entity = this->entityBuilder.createFadingTerrain(
+                texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    }
+
     this->addEntity(entity);
     return entity;
 }
@@ -324,6 +378,7 @@ void EntityManager::populateLevel(Level* level) {
         for (int j = 0; j < level->contentWidth; j++) {
             switch (level->getTile(i, j)) {
             case TILE_DIRT:
+            case TILE_SAND:
             case TILE_BRICK:
             case TILE_GRASS: {
                 bool freeLeft = (j == 0 || level->getTile(i, j-1) >= TILE_NONE);
