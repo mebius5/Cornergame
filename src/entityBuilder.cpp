@@ -189,15 +189,6 @@ Entity* EntityBuilder::createFadeInText(FontEnum fontType, const char *text, int
     return fadeInText;
 }
 
-Entity* EntityBuilder::createHorizontallyCenteredFadeInText(FontEnum fontType, const char *text, int fontSize, int r,
-                                                            int g, int b, int initialAlpha, int windowW, int yPos) {
-    SDL_Surface* textSurface = this->createTextSurface(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
-    int x = (windowW/2 - textSurface->w/2);
-    Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
-    fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, 1, initialAlpha);
-    return fadeInText;
-}
-
 Entity* EntityBuilder::createHorizontallyCenteredFadeInMenuText(FontEnum fontType, const char *text, int fontSize,
                                                                 int r, int g, int b, int initialAlpha,
                                                                 int windowW, int yPos,
