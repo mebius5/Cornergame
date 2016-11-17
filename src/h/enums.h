@@ -3,7 +3,7 @@
 
 enum Tile {
     // Put texture enums first to match with TerrainTexEnum
-    TILE_BRICK, TILE_GRASS, TILE_DIRT, TILE_NONE,
+    TILE_BRICK, TILE_GRASS, TILE_DIRT, TILE_BOUNCE, TILE_NONE,
     // Other tiles
     TILE_SPAWN1, TILE_SPAWN2, TILE_ENEMY, TILE_GOAL,
     TILE_PU_JUMP, TILE_PU_HEALTH, TILE_PU_AMMO, TILE_PU_BEER,
@@ -23,7 +23,7 @@ enum ProjEnum { PROJ_HERO, PROJ_ENEMY };
 // soundHander or entityBuilder for the map vectors.
 enum SfxEnum { SFX_ALERT, SFX_AMMO, SFX_ARMOR, SFX_DRINK, SFX_JUMP,
                SFX_LAND, SFX_ENEMY, SFX_RUMBLE, SFX_RUNNING, SFX_SCRAPE,
-               SFX_WOOSH, SFX_NONE };
+               SFX_WOOSH, SFX_BOUNCE, SFX_NONE };
 
 enum MusicEnum { MUSIC_START, MUSIC_MENU, MUSIC_PLAY, MUSIC_HIGHSCORE };
 
@@ -38,7 +38,7 @@ enum TextureEnum {
     TEX_TREE1, TEX_TREE2, TEX_BENCH, TEX_NONE
 };
 
-enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_DIRT, TT_NONE };
+enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_DIRT, TT_BOUNCE, TT_NONE };
 
 enum FontEnum { FONT_GLOBAL };
 

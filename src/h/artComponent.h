@@ -38,7 +38,7 @@ public:
 };
 
 class AnimationComponent : public ArtComponent {
-private:
+protected:
     SDL_Texture* texture;
     int surfaceW;
     int surfaceH;
@@ -50,6 +50,14 @@ public:
     AnimationComponent(Entity* entity, Texture texture, int layer);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
+};
+
+class BounceAnimationComponent : public AnimationComponent {
+public:
+    BounceAnimationComponent(Entity* entity, Texture texture, int layer);
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+    void restartAnimation();
 };
 
 class BackgroundArtComponent : public ArtComponent {

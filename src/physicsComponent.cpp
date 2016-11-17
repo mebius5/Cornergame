@@ -186,15 +186,18 @@ bool PhysicsComponent::isFrozen() {
     return this->frozen;
 }
 
-void PhysicsComponent::jump() {
+void PhysicsComponent::jump(float velocity) {
+    if (velocity == -1) {
+        velocity = this->jumpVelocity;
+    }
     if (this->jumps < this->maxJumps || this->infiniteJumps) {
-        this->yVelocity = -1 * this->jumpVelocity;
+        this->yVelocity = -1 * velocity;
         this->jumps++;
         this->entity->actionState = ACTION_JUMP;
         if (this->collisionComp->onLeftWall && !this->collisionComp->onGround)
-            this->xVelocity = .25f * this->jumpVelocity;
+            this->xVelocity = .25f * velocity;
         else if (this->collisionComp->onRightWall && !this->collisionComp->onGround)
-            this->xVelocity = -.25f * this->jumpVelocity;
+            this->xVelocity = -.25f * velocity;
         if (this->jumpCommand)
             Component::commandList->push_back(this->jumpCommand);
     }

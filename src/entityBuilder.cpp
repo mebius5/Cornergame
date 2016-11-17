@@ -4,7 +4,7 @@ EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
     textureMap(30),
-    terrainTexMap(3, std::vector<Texture>(256)),
+    terrainTexMap(10, std::vector<Texture>(256)),
     fontMap(1, std::vector<TTF_Font*>(128)) {
 }
 
@@ -104,21 +104,26 @@ void EntityBuilder::loadTexture(TextureEnum texType, const char* filename) {
 }
 
 void EntityBuilder::loadTerrain(TerrainTexEnum texType, int width) {
-    SDL_Surface* image;
+    SDL_Surface* image = NULL;
     if (texType == TT_BRICK) {
         image = this->loadImage("resources/tile.png");
     } else if (texType == TT_GRASS) {
         image = this->loadImage("resources/grass.png");
-    } else {
+    } else if (texType == TT_DIRT) {
         image = this->loadImage("resources/dirt.png");
+    } else if (texType == TT_BOUNCE) {
+        image = this->loadImage("spritesheets/bounce.png");
     }
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, image->w * width, image->h, 32, 0, 0, 0, 0);
+
+    SDL_Surface* surface = SDL_CreateRGBSurface(0, image->w * width, image->h, 32,
+                                                        0xFF000000, 0x00FF0000, 0x0000FF00, 0x000000FF);
     for (int i = 0; i < width; i++) {
         SDL_Rect tempRect = {image->w * i, 0, image->w, image->h};
         SDL_BlitSurface(image, NULL, surface, &tempRect);
     }
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     this->terrainTexMap[texType][width] = {texture, image->w * width, image->h};
+
     SDL_FreeSurface(image);
     SDL_FreeSurface(surface);
 }
@@ -317,13 +322,25 @@ Entity* EntityBuilder::createStaticBackgroundObject(TextureEnum texType, int x, 
 
 Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
         bool freeTop, bool freeBot, bool freeRight, bool freeLeft) {
+
+    Entity* terrain = NULL;
     if (!this->terrainTexMap[texType][numberHorizontal].sdlTexture)
         this->loadTerrain(texType, numberHorizontal);
     Texture texture = this->terrainTexMap[texType][numberHorizontal];
-    Entity* terrain = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
 
-    terrain->art = new StaticArtComponent(terrain, texture.sdlTexture, 1, false);
-    terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
+    if (texType == TT_BOUNCE) {
+        // set the drawing offset
+        terrain = new Entity(this->nextId++, x, y + (texture.height) / 2,
+                             texture.width, texture.height / 4, texture.width, texture.height);
+        terrain->drawY -= (texture.height) / 2;
+        terrain->art = new BounceAnimationComponent(terrain, texture, 2);
+        terrain->collision = new BounceCollisionComponent(terrain);
+
+    } else {
+        terrain = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+        terrain->art = new StaticArtComponent(terrain, texture.sdlTexture, 1, false);
+        terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
+    }
     return terrain;
 }
 

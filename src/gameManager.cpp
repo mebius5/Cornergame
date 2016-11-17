@@ -150,6 +150,7 @@ void GameManager::run() {
     soundHandler.loadSfx("resources/running.aiff", SFX_RUNNING);
     soundHandler.loadSfx("resources/scrape.aiff", SFX_SCRAPE);
     soundHandler.loadSfx("resources/woosh.aiff", SFX_WOOSH);
+    soundHandler.loadSfx("resources/jump.wav", SFX_BOUNCE);
 
     // State loop
     State* currentState = &startState;

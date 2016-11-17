@@ -6,6 +6,8 @@ SRCFILES = \
     ammoComponent.cpp \
 	animationComponent.cpp \
 	backgroundArtComponent.cpp \
+    bounceAnimationComponent.cpp \
+    bounceCollisionComponent.cpp \
 	camera.cpp \
 	collisionHandler.cpp \
 	command.cpp \

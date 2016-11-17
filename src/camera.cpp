@@ -81,8 +81,8 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
         }
     }
 
-    SDL_Rect dest = { (int)entity->x - (int)minX + entity->width/2 - entity->drawWidth/2 - offsetX,
-                      (int) entity->y - (int)minY + entity->height/2 - entity->drawHeight/2 - offsetY,
+    SDL_Rect dest = { (int)entity->x + (int)entity->drawX - (int)minX - offsetX,
+                      (int)entity->y + (int)entity->drawY - (int)minY - offsetY,
                       entity->drawWidth,
                       entity->drawHeight};
 

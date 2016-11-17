@@ -107,4 +107,14 @@ public:
     void setIsClaimed(bool isClaimed);
 };
 
+class BounceCollisionComponent : public StaticCollisionComponent {
+private:
+    Command* bounceCommand;
+    float bounceVelocity;
+public:
+    BounceCollisionComponent(Entity* entity);
+    ~BounceCollisionComponent();
+    void onEntityCollision(DynamicCollisionComponent* otherComp);
+};
+
 #endif
