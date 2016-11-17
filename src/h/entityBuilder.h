@@ -19,8 +19,6 @@ private:
     std::vector<std::vector<TTF_Font*>> fontMap;      // indexes by font & size
     SDL_Surface* createTextSurface(FontEnum font, const char *text, int fontSize,
                                    int r, int g, int b, int a, int windowW);
-    SDL_Surface* createTextSurfacePerLine(FontEnum font, const char *text, int fontSize,
-                                   int r, int g, int b, int a, int windowW);
     SDL_Surface* loadImage(const char* filename);
 public:
     EntityBuilder(SDL_Renderer *renderer);
@@ -41,16 +39,6 @@ public:
     Entity* createFadeInText(FontEnum fontType, const char *text, int fontSize,
                              int r, int g, int b, int initialAlpha,
                              int windowW, int x, int y);
-
-    Entity* createCenteredFadeInText(FontEnum fontType, const char *text, int fontSize,
-                                     int r, int g, int b, int initialAlpha,
-                                     int windowW, int windowH);
-
-    Entity* createHorizontallyCenteredFadeInText(FontEnum fontType,
-                                                 const char *text, int fontSize,
-                                                 int r, int g, int b, int initialAlpha,
-                                                 int windowW, int yPos);
-
     Entity* createHorizontallyCenteredFadeInMenuText(FontEnum fontType,
                                                      const char *text, int fontSize,
                                                      int r, int g, int b, int initialAlpha,
