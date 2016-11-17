@@ -59,7 +59,6 @@ public:
     BackgroundArtComponent(Entity* entity, SDL_Texture* texture, int layer, float speed);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
-    void shift(float cameraXShift);
 };
 
 class PowerUpArtComponent : public ArtComponent {

@@ -27,7 +27,6 @@ public:
     void loadTexture(TextureEnum texType, const char* filename);
     void loadHealthBar(int width, int height);
     void loadAmmoBar(int width, int height);
-    void loadBackground(TextureEnum texType, const char* filename);
     void loadFont(FontEnum fontType, int fontSize);
     void loadTerrain(TerrainTexEnum texType, int width);
     void freeTextures();

@@ -128,6 +128,8 @@ Refactor level.cpp, entityManager, entityBuilder responsibilities
 change previewOn to autoShiftOn (invert stuff...)
 slow-mo nesting (multiple projectiles in kill range)
 *separate characterPhysics from projectilePhysics
+Make all backgrounds double copied!
+Make backgrounds more efficient...
 
 TIME TO BEAT (average dt level 2 over 23 trials): 25.69
 IMPROVED TO 24.73 :) MORE TO GO!

@@ -1,7 +1,7 @@
 #include "artComponent.h"
 
 BackgroundArtComponent::BackgroundArtComponent(Entity* ent, SDL_Texture* tex, int lay, float speed) :
-    ArtComponent(ent, lay, false),
+    ArtComponent(ent, lay, true),
     texture(tex),
     speed(speed) {
 }
@@ -12,8 +12,4 @@ SDL_Texture* BackgroundArtComponent::getNextTexture(int /*dt*/) {
 
 SDL_Rect* BackgroundArtComponent::getNextSrcRect(int /*dt*/) {
     return NULL;
-}
-
-void BackgroundArtComponent::shift(float cameraXShift) {
-
 }

@@ -38,9 +38,8 @@ ArtComponent::ArtComponent(Entity* entity, int layer, bool movesWithCamera) :
     Component(entity),
     layer(layer),
     movesWithCamera(movesWithCamera),
-    isVisible(true)
-{
-    if(this->movesWithCamera){
+    isVisible(true) {
+    if (this->movesWithCamera) {
         this->offsetX = (int) entity->x;
         this->offsetY = (int) entity->y;
     }

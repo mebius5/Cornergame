@@ -66,32 +66,33 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
         }
     }
 
-    if(artComponent->movesWithCamera){
-        artComponent->entity->x = this->minX+artComponent->offsetX;
-        artComponent->entity->y = this->minY+artComponent->offsetY;
+    if (artComponent->movesWithCamera) {
+        artComponent->entity->x = this->minX + artComponent->offsetX;
+        artComponent->entity->y = this->minY + artComponent->offsetY;
     }
 
     if (entity->x + entity->width < minX || entity->y+entity->height < minY
             || entity->x > maxX || entity->y > maxY)
         return;
 
-    double angle = 0;
-    SDL_RendererFlip flip = SDL_FLIP_NONE;
-    if (entity->rotates && entity->physics->xVelocity != 0) {
-        angle = atan((double)entity->physics->yVelocity/(double)entity->physics->xVelocity);
-        angle *= 180/M_PI;
-        if (entity->physics->xVelocity < 0) {
-            flip = SDL_FLIP_HORIZONTAL;
-        }
-    }
-
     SDL_Rect dest = { (int)entity->x - (int)minX + entity->width/2 - entity->drawWidth/2 - offsetX,
-                      (int) entity->y - (int)minY + entity->height/2 - entity->drawHeight/2 - offsetY,
+                      (int)entity->y - (int)minY + entity->height/2 - entity->drawHeight/2 - offsetY,
                       entity->drawWidth,
                       entity->drawHeight};
 
-    SDL_RenderCopyEx(this->renderer, artComponent->getNextTexture(dt),
-                   artComponent->getNextSrcRect(dt), &dest, angle, NULL, flip);
+    if (entity->rotates && entity->physics->xVelocity != 0) {
+        double angle = atan((double)entity->physics->yVelocity/(double)entity->physics->xVelocity);
+        angle *= 180/M_PI;
+        SDL_RendererFlip flip = SDL_FLIP_NONE;
+        if (entity->physics->xVelocity < 0) {
+            flip = SDL_FLIP_HORIZONTAL;
+        }
+        SDL_RenderCopyEx(this->renderer, artComponent->getNextTexture(dt),
+                       artComponent->getNextSrcRect(dt), &dest, angle, NULL, flip);
+    } else {
+        SDL_RenderCopy(this->renderer, artComponent->getNextTexture(dt),
+                       artComponent->getNextSrcRect(dt), &dest);
+    }
 }
 
 void Camera::shift(int dx, int dy) {
@@ -102,12 +103,13 @@ void Camera::shift(int dx, int dy) {
 
     std::vector<BackgroundArtComponent*>::iterator bgit;
     for (bgit = this->bgComponents.begin(); bgit != this->bgComponents.end(); ++bgit) {
-        Entity* entity = (*bgit)->entity;
-        entity->x = entity->x + dx * ((*bgit)->speed);
-        entity->y = this->minY;
-        //if ((*bgit)->entity->x + (*bgit)->entity->width <= minX) {
-        //    (*bgit)->entity->x = (*bgit)->entity->x + (*bgit)->entity->width;
-        //}
+        BackgroundArtComponent* artComp = *bgit;
+        artComp->offsetX = artComp->offsetX - dx * artComp->speed;
+        int halfWidth = artComp->entity->width / 2;
+        if (artComp->offsetX < -halfWidth)  // loop the background
+            artComp->offsetX += halfWidth;
+        else if (artComp->offsetX > 0)
+            artComp->offsetX -= halfWidth;
     }
 
     if (!previewOn && minX >= levelW) {     // perform level loop

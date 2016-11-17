@@ -147,25 +147,6 @@ void EntityBuilder::loadAmmoBar(int width, int height) {
     this->textureMap[TEX_AMMOBAR] = {texture, width*2, height};
 }
 
-void EntityBuilder::loadBackground(TextureEnum texType, const char* filename) {
-    this->loadTexture(texType, filename);
-    return;
-    SDL_Surface* image = this->loadImage(filename);
-    SDL_Surface* surface = SDL_CreateRGBSurface(0, image->w * 3, image->h, 32, 0, 0, 0, 0);
-    SDL_SetSurfaceBlendMode(surface, SDL_BLENDMODE_BLEND);
-    SDL_Rect tempRect = {0, 0, image->w, image->h};
-    SDL_BlitSurface(image, NULL, surface, &tempRect);
-    tempRect.x = image->w;
-    SDL_BlitSurface(image, NULL, surface, &tempRect);       // copy image side by side
-    tempRect.x = image->w*2;
-    SDL_BlitSurface(image, NULL, surface, &tempRect);       // copy image side by side
-    SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
-    SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND);
-    this->textureMap[texType] = {texture, image->w * 3, image->h};
-    SDL_FreeSurface(image);
-    SDL_FreeSurface(surface);
-}
-
 void EntityBuilder::loadFont(FontEnum fontType, int fontSize) {
     TTF_Font* font = TTF_OpenFont("resources/varsity_regular.ttf", fontSize);
     if (!font)
