@@ -7,7 +7,7 @@ TextFadeInComponent::TextFadeInComponent(Entity* entity, SDL_Renderer *renderer,
     surface(surface),
     renderer(renderer),
     alpha(initialAlpha) {
-    SDL_SetSurfaceAlphaMod(this->surface, (int)this->alpha);
+//    SDL_SetSurfaceAlphaMod(this->surface, (int)this->alpha);
     this->lastTexture = SDL_CreateTextureFromSurface(this->renderer, this->surface);
 }
 

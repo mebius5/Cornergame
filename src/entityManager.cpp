@@ -41,6 +41,8 @@ void EntityManager::addEntity(Entity* entity) {
     }
     if (entity->art) {
         this->artComponents.push_back(entity->art);
+        if (BackgroundArtComponent* bg = dynamic_cast<BackgroundArtComponent*>(entity->art))
+            this->bgComponents.push_back(bg);
     }
     if (entity->collision) {
         if (StaticCollisionComponent* scc =
@@ -128,6 +130,7 @@ void EntityManager::clear() {
     this->entityMap.clear();
     this->aiComponents.clear();
     this->artComponents.clear();
+    this->bgComponents.clear();
     this->inputComponents.clear();
     this->physicsComponents.clear();
     this->healthComponents.clear();

@@ -2,11 +2,12 @@
 
 DrawingHandler::DrawingHandler(std::vector<Command*>& commandList,
                                std::vector<ArtComponent*>& componentList,
+                               std::vector<BackgroundArtComponent*>& bgComponents,
                                SDL_Renderer* renderer, int windowW, int windowH) :
     commandList(commandList),
     componentList(componentList),
     renderer(renderer),
-    camera(renderer, commandList, componentList, windowW, windowH),
+    camera(renderer, commandList, componentList, bgComponents, windowW, windowH),
     shiftCount(0),
     windowW(windowW) {
 }

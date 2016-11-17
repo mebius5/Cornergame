@@ -16,6 +16,7 @@ private:
 public:
     DrawingHandler(std::vector<Command*>& commandList,
                    std::vector<ArtComponent*>& componentList,
+                   std::vector<BackgroundArtComponent*>& bgComponents,
                    SDL_Renderer* renderer, int windowW, int windowH);
     void draw(int dt);
     void shift(int dt);
