@@ -5,6 +5,7 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     entityBuilder(renderer),
     windowW(windowW),
     numCleanable(0) {
+    this->initIndices();
     this->entityBuilder.loadTexture(TEX_HERO, "spritesheets/hero.png");
     this->entityBuilder.loadTexture(TEX_HERO2, "spritesheets/hero2.png");
     this->entityBuilder.loadTexture(TEX_ENEMY, "spritesheets/lax.png");
@@ -40,7 +41,14 @@ void EntityManager::addEntity(Entity* entity) {
         this->aiComponents.push_back(entity->ai);
     }
     if (entity->art) {
-        this->artComponents.push_back(entity->art);
+        this->artComponents.push_back(NULL);        // add one space
+        int layer = entity->art->layer;
+        for (int i = NUMLAYERS-1; i > layer; i--) {
+            this->layerIndices[i]++;                // shift first layer element to last layer element
+            this->artComponents[this->layerIndices[i]] = this->artComponents[this->layerIndices[i-1]+1];
+        }
+        this->layerIndices[layer]++;                // insert new artComp
+        this->artComponents[this->layerIndices[layer]] = entity->art;
         if (BackgroundArtComponent* bg = dynamic_cast<BackgroundArtComponent*>(entity->art))
             this->bgComponents.push_back(bg);
     }
@@ -72,6 +80,11 @@ void EntityManager::addEntity(Entity* entity) {
     if (entity->powerUp){
         this->powerUpComponents.push_back(entity->powerUp);
     }
+}
+
+void EntityManager::initIndices() {
+    for (int i = 0; i < NUMLAYERS; i++)
+        this->layerIndices[i] = -1;
 }
 
 void EntityManager::initRespawns() {
@@ -141,6 +154,7 @@ void EntityManager::clear() {
     this->powerUpCollisionComponents.clear();
     this->heroEntities.clear();
     this->respawnEntities.clear();
+    this->initIndices();
 }
 
 /* Entity Creation Methods */

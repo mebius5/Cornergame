@@ -17,9 +17,11 @@ private:
     std::queue<Entity*> deletionQueue;
     int windowW;
     int numCleanable;                   // # of entities ready for deletion
+    void initIndices();
 public:
     std::vector<AiComponent*> aiComponents;
-    std::vector<ArtComponent*> artComponents;
+    std::vector<ArtComponent*> artComponents;  // in order by layer #
+    std::array<int, NUMLAYERS> layerIndices;   // indices of last item w/ given layer
     std::vector<BackgroundArtComponent*> bgComponents;
     std::vector<StaticCollisionComponent*> staticCollisionComponents;
     std::vector<DynamicCollisionComponent*> dynamicCollisionComponents;

@@ -57,7 +57,6 @@ StateEnum PlayState::run() {
     while (previewOn) {
         int currentTime = SDL_GetTicks();
         int dt = currentTime - lastTime;
-        std::cout << dt << std::endl;
         lastTime = currentTime;
 
         previewOn=drawingHandler.previewLevel(dt);

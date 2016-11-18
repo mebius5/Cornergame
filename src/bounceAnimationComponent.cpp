@@ -1,7 +1,7 @@
 #include "artComponent.h"
 
 BounceAnimationComponent::BounceAnimationComponent(Entity* entity, Texture tex):
-    AnimationComponent(entity, tex, LAYER_TERRAIN) {
+    AnimationComponent(entity, tex, LAYER_TERRAIN2) {
 }
 
 SDL_Texture* BounceAnimationComponent::getNextTexture(int /*dt*/) {

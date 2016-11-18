@@ -115,13 +115,7 @@ void Camera::shift(int dx, int dy) {
 
     if (!previewOn && minX >= levelW) {     // perform level loop
         std::vector<ArtComponent*>::iterator it;
-        for (it = this->componentList.begin(); it != this->componentList.end(); ) {
-            if (!(*it)->isValid()) {        // remove invalid components
-                *it = this->componentList.back();
-                this->componentList.pop_back();
-                continue;
-            }
-
+        for (it = this->componentList.begin(); it != this->componentList.end(); ++it) {
             Entity* entity = (*it)->entity;
             if (dynamic_cast<DynamicCollisionComponent*>(entity->collision)
                     && entity->x +  entity->width >= levelW) {
@@ -129,7 +123,6 @@ void Camera::shift(int dx, int dy) {
                 if (RespawnEntity* reEnt = dynamic_cast<RespawnEntity*>(entity))
                     reEnt->shifted = true;
             }
-            ++it;
         }
 
         minX = minX - levelW;

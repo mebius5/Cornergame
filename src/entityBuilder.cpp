@@ -218,7 +218,7 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {        // not using map
     SDL_FillRect(surface, &tempRect, SDL_MapRGB(surface->format, 255, 0, 0));
     SDL_Texture* texture = SDL_CreateTextureFromSurface(this->renderer, surface);
     SDL_FreeSurface(surface);
-    zone->art = new StaticArtComponent(zone, texture, LAYER_TERRAIN, false);
+    zone->art = new StaticArtComponent(zone, texture, LAYER_TERRAIN2, false);
     zone->collision = new VictoryZoneCollisionComponent(zone, new SwitchStateCommand(STATE_MENU));
     return zone;
 }
@@ -226,7 +226,7 @@ Entity* EntityBuilder::createVictoryZone(int x, int y) {        // not using map
 Entity* EntityBuilder::createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y) {
     Texture texture = this->textureMap[pwrUpType];
     Entity *entity = new Entity(this->nextId++, x, y, 30, 30, 30, 30);
-    entity->art = new StaticArtComponent(entity, texture.sdlTexture, LAYER_TERRAIN, false);
+    entity->art = new StaticArtComponent(entity, texture.sdlTexture, LAYER_TERRAIN2, false);
     entity->collision = new PowerUpCollisionComponent(entity, pwrUpType, pwrSound);
     return entity;
 }
@@ -264,7 +264,7 @@ Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int n
 
     } else {
         terrain = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
-        terrain->art = new StaticArtComponent(terrain, texture.sdlTexture, LAYER_TERRAIN, false);
+        terrain->art = new StaticArtComponent(terrain, texture.sdlTexture, LAYER_TERRAIN1, false);
         terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
     }
     return terrain;

@@ -9,13 +9,16 @@ class DrawingHandler {
 private:
     std::vector<Command*>& commandList;
     std::vector<ArtComponent*>& componentList;
+    std::array<int, NUMLAYERS>& layerIndices;
     SDL_Renderer* renderer;
     Camera camera;
     int shiftCount;
     int windowW;
+    void removeInvalidComponents();
 public:
     DrawingHandler(std::vector<Command*>& commandList,
                    std::vector<ArtComponent*>& componentList,
+                   std::array<int, NUMLAYERS>& layerIndices,
                    std::vector<BackgroundArtComponent*>& bgComponents,
                    SDL_Renderer* renderer, int windowW, int windowH);
     void draw(int dt);

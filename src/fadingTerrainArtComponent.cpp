@@ -1,7 +1,7 @@
 #include "artComponent.h"
 
 FadingTerrainArtComponent::FadingTerrainArtComponent(Entity *entity, SDL_Texture *texture):
-    ArtComponent(entity, LAYER_TERRAIN, false),
+    ArtComponent(entity, LAYER_TERRAIN1, false),
     texture(texture),
     shakeTime(-999),
     maxShakeTime(1000) {

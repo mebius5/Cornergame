@@ -19,7 +19,8 @@ Akshay
 
 Andrew
 - Fixed bugs with background parallax and made it more efficient
-- Cleaned up ArtComponent layering, and made layering more efficient
+- Cleaned up ArtComponent layering, tested various custom data structures for
+    layering, made layering more efficient
 
 Grady
 - Changed text surfaces to allow centered multiline texts
@@ -115,7 +116,7 @@ QUIRKS
 - disabled the down key due to bugs that allow you to sink into the terrain
 
 TODOS
-next up: add layer enums. THEN edit layer handling. THEN add enum max consts
+next up: edit layer handling. THEN add enum max consts
 
 Kill acceleration? -> more responsive w/ velocity based.
 verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
@@ -126,7 +127,6 @@ Segfault with fonts (on mac only?)
 *Tuning of camera speed/character speed
 Sounds: handle stop sounds before start sounds?
 GAME NAME - STOP PUNTING
-*revamp layers -> enum/drawingHandler has vector<vector<>> (use the consts!)
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
 change powerup enum to be separate?
 revamp enums: embed type code into enum?
@@ -137,6 +137,9 @@ slow-mo nesting (multiple projectiles in kill range)
 *separate characterPhysics from projectilePhysics
 Make all backgrounds double copied!
 Make backgrounds more efficient...
+Array instead of vector where vector growth is not needed
 
 TIME TO BEAT (average dt level 2 over 23 trials): 25.69
 IMPROVED TO 24.73 :) MORE TO GO!
+
+25.9

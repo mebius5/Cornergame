@@ -93,7 +93,7 @@ void GameManager::run() {
     Component::setCommandList(&commandList);
 
     EntityManager entityMgr(this->renderer, commandList, width);
-    DrawingHandler drawingHandler(commandList, entityMgr.artComponents,
+    DrawingHandler drawingHandler(commandList, entityMgr.artComponents, entityMgr.layerIndices,
                                   entityMgr.bgComponents, this->renderer, width, height);
     InputHandler inputHandler(entityMgr.inputComponents, commandList);
     AiHandler aiHandler(entityMgr.aiComponents);
