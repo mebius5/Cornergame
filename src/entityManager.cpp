@@ -9,6 +9,7 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_HERO2, "spritesheets/hero2.png");
     this->entityBuilder.loadTexture(TEX_ENEMY, "spritesheets/lax.png");
     this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
+    this->entityBuilder.loadTexture(TEX_BOUNCE, "spritesheets/bounce.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH, "resources/star.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH_OVERLAY, "resources/starOverlay.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
@@ -310,6 +311,12 @@ Entity* EntityManager::createTerrain(Tile tileType, int x, int y, int numberHori
     return entity;
 }
 
+Entity* EntityManager::createBounce(TextureEnum texType, int x, int y) {
+    Entity* entity = this->entityBuilder.createBounce(texType, x, y);
+    this->addEntity(entity);
+    return entity;
+}
+
 Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum /*projType*/) {
     // Home in on the nearest thing that takes damage
     float min_dist = -1;
@@ -377,7 +384,6 @@ void EntityManager::populateLevel(Level* level) {
     for (int i = 0; i < level->contentHeight; i++) {
         for (int j = 0; j < level->contentWidth; j++) {
             switch (level->getTile(i, j)) {
-            case TILE_BOUNCE:
             case TILE_DIRT:
             case TILE_SAND:
             case TILE_BRICK:
@@ -405,6 +411,9 @@ void EntityManager::populateLevel(Level* level) {
                 createTerrain(level->getTile(i, j), originalJ*32, i*32, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
                 break;
             }
+            case TILE_BOUNCE:
+                createBounce(TEX_BOUNCE, j * 32, i * 32);
+                break;
             case TILE_ENEMY:
                 createEnemy(TEX_ENEMY, j * 32, i * 32);
                 break;
