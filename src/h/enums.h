@@ -12,6 +12,11 @@ enum Tile {
 enum ActionEnum { ACTION_IDLE, ACTION_JUMP, ACTION_THROW, ACTION_DAMAGE,
                   ACTION_SLIDING };
 
+// Items are drawn in order based on this enum.
+const int NUMLAYERS = 9;
+enum LayerEnum { LAYER_BG, LAYER_FG, LAYER_TERRAIN, LAYER_TEXT, LAYER_ENEMY,
+                 LAYER_UNDERLAY, LAYER_HERO, LAYER_OVERLAY, LAYER_HUD };
+
 // NOTE: keep NONE state the last one to make array indexing easier!
 enum StateEnum { STATE_QUIT, STATE_START, STATE_PLAY, STATE_LEVEL_TRANSIT,
                  STATE_TUTORIAL, STATE_MENU, STATE_HIGHSCORE, STATE_RESULTS,

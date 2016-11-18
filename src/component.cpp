@@ -34,7 +34,7 @@ AiComponent::AiComponent(Entity* entity) :
     Component(entity) {
 }
 
-ArtComponent::ArtComponent(Entity* entity, int layer, bool movesWithCamera) :
+ArtComponent::ArtComponent(Entity* entity, LayerEnum layer, bool movesWithCamera) :
     Component(entity),
     layer(layer),
     movesWithCamera(movesWithCamera),

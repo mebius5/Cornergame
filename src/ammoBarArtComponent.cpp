@@ -1,7 +1,7 @@
 #include "artComponent.h"
 
-AmmoBarArtComponent::AmmoBarArtComponent(Entity* entity, Entity* owner, Texture tex, int layer):
-    ArtComponent(entity, layer, false),
+AmmoBarArtComponent::AmmoBarArtComponent(Entity* entity, Entity* owner, Texture tex):
+    ArtComponent(entity, LAYER_HUD, false),
     texture(tex.sdlTexture),
     ownerAmmo(owner->ammo),
     width(tex.width / 2),

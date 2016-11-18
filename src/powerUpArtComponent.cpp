@@ -1,6 +1,7 @@
 #include "artComponent.h"
 
-PowerUpArtComponent::PowerUpArtComponent(Entity* entity, Entity * owner, Texture tex, int layer, int index):
+PowerUpArtComponent::PowerUpArtComponent(Entity* entity, Entity* owner, Texture tex,
+                                         LayerEnum layer, int index):
     ArtComponent(entity, layer, false),
     texture(tex.sdlTexture),
     powerUp(owner->powerUp),
@@ -19,7 +20,7 @@ SDL_Texture* PowerUpArtComponent::getNextTexture(int /*dt*/) {
 }
 
 SDL_Rect* PowerUpArtComponent::getNextSrcRect(int dt) {
-    if (powerUp->pwrUPTimerArray[index]!=-999) {
+    if (powerUp->pwrUPTimerArray[index] != -999) {
         timecount += dt;
         timecount %= 500;
         clip.x = (timecount / 125) * 32;

@@ -18,7 +18,8 @@ Akshay
 
 
 Andrew
-
+- Fixed bugs with background parallax and made it more efficient
+- Cleaned up ArtComponent layering, and made layering more efficient
 
 Grady
 - Changed text surfaces to allow centered multiline texts
@@ -114,6 +115,8 @@ QUIRKS
 - disabled the down key due to bugs that allow you to sink into the terrain
 
 TODOS
+next up: add layer enums. THEN edit layer handling. THEN add enum max consts
+
 Kill acceleration? -> more responsive w/ velocity based.
 verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
 revamp terrain -> fewer rectangles!

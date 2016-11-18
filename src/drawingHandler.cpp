@@ -21,7 +21,7 @@ void DrawingHandler::draw(int dt) {
     camera.updateShake(dt);
 
     std::vector<ArtComponent*>::iterator it;
-    for (int i = 0; i <= ArtComponent::MAXLAYER; i++) {
+    for (int i = 0; i <= NUMLAYERS; i++) {
         for (it = this->componentList.begin(); it != this->componentList.end(); ) {
             if (!(*it)->isValid()) {        // remove invalid components
                 *it = this->componentList.back();

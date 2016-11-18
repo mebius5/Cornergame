@@ -12,14 +12,13 @@
 
 class ArtComponent : public Component {
 public:
-    const static int MAXLAYER = 3;
-    int layer;
+    LayerEnum layer;
     bool movesWithCamera;
     int offsetX;
     int offsetY;
     bool isVisible;
 
-    ArtComponent(Entity* entity, int layer, bool movesWithCamera);
+    ArtComponent(Entity* entity, LayerEnum layer, bool movesWithCamera);
     virtual ~ArtComponent() { };
     virtual void updateLocation() { };      // for ArtComponents with owners
     virtual SDL_Texture* getNextTexture(int dt) = 0;
@@ -30,7 +29,7 @@ class StaticArtComponent : public ArtComponent {
 protected:
     SDL_Texture* texture;
 public:
-    StaticArtComponent(Entity* entity, SDL_Texture* texture, int layer,
+    StaticArtComponent(Entity* entity, SDL_Texture* texture, LayerEnum layer,
                        bool movesWithCamera);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
@@ -46,14 +45,14 @@ protected:
     SDL_Rect clip;
     DynamicCollisionComponent* collisionComp;
 public:
-    AnimationComponent(Entity* entity, Texture texture, int layer);
+    AnimationComponent(Entity* entity, Texture texture, LayerEnum layer);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
 
 class BounceAnimationComponent : public AnimationComponent {
 public:
-    BounceAnimationComponent(Entity* entity, Texture texture, int layer);
+    BounceAnimationComponent(Entity* entity, Texture texture);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
     void restartAnimation();
@@ -64,7 +63,7 @@ private:
     SDL_Texture* texture;
 public:
     float speed;
-    BackgroundArtComponent(Entity* entity, SDL_Texture* texture, int layer, float speed);
+    BackgroundArtComponent(Entity* entity, SDL_Texture* texture, float speed);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
@@ -77,7 +76,7 @@ private:
     int timecount;
     SDL_Rect clip;
 public:
-    PowerUpArtComponent(Entity* entity, Entity* owner, Texture tex, int layer, int index);
+    PowerUpArtComponent(Entity* entity, Entity* owner, Texture tex, LayerEnum layer, int index);
     void updateLocation();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
@@ -89,7 +88,7 @@ private:
     int shakeTime;
     int maxShakeTime;
 public:
-    FadingTerrainArtComponent(Entity* entity, SDL_Texture* texture, int layer);
+    FadingTerrainArtComponent(Entity* entity, SDL_Texture* texture);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
     void startShake();
@@ -104,7 +103,7 @@ private:
     int height;
     int lastHealth;
 public:
-    HealthBarArtComponent(Entity* entity, Entity* owner, Texture tex, int layer);
+    HealthBarArtComponent(Entity* entity, Entity* owner, Texture tex);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
@@ -117,7 +116,7 @@ private:
     float width;
     int height;
 public:
-    AmmoBarArtComponent(Entity* entity, Entity* owner, Texture tex, int layer);
+    AmmoBarArtComponent(Entity* entity, Entity* owner, Texture tex);
     void updateLocation();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
@@ -131,7 +130,7 @@ private:
     float alpha;
 public:
     TextFadeInComponent(Entity* entity, SDL_Renderer* renderer,
-                        SDL_Surface* surface, int layer, float initialAlpha);
+                        SDL_Surface* surface, float initialAlpha);
     ~TextFadeInComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);

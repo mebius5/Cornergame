@@ -1,13 +1,12 @@
 #include "artComponent.h"
 
-HealthBarArtComponent::HealthBarArtComponent(Entity *entity, Entity *owner, Texture tex, int layer):
-        ArtComponent(entity, layer, true),
-        texture(tex.sdlTexture),
-        ownerHealth(owner->health),
-        width(tex.width / 2),
-        height(tex.height),
-        lastHealth(-1)
-{
+HealthBarArtComponent::HealthBarArtComponent(Entity* entity, Entity* owner, Texture tex):
+    ArtComponent(entity, LAYER_HUD, true),
+    texture(tex.sdlTexture),
+    ownerHealth(owner->health),
+    width(tex.width / 2),
+    height(tex.height),
+    lastHealth(-1) {
     this->clip = {0,0,0,0};
 }
 

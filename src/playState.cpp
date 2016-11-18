@@ -30,7 +30,7 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
 void PlayState::begin(int levelnum) {
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
     this->entityManager.createBackground(TEX_BACKGROUND1, 0, 0, 0.25);
-    this->entityManager.createBackground(TEX_BACKGROUND2, 0, 0, 0.5);
+    //this->entityManager.createBackground(TEX_BACKGROUND2, 0, 0, 0.5);
 
     std::string levelFile = "levels/level";
     levelFile.append(std::to_string(levelnum));
@@ -57,6 +57,7 @@ StateEnum PlayState::run() {
     while (previewOn) {
         int currentTime = SDL_GetTicks();
         int dt = currentTime - lastTime;
+        std::cout << dt << std::endl;
         lastTime = currentTime;
 
         previewOn=drawingHandler.previewLevel(dt);

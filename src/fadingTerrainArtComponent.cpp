@@ -1,11 +1,10 @@
 #include "artComponent.h"
 
-FadingTerrainArtComponent::FadingTerrainArtComponent(Entity *entity, SDL_Texture *texture, int layer):
-    ArtComponent(entity,layer, false),
+FadingTerrainArtComponent::FadingTerrainArtComponent(Entity *entity, SDL_Texture *texture):
+    ArtComponent(entity, LAYER_TERRAIN, false),
     texture(texture),
     shakeTime(-999),
-    maxShakeTime(1000)
-{
+    maxShakeTime(1000) {
 }
 
 void FadingTerrainArtComponent::startShake() {
@@ -32,6 +31,3 @@ SDL_Texture* FadingTerrainArtComponent::getNextTexture(int dt) {
 SDL_Rect* FadingTerrainArtComponent::getNextSrcRect(int) {
     return NULL;
 }
-
-
-
