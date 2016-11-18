@@ -57,8 +57,6 @@ void EntityBuilder::loadTerrain(TerrainTexEnum texType, int width) {
         image = this->loadImage("resources/dirt.png");
     } else if (texType == TT_SAND) {
         image = this->loadImage("resources/sand.png");
-    } else if (texType == TT_BOUNCE) {
-        image = this->loadImage("spritesheets/bounce.png");
     }
 
     SDL_Surface* surface = SDL_CreateRGBSurface(0, image->w * width, image->h, 32,
@@ -248,26 +246,24 @@ Entity* EntityBuilder::createStaticBackgroundObject(TextureEnum texType, int x, 
 
 Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
         bool freeTop, bool freeBot, bool freeRight, bool freeLeft) {
-
-    Entity* terrain = NULL;
     if (!this->terrainTexMap[texType][numberHorizontal].sdlTexture)
         this->loadTerrain(texType, numberHorizontal);
     Texture texture = this->terrainTexMap[texType][numberHorizontal];
 
-    if (texType == TT_BOUNCE) {
-        // set the drawing offset
-        terrain = new Entity(this->nextId++, x, y + (texture.height) / 2,
-                             texture.width, texture.height / 4, texture.width, texture.height);
-        terrain->drawY -= (texture.height) / 2;
-        terrain->art = new BounceAnimationComponent(terrain, texture);
-        terrain->collision = new BounceCollisionComponent(terrain);
-
-    } else {
-        terrain = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
-        terrain->art = new StaticArtComponent(terrain, texture.sdlTexture, LAYER_TERRAIN1, false);
-        terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
-    }
+    Entity* terrain = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+    terrain->art = new StaticArtComponent(terrain, texture.sdlTexture, LAYER_TERRAIN1, false);
+    terrain->collision = new TerrainCollisionComponent(terrain, freeTop, freeBot, freeRight, freeLeft);
     return terrain;
+}
+
+Entity* EntityBuilder::createBounce(TextureEnum texType, int x, int y) {
+    Texture texture = this->textureMap[texType];
+    // set the drawing offset
+    Entity* entity = new Entity(this->nextId++, x, y + 24, 32, 8, 32, 32);
+    entity->drawY -= 12;
+    entity->art = new BounceAnimationComponent(entity, texture);
+    entity->collision = new BounceCollisionComponent(entity);
+    return entity;
 }
 
 Entity* EntityBuilder::createFadingTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal, bool freeTop,
