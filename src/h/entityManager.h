@@ -7,7 +7,7 @@
 #include <cmath>
 #include "entityBuilder.h"
 #include "level.h"
-#include "enums.h"
+#include "consts.h"
 
 class EntityManager {
 private:
@@ -21,7 +21,7 @@ private:
 public:
     std::vector<AiComponent*> aiComponents;
     std::vector<ArtComponent*> artComponents;  // in order by layer #
-    std::array<int, NUMLAYERS> layerIndices;   // indices of last item w/ given layer
+    std::array<int, NLAYERS> layerIndices;   // indices of last item w/ given layer
     std::vector<BackgroundArtComponent*> bgComponents;
     std::vector<StaticCollisionComponent*> staticCollisionComponents;
     std::vector<DynamicCollisionComponent*> dynamicCollisionComponents;

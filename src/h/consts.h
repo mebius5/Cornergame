@@ -1,7 +1,13 @@
-#ifndef CORNERGAME_ENUMS_H
-#define CORNERGAME_ENUMS_H
+#ifndef CORNERGAME_CONSTS_H
+#define CORNERGAME_CONSTS_H
 
-#define NUMLAYERS 10
+#include <SDL_image.h>
+
+#define NCHANS 16       // number of sfx channels
+#define NLAYERS 10
+#define NTERRAIN 4
+#define NTEXTURE 25
+#define NFONT 1
 
 enum Tile {
     // Put texture enums first to match with TerrainTexEnum
@@ -47,5 +53,11 @@ enum TextureEnum {
 enum TerrainTexEnum { TT_BRICK, TT_GRASS, TT_DIRT, TT_SAND, TT_NONE };
 
 enum FontEnum { FONT_GLOBAL };
+
+struct Texture {
+    SDL_Texture* sdlTexture;
+    int width;
+    int height;
+};
 
 #endif

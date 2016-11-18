@@ -9,7 +9,7 @@
 #include "collisionHandler.h"
 #include "soundHandler.h"
 #include "controlHandler.h"
-#include "enums.h"
+#include "consts.h"
 #include "scoreHandler.h"
 #include "physicsHandler.h"
 #include "level.h"

@@ -2,7 +2,7 @@
 
 DrawingHandler::DrawingHandler(std::vector<Command*>& commandList,
                                std::vector<ArtComponent*>& componentList,
-                               std::array<int, NUMLAYERS>& layerIndices,
+                               std::array<int, NLAYERS>& layerIndices,
                                std::vector<BackgroundArtComponent*>& bgComponents,
                                SDL_Renderer* renderer, int windowW, int windowH) :
     commandList(commandList),
@@ -24,7 +24,7 @@ void DrawingHandler::removeInvalidComponents() {
         if (!(*it)->isValid()) {        // remove invalid components
             int layer = (*it)->layer;
             *it = this->componentList[this->layerIndices[layer]--];
-            for (int i = layer; i < NUMLAYERS-1; i++)
+            for (int i = layer; i < NLAYERS-1; i++)
                 this->componentList[this->layerIndices[i]+1] = this->componentList[this->layerIndices[i+1]--];
             this->componentList.pop_back();
             continue;

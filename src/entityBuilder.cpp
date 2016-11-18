@@ -3,9 +3,9 @@
 EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
-    textureMap(30),
-    terrainTexMap(10, std::vector<Texture>(256)),
-    fontMap(1, std::vector<TTF_Font*>(128)) {
+    textureMap(NTEXTURE),
+    terrainTexMap(NTERRAIN, std::vector<Texture>(256)),
+    fontMap(NFONT, std::vector<TTF_Font*>(128)) {
 }
 
 /* Helper methods */

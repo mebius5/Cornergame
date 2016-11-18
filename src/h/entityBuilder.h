@@ -6,8 +6,7 @@
 #include <SDL_ttf.h>
 #include <iostream>
 #include <vector>
-#include "enums.h"
-#include "structs.h"
+#include "consts.h"
 #include "entity.h"
 
 class EntityBuilder {

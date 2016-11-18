@@ -2,7 +2,7 @@
 #define CORNERGAME_COMMAND_H
 
 #include <SDL_mixer.h>
-#include "enums.h"
+#include "consts.h"
 
 class Command {
 public:

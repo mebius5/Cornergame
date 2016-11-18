@@ -44,7 +44,7 @@ void EntityManager::addEntity(Entity* entity) {
     if (entity->art) {
         this->artComponents.push_back(NULL);        // add one space
         int layer = entity->art->layer;
-        for (int i = NUMLAYERS-1; i > layer; i--) {
+        for (int i = NLAYERS-1; i > layer; i--) {
             this->layerIndices[i]++;                // shift first layer element to last layer element
             this->artComponents[this->layerIndices[i]] = this->artComponents[this->layerIndices[i-1]+1];
         }
@@ -84,7 +84,7 @@ void EntityManager::addEntity(Entity* entity) {
 }
 
 void EntityManager::initIndices() {
-    for (int i = 0; i < NUMLAYERS; i++)
+    for (int i = 0; i < NLAYERS; i++)
         this->layerIndices[i] = -1;
 }
 

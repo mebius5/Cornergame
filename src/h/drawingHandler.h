@@ -9,7 +9,7 @@ class DrawingHandler {
 private:
     std::vector<Command*>& commandList;
     std::vector<ArtComponent*>& componentList;
-    std::array<int, NUMLAYERS>& layerIndices;
+    std::array<int, NLAYERS>& layerIndices;
     SDL_Renderer* renderer;
     Camera camera;
     int shiftCount;
@@ -18,7 +18,7 @@ private:
 public:
     DrawingHandler(std::vector<Command*>& commandList,
                    std::vector<ArtComponent*>& componentList,
-                   std::array<int, NUMLAYERS>& layerIndices,
+                   std::array<int, NLAYERS>& layerIndices,
                    std::vector<BackgroundArtComponent*>& bgComponents,
                    SDL_Renderer* renderer, int windowW, int windowH);
     void draw(int dt);

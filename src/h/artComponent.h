@@ -6,7 +6,6 @@
 #include <string>
 #include <math.h>
 #include <iostream>
-#include "structs.h"
 #include "entity.h"
 #include "component.h"
 

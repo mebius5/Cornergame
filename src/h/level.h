@@ -5,7 +5,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "enums.h"
+#include "consts.h"
 
 class Level {
 private:
