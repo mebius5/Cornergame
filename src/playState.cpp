@@ -32,10 +32,7 @@ void PlayState::begin(int levelnum) {
     this->entityManager.createBackground(TEX_BACKGROUND1, 0, 0, 0.25);
     //this->entityManager.createBackground(TEX_BACKGROUND2, 0, 0, 0.5);
 
-    std::string levelFile = "levels/level";
-    levelFile.append(std::to_string(levelnum));
-    levelFile.append(".txt");
-    Level level(levelFile.c_str(), windowW, windowH);
+    Level level(levelnum, windowW, windowH);
     this->entityManager.populateLevel(&level);
     this->entityManager.initRespawns();
     this->hero1 = entityManager.heroEntities[0];

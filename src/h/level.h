@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <string>
 #include <vector>
 #include "consts.h"
@@ -11,12 +12,19 @@ class Level {
 private:
     Tile* levelContents;
     std::vector<std::string> stringList;
+    int windowW;
+    int windowH;
+    int numHero;
 public:
     int height, width;
     int contentHeight, contentWidth;
-    Level(std::string filename, int windowW, int windowH);
+    Level(int levelNum, int windowW, int windowH);
+    Level(const char * filename, int windowW, int windowH);
     ~Level();
     Tile& getTile(int i, int j);
+    void readTxtFile(std::ifstream & infile);
+    void readCsvFile(std::ifstream & infile);
+    Tile determineTileType(char a);
     std::vector<std::string>& getStringList();
 };
 
