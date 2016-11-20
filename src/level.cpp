@@ -25,7 +25,7 @@ Level::Level(int levelNum, int windowW, int windowH):
     }***/
 
     std::ifstream textFS("levels/level"+std::to_string(levelNum)+".txt");
-    std::ifstream csvFS("levels/level"+std::to_string(levelNum)+".txt");
+    std::ifstream csvFS("levels/level"+std::to_string(levelNum)+".csv");
 
     if(textFS.is_open()){
         readTxtFile(textFS);
