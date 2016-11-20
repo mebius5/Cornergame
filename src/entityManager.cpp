@@ -474,7 +474,7 @@ void EntityManager::populateLevel(Level* level) {
                 break;
             case TILE_NORMALTEXT:
                 createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
-                                 30, 255, 255, 255, 255, windowW, j*32, i*32);
+                                 30, 0, 0, 0, 255, windowW, j*32, i*32);
                 stringCount++;
                 break;
             default:

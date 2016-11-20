@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <cmath>
+#include <array>
 #include "entityBuilder.h"
 #include "level.h"
 #include "consts.h"

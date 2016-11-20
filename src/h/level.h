@@ -24,7 +24,7 @@ public:
     Tile& getTile(int i, int j);
     void readTxtFile(std::ifstream & infile);
     void readCsvFile(std::ifstream & infile);
-    Tile determineTileType(char a);
+    void determineTileType(char a, int i, int j);
     std::vector<std::string>& getStringList();
 };
 

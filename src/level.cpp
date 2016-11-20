@@ -3,7 +3,9 @@
 Level::Level(int levelNum, int windowW, int windowH):
     windowW(windowW),
     windowH(windowH),
-    numHero(0)
+    numHero(0),
+    height(0),
+    width(0)
 
 {
     std::ifstream csvFS("levels/level"+std::to_string(levelNum)+".csv");
@@ -77,8 +79,7 @@ void Level::readTxtFile(std::ifstream & infile) {
         if ((int)line.length() < this->width)
             std::cerr << "Error: Level file line " << i+2 << " is too short." << std::endl;
         for (int j = 0; j < this->width; j++) {
-
-            this->getTile(i, j) = determineTileType(line[j]);
+            determineTileType(line[j],i,j);
         }
     }
 
@@ -105,15 +106,23 @@ void Level::readCsvFile(std::ifstream &infile) {
     std::string line;
     std::string cell;
 
-    // get the size of the level from first line
-    infile >> this->height;
-    infile >> this->width;
-    infile >> this->width;
     std::getline(infile, line);
+
+    std::stringstream firstLineStream(line);
+    //std::cout<<line<<std::endl;
+    while(std::getline(firstLineStream,cell,',')){
+        if(this->height==0){
+            this->height = atoi(cell.c_str());
+        } else if (this->width==0){
+            this->width = atoi(cell.c_str());
+        } else {
+            firstLineStream.clear();
+        }
+    }
 
     if ((this->height % (windowH/32)) != 0 || (this->width % (windowW/32)) != 0) {
         std::cerr << "Level width needs to be multiple of " << windowW/32
-                  << "Level height needs to be multiple of " << windowH/32
+                  << ". Level height needs to be multiple of " << windowH/32
                   << std::endl;
         return;
     }
@@ -124,21 +133,23 @@ void Level::readCsvFile(std::ifstream &infile) {
     levelContents = new Tile[this->contentHeight * this->contentWidth];
 
     // read the file and build the level
-
     for (int i = 0; i < this->height; i++) {
         std::getline(infile, line);
+        //std::cout<<line<<std::endl;
         if ((int)line.length() < this->width)
             std::cerr << "Error: Level file line " << i+2 << " is too short." << std::endl;
 
-        std::stringstream lineStream(line);
-        for (int j = 0; j < this->width; j++) {
-            std::getline(lineStream,cell,',');
-            if(cell.length()==1){
-                this->getTile(i, j) = determineTileType(cell[0]);
+        int j=0;
+        for(int k = 0; k<(int)line.length();k++){
+            if(line[k]!=',' && j <=this->width && i <=this->height){
+                //std::cout<<line[k];
+                determineTileType(line[k],i,j);
             } else {
-                this->getTile(i, j) = determineTileType('^');
+                //std::cout<<" ";
+                j++;
             }
         }
+        //std::cout<<std::endl;
     }
 
     for (int i = 0; i < height; i++) {
@@ -154,15 +165,16 @@ void Level::readCsvFile(std::ifstream &infile) {
         }
     }
 
-    while (!infile.eof()) {
-        std::getline(infile, line);
-        std::stringstream lineStream(line);
-        std::getline(lineStream,cell,',');
-        this->stringList.push_back(cell);
+    while (std::getline(infile,line)) {
+        std::stringstream lastFewStringStream(line);
+        std::getline(lastFewStringStream,cell,',');
+        if(cell.length()!=0)
+            this->stringList.push_back(cell);
+        lastFewStringStream.clear();
     }
 }
 
-Tile Level::determineTileType(char a) {
+void Level::determineTileType(char a, int i, int j) {
     Tile tile = TILE_NONE;
     switch (a) {
         case '^': tile = TILE_NONE; break;
@@ -194,9 +206,9 @@ Tile Level::determineTileType(char a) {
         case 'N': tile = TILE_NORMALTEXT; break;
         default:
             tile = TILE_NONE;
-            std::cerr << "Unrecognized symbol in level file: " << a << std::endl;
+            std::cerr << "Unrecognized symbol in level file: " << a << "at ("<<i<<", "<<j<<")"<<std::endl;
     }
-    return tile;
+    this->getTile(i,j)=tile;
 }
 
 Tile& Level::getTile(int i, int j) {
