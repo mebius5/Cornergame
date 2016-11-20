@@ -133,7 +133,7 @@ void GameManager::run() {
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
                         collisionHandler, scoreHandler, physicsHandler,
-                        powerUpHandler);
+                        powerUpHandler, timeHandler);
 
     // Load music resources
     soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);

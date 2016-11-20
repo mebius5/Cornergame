@@ -172,6 +172,7 @@ private:
     ScoreHandler& scoreHandler;
     PhysicsHandler& physicsHandler;
     PowerUpHandler& powerUpHandler;
+    TimeHandler& timeHandler;
     Entity* hero;
     Entity* hero2;
     int levelW;
@@ -183,7 +184,7 @@ public:
               SoundHandler& soundHandler, ControlHandler& controlHandler,
               AiHandler& aiHandler, CollisionHandler& collisionHandler,
               ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
-              PowerUpHandler& powerUpHandler);
+              PowerUpHandler& powerUpHandler, TimeHandler& timeHandler);
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);

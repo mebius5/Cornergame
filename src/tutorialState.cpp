@@ -5,7 +5,7 @@ TutorialState::TutorialState(int windowW, int windowH, EntityManager& entityMana
                              DrawingHandler& drawingHandler, InputHandler& inputHandler, SoundHandler& soundHandler,
                              ControlHandler& controlHandler, AiHandler& aiHandler, CollisionHandler& collisionHandler,
                              ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
-                             PowerUpHandler& powerUpHandler):
+                             PowerUpHandler& powerUpHandler, TimeHandler& timeHandler):
     State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
@@ -16,6 +16,7 @@ TutorialState::TutorialState(int windowW, int windowH, EntityManager& entityMana
     scoreHandler(scoreHandler),
     physicsHandler(physicsHandler),
     powerUpHandler(powerUpHandler),
+    timeHandler(timeHandler),
     levelW(0),
     levelH(0) {
 }
@@ -67,22 +68,27 @@ StateEnum TutorialState::run() {
         int dt = currentTime - lastTime;
         lastTime = currentTime;
 
-        this->aiHandler.updateAi(dt);
-        this->inputHandler.handleEvents(dt);
-        this->physicsHandler.update(dt);
-        this->collisionHandler.handleCollisions();
-        this->scoreHandler.handleScore(dt);
-        this->drawingHandler.checkCameraShakes();
-        this->powerUpHandler.update(dt);
-        this->drawingHandler.shift(dt);
-        this->drawingHandler.draw(dt);
-        this->soundHandler.handleSfx(dt);
-        this->entityManager.handleSpawns();
-        this->entityManager.cleanupEntities();
+        // freeze time if necessary
+        this->timeHandler.handleTimeCommands();
+        dt = this->timeHandler.forward(dt);
+        if (dt > 0) {
+            this->aiHandler.updateAi(dt);
+            this->inputHandler.handleEvents(dt);
+            this->physicsHandler.update(dt);
+            this->collisionHandler.handleCollisions();
+            this->scoreHandler.handleScore(dt);
+            this->drawingHandler.checkCameraShakes();
+            this->powerUpHandler.update(dt);
+            this->drawingHandler.shift(dt);
+            this->drawingHandler.draw(dt);
+            this->soundHandler.handleSfx(dt);
+            this->entityManager.handleSpawns();
+            this->entityManager.cleanupEntities();
 
-        StateEnum nextState = this->controlHandler.handleStateCommands();
-        if (nextState != STATE_NONE)
-            return STATE_MENU;
+            StateEnum nextState = this->controlHandler.handleStateCommands();
+            if (nextState != STATE_NONE)
+                return nextState;
+        }
     }
 
     return STATE_MENU;
