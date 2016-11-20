@@ -1,11 +1,11 @@
 #include "level.h"
 
 Level::Level(int levelNum, int windowW, int windowH):
-    windowW(windowW),
-    windowH(windowH),
-    numHero(0),
-    height(0),
-    width(0)
+        windowW(windowW),
+        windowH(windowH),
+        numHero(0),
+        height(0),
+        width(0)
 
 {
     std::ifstream csvFS("levels/level"+std::to_string(levelNum)+".csv");
@@ -24,9 +24,9 @@ Level::Level(int levelNum, int windowW, int windowH):
 }
 
 Level::Level(const char * filename, int windowW, int windowH):
-    windowW(windowW),
-    windowH(windowH),
-    numHero(0)
+        windowW(windowW),
+        windowH(windowH),
+        numHero(0)
 {
     std::ifstream infile(filename);
     std::string temp(filename);
@@ -141,15 +141,14 @@ void Level::readCsvFile(std::ifstream &infile) {
 
         int j=0;
         for(int k = 0; k<(int)line.length();k++){
-            if(line[k]!=',' && j <=this->width && i <=this->height){
-                //std::cout<<line[k];
+            if(line[k]!=',' && j <this->width && i <this->height){
+                std::cout<<line[k];
                 determineTileType(line[k],i,j);
             } else {
-                //std::cout<<" ";
                 j++;
             }
         }
-        //std::cout<<std::endl;
+        std::cout<<std::endl;
     }
 
     for (int i = 0; i < height; i++) {
@@ -206,7 +205,15 @@ void Level::determineTileType(char a, int i, int j) {
         case 'N': tile = TILE_NORMALTEXT; break;
         default:
             tile = TILE_NONE;
-            std::cerr << "Unrecognized symbol in level file: " << a << "at ("<<i<<", "<<j<<")"<<std::endl;
+            std::string errorMsg;
+            errorMsg="Unrecognized symbol in level file: ";
+            errorMsg+=a;
+            errorMsg.append(" at (")
+                    .append(std::to_string(i))
+                    .append(", ")
+                    .append(std::to_string(j))
+                    .append(")");
+            std::cerr << errorMsg <<std::endl;
     }
     this->getTile(i,j)=tile;
 }
