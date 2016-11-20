@@ -6,8 +6,9 @@ Level::Level(int levelNum, int windowW, int windowH):
     numHero(0)
 
 {
-    std::ifstream textFS("level"+std::to_string(levelNum)+".txt");
-    std::ifstream csvFS("level"+std::to_string(levelNum)+".csv");
+    std::string filePrefix = "level"+std::to_string(levelNum);
+    std::ifstream textFS(filePrefix+".txt");
+    std::ifstream csvFS(filePrefix+".cvs");
 
     if(textFS.is_open()){
         readTxtFile(textFS);
@@ -16,7 +17,7 @@ Level::Level(int levelNum, int windowW, int windowH):
         readCsvFile(csvFS);
         csvFS.close();
     } else {
-        std::cerr << "Cannot open level file for level " << levelNum << std::endl;
+        std::cerr << "Cannot open level file for level " << filePrefix << std::endl;
         return;
     }
 }
@@ -71,7 +72,7 @@ void Level::readTxtFile(std::ifstream & infile) {
     levelContents = new Tile[this->contentHeight * this->contentWidth];
 
     // read the file and build the level
-    int numHero = 0;    // number of heroes that have been declared
+
     for (int i = 0; i < this->height; i++) {
         std::getline(infile, line);
         if ((int)line.length() < this->width)
@@ -124,7 +125,7 @@ void Level::readCsvFile(std::ifstream &infile) {
     levelContents = new Tile[this->contentHeight * this->contentWidth];
 
     // read the file and build the level
-    int numHero = 0;    // number of heroes that have been declared
+
     for (int i = 0; i < this->height; i++) {
         std::getline(infile, line);
         if ((int)line.length() < this->width)
