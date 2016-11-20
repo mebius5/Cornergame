@@ -24,12 +24,8 @@ Level::Level(int levelNum, int windowW, int windowH):
         }
     }***/
 
-    std::string textFileName = "level";
-    textFileName.append(std::to_string(levelNum)).append(".txt");
-    std::string csvFileName = "level";
-    csvFileName.append(std::to_string(levelNum)).append(".cvs");
-    std::ifstream textFS(textFileName.c_str());
-    std::ifstream csvFS(csvFileName.c_str());
+    std::ifstream textFS("levels/level"+std::to_string(levelNum)+".txt");
+    std::ifstream csvFS("levels/level"+std::to_string(levelNum)+".txt");
 
     if(textFS.is_open()){
         readTxtFile(textFS);
@@ -38,7 +34,7 @@ Level::Level(int levelNum, int windowW, int windowH):
         readCsvFile(csvFS);
         csvFS.close();
     } else {
-        std::cerr << "Cannot open level file for level " << textFileName << " or " << csvFileName << std::endl;
+        std::cerr << "Cannot open level file for level " << levelNum << std::endl;
         return;
     }
 }
