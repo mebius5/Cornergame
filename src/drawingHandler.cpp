@@ -1,3 +1,4 @@
+#include <array>
 #include "drawingHandler.h"
 
 DrawingHandler::DrawingHandler(std::vector<Command*>& commandList,
@@ -23,9 +24,12 @@ void DrawingHandler::removeInvalidComponents() {
     for (it = this->componentList.begin(); it != this->componentList.end(); ) {
         if (!(*it)->isValid()) {        // remove invalid components
             int layer = (*it)->layer;
-            *it = this->componentList[this->layerIndices[layer]--];
-            for (int i = layer; i < NLAYERS-1; i++)
-                this->componentList[this->layerIndices[i]+1] = this->componentList[this->layerIndices[i+1]--];
+            *it = this->componentList[this->layerIndices[layer]];
+            this->layerIndices[layer]=this->layerIndices[layer]-1;
+            for (int i = layer; i < NLAYERS-1; i++){
+                this->componentList[this->layerIndices[i]+1] = this->componentList[this->layerIndices[i+1]];
+                this->layerIndices[i+1]=this->layerIndices[i+1]-1;
+            }
             this->componentList.pop_back();
             continue;
         }

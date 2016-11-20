@@ -31,3 +31,8 @@ SDL_Texture* FadingTerrainArtComponent::getNextTexture(int dt) {
 SDL_Rect* FadingTerrainArtComponent::getNextSrcRect(int) {
     return NULL;
 }
+
+void FadingTerrainArtComponent::resetComponent() {
+    this->shakeTime=-999;
+    this->isVisible=true;
+}

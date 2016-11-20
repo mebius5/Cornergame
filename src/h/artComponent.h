@@ -91,6 +91,7 @@ public:
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
     void startShake();
+    void resetComponent();
 };
 
 class HealthBarArtComponent: public ArtComponent {

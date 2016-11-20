@@ -105,6 +105,7 @@ public:
     FadingTerrainColComponent(Entity* entity, bool top, bool bot, bool r, bool l);
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void setHasDisappeared(bool hasDisappeared);
+    void resetComponent();
 
 };
 

@@ -28,6 +28,8 @@ Grady
   entity builder. Now, entity builder only has createFadeInText() and createMenuText() for all
   texts
 - Added fading terrain type where the hero can trigger terrain to shake and then disappear
+- Added support for CSV file for level editor
+- Designed level 5
 
 Pratyush
 

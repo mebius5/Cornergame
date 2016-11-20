@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <vector>
 #include <cmath>
+#include <array>
 #include "entityBuilder.h"
 #include "level.h"
 #include "consts.h"
@@ -33,8 +34,9 @@ public:
     std::vector<Entity*> heroEntities;
     std::vector<RespawnEntity*> respawnEntities;
     std::vector<PowerUpCollisionComponent*> powerUpCollisionComponents;
+    std::vector<FadingTerrainColComponent*> fadingTerrainColComponents;
 
-    EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW);
+            EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW);
     ~EntityManager();
 
     void addEntity(Entity* entity);     // add entity/components to map/vectors
