@@ -61,6 +61,10 @@ void EntityManager::addEntity(Entity* entity) {
             if(PowerUpCollisionComponent * puc = dynamic_cast<PowerUpCollisionComponent*>(entity->collision)){
                 this->powerUpCollisionComponents.push_back(puc);
             }
+
+            if(FadingTerrainColComponent * ftc = dynamic_cast<FadingTerrainColComponent*>(entity->collision)){
+                this->fadingTerrainColComponents.push_back(ftc);
+            }
         } else if (DynamicCollisionComponent* dcc =
                 dynamic_cast<DynamicCollisionComponent*>(entity->collision)) {
             this->dynamicCollisionComponents.push_back(dcc);
@@ -153,6 +157,7 @@ void EntityManager::clear() {
     this->dynamicCollisionComponents.clear();
     this->powerUpComponents.clear();
     this->powerUpCollisionComponents.clear();
+    this->fadingTerrainColComponents.clear();
     this->heroEntities.clear();
     this->respawnEntities.clear();
     this->initIndices();
@@ -368,6 +373,15 @@ void EntityManager::handleSpawns() {
                 (*pu)->setIsClaimed(false);
                 (*pu)->entity->art->isVisible = true;
             }
+
+            std::vector<FadingTerrainColComponent*>::iterator ft;
+            for (ft = this->fadingTerrainColComponents.begin(); ft != this->fadingTerrainColComponents.end(); ++ft){
+                (*ft)->resetComponent();
+                if(FadingTerrainArtComponent * fta = dynamic_cast<FadingTerrainArtComponent*>((*ft)->entity->art)){
+                    fta->resetComponent();
+                }
+            }
+
             std::vector<RespawnEntity*>::iterator ents;
             for (ents = this->respawnEntities.begin(); ents != this->respawnEntities.end(); ++ents) {
                 RespawnEntity* entity = *ents;

@@ -41,3 +41,9 @@ void FadingTerrainColComponent::onEntityCollision(DynamicCollisionComponent *oth
 }
 
 
+void FadingTerrainColComponent::resetComponent() {
+    this->hasDisappeared=false;
+    this->touched=false;
+    this->heroOtherComp1=NULL;
+    this->heroOtherComp2=NULL;
+}
