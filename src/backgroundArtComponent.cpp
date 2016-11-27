@@ -1,7 +1,7 @@
 #include "artComponent.h"
 
-BackgroundArtComponent::BackgroundArtComponent(Entity* ent, SDL_Texture* tex, int lay, float speed) :
-    ArtComponent(ent, lay, false),
+BackgroundArtComponent::BackgroundArtComponent(Entity* ent, SDL_Texture* tex, float speed) :
+    ArtComponent(ent, LAYER_BG, true),
     texture(tex),
     speed(speed) {
 }

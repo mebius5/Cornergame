@@ -10,7 +10,7 @@ GameManager::GameManager() :
     width(1024),
     height(704),
     currentLevel(1),
-    maxLevel(4) {
+    maxLevel(5) {
     srand((unsigned int) time(NULL));
 }
 
@@ -93,7 +93,8 @@ void GameManager::run() {
     Component::setCommandList(&commandList);
 
     EntityManager entityMgr(this->renderer, commandList, width);
-    DrawingHandler drawingHandler(commandList, entityMgr.artComponents, this->renderer, width, height);
+    DrawingHandler drawingHandler(commandList, entityMgr.artComponents, entityMgr.layerIndices,
+                                  entityMgr.bgComponents, this->renderer, width, height);
     InputHandler inputHandler(entityMgr.inputComponents, commandList);
     AiHandler aiHandler(entityMgr.aiComponents);
     CollisionHandler collisionHandler(entityMgr.dynamicCollisionComponents,
@@ -136,7 +137,7 @@ void GameManager::run() {
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
                         collisionHandler, scoreHandler, physicsHandler,
-                        powerUpHandler);
+                        powerUpHandler, timeHandler);
 
     // Load music resources
     soundHandler.loadMusic("music/mega_destruction_titlescreen.xm", MUSIC_START);
@@ -154,6 +155,7 @@ void GameManager::run() {
     soundHandler.loadSfx("resources/running.aiff", SFX_RUNNING);
     soundHandler.loadSfx("resources/scrape.aiff", SFX_SCRAPE);
     soundHandler.loadSfx("resources/woosh.aiff", SFX_WOOSH);
+    soundHandler.loadSfx("resources/jump.wav", SFX_BOUNCE);
 
     // State loop
     State* currentState = &startState;

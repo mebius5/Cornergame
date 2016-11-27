@@ -2,7 +2,7 @@
 #define CORNERGAME_CONTROL_HANDLER_H
 
 #include <vector>
-#include "enums.h"
+#include "consts.h"
 #include "command.h"
 
 class ControlHandler {

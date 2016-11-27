@@ -1,16 +1,16 @@
 #include "entityManager.h"
 
 EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdList, int windowW) :
-    commandList(cmdList),
-    entityBuilder(renderer),
-    windowW(windowW),
-    numCleanable(0) {
+        commandList(cmdList),
+        entityBuilder(renderer),
+        windowW(windowW),
+        numCleanable(0) {
+    this->initIndices();
     this->entityBuilder.loadTexture(TEX_HERO, "spritesheets/hero.png");
     this->entityBuilder.loadTexture(TEX_HERO2, "spritesheets/hero2.png");
     this->entityBuilder.loadTexture(TEX_ENEMY, "spritesheets/lax.png");
     this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
-    this->entityBuilder.loadTexture(TEX_BACKGROUND1, "resources/background1.png");
-    this->entityBuilder.loadTexture(TEX_BACKGROUND2, "resources/background2.png");
+    this->entityBuilder.loadTexture(TEX_BOUNCE, "spritesheets/bounce.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH, "resources/star.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH_OVERLAY, "resources/starOverlay.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
@@ -25,6 +25,8 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_LEVEL2_PREVIEW, "resources/level2preview.png");
     this->entityBuilder.loadTexture(TEX_LEVEL3_PREVIEW, "resources/level3preview.png");
     this->entityBuilder.loadTexture(TEX_LEVEL4_PREVIEW, "resources/level4preview.png");
+    this->entityBuilder.loadTexture(TEX_BACKGROUND1, "resources/background1.png");
+    this->entityBuilder.loadTexture(TEX_BACKGROUND2, "resources/background2.png");
     this->entityBuilder.loadHealthBar(200, 40);
     this->entityBuilder.loadAmmoBar(50, 8);
 }
@@ -44,7 +46,16 @@ void EntityManager::addEntity(Entity* entity) {
         this->aiComponents.push_back(entity->ai);
     }
     if (entity->art) {
-        this->artComponents.push_back(entity->art);
+        this->artComponents.push_back(NULL);        // add one space
+        int layer = entity->art->layer;
+        for (int i = NLAYERS-1; i > layer; i--) {
+            this->layerIndices[i]++;                // shift first layer element to last layer element
+            this->artComponents[this->layerIndices[i]] = this->artComponents[this->layerIndices[i-1]+1];
+        }
+        this->layerIndices[layer]++;                // insert new artComp
+        this->artComponents[this->layerIndices[layer]] = entity->art;
+        if (BackgroundArtComponent* bg = dynamic_cast<BackgroundArtComponent*>(entity->art))
+            this->bgComponents.push_back(bg);
     }
     if (entity->collision) {
         if (StaticCollisionComponent* scc =
@@ -53,6 +64,10 @@ void EntityManager::addEntity(Entity* entity) {
 
             if(PowerUpCollisionComponent * puc = dynamic_cast<PowerUpCollisionComponent*>(entity->collision)){
                 this->powerUpCollisionComponents.push_back(puc);
+            }
+
+            if(FadingTerrainColComponent * ftc = dynamic_cast<FadingTerrainColComponent*>(entity->collision)){
+                this->fadingTerrainColComponents.push_back(ftc);
             }
         } else if (DynamicCollisionComponent* dcc =
                 dynamic_cast<DynamicCollisionComponent*>(entity->collision)) {
@@ -74,6 +89,11 @@ void EntityManager::addEntity(Entity* entity) {
     if (entity->powerUp){
         this->powerUpComponents.push_back(entity->powerUp);
     }
+}
+
+void EntityManager::initIndices() {
+    for (int i = 0; i < NLAYERS; i++)
+        this->layerIndices[i] = -1;
 }
 
 void EntityManager::initRespawns() {
@@ -132,6 +152,7 @@ void EntityManager::clear() {
     this->entityMap.clear();
     this->aiComponents.clear();
     this->artComponents.clear();
+    this->bgComponents.clear();
     this->inputComponents.clear();
     this->physicsComponents.clear();
     this->healthComponents.clear();
@@ -140,8 +161,10 @@ void EntityManager::clear() {
     this->dynamicCollisionComponents.clear();
     this->powerUpComponents.clear();
     this->powerUpCollisionComponents.clear();
+    this->fadingTerrainColComponents.clear();
     this->heroEntities.clear();
     this->respawnEntities.clear();
+    this->initIndices();
 }
 
 /* Entity Creation Methods */
@@ -189,8 +212,8 @@ Entity* EntityManager::createAmmoBar(int x, int y, Entity* owner) {
 // }
 
 void EntityManager::createFadeInText(FontEnum font,
-                                                const char* text, int fontSize, int r, int g, int b,
-                                                int initialAlpha, int windowW, int x, int y) {
+                                     const char* text, int fontSize, int r, int g, int b,
+                                     int initialAlpha, int windowW, int x, int y) {
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
@@ -209,8 +232,8 @@ void EntityManager::createFadeInText(FontEnum font,
 }
 
 void EntityManager::createCenteredFadeInText(FontEnum font,
-                                                const char* text, int fontSize, int r, int g, int b,
-                                                int initialAlpha, int windowW, int windowH) {
+                                             const char* text, int fontSize, int r, int g, int b,
+                                             int initialAlpha, int windowW, int windowH) {
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
@@ -233,7 +256,7 @@ void EntityManager::createCenteredFadeInText(FontEnum font,
 }
 
 void EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const char *text, int fontSize, int r, int g,
-                                                            int b, int initialAlpha, int windowW, int yPos) {
+                                                         int b, int initialAlpha, int windowW, int yPos) {
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
@@ -306,8 +329,21 @@ Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, int x, 
 Entity* EntityManager::createTerrain(Tile tileType, int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
     TerrainTexEnum texType = (TerrainTexEnum)tileType;
-    Entity* entity = this->entityBuilder.createTerrain(
-            texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    Entity * entity;
+    if(texType!=TT_SAND){
+        entity = this->entityBuilder.createTerrain(
+                texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    } else{
+        entity = this->entityBuilder.createFadingTerrain(
+                texType, x, y, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+    }
+
+    this->addEntity(entity);
+    return entity;
+}
+
+Entity* EntityManager::createBounce(TextureEnum texType, int x, int y) {
+    Entity* entity = this->entityBuilder.createBounce(texType, x, y);
     this->addEntity(entity);
     return entity;
 }
@@ -349,6 +385,15 @@ void EntityManager::handleSpawns() {
                 (*pu)->setIsClaimed(false);
                 (*pu)->entity->art->isVisible = true;
             }
+
+            std::vector<FadingTerrainColComponent*>::iterator ft;
+            for (ft = this->fadingTerrainColComponents.begin(); ft != this->fadingTerrainColComponents.end(); ++ft){
+                (*ft)->resetComponent();
+                if(FadingTerrainArtComponent * fta = dynamic_cast<FadingTerrainArtComponent*>((*ft)->entity->art)){
+                    fta->resetComponent();
+                }
+            }
+
             std::vector<RespawnEntity*>::iterator ents;
             for (ents = this->respawnEntities.begin(); ents != this->respawnEntities.end(); ++ents) {
                 RespawnEntity* entity = *ents;
@@ -379,83 +424,97 @@ void EntityManager::populateLevel(Level* level) {
     for (int i = 0; i < level->contentHeight; i++) {
         for (int j = 0; j < level->contentWidth; j++) {
             switch (level->getTile(i, j)) {
-            case TILE_DIRT:
-            case TILE_BRICK:
-            case TILE_GRASS: {
-                bool freeLeft = (j == 0 || level->getTile(i, j-1) >= TILE_NONE);
-                bool freeRight;     // assigned value later
-                bool freeTop = (i == 0 || level->getTile(i-1, j) >= TILE_NONE);
-                bool freeBot = (i == level->contentHeight-1 || level->getTile(i+1, j) >= TILE_NONE);
-                int numberHorizontal = 1;
-                int originalJ = j;
-                // create horizontal slabs, breaking at each intersection with other terrain rectangles.
-                while (j < (level->width-1) && level->getTile(i, j+1) == level->getTile(i, j)) {
-                    if (i > 0 && freeTop && level->getTile(i-1, j+1) < TILE_NONE)
-                        break;
-                    if (i > 0 && !freeTop && level->getTile(i-1, j+1) >= TILE_NONE)
-                        break;
-                    if (i < level->contentHeight-1 && freeBot && level->getTile(i+1, j+1) < TILE_NONE)
-                        break;
-                    if (i < level->contentHeight-1 && !freeBot && level->getTile(i+1, j+1) >= TILE_NONE)
-                        break;
-                    numberHorizontal++;
-                    j++;
+                case TILE_DIRT:
+                case TILE_BRICK:
+                case TILE_GRASS: {
+                    bool freeLeft = (j == 0 || level->getTile(i, j-1) >= TILE_NONE);
+                    bool freeRight;     // assigned value later
+                    bool freeTop = (i == 0 || level->getTile(i-1, j) >= TILE_NONE);
+                    bool freeBot = (i == level->contentHeight-1 || level->getTile(i+1, j) >= TILE_NONE);
+                    int numberHorizontal = 1;
+                    int originalJ = j;
+                    // create horizontal slabs, breaking at each intersection with other terrain rectangles.
+                    while (j < (level->width-1) && level->getTile(i, j+1) == level->getTile(i, j)) {
+                        if (i > 0 && freeTop && level->getTile(i-1, j+1) < TILE_NONE)
+                            break;
+                        if (i > 0 && !freeTop && level->getTile(i-1, j+1) >= TILE_NONE)
+                            break;
+                        if (i < level->contentHeight-1 && freeBot && level->getTile(i+1, j+1) < TILE_NONE)
+                            break;
+                        if (i < level->contentHeight-1 && !freeBot && level->getTile(i+1, j+1) >= TILE_NONE)
+                            break;
+                        numberHorizontal++;
+                        j++;
+                    }
+                    freeRight = (j == level->contentWidth-1 || level->getTile(i, j+1) >= TILE_NONE);
+                    createTerrain(level->getTile(i, j), originalJ*32, i*32, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+                    break;
                 }
-                freeRight = (j == level->contentWidth-1 || level->getTile(i, j+1) >= TILE_NONE);
-                createTerrain(level->getTile(i, j), originalJ*32, i*32, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
-                break;
-            }
-            case TILE_ENEMY:
-                createEnemy(TEX_ENEMY, j * 32, i * 32);
-                break;
-            case TILE_SPAWN1: {
-                Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
-                createHealthBar(100, 50, hero);
-                createAmmoBar(400, 50, hero);
-                break;
-            }
-            case TILE_SPAWN2: {
-                Entity* hero2 = createHero(TEX_HERO2, j * 32, i * 32, SFX_ALERT, true);
-                createHealthBar(100, 100, hero2);
-                createAmmoBar(400, 100, hero2);
-                break;
-            }
-            case TILE_GOAL:
-                createVictoryZone(j * 32, i * 32);
-                break;
-            case TILE_PU_AMMO:
-                createPowerUp(TEX_PWRUP_AMMO, SFX_AMMO, j*32, i*32);
-                break;
-            case TILE_TREE1:
-                createStaticBackgroundObject(TEX_TREE1, j*32, i*32);
-                break;
-            case TILE_TREE2:
-                createStaticBackgroundObject(TEX_TREE2, j*32, i*32);
-                break;
-            case TILE_BENCH:
-                createStaticBackgroundObject(TEX_BENCH, j*32, i*32);
-                break;
-            case TILE_PU_JUMP:
-                createPowerUp(TEX_PWRUP_INFJUMP, SFX_WOOSH, j*32, i*32);
-                break;
-            case TILE_PU_HEALTH:
-                createPowerUp(TEX_PWRUP_INFHEALTH, SFX_ARMOR, j*32, i*32);
-                break;
-            case TILE_PU_BEER:
-                createPowerUp(TEX_PWRUP_BEER, SFX_DRINK, j*32, i*32);
-                break;
-            case TILE_FADEINTEXT:
-                createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
-                                 30, 255, 255, 255, 0, windowW, j*32, i*32);
-                stringCount++;
-                break;
-            case TILE_NORMALTEXT:
-                createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
-                                 30, 255, 255, 255, 255, windowW, j*32, i*32);
-                stringCount++;
-                break;
-            default:
-                break;
+                case TILE_SAND: {
+                    bool freeLeft = (j == 0 || level->getTile(i, j-1) >= TILE_NONE);
+                    bool freeRight;     // assigned value later
+                    bool freeTop = (i == 0 || level->getTile(i-1, j) >= TILE_NONE);
+                    bool freeBot = (i == level->contentHeight-1 || level->getTile(i+1, j) >= TILE_NONE);
+                    int numberHorizontal = 1;
+                    int originalJ = j;
+                    freeRight = (j == level->contentWidth-1 || level->getTile(i, j+1) >= TILE_NONE);
+                    createTerrain(level->getTile(i, j), originalJ*32, i*32, numberHorizontal, freeTop, freeBot, freeRight, freeLeft);
+                    break;
+                }
+                case TILE_BOUNCE:
+                    createBounce(TEX_BOUNCE, j * 32, i * 32);
+                    break;
+                case TILE_ENEMY:
+                    createEnemy(TEX_ENEMY, j * 32, i * 32);
+                    break;
+                case TILE_SPAWN1: {
+                    Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
+                    createHealthBar(100, 50, hero);
+                    createAmmoBar(400, 50, hero);
+                    break;
+                }
+                case TILE_SPAWN2: {
+                    Entity* hero2 = createHero(TEX_HERO2, j * 32, i * 32, SFX_ALERT, true);
+                    createHealthBar(100, 100, hero2);
+                    createAmmoBar(400, 100, hero2);
+                    break;
+                }
+                case TILE_GOAL:
+                    createVictoryZone(j * 32, i * 32);
+                    break;
+                case TILE_PU_AMMO:
+                    createPowerUp(TEX_PWRUP_AMMO, SFX_AMMO, j*32, i*32);
+                    break;
+                case TILE_TREE1:
+                    createStaticBackgroundObject(TEX_TREE1, j*32, i*32);
+                    break;
+                case TILE_TREE2:
+                    createStaticBackgroundObject(TEX_TREE2, j*32, i*32);
+                    break;
+                case TILE_BENCH:
+                    createStaticBackgroundObject(TEX_BENCH, j*32, i*32);
+                    break;
+                case TILE_PU_JUMP:
+                    createPowerUp(TEX_PWRUP_INFJUMP, SFX_WOOSH, j*32, i*32);
+                    break;
+                case TILE_PU_HEALTH:
+                    createPowerUp(TEX_PWRUP_INFHEALTH, SFX_ARMOR, j*32, i*32);
+                    break;
+                case TILE_PU_BEER:
+                    createPowerUp(TEX_PWRUP_BEER, SFX_DRINK, j*32, i*32);
+                    break;
+                case TILE_FADEINTEXT:
+                    createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
+                                     30, 255, 255, 255, 0, windowW, j*32, i*32);
+                    stringCount++;
+                    break;
+                case TILE_NORMALTEXT:
+                    createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
+                                     30, 0, 0, 0, 255, windowW, j*32, i*32);
+                    stringCount++;
+                    break;
+                default:
+                    break;
             }
         }
     }

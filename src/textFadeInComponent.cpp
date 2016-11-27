@@ -1,13 +1,12 @@
 #include "artComponent.h"
 
 TextFadeInComponent::TextFadeInComponent(Entity* entity, SDL_Renderer *renderer,
-                                         SDL_Surface *surface,
-                                         int layer, float initialAlpha):
-    ArtComponent(entity, layer, false),
+                                         SDL_Surface *surface, float initialAlpha):
+    ArtComponent(entity, LAYER_TEXT, false),
     surface(surface),
     renderer(renderer),
     alpha(initialAlpha) {
-    SDL_SetSurfaceAlphaMod(this->surface, (int)this->alpha);
+//    SDL_SetSurfaceAlphaMod(this->surface, (int)this->alpha);
     this->lastTexture = SDL_CreateTextureFromSurface(this->renderer, this->surface);
 }
 

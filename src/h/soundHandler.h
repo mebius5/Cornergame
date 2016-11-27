@@ -5,11 +5,10 @@
 #include <iostream>
 #include <vector>
 #include "command.h"
-#include "enums.h"
+#include "consts.h"
 
 class SoundHandler {
 private:
-    static const int NCHANS = 20;
     std::vector<Command*>& commandList;
     std::vector<Mix_Chunk*> sfxMap;
     std::vector<Mix_Music*> musicMap;

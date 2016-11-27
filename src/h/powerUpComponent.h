@@ -4,7 +4,7 @@
 #include "entity.h"
 #include "component.h"
 
-// NOTE: REFER TO PowerUpEnums in the enums.h
+// NOTE: REFER TO PowerUpEnums in the consts.h
 
 class PowerUpComponent : public Component {
 private:

@@ -13,6 +13,8 @@ ResultsState::ResultsState(int windowW, int windowH, EntityManager& entMgr,
 }
 
 void ResultsState::setVictorious(Entity* winner, Entity* loser) {
+    winner->drawX -= winner->drawWidth;
+    winner->drawY -= winner->drawHeight;
     winner->drawHeight *= 3;
     winner->drawWidth *= 3;
     winner->actionState = ACTION_JUMP;

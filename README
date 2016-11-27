@@ -14,20 +14,22 @@ make
 
 Assignment 10 Task Writeups
 
-General Notes:
-
-
 Akshay
 
 
 Andrew
-
+- Fixed bugs with background parallax and made it more efficient
+- Cleaned up ArtComponent layering, tested various custom data structures for
+    layering, made layering more efficient (in prep for particles)
 
 Grady
 - Changed text surfaces to allow centered multiline texts
 - Refactored entity manager's create text methods in order to eliminate repetitive methods in
   entity builder. Now, entity builder only has createFadeInText() and createMenuText() for all
   texts
+- Added fading terrain type where the hero can trigger terrain to shake and then disappear
+- Added support for CSV file for level editor
+- Designed level 5
 
 Pratyush
 
@@ -125,12 +127,15 @@ Segfault with fonts (on mac only?)
 *Tuning of camera speed/character speed
 Sounds: handle stop sounds before start sounds?
 GAME NAME - STOP PUNTING
-*revamp layers -> enum/drawingHandler has vector<vector<>>
 EntityEnum instead of dynamic casts everywhere? (see camera.cpp, etc.)
 change powerup enum to be separate?
 revamp enums: embed type code into enum?
+Refactor level.cpp, entityManager, entityBuilder responsibilities
 change previewOn to autoShiftOn (invert stuff...)
 slow-mo nesting (multiple projectiles in kill range)
 *separate characterPhysics from projectilePhysics
+merge playstate and tutorial state? they're basically the same...
+Make all backgrounds double copied!
+Make backgrounds more efficient...
 
-TIME TO BEAT (average dt level 2 over 23 trials): 25.69
+post bouncy terrain: 24.8

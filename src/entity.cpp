@@ -20,6 +20,8 @@ Entity::Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHe
     health(NULL),
     powerUp(NULL),
     ammo(NULL) {
+    drawX = this->width/2 - this->drawWidth/2;
+    drawY = this->height/2 - this->drawHeight/2;
 }
 
 Entity::~Entity() {

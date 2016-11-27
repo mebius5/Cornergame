@@ -42,7 +42,7 @@ public:
     void updateLocation(int dt);
     void freeze();
     bool isFrozen();
-    void jump();
+    void jump(float velocity = -1);
     void toggleInfiniteJumps();
     bool isInfiniteJumpOn();
     void resetJumps();

@@ -9,7 +9,7 @@
 #include "collisionHandler.h"
 #include "soundHandler.h"
 #include "controlHandler.h"
-#include "enums.h"
+#include "consts.h"
 #include "scoreHandler.h"
 #include "physicsHandler.h"
 #include "level.h"
@@ -64,6 +64,7 @@ private:
     Entity* level2;
     Entity* level3;
     Entity* level4;
+    Entity* level5;
 public:
     LevelSelectState(int windowW, int windowH, EntityManager& entityManager,
               std::vector<Command*>& commandList, SDL_Renderer* renderer,
@@ -200,6 +201,7 @@ private:
     ScoreHandler& scoreHandler;
     PhysicsHandler& physicsHandler;
     PowerUpHandler& powerUpHandler;
+    TimeHandler& timeHandler;
     Entity* hero;
     Entity* hero2;
     int levelW;
@@ -211,7 +213,7 @@ public:
               SoundHandler& soundHandler, ControlHandler& controlHandler,
               AiHandler& aiHandler, CollisionHandler& collisionHandler,
               ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
-              PowerUpHandler& powerUpHandler);
+              PowerUpHandler& powerUpHandler, TimeHandler& timeHandler);
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);

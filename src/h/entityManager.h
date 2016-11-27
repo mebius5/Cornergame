@@ -5,9 +5,10 @@
 #include <unordered_map>
 #include <vector>
 #include <cmath>
+#include <array>
 #include "entityBuilder.h"
 #include "level.h"
-#include "enums.h"
+#include "consts.h"
 
 class EntityManager {
 private:
@@ -17,9 +18,12 @@ private:
     std::queue<Entity*> deletionQueue;
     int windowW;
     int numCleanable;                   // # of entities ready for deletion
+    void initIndices();
 public:
     std::vector<AiComponent*> aiComponents;
-    std::vector<ArtComponent*> artComponents;
+    std::vector<ArtComponent*> artComponents;  // in order by layer #
+    std::array<int, NLAYERS> layerIndices;   // indices of last item w/ given layer
+    std::vector<BackgroundArtComponent*> bgComponents;
     std::vector<StaticCollisionComponent*> staticCollisionComponents;
     std::vector<DynamicCollisionComponent*> dynamicCollisionComponents;
     std::vector<InputComponent*> inputComponents;
@@ -30,8 +34,9 @@ public:
     std::vector<Entity*> heroEntities;
     std::vector<RespawnEntity*> respawnEntities;
     std::vector<PowerUpCollisionComponent*> powerUpCollisionComponents;
+    std::vector<FadingTerrainColComponent*> fadingTerrainColComponents;
 
-    EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW);
+            EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW);
     ~EntityManager();
 
     void addEntity(Entity* entity);     // add entity/components to map/vectors
@@ -69,6 +74,7 @@ public:
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y);
     Entity* createTerrain(Tile tileType, int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);
+    Entity* createBounce(TextureEnum tileType, int x, int y);
     Entity* createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum projType);
     void handleSpawns();
     void populateLevel(Level* level);

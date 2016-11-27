@@ -28,6 +28,8 @@ protected:
 public:
     float x;                    // coordinates of top left corner
     float y;
+    float drawX;
+    float drawY;
     int width;
     int height;
     int drawWidth;

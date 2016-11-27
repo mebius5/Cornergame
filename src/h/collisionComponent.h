@@ -78,7 +78,7 @@ public:
 };
 
 class TerrainCollisionComponent : public StaticCollisionComponent {
-private:
+protected:
     Command* landCommand;
     bool freeTop;
     bool freeBot;
@@ -95,6 +95,20 @@ public:
     void onEntityCollision(DynamicCollisionComponent* otherComp);
 };
 
+class FadingTerrainColComponent : public TerrainCollisionComponent {
+protected:
+    bool hasDisappeared;
+    bool touched;
+    DynamicCollisionComponent * heroOtherComp1;
+    DynamicCollisionComponent * heroOtherComp2;
+public:
+    FadingTerrainColComponent(Entity* entity, bool top, bool bot, bool r, bool l);
+    void onEntityCollision(DynamicCollisionComponent* otherComp);
+    void setHasDisappeared(bool hasDisappeared);
+    void resetComponent();
+
+};
+
 class PowerUpCollisionComponent : public StaticCollisionComponent {
 protected:
     Command* pickupCommand;
@@ -105,6 +119,16 @@ public:
     ~PowerUpCollisionComponent();
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void setIsClaimed(bool isClaimed);
+};
+
+class BounceCollisionComponent : public StaticCollisionComponent {
+private:
+    Command* bounceCommand;
+    float bounceVelocity;
+public:
+    BounceCollisionComponent(Entity* entity);
+    ~BounceCollisionComponent();
+    void onEntityCollision(DynamicCollisionComponent* otherComp);
 };
 
 #endif

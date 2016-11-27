@@ -1,6 +1,6 @@
 #include "artComponent.h"
 
-AnimationComponent::AnimationComponent(Entity* entity, Texture tex, int layer):
+AnimationComponent::AnimationComponent(Entity* entity, Texture tex, LayerEnum layer):
     ArtComponent(entity, layer, false),
     texture(tex.sdlTexture),
     surfaceW(tex.width),

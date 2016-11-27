@@ -6,8 +6,7 @@
 #include <SDL_ttf.h>
 #include <iostream>
 #include <vector>
-#include "enums.h"
-#include "structs.h"
+#include "consts.h"
 #include "entity.h"
 
 class EntityBuilder {
@@ -53,6 +52,9 @@ public:
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y) ;
     Entity* createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
             bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
+    Entity* createBounce(TextureEnum tileType, int x, int y);
+    Entity* createFadingTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
+                          bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
     Entity* createProjectile(TextureEnum texType, int x, int y, float charge, int dir, int ownerID, Entity * closest);
 };
 

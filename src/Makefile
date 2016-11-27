@@ -2,10 +2,12 @@
 
 SRCFILES = \
 	aiHandler.cpp \
-    ammoBarArtComponent.cpp \
-    ammoComponent.cpp \
+	ammoBarArtComponent.cpp \
+	ammoComponent.cpp \
 	animationComponent.cpp \
 	backgroundArtComponent.cpp \
+	bounceAnimationComponent.cpp \
+	bounceCollisionComponent.cpp \
 	camera.cpp \
 	collisionHandler.cpp \
 	command.cpp \
@@ -17,6 +19,8 @@ SRCFILES = \
 	entity.cpp \
 	entityBuilder.cpp \
 	entityManager.cpp \
+	fadingTerrainArtComponent.cpp \
+	fadingTerrainColComponent.cpp \
 	gameManager.cpp \
 	healthComponent.cpp \
 	healthBarArtComponent.cpp \
@@ -47,7 +51,7 @@ SRCFILES = \
 	staticArtComponent.cpp \
 	terrainCollisionComponent.cpp \
 	textFadeInComponent.cpp \
-    timeHandler.cpp \
+	timeHandler.cpp \
 	tutorialState.cpp \
 	victoryZoneCollisionComponent.cpp
 

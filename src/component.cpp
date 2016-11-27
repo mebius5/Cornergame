@@ -34,13 +34,12 @@ AiComponent::AiComponent(Entity* entity) :
     Component(entity) {
 }
 
-ArtComponent::ArtComponent(Entity* entity, int layer, bool movesWithCamera) :
+ArtComponent::ArtComponent(Entity* entity, LayerEnum layer, bool movesWithCamera) :
     Component(entity),
     layer(layer),
     movesWithCamera(movesWithCamera),
-    isVisible(true)
-{
-    if(this->movesWithCamera){
+    isVisible(true) {
+    if (this->movesWithCamera) {
         this->offsetX = (int) entity->x;
         this->offsetY = (int) entity->y;
     }

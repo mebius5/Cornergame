@@ -1,12 +1,16 @@
+#include <array>
 #include "drawingHandler.h"
 
 DrawingHandler::DrawingHandler(std::vector<Command*>& commandList,
                                std::vector<ArtComponent*>& componentList,
+                               std::array<int, NLAYERS>& layerIndices,
+                               std::vector<BackgroundArtComponent*>& bgComponents,
                                SDL_Renderer* renderer, int windowW, int windowH) :
     commandList(commandList),
     componentList(componentList),
+    layerIndices(layerIndices),
     renderer(renderer),
-    camera(renderer, commandList, componentList, windowW, windowH),
+    camera(renderer, commandList, componentList, bgComponents, windowW, windowH),
     shiftCount(0),
     windowW(windowW) {
 }
@@ -15,27 +19,35 @@ void DrawingHandler::initializeCamera(int levelW, int levelH, bool previewOn) {
     this->camera.initializeCamera(levelW, levelH, previewOn);
 }
 
+void DrawingHandler::removeInvalidComponents() {
+    std::vector<ArtComponent*>::iterator it;
+    for (it = this->componentList.begin(); it != this->componentList.end(); ) {
+        if (!(*it)->isValid()) {        // remove invalid components
+            int layer = (*it)->layer;
+            *it = this->componentList[this->layerIndices[layer]];
+            this->layerIndices[layer]=this->layerIndices[layer]-1;
+            for (int i = layer; i < NLAYERS-1; i++){
+                this->componentList[this->layerIndices[i]+1] = this->componentList[this->layerIndices[i+1]];
+                this->layerIndices[i+1]=this->layerIndices[i+1]-1;
+            }
+            this->componentList.pop_back();
+            continue;
+        }
+        ++it;
+    }
+}
+
 void DrawingHandler::draw(int dt) {
     SDL_RenderClear(this->renderer);
-    camera.updateShake(dt);
+    this->camera.updateShake(dt);
+    this->removeInvalidComponents();
 
     std::vector<ArtComponent*>::iterator it;
-    for (int i = 0; i <= ArtComponent::MAXLAYER; i++) {
-        for (it = this->componentList.begin(); it != this->componentList.end(); ) {
-            if (!(*it)->isValid()) {        // remove invalid components
-                *it = this->componentList.back();
-                this->componentList.pop_back();
-                continue;
-            }
-
-            ArtComponent* artComp = *it;
-            if (artComp->layer == i) {
-                artComp->updateLocation();
-                if (artComp->isVisible)
-                    camera.draw(dt, artComp);
-            }
-            ++it;
-        }
+    for (it = this->componentList.begin(); it != this->componentList.end(); ++it) {
+        ArtComponent* artComp = *it;
+        artComp->updateLocation();
+        if (artComp->isVisible)
+            camera.draw(dt, artComp);
     }
 
     SDL_RenderPresent(this->renderer);
