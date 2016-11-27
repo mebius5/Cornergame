@@ -87,3 +87,8 @@ void LevelTransitState::cleanup(StateEnum /*next*/) {
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
 }
+
+
+int LevelTransitState::nextLevel() {
+    return 0;
+}

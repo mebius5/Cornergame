@@ -19,6 +19,10 @@ MenuOptionInputComponent::~MenuOptionInputComponent() {
         delete this->nextStateCommand;
 }
 
+bool MenuOptionInputComponent::isSelected() {
+    return this->selected;
+}
+
 void MenuOptionInputComponent::updateTime(int /*dt*/) {
 }
 

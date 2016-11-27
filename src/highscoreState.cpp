@@ -60,3 +60,8 @@ void HighscoreState::updateHighscores(Entity* /*hero1*/, Entity* hero2) {
     else
         this->p2wins++;
 }
+
+
+int HighscoreState::nextLevel() {
+    return 0;
+}

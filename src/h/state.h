@@ -31,6 +31,7 @@ public:
     virtual void begin(int level) = 0;
     virtual StateEnum run() = 0;
     virtual void cleanup(StateEnum nextState) = 0;
+    virtual int nextLevel() = 0;
 };
 
 class StartState : public State {
@@ -50,6 +51,7 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
+    int nextLevel();
 };
 
 class LevelSelectState : public State {
@@ -58,6 +60,10 @@ private:
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
     ControlHandler& controlHandler;
+    Entity* level1;
+    Entity* level2;
+    Entity* level3;
+    Entity* level4;
 public:
     LevelSelectState(int windowW, int windowH, EntityManager& entityManager,
               std::vector<Command*>& commandList, SDL_Renderer* renderer,
@@ -66,6 +72,7 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
+    int nextLevel();
 };
 
 
@@ -83,6 +90,7 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
+    int nextLevel();
 };
 
 class HighscoreState : public State {
@@ -102,6 +110,7 @@ public:
     StateEnum run();
     void cleanup(StateEnum next);
     void updateHighscores(Entity* hero1, Entity* hero2);
+    int nextLevel();
 };
 
 class ResultsState : public State {
@@ -123,6 +132,7 @@ public:
     StateEnum run();
     void cleanup(StateEnum next);
     void updateResults(Entity* hero1, Entity* hero2);
+    int nextLevel();
 };
 
 class LevelTransitState : public State {
@@ -141,6 +151,7 @@ public:
     StateEnum run();
     void cleanup(StateEnum next);
     void readTransitString(int level);
+    int nextLevel();
 };
 
 class PlayState : public State {
@@ -175,6 +186,7 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
+    int nextLevel();
 };
 
 class TutorialState : public State {
@@ -203,6 +215,7 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
+    int nextLevel();
 };
 
 #endif

@@ -22,6 +22,9 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_TREE2, "resources/greentree2.png");
     this->entityBuilder.loadTexture(TEX_BENCH, "resources/bench.png");
     this->entityBuilder.loadTexture(TEX_LEVEL1_PREVIEW, "resources/level1preview.png");
+    this->entityBuilder.loadTexture(TEX_LEVEL2_PREVIEW, "resources/level2preview.png");
+    this->entityBuilder.loadTexture(TEX_LEVEL3_PREVIEW, "resources/level3preview.png");
+    this->entityBuilder.loadTexture(TEX_LEVEL4_PREVIEW, "resources/level4preview.png");
     this->entityBuilder.loadHealthBar(200, 40);
     this->entityBuilder.loadAmmoBar(50, 8);
 }
@@ -250,7 +253,7 @@ void EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const ch
     }
 }
 
-void EntityManager::createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text,
+Entity* EntityManager::createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text,
                                                                 int fontSize,
                                                                 int r, int g, int b, int initialAlpha,
                                                                 int windowW, int yPos,
@@ -271,7 +274,9 @@ void EntityManager::createHorizontallyCenteredFadeInMenuText(FontEnum font, cons
                 font, tempText.c_str(), fontSize, r, g, b, initialAlpha,
                 windowW, yPos+yOffset, index, numOptions, nextState);
         this->addEntity(entity);
+        return entity;
     }
+    return NULL;
 }
 
 Entity* EntityManager::createLevelPreview(TextureEnum tex, int x, int y) {

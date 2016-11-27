@@ -58,7 +58,7 @@ public:
                                                  int r, int g, int b, int initialAlpha,
                                                  int windowW, int yPos);
 
-    void createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text, int fontSize,
+    Entity* createHorizontallyCenteredFadeInMenuText(FontEnum font, const char *text, int fontSize,
                                                      int r, int g, int b, int initialAlpha,
                                                      int windowW, int yPos,
                                                      int index, int numOptions, StateEnum nextState);

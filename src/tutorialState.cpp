@@ -96,3 +96,7 @@ void TutorialState::cleanup(StateEnum) {
     this->soundHandler.stopAllSfx();
     this->drawingHandler.resetCamera(0, 0, windowW,windowH);
 }
+
+int TutorialState::nextLevel() {
+    return 0;
+}

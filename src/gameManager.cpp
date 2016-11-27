@@ -162,6 +162,9 @@ void GameManager::run() {
     do {
         currentState->begin(this->currentLevel);
         nextState = currentState->run();
+        if (currentState->nextLevel() != 0) {
+            this->currentLevel = currentState->nextLevel();
+        }
         currentState->cleanup(nextState);
 
         switch (nextState) {
@@ -173,10 +176,6 @@ void GameManager::run() {
                 break;
             case STATE_LEVEL_TRANSIT:
                 currentState = &levelTransitState;
-                if (this->currentLevel > maxLevel) {
-                    currentState = &menuState;
-                    this->currentLevel = 1;
-                }
                 break;
             case STATE_TUTORIAL:
                 currentState = &tutorialState;

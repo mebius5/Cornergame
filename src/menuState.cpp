@@ -67,3 +67,7 @@ void MenuState::cleanup(StateEnum /*next*/) {
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
 }
+
+int MenuState::nextLevel() {
+    return 0;
+}

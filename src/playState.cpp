@@ -125,3 +125,7 @@ void PlayState::cleanup(StateEnum nextState) {
     this->drawingHandler.resetCamera(0, 0, windowW, windowH);
     this->timeHandler.stopSlowMotion();
 }
+
+int PlayState::nextLevel() {
+    return 0;
+}

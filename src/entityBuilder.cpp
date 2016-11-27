@@ -206,7 +206,7 @@ Entity* EntityBuilder::createHorizontallyCenteredFadeInMenuText(FontEnum fontTyp
 
 Entity* EntityBuilder::createLevelPreview(TextureEnum tex, int x, int y) {
     Texture texture = this->textureMap[tex];
-    Entity* entity = new Entity(this->nextId++, x, y, 800, 150, 800, 150);
+    Entity* entity = new Entity(this->nextId++, x, y, 600, 100, 600, 100);
     entity->art = new StaticArtComponent(entity, texture.sdlTexture, 1, false);
     return entity;
 }

@@ -48,6 +48,7 @@ public:
     MenuOptionInputComponent(Entity* entity, int index, int numOptions,
                              Command* nextStateCommand);
     ~MenuOptionInputComponent();
+    bool isSelected();
     void updateTime(int dt);
     void keyDown(SDL_Keycode keycode);
     void keyUp(SDL_Keycode keycode);
