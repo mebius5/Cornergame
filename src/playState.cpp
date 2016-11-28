@@ -37,10 +37,10 @@ void PlayState::begin(int levelnum) {
     this->entityManager.initRespawns();
     this->hero1 = entityManager.heroEntities[0];
     this->hero2 = entityManager.heroEntities[1];
-    if (levelnum != 1) {
+    //if (levelnum != 1) {
         this->hero1->score->wins = this->p1wins;
         this->hero2->score->wins = this->p2wins;
-    }
+    //}
     this->levelW = level.width * 32;
     this->levelH = level.height * 32;
 }

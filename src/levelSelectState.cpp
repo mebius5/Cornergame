@@ -51,16 +51,16 @@ int LevelSelectState::nextLevel() {
     if (dynamic_cast<MenuOptionInputComponent*>(level1->input)->isSelected()) {
         return 1;
     }
-    if (dynamic_cast<MenuOptionInputComponent*>(level2->input)->isSelected()) {
+    else if (dynamic_cast<MenuOptionInputComponent*>(level2->input)->isSelected()) {
         return 2;
     }
-    if (dynamic_cast<MenuOptionInputComponent*>(level3->input)->isSelected()) {
+    else if (dynamic_cast<MenuOptionInputComponent*>(level3->input)->isSelected()) {
         return 3;
     }
-    if (dynamic_cast<MenuOptionInputComponent*>(level4->input)->isSelected()) {
+    else if (dynamic_cast<MenuOptionInputComponent*>(level4->input)->isSelected()) {
         return 4;
     }
-    if (dynamic_cast<MenuOptionInputComponent*>(level5->input)->isSelected()) {
+    else if (dynamic_cast<MenuOptionInputComponent*>(level5->input)->isSelected()) {
         return 5;
     }
     else return 1;

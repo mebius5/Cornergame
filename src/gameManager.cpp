@@ -9,8 +9,9 @@ GameManager::GameManager() :
     title("<GAME NAME>"),
     width(1024),
     height(704),
-    currentLevel(1),
-    maxLevel(5) {
+    currentLevel(1)
+    //maxLevel(5)
+{
     srand((unsigned int) time(NULL));
 }
 

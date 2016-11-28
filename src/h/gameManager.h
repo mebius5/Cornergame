@@ -33,7 +33,7 @@ private:
     const int height;
 
     int currentLevel;
-    int maxLevel;
+    //int maxLevel;
 
 public:
     GameManager();
