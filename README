@@ -15,7 +15,10 @@ make
 Assignment 10 Task Writeups
 
 Akshay
-
+- Created a trampoline tile that launches entities upwards
+- Created animation for said trampoline
+- Added said trampolines to existing levels
+- Fixed a rounding issue in the time handler, allowing for more accurate slow motion
 
 Andrew
 - Fixed bugs with background parallax and made it more efficient
