@@ -72,6 +72,7 @@ public:
     Entity* createVictoryZone(int x, int y);
     Entity* createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y);
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y);
+    Entity* createAnimatedBackgroundObject(TextureEnum texType, int x, int y, int fps, int numFrames);
     //Entity* createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y);
     Entity* createTerrain(Tile tileType, int x, int y, int numberHorizontal, bool freeTop, bool freeBot,
         bool freeRight, bool freeLeft);

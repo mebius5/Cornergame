@@ -252,6 +252,13 @@ Entity* EntityBuilder::createStaticBackgroundObject(TextureEnum texType, int x, 
     return object;
 }
 
+Entity* EntityBuilder::createAnimatedBackgroundObject(TextureEnum texType, int x, int y, int fps, int numFrames) {
+    Texture texture = this->textureMap[texType];
+    Entity* object = new Entity(this->nextId++, x, y, texture.width/numFrames, texture.height, texture.width/numFrames, texture.height);
+    object->art = new ObjectAnimationComponent(object, texture.sdlTexture, LAYER_FG, false, fps, numFrames);
+    return object;
+}
+
 /***
 Entity* EntityBuilder::createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y) {
     Texture texture = this->textureMap[texType];

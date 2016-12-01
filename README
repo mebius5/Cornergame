@@ -24,6 +24,7 @@ Andrew
 
 Grady
 - Added support for lighting effect for static objects
+- Added objectAnimationComponent for animations for non-hero or enemy objects
 - Added torch
 - Created lighting blur filters
 
