@@ -330,6 +330,12 @@ Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, int x, 
     return entity;
 }
 
+Entity* EntityManager::createAnimatedBackgroundObject(TextureEnum texType, int x, int y, int fps, int numFrames) {
+    Entity* entity = this->entityBuilder.createAnimatedBackgroundObject(texType, x,y, fps, numFrames);
+    this->addEntity(entity);
+    return entity;
+}
+
 /***
 Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y) {
     Entity* entity = this->entityBuilder.createStaticBackgroundObject(texType, lightType, x,y);
@@ -507,7 +513,7 @@ void EntityManager::populateLevel(Level* level) {
                     createStaticBackgroundObject(TEX_BENCH, j*32, i*32);
                     break;
                 case TILE_TORCH:{
-                    Entity * entity = createStaticBackgroundObject(TEX_TORCH, j*32, i*32);
+                    Entity * entity = createAnimatedBackgroundObject(TEX_TORCH, j*32, i*32, 6, 4);
                     entity->art->setLightTexture(&this->entityBuilder.textureMap[TEX_LIGHT128]);
                     break;
                 }

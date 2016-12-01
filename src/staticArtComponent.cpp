@@ -3,8 +3,7 @@
 StaticArtComponent::StaticArtComponent(Entity* ent, SDL_Texture* tex,
                                        LayerEnum layer, bool movesWithCamera) :
     ArtComponent(ent, layer, movesWithCamera),
-    texture(tex),
-    lightTexture(NULL)
+    texture(tex)
 {
 }
 

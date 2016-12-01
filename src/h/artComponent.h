@@ -31,10 +31,22 @@ public:
 class StaticArtComponent : public ArtComponent {
 protected:
     SDL_Texture* texture;
-    Texture * lightTexture;
 public:
     StaticArtComponent(Entity* entity, SDL_Texture* texture, LayerEnum layer,
                        bool movesWithCamera);
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+};
+
+class ObjectAnimationComponent : public ArtComponent {
+private:
+    SDL_Texture* texture;
+    int timecount;
+    int fps;
+    int numFrames;
+    SDL_Rect clip;
+public:
+    ObjectAnimationComponent(Entity* entity, SDL_Texture* texture, LayerEnum layer, bool movesWithCamera, int fps, int numFrames);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };
