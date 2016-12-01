@@ -22,6 +22,8 @@ private:
     bool infiniteJumps;
     bool frozen;
     bool slow;
+    int aerialDodges;
+    int maxDodges;
     DynamicCollisionComponent* collisionComp;
     float clipVelocity(float velocity, float max);
 
@@ -34,6 +36,7 @@ public:
     float deceleration;
     int maxJumps;
     int dodgeTime;
+    int maxDodgeTime;
     Entity * target;
     float rotSpeed;
 
