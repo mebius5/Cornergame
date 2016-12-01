@@ -13,13 +13,13 @@ class EntityBuilder {
 private:
     int nextId;
     SDL_Renderer* renderer;
-    std::vector<Texture> textureMap;
     std::vector<std::vector<Texture>> terrainTexMap;  // indexes by type & width
     std::vector<std::vector<TTF_Font*>> fontMap;      // indexes by font & size
     SDL_Surface* createTextSurface(FontEnum font, const char *text, int fontSize,
                                    int r, int g, int b, int a, int windowW);
     SDL_Surface* loadImage(const char* filename);
 public:
+    std::vector<Texture> textureMap;
     EntityBuilder(SDL_Renderer *renderer);
     void loadTexture(TextureEnum texType, const char* filename);
     void loadHealthBar(int width, int height);
@@ -50,7 +50,7 @@ public:
     Entity* createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y);
     Entity* createPowerUpOverlay(TextureEnum pwrUpType, int x, int y, Entity * owner, int index);
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y) ;
-    Entity* createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y);
+    //Entity* createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y);
     Entity* createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
             bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
     Entity* createBounce(TextureEnum tileType, int x, int y);

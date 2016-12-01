@@ -104,7 +104,7 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
                           lightTexture->height};
         std::cout<<lightRect.x<<" "<<lightRect.y<<" "<<lightRect.w<<" "<<lightRect.h<<std::endl;
         std::cout<<entity->x<<" "<<entity->y<<" "<<std::endl;
-        SDL_RenderCopy(this->renderer,artComponent->getLightTexture()->sdlTexture,NULL,&lightRect);
+        SDL_RenderCopy(this->renderer,lightTexture->sdlTexture, NULL, &lightRect);
     }
 
 }

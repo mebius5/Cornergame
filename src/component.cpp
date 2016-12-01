@@ -35,10 +35,12 @@ AiComponent::AiComponent(Entity* entity) :
 }
 
 ArtComponent::ArtComponent(Entity* entity, LayerEnum layer, bool movesWithCamera) :
-    Component(entity),
+        Component(entity),
+    lightTexture(NULL),
     layer(layer),
     movesWithCamera(movesWithCamera),
-    isVisible(true) {
+    isVisible(true)
+{
     if (this->movesWithCamera) {
         this->offsetX = (int) entity->x;
         this->offsetY = (int) entity->y;
@@ -46,7 +48,13 @@ ArtComponent::ArtComponent(Entity* entity, LayerEnum layer, bool movesWithCamera
 }
 
 Texture * ArtComponent::getLightTexture() {
-    return NULL;
+    return this->lightTexture;
+}
+
+
+void ArtComponent::setLightTexture(Texture * lightTexture) {
+    this->lightTexture = lightTexture;
+    SDL_SetTextureBlendMode(this->lightTexture->sdlTexture,SDL_BLENDMODE_ADD);
 }
 
 CollisionComponent::CollisionComponent(Entity* entity) :

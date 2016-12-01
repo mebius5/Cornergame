@@ -330,11 +330,13 @@ Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, int x, 
     return entity;
 }
 
+/***
 Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y) {
     Entity* entity = this->entityBuilder.createStaticBackgroundObject(texType, lightType, x,y);
     this->addEntity(entity);
     return entity;
 }
+ ***/
 
 Entity* EntityManager::createTerrain(Tile tileType, int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
@@ -504,9 +506,11 @@ void EntityManager::populateLevel(Level* level) {
                 case TILE_BENCH:
                     createStaticBackgroundObject(TEX_BENCH, j*32, i*32);
                     break;
-                case TILE_TORCH:
-                    createStaticBackgroundObject(TEX_TORCH, TEX_LIGHT128, j*32, i*32);
+                case TILE_TORCH:{
+                    Entity * entity = createStaticBackgroundObject(TEX_TORCH, j*32, i*32);
+                    entity->art->setLightTexture(&this->entityBuilder.textureMap[TEX_LIGHT128]);
                     break;
+                }
                 case TILE_PU_JUMP:
                     createPowerUp(TEX_PWRUP_INFJUMP, SFX_WOOSH, j*32, i*32);
                     break;

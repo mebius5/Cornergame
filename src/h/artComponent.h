@@ -10,6 +10,8 @@
 #include "component.h"
 
 class ArtComponent : public Component {
+protected:
+    Texture * lightTexture;
 public:
     LayerEnum layer;
     bool movesWithCamera;
@@ -18,11 +20,12 @@ public:
     bool isVisible;
 
     ArtComponent(Entity* entity, LayerEnum layer, bool movesWithCamera);
-    virtual ~ArtComponent() { };
+    virtual ~ArtComponent(){};
     virtual void updateLocation() { };      // for ArtComponents with owners
     virtual SDL_Texture* getNextTexture(int dt) = 0;
     virtual SDL_Rect* getNextSrcRect(int dt) = 0;
-    virtual Texture * getLightTexture();
+    Texture * getLightTexture();
+    void setLightTexture(Texture * lightTexture);
 };
 
 class StaticArtComponent : public ArtComponent {
@@ -32,11 +35,8 @@ protected:
 public:
     StaticArtComponent(Entity* entity, SDL_Texture* texture, LayerEnum layer,
                        bool movesWithCamera);
-    StaticArtComponent(Entity *entity, SDL_Texture *texture, Texture *lightTexture, LayerEnum layer,
-                       bool movesWithCamera);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
-    Texture * getLightTexture();
 };
 
 class AnimationComponent : public ArtComponent {

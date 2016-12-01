@@ -3,9 +3,10 @@
 EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
-    textureMap(NTEXTURE),
     terrainTexMap(NTERRAIN, std::vector<Texture>(256)),
-    fontMap(NFONT, std::vector<TTF_Font*>(128)) {
+    fontMap(NFONT, std::vector<TTF_Font*>(128)),
+    textureMap(NTEXTURE)
+{
 }
 
 /* Helper methods */
@@ -251,12 +252,15 @@ Entity* EntityBuilder::createStaticBackgroundObject(TextureEnum texType, int x, 
     return object;
 }
 
+/***
 Entity* EntityBuilder::createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y) {
     Texture texture = this->textureMap[texType];
     Entity* object = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
-    object->art = new StaticArtComponent(object, texture.sdlTexture, &this->textureMap[lightType], LAYER_FG, false);
+    object->art = new StaticArtComponent(object, texture.sdlTexture, LAYER_FG, false);
+    object->art->setLightTexture(&this->textureMap[lightType]);
     return object;
 }
+ ***/
 
 
 Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
