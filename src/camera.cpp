@@ -93,7 +93,25 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
         SDL_RenderCopy(this->renderer, artComponent->getNextTexture(dt),
                        artComponent->getNextSrcRect(dt), &dest);
     }
+}
 
+void Camera::drawLighting(int , ArtComponent *artComponent) {
+    Entity * entity = artComponent->entity;
+
+    if (entity->x + entity->width < minX || entity->y+entity->height < minY
+        || entity->x > maxX || entity->y > maxY)
+        return;
+
+    Texture *lightTexture = NULL;
+    if ((lightTexture = artComponent->getLightTexture()) != NULL) {
+        SDL_Rect lightRect = {(int) entity->x + entity->width / 2 - lightTexture->width / 2 - (int) minX - offsetX,
+                              (int) entity->y + entity->height / 2 - lightTexture->height / 2 - (int) minY - offsetY,
+                              lightTexture->width,
+                              lightTexture->height};
+        //std::cout << lightRect.x << " " << lightRect.y << " " << lightRect.w << " " << lightRect.h << std::endl;
+        //std::cout << entity->x << " " << entity->y << " " << std::endl;
+        SDL_RenderCopy(this->renderer, lightTexture->sdlTexture, NULL, &lightRect);
+    }
 }
 
 void Camera::shift(int dx, int dy) {

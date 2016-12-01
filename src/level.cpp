@@ -201,6 +201,7 @@ void Level::determineTileType(char a, int i, int j) {
         case 'T': tile = TILE_TREE1; break;
         case 't': tile = TILE_TREE2; break;
         case 'b': tile = TILE_BENCH; break;
+        case 'y': tile = TILE_TORCH; break;
         case 'F': tile = TILE_FADEINTEXT; break;
         case 'N': tile = TILE_NORMALTEXT; break;
         default:
