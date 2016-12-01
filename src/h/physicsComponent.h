@@ -33,6 +33,7 @@ public:
     float jumpVelocity;
     float deceleration;
     int maxJumps;
+    int dodgeTime;
     Entity * target;
     float rotSpeed;
 
@@ -47,6 +48,7 @@ public:
     bool isInfiniteJumpOn();
     void resetJumps();
     void bump(int dir);
+    void dodge(int dir);
     void accelerateX(int dir);
     void accelerateY(int dir);
     void clearAccelerationX();

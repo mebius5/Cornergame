@@ -24,6 +24,8 @@ private:
     SDL_Keycode leftKey;
     SDL_Keycode rightKey;
     SDL_Keycode shootKey;
+    SDL_Keycode leftDodge;
+    SDL_Keycode rightDodge;
     bool jumpPressed;
     SpawnProjCommand* spawnCommand;
     float holdTime;

@@ -8,7 +8,9 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnProjComma
     downKey(wasd ? SDLK_s : SDLK_DOWN),
     leftKey(wasd ? SDLK_a : SDLK_LEFT),
     rightKey(wasd ? SDLK_d : SDLK_RIGHT),
-    shootKey(wasd ? SDLK_v : SDLK_m),
+    shootKey(wasd ? SDLK_v : SDLK_PERIOD),
+    leftDodge(wasd ? SDLK_c : SDLK_COMMA),
+    rightDodge(wasd ? SDLK_b : SDLK_SLASH),
     jumpPressed(false),
     spawnCommand(spawnCommand),
     holdTime(-1.0f),
@@ -39,31 +41,36 @@ void HeroInputComponent::updateTime(int dt) {
 }
 
 void HeroInputComponent::keyDown(SDL_Keycode keycode) {
-    if (keycode == this->upKey) {
-        if (!this->jumpPressed) {
-            this->entity->physics->jump();
-            this->jumpPressed = true;
+    if (this->entity->physics->dodgeTime < 0) {
+        if (keycode == this->upKey) {
+            if (!this->jumpPressed) {
+                this->entity->physics->jump();
+                this->jumpPressed = true;
+            }
+            this->entity->physics->accelerateY(-1);
+        } else if (keycode == this->downKey) {
+            this->entity->physics->accelerateY(1);
+        } else if (keycode == this->leftKey) {
+            this->entity->physics->accelerateX(-1);
+            if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
+                Component::commandList->push_back(this->runCommand);
+        } else if (keycode == this->rightKey) {
+            this->entity->physics->accelerateX(1);
+            if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
+                Component::commandList->push_back(this->runCommand);
+        } else if (keycode == this->shootKey) {
+            // start to charge the shot
+            if (this->holdTime < 0) {
+                this->holdTime = 0.0f;
+            }
+        } else if (keycode == this->leftDodge) {
+            this->entity->physics->dodge(-1);
+        } else if (keycode == this->rightDodge) {
+            this->entity->physics->dodge(1);
         }
-        this->entity->physics->accelerateY(-1);
-    //} else if (keycode == this->downKey) {
-    //    this->entity->physics->accelerateY(1);
-    } else if (keycode == this->leftKey) {
-        this->entity->physics->accelerateX(-1);
-        this->entity->dir = -1;
-        if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
-            Component::commandList->push_back(this->runCommand);
-    } else if (keycode == this->rightKey) {
-        this->entity->physics->accelerateX(1);
-        this->entity->dir = 1;
-        if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
-            Component::commandList->push_back(this->runCommand);
-    } else if (keycode == this->shootKey) {
-        // start to charge the shot
-        if (this->holdTime < 0) {
-            this->holdTime = 0.0f;
-        }
+    }
 
-    } else if (keycode == SDLK_k) {
+    if (keycode == SDLK_k) {
         this->entity->health->toggleInvincibility();
         this->entity->physics->toggleInfiniteJumps();
     } else if (keycode == SDLK_l) {
@@ -75,13 +82,16 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
     if (keycode == this->upKey) {
         this->jumpPressed = false;
         this->entity->physics->clearAccelerationY();
-    //} else if (keycode == this->downKey) {
-    //    this->entity->physics->clearAccelerationY();
+    } else if (keycode == this->downKey) {
+        this->entity->physics->clearAccelerationY();
     } else if (keycode == this->leftKey || keycode == this->rightKey) {
         this->entity->physics->clearAccelerationX();
         if (this->stopCommand)
             Component::commandList->push_back(this->stopCommand);
     } else if (keycode == this->shootKey) {
+        if (this->entity->physics->dodgeTime >= 0)
+            return;
+
         // don't allow a shot if not charged
         if (this->holdTime <= 0) {
             return;
@@ -119,4 +129,8 @@ void HeroInputComponent::invertControl() {
     tempKey = this->rightKey;
     this->rightKey = this->leftKey;
     this->leftKey = tempKey;
+
+    tempKey = this->leftDodge;
+    this->leftDodge = this->rightDodge;
+    this->rightDodge = tempKey;
 }
