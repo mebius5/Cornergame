@@ -18,7 +18,9 @@ Akshay
 
 
 Andrew
-
+- Added dodge feature -> allows a roll or aerial dodge with limited
+  invincibility, at the cost of not being able to shoot, jump or change
+  movement direction for a limited time.
 
 Grady
 - Added support for lighting effect for static objects
@@ -36,8 +38,8 @@ GENERAL CONTROLS
 - Press p to skip preview, transit text, results, etc.
 
 GAMEPLAY CONTROLS
-- Player 1 uses wasd to move and v to shoot
-- Player 2 uses arrows to move and m to shoot.
+- Player 1 uses wasd to move, v to shoot, c and m to dodge to left and right
+- Player 2 uses arrows to move, PERIOD to shoot, COMMA and SLASH to dodge left and right.
 - Cheatcodes: press k to grant invincibility and infinite jumps, l to skip level
 
 MENU CONTROLS

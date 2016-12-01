@@ -16,6 +16,8 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     infiniteJumps(false),
     frozen(false),
     slow(false),
+    aerialDodges(0),
+    maxDodges(1),
     collisionComp(dynamic_cast<DynamicCollisionComponent*>(entity->collision)),
     xVelocity(0.0f),
     yVelocity(0.0f),
@@ -24,6 +26,8 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     jumpVelocity(.5f),
     deceleration(.0018f),
     maxJumps(1),
+    dodgeTime(-1),
+    maxDodgeTime(600),
     target(NULL),
     rotSpeed(0.002f) {
 }
@@ -148,6 +152,13 @@ void PhysicsComponent::updateLocation(int dt) {
         this->xVelocity = 0;
     }
 
+    if (this->dodgeTime >= 0) {
+        this->xVelocity =
+            this->maxXVelocity*this->entity->dir * this->dodgeTime/this->maxDodgeTime;
+        this->yVelocity = 0;
+        onGround = false;
+    }
+
     // move entity based on velocity
     this->entity->x += this->xVelocity * dt;
     this->entity->y += this->yVelocity * dt;
@@ -175,6 +186,9 @@ void PhysicsComponent::updateLocation(int dt) {
             this->slow = false;
         }
     }
+
+    if (this->dodgeTime >= 0)
+        this->dodgeTime -= dt;
 }
 
 void PhysicsComponent::freeze() {
@@ -205,6 +219,7 @@ void PhysicsComponent::jump(float velocity) {
 
 void PhysicsComponent::resetJumps() {
     this->jumps = 0;
+    this->aerialDodges = 0;
 }
 
 void PhysicsComponent::toggleInfiniteJumps() {
@@ -215,14 +230,29 @@ void PhysicsComponent::toggleInfiniteJumps() {
 void PhysicsComponent::bump(int dir) {
     this->xVelocity += dir * this->jumpVelocity;
     this->xVelocity = this->clipVelocity(this->xVelocity, this->maxXVelocity);
+    this->dodgeTime = -1;
+}
+
+void PhysicsComponent::dodge(int dir) {
+    if ((this->aerialDodges < this->maxDodges || this->infiniteJumps) && this->dodgeTime < 0) {
+        this->dodgeTime = this->maxDodgeTime;
+        this->xAccel = 0;
+        this->yAccel = 0;
+        this->entity->dir = dir;
+        this->aerialDodges++;
+    }
 }
 
 void PhysicsComponent::accelerateX(int dir) {
-    this->xAccel = dir * this->accelAmount;
+    if (this->dodgeTime < 0) {
+        this->xAccel = dir * this->accelAmount;
+        this->entity->dir = dir;
+    }
 }
 
 void PhysicsComponent::accelerateY(int dir) {
-    this->yAccel = dir * this->accelAmount;
+    if (this->dodgeTime < 0)
+        this->yAccel = dir * this->accelAmount;
 }
 
 void PhysicsComponent::clearAccelerationX() {

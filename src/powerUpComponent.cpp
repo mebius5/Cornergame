@@ -107,13 +107,10 @@ void PowerUpComponent::activateBeerPwrUp() {
     int timeLimit = 5000;
 
     if(HeroInputComponent * hic = dynamic_cast<HeroInputComponent *>(entity->input)){
-        hic->invertControl();
-        this->pwrUPTimerArray[(int)TEX_PWRUP_BEER]=timeLimit;
-    }else{ //If is already turned on
-        //If activated from power up and not from cheat
-        if(this->pwrUPTimerArray[(int)TEX_PWRUP_BEER]!=-999){
-            this->pwrUPTimerArray[(int)TEX_PWRUP_BEER]=timeLimit;
-        }
+        if (this->pwrUPTimerArray[(int)TEX_PWRUP_BEER] == -999) // only invert if not drunk
+            hic->invertControl();
+
+        this->pwrUPTimerArray[(int)TEX_PWRUP_BEER] = timeLimit;
     }
 }
 
