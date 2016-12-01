@@ -142,13 +142,13 @@ void Level::readCsvFile(std::ifstream &infile) {
         int j=0;
         for(int k = 0; k<(int)line.length();k++){
             if(line[k]!=',' && j <this->width && i <this->height){
-                std::cout<<line[k];
+                //std::cout<<line[k];
                 determineTileType(line[k],i,j);
             } else {
                 j++;
             }
         }
-        std::cout<<std::endl;
+        //std::cout<<std::endl;
     }
 
     for (int i = 0; i < height; i++) {
