@@ -12,31 +12,19 @@ cd src/
 make
 ./gameManager
 
-Assignment 10 Task Writeups
+Assignment 11 Task Writeups
 
 Akshay
-- Created a trampoline tile that launches entities upwards
-- Created animation for said trampoline
-- Added said trampolines to existing levels
-- Fixed a rounding issue in the time handler, allowing for more accurate slow motion
+
 
 Andrew
-- Fixed bugs with background parallax and made it more efficient
-- Cleaned up ArtComponent layering, tested various custom data structures for
-    layering, made layering more efficient (in prep for particles)
+
 
 Grady
-- Changed text surfaces to allow centered multiline texts
-- Refactored entity manager's create text methods in order to eliminate repetitive methods in
-  entity builder. Now, entity builder only has createFadeInText() and createMenuText() for all
-  texts
-- Added fading terrain type where the hero can trigger terrain to shake and then disappear
-- Added support for CSV file for level editor
-- Designed level 5
+- Added support for lighting effect for static objects
 
 Pratyush
--Added a level select screen
--Added level preview icons for levels 1 through 4
+
 
 
 GENERAL CONTROLS

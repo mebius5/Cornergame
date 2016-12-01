@@ -45,6 +45,10 @@ ArtComponent::ArtComponent(Entity* entity, LayerEnum layer, bool movesWithCamera
     }
 }
 
+Texture * ArtComponent::getLightTexture() {
+    return NULL;
+}
+
 CollisionComponent::CollisionComponent(Entity* entity) :
     Component(entity) {
 }

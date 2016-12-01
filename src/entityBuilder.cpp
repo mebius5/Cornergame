@@ -251,6 +251,14 @@ Entity* EntityBuilder::createStaticBackgroundObject(TextureEnum texType, int x, 
     return object;
 }
 
+Entity* EntityBuilder::createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y) {
+    Texture texture = this->textureMap[texType];
+    Entity* object = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+    object->art = new StaticArtComponent(object, texture.sdlTexture, &this->textureMap[lightType], LAYER_FG, false);
+    return object;
+}
+
+
 Entity* EntityBuilder::createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
         bool freeTop, bool freeBot, bool freeRight, bool freeLeft) {
     if (!this->terrainTexMap[texType][numberHorizontal].sdlTexture)

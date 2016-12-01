@@ -27,6 +27,10 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_LEVEL4_PREVIEW, "resources/level4preview.png");
     this->entityBuilder.loadTexture(TEX_BACKGROUND1, "resources/background1.png");
     this->entityBuilder.loadTexture(TEX_BACKGROUND2, "resources/background2.png");
+    this->entityBuilder.loadTexture(TEX_BACKGROUND3, "resources/background3.png");
+    this->entityBuilder.loadTexture(TEX_DARKBACKGROUND1, "resources/greyBackground1.png");
+    this->entityBuilder.loadTexture(TEX_TORCH,"resources/torch.png");
+    this->entityBuilder.loadTexture(TEX_LIGHT128,"resources/gaussianBlur.png");
     this->entityBuilder.loadHealthBar(200, 40);
     this->entityBuilder.loadAmmoBar(50, 8);
 }
@@ -326,6 +330,12 @@ Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, int x, 
     return entity;
 }
 
+Entity* EntityManager::createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y) {
+    Entity* entity = this->entityBuilder.createStaticBackgroundObject(texType, lightType, x,y);
+    this->addEntity(entity);
+    return entity;
+}
+
 Entity* EntityManager::createTerrain(Tile tileType, int x, int y, int numberHorizontal, bool freeTop,
                                      bool freeBot, bool freeRight, bool freeLeft) {
     TerrainTexEnum texType = (TerrainTexEnum)tileType;
@@ -493,6 +503,9 @@ void EntityManager::populateLevel(Level* level) {
                     break;
                 case TILE_BENCH:
                     createStaticBackgroundObject(TEX_BENCH, j*32, i*32);
+                    break;
+                case TILE_TORCH:
+                    createStaticBackgroundObject(TEX_TORCH, TEX_LIGHT128, j*32, i*32);
                     break;
                 case TILE_PU_JUMP:
                     createPowerUp(TEX_PWRUP_INFJUMP, SFX_WOOSH, j*32, i*32);

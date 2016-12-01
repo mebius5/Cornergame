@@ -50,6 +50,7 @@ public:
     Entity* createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y);
     Entity* createPowerUpOverlay(TextureEnum pwrUpType, int x, int y, Entity * owner, int index);
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y) ;
+    Entity* createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y);
     Entity* createTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
             bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
     Entity* createBounce(TextureEnum tileType, int x, int y);
