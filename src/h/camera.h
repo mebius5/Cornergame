@@ -35,6 +35,7 @@ public:
     void startShake();
     void updateShake(int dt);
     void draw(int dt, ArtComponent *artComponent);
+    void drawLighting(int dt, ArtComponent * artComponent);
     void shift(int dx, int dy);
     void resetCamera(int minX, int minY, int maxX, int maxY);
     void initializeCamera(int levelW, int levelH, bool previewOn);
