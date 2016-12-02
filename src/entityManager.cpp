@@ -513,7 +513,7 @@ void EntityManager::populateLevel(Level* level) {
                     createStaticBackgroundObject(TEX_BENCH, j*32, i*32);
                     break;
                 case TILE_TORCH:{
-                    Entity * entity = createAnimatedBackgroundObject(TEX_TORCH, j*32, i*32, 7, 5);
+                    Entity * entity = createAnimatedBackgroundObject(TEX_TORCH, j*32, i*32, 2, 5);
                     entity->art->setLightTexture(&this->entityBuilder.textureMap[TEX_LIGHT128]);
                     break;
                 }
