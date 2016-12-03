@@ -8,11 +8,10 @@
 GameManager::GameManager() :
     title("<GAME NAME>"),
     width(1024),
-    height(704),
-    currentLevel(1)
-    //maxLevel(5)
+    height(704)
 {
     srand((unsigned int) time(NULL));
+    levelSelected = new bool [MAXLEVELS] {false};
 }
 
 // Setup the instance of SDL2
@@ -85,6 +84,7 @@ void GameManager::cleanup() {
 
     this->renderer = NULL;
     this->window = NULL;
+    delete[](levelSelected);
 }
 
 // Run the actual program
@@ -124,9 +124,10 @@ void GameManager::run() {
                               commandList, this->renderer, drawingHandler,
                               inputHandler, soundHandler, controlHandler);
 
-    LevelSelectState LevelSelectState(this->width, this->height, entityMgr, commandList,
-                        this->renderer, drawingHandler, inputHandler,
-                        soundHandler, controlHandler);
+    LevelSelectState LevelSelectState(this->width, this->height, this->levelSelected,
+                                      entityMgr, commandList, this->renderer,
+                                      drawingHandler, inputHandler,
+                                      soundHandler, controlHandler);
 
     PlayState playState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
@@ -163,11 +164,8 @@ void GameManager::run() {
     StateEnum nextState;
 
     do {
-        currentState->begin(this->currentLevel);
+        currentState->begin(getNextLevel());
         nextState = currentState->run();
-        if (currentState->nextLevel() != 0) {
-            this->currentLevel = currentState->nextLevel();
-        }
         currentState->cleanup(nextState);
 
         switch (nextState) {
@@ -178,23 +176,25 @@ void GameManager::run() {
                 currentState = &LevelSelectState;
                 break;
             case STATE_LEVEL_TRANSIT:
-                currentState = &levelTransitState;
+                if(getNextLevel()!=0){
+                    currentState = &levelTransitState;
+                } else {
+                    currentState = &menuState;
+                }
                 break;
             case STATE_TUTORIAL:
                 currentState = &tutorialState;
-                this->currentLevel=1;
                 break;
             case STATE_HIGHSCORE:
                 currentState = &highscoreState;
-                this->currentLevel=1;
                 break;
             case STATE_MENU:
                 currentState = &menuState;
-                this->currentLevel=1;
+                resetLevels();
                 break;
             case STATE_RESULTS:
                 currentState = &resultsState;
-                this->currentLevel++;
+                completeLevel();
                 break;
             default:
                 break;
@@ -204,6 +204,30 @@ void GameManager::run() {
     // Cleanup Entities and Commands
     entityMgr.clear();
     commandList.clear();
+}
+
+int GameManager::getNextLevel() {
+    for(int i = 0; i< MAXLEVELS; i++){
+        if (levelSelected[i]){
+            return i+1;
+        }
+    }
+    return 0;
+}
+
+void GameManager::completeLevel() {
+    for(int i = 0; i< MAXLEVELS; i++){
+        if (levelSelected[i]){
+            levelSelected[i]=false;
+            return;
+        }
+    }
+}
+
+void GameManager::resetLevels() {
+    for(int i = 0; i< MAXLEVELS; i++){
+        levelSelected[i]=false;
+    }
 }
 
 int main(void) {

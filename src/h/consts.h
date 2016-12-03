@@ -8,6 +8,7 @@
 #define NTERRAIN 4
 #define NTEXTURE 30
 #define NFONT 1
+#define MAXLEVELS 5
 
 enum Tile {
     // Put texture enums first to match with TerrainTexEnum

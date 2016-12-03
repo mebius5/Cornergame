@@ -29,6 +29,7 @@ SRCFILES = \
 	highscoreState.cpp \
 	inputHandler.cpp \
 	level.cpp \
+	levelSelectInputComponent.cpp \
 	levelSelectState.cpp \
 	levelTransitState.cpp \
 	menuOptionInputComponent.cpp \

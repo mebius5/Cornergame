@@ -1,5 +1,4 @@
 #include <state.h>
-#include <sstream>
 
 LevelTransitState::LevelTransitState(int windowW, int windowH, EntityManager &entityManager,
                                      std::vector<Command *> &commandList, SDL_Renderer *renderer,
@@ -86,9 +85,4 @@ void LevelTransitState::cleanup(StateEnum /*next*/) {
     this->entityManager.clear();
     this->commandList.clear();
     this->soundHandler.stopBackgroundMusic();
-}
-
-
-int LevelTransitState::nextLevel() {
-    return 0;
 }

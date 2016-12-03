@@ -172,7 +172,7 @@ void EntityManager::clear() {
 }
 
 /* Entity Creation Methods */
-Entity* EntityManager::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
+Entity * EntityManager::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
     Entity* entity = this->entityBuilder.createHero(texType, x, y, sfxType, wasd);
     this->addEntity(entity);
     this->heroEntities.push_back(entity);
@@ -305,6 +305,32 @@ Entity* EntityManager::createHorizontallyCenteredFadeInMenuText(FontEnum font, c
     }
     return NULL;
 }
+
+Entity* EntityManager::createHorizontallyCenteredSelectLevelText(FontEnum fontType, const char *text, int fontSize,
+                                                                 int r, int g, int b, int initialAlpha, int windowW,
+                                                                 int yPos, int index, int numOptions,
+                                                                 StateEnum nextState, bool *levelSelected) {
+    std::string tempText = text;
+    std::string::size_type  i=0;
+    int yOffset=0;
+    while((i = tempText.find("\n"))!=std::string::npos){
+        Entity* entity = this->entityBuilder.createHorizontallyCenteredSelectLevelText(
+                fontType, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha,
+                windowW, yPos+yOffset, index, numOptions, nextState, levelSelected);
+        this->addEntity(entity);
+        tempText = tempText.substr(i+1, tempText.length());
+        yOffset += entity->drawHeight;
+    }
+    if(tempText.length()!=0){
+        Entity* entity = this->entityBuilder.createHorizontallyCenteredSelectLevelText(
+                fontType, tempText.c_str(), fontSize, r, g, b, initialAlpha,
+                windowW, yPos+yOffset, index, numOptions, nextState, levelSelected);
+        this->addEntity(entity);
+        return entity;
+    }
+    return NULL;
+}
+
 
 Entity* EntityManager::createLevelPreview(TextureEnum tex, int x, int y) {
     Entity* entity = this->entityBuilder.createLevelPreview(tex, x, y);

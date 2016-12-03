@@ -56,4 +56,21 @@ public:
     void keyUp(SDL_Keycode keycode);
 };
 
+class LevelSelectInputComponent : public InputComponent {
+private:
+protected:
+    int index;                  // index of this menu option
+    int numOptions;             // total number of menu options
+    int currIndex;              // currently selected menu option
+    Command* nextStateCommand;  // when space pressed, fire if selected
+    bool * levelSelected;
+public:
+    LevelSelectInputComponent(Entity* entity, int index, int numOptions,
+                              Command* nextStateCommand, bool * levelSelected);
+    ~LevelSelectInputComponent();
+    void updateTime(int dt);
+    void keyUp(SDL_Keycode keycode);
+    void keyDown(SDL_Keycode keycode);
+};
+
 #endif

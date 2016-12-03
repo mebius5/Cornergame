@@ -31,6 +31,13 @@ void InputHandler::handleEvents(int dt) {
         else if (event.type != SDL_KEYUP && event.type != SDL_KEYDOWN)
             return;
 
+        if (event.key.keysym.sym == SDLK_ESCAPE)
+            this->commandList.push_back(&this->quitCommand);
+        else if (event.key.keysym.sym == SDLK_q)
+            this->commandList.push_back(&this->switchToMenu);
+        else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_p)
+            this->commandList.push_back(&this->previewOff);
+
         for (it = this->componentList.begin(); it != this->componentList.end(); ) {
             if (event.type == SDL_KEYUP)
                 (*it)->keyUp(event.key.keysym.sym);
@@ -38,11 +45,6 @@ void InputHandler::handleEvents(int dt) {
                 (*it)->keyDown(event.key.keysym.sym);
             ++it;
         }
-        if (event.key.keysym.sym == SDLK_ESCAPE)
-            this->commandList.push_back(&this->quitCommand);
-        else if (event.key.keysym.sym == SDLK_q)
-            this->commandList.push_back(&this->switchToMenu);
-        else if (event.type == SDL_KEYUP && event.key.keysym.sym == SDLK_p)
-            this->commandList.push_back(&this->previewOff);
+
     }
 }

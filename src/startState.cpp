@@ -70,7 +70,3 @@ void StartState::cleanup(StateEnum /*next*/) {
     this->soundHandler.stopBackgroundMusic();
     this->drawingHandler.resetCamera(0, 0, windowW, windowH);
 }
-
-int StartState::nextLevel() {
-    return 0;
-}

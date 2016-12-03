@@ -89,7 +89,7 @@ StateEnum ResultsState::run() {
             break;
     }
 
-    return STATE_MENU;
+    return STATE_LEVEL_TRANSIT;
 }
 
 void ResultsState::cleanup(StateEnum /*next*/) {
@@ -108,9 +108,4 @@ void ResultsState::updateResults(Entity* hero1, Entity* hero2) {
         this->setVictorious(this->hero1, this->hero2);
     else
         this->setVictorious(this->hero2, this->hero1);
-}
-
-
-int ResultsState::nextLevel() {
-    return 0;
 }

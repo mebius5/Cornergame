@@ -107,7 +107,7 @@ StateEnum PlayState::run() {
         }
     }
 
-    return STATE_HIGHSCORE;
+    return STATE_RESULTS; //Unreachable, but necessary to suppress warning
 }
 
 void PlayState::cleanup(StateEnum nextState) {
@@ -125,8 +125,4 @@ void PlayState::cleanup(StateEnum nextState) {
     this->soundHandler.stopAllSfx();
     this->drawingHandler.resetCamera(0, 0, windowW, windowH);
     this->timeHandler.stopSlowMotion();
-}
-
-int PlayState::nextLevel() {
-    return 0;
 }

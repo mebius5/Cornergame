@@ -32,14 +32,16 @@ private:
     const int width;
     const int height;
 
-    int currentLevel;
-    //int maxLevel;
+    bool * levelSelected;
 
 public:
     GameManager();
     void setup();
     void run();
     void cleanup();
+    int getNextLevel();
+    void completeLevel();
+    void resetLevels();
 };
 
 #endif

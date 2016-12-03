@@ -26,12 +26,9 @@ protected:
 public:
     State(EntityManager& entityManager, std::vector<Command*>& commandList,
           SDL_Renderer* renderer, int windowW, int windowH);
-    static int center(int large, int small);
-    static SDL_Rect centeredRect(int largeW, int largeH, int smallW, int smallH);
     virtual void begin(int level) = 0;
     virtual StateEnum run() = 0;
     virtual void cleanup(StateEnum nextState) = 0;
-    virtual int nextLevel() = 0;
 };
 
 class StartState : public State {
@@ -51,29 +48,23 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
-    int nextLevel();
 };
 
 class LevelSelectState : public State {
-private: 
+private:
+    bool * levelSelected;
     DrawingHandler& drawingHandler;
     InputHandler& inputHandler;
     SoundHandler& soundHandler;
     ControlHandler& controlHandler;
-    Entity* level1;
-    Entity* level2;
-    Entity* level3;
-    Entity* level4;
-    Entity* level5;
 public:
-    LevelSelectState(int windowW, int windowH, EntityManager& entityManager,
-              std::vector<Command*>& commandList, SDL_Renderer* renderer,
-              DrawingHandler& drawingHandler, InputHandler& inputHandler,
-              SoundHandler& soundHandler, ControlHandler& controlHandler);
+    LevelSelectState(int windowW, int windowH, bool *levelSelected, EntityManager &entityManager,
+                         std::vector<Command *> &commandList, SDL_Renderer *renderer,
+                         DrawingHandler &drawingHandler, InputHandler &inputHandler,
+                         SoundHandler &soundHandler, ControlHandler &controlHandler);
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
-    int nextLevel();
 };
 
 
@@ -91,7 +82,6 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
-    int nextLevel();
 };
 
 class HighscoreState : public State {
@@ -111,7 +101,6 @@ public:
     StateEnum run();
     void cleanup(StateEnum next);
     void updateHighscores(Entity* hero1, Entity* hero2);
-    int nextLevel();
 };
 
 class ResultsState : public State {
@@ -133,7 +122,6 @@ public:
     StateEnum run();
     void cleanup(StateEnum next);
     void updateResults(Entity* hero1, Entity* hero2);
-    int nextLevel();
 };
 
 class LevelTransitState : public State {
@@ -152,7 +140,6 @@ public:
     StateEnum run();
     void cleanup(StateEnum next);
     void readTransitString(int level);
-    int nextLevel();
 };
 
 class PlayState : public State {
@@ -187,7 +174,6 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
-    int nextLevel();
 };
 
 class TutorialState : public State {
@@ -217,7 +203,6 @@ public:
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
-    int nextLevel();
 };
 
 #endif

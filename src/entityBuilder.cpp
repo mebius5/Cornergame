@@ -123,7 +123,7 @@ void EntityBuilder::freeFonts() {
 }
 
 /* Entity creation operations */
-Entity* EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
+Entity * EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
     Texture texture = this->textureMap[texType];
     Entity* hero = new Entity(this->nextId++, x, y, 32, 64, 64, 64);
     PlaySoundCommand* command = NULL;
@@ -207,6 +207,21 @@ Entity* EntityBuilder::createHorizontallyCenteredFadeInMenuText(FontEnum fontTyp
     if (nextState != STATE_NONE)
         nextStateCmd = new SwitchStateCommand(nextState);
     fadeInText->input = new MenuOptionInputComponent(fadeInText, index, numOptions, nextStateCmd);
+    return fadeInText;
+}
+
+Entity* EntityBuilder::createHorizontallyCenteredSelectLevelText(FontEnum fontType, const char *text, int fontSize,
+                                                                 int r, int g, int b, int initialAlpha, int windowW,
+                                                                 int yPos, int index, int numOptions,
+                                                                 StateEnum nextState, bool *levelSelected) {
+    SDL_Surface* textSurface = this->createTextSurface(fontType, text, fontSize, r, g, b, initialAlpha, windowW);
+    int x = (windowW/2 - textSurface->w/2);
+    Entity* fadeInText = new Entity(this->nextId++, x, yPos, textSurface->w, textSurface->h, textSurface->w, textSurface->h);
+    fadeInText->art = new TextFadeInComponent(fadeInText, this->renderer, textSurface, initialAlpha);
+    SwitchStateCommand* nextStateCmd = NULL;
+    if (nextState != STATE_NONE)
+        nextStateCmd = new SwitchStateCommand(nextState);
+    fadeInText->input = new LevelSelectInputComponent(fadeInText, index, numOptions, nextStateCmd, levelSelected);
     return fadeInText;
 }
 

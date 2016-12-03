@@ -28,7 +28,7 @@ public:
     void loadTerrain(TerrainTexEnum texType, int width);
     void freeTextures();
     void freeFonts();
-    Entity* createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd);
+    Entity *createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd);
     Entity* createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes);
     Entity* createBackground(TextureEnum texType, int x, int y, float speed);
     Entity* createHealthBar(int x, int y, Entity* owner);
@@ -44,7 +44,12 @@ public:
                                                      int windowW, int yPos,
                                                      int index, int numOptions,
                                                      StateEnum nextState);
-
+    Entity* createHorizontallyCenteredSelectLevelText(FontEnum fontType,
+                                                     const char *text, int fontSize,
+                                                     int r, int g, int b, int initialAlpha,
+                                                     int windowW, int yPos,
+                                                     int index, int numOptions,
+                                                     StateEnum nextState, bool * levelSelected);
     Entity* createLevelPreview(TextureEnum tex, int x, int y);
     Entity* createVictoryZone(int x, int y);
     Entity* createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y);
