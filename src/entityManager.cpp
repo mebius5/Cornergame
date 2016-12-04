@@ -394,7 +394,7 @@ Entity* EntityManager::createBounce(TextureEnum texType, int x, int y) {
     return entity;
 }
 
-Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum /*projType*/) {
+Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum projType) {
     // Home in on the nearest thing that takes damage
     float min_dist = -1;
     float sqnorm = 0;
@@ -411,7 +411,12 @@ Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int
         }
         ++it;
     }
-    Entity* entity = this->entityBuilder.createProjectile(TEX_PROJECTILE, x, y, charge, dir, ownerID, closest_entity);
+
+    Entity* entity = NULL;
+    if (projType == PROJ_HERO)
+        entity = this->entityBuilder.createProjectile(TEX_PROJECTILE, x, y, charge, dir, ownerID, closest_entity);
+    else        // if projType == PROJ_BOMB
+        entity = this->entityBuilder.createBomb(TEX_PROJECTILE, x, y, charge, dir, closest_entity);
     this->addEntity(entity);
     return entity;
 }

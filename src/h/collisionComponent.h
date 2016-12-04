@@ -68,6 +68,16 @@ public:
     void onStaticCollision(StaticCollisionComponent* otherComp);
 };
 
+class BombCollisionComponent : public DynamicCollisionComponent {
+private:
+    Command* despawnCommand;
+public:
+    BombCollisionComponent(Entity* entity, Command* entCollisionCmd);
+    ~BombCollisionComponent();
+    void onEntityCollision(DynamicCollisionComponent* otherComp);
+    void onStaticCollision(StaticCollisionComponent* otherComp);
+};
+
 class VictoryZoneCollisionComponent : public StaticCollisionComponent {
 private:
     Command* entityCollisionCommand;

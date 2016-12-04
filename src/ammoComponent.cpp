@@ -33,21 +33,28 @@ void AmmoComponent::spendAmmo(float charge) {
     if (this->ammo <= 0 && !this->isUnlimited)
         return;
 
-    this->entity->actionState = ACTION_THROW;
-    this->spawnCommand->dir = this->entity->dir;
-    if (this->spawnCommand->dir == 1) {
-        this->spawnCommand->x = entity->x + this->entity->width + 16;
+    SpawnProjCommand* command;
+    if (this->hasBomb) {
+        command = this->bombCommand;
+        this->hasBomb = false;
     } else {
-        this->spawnCommand->x = entity->x - 32;
+        command = this->spawnCommand;
+        if (!this->isUnlimited) {
+            this->ammo -= 1;
+        }
     }
-    this->spawnCommand->y = entity->y+20;
-    this->spawnCommand->ownerID = this->entity->getId();
-    this->spawnCommand->charge = charge;
-    Component::commandList->push_back(this->spawnCommand);
 
-    if (!this->isUnlimited) {
-        this->ammo -= 1;
+    this->entity->actionState = ACTION_THROW;
+    command->dir = this->entity->dir;
+    if (command->dir == 1) {
+        command->x = entity->x + this->entity->width + 16;
+    } else {
+        command->x = entity->x - 32;
     }
+    command->y = entity->y+20;
+    command->ownerID = this->entity->getId();
+    command->charge = charge;
+    Component::commandList->push_back(command);
 }
 
 void AmmoComponent::addAmmo(int amount) {

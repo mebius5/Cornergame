@@ -155,8 +155,8 @@ void Level::readCsvFile(std::ifstream &infile) {
         for (int j = 0; j < windowW/32; j++) {
             Tile type = this->getTile(i, j);
             if (type == TILE_BRICK || type == TILE_GRASS || type == TILE_DIRT || type == TILE_SAND
-                || type == TILE_TREE1 || type == TILE_TREE2 || type == TILE_BENCH ||
-                type == TILE_BOUNCE) {
+                || type == TILE_TREE1 || type == TILE_TREE2 || type == TILE_BENCH
+                || type == TILE_BOUNCE || type == TILE_TORCH) {
                 this->getTile(i, j + this->width) = type;
             } else {
                 this->getTile(i, j + this->width) = TILE_NONE;

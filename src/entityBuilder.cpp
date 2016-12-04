@@ -335,6 +335,21 @@ Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, float
     return projectile;
 }
 
+Entity* EntityBuilder::createBomb(TextureEnum texType, int x, int y, float charge, int dir, Entity* closest) {
+    Texture texture = this->textureMap[texType];
+    Entity* projectile = new Entity(this->nextId++, x, y, 20, 20, texture.width, texture.height);
+    projectile->rotates = true;
+    projectile->art = new StaticArtComponent(projectile, texture.sdlTexture, LAYER_HERO, false);
+    DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
+    projectile->collision = new BombCollisionComponent(projectile, dCmd);
+    projectile->physics = new PhysicsComponent(projectile);
+    projectile->physics->xVelocity = dir * charge * 0.7f;
+    projectile->physics->maxXVelocity = 0.7f;
+    projectile->physics->yVelocity = -0.4f;
+    projectile->physics->deceleration = 0.0f;
+    projectile->physics->target = closest;
+    return projectile;
+}
 
 void EntityBuilder::setLightTexture(Entity *entity, TextureEnum lightTex, bool addTrueModFalse) {
     entity->art->setLightTexture(&textureMap[lightTex], addTrueModFalse);
