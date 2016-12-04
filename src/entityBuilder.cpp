@@ -334,3 +334,8 @@ Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, float
     projectile->physics->target = closest;
     return projectile;
 }
+
+
+void EntityBuilder::setLightTexture(Entity *entity, TextureEnum lightTex, bool addTrueModFalse) {
+    entity->art->setLightTexture(&textureMap[lightTex], addTrueModFalse);
+}

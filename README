@@ -33,6 +33,7 @@ Grady
 - Added torch
 - Created lighting blur filters
 - Added ability to select multiple levels for gameplay
+- Added global lighting (for dark theme levels)
 - Cleaned up code
 
 Pratyush
