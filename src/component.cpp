@@ -52,9 +52,13 @@ Texture * ArtComponent::getLightTexture() {
 }
 
 
-void ArtComponent::setLightTexture(Texture * lightTexture) {
+void ArtComponent::setLightTexture(Texture *lightTexture, bool addTrueModFalse) {
     this->lightTexture = lightTexture;
-    SDL_SetTextureBlendMode(this->lightTexture->sdlTexture,SDL_BLENDMODE_ADD);
+    if(addTrueModFalse){
+        SDL_SetTextureBlendMode(lightTexture->sdlTexture, SDL_BLENDMODE_ADD);
+    } else {
+        SDL_SetTextureBlendMode(lightTexture->sdlTexture, SDL_BLENDMODE_MOD);
+    }
 }
 
 CollisionComponent::CollisionComponent(Entity* entity) :

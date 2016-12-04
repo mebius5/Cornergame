@@ -25,7 +25,7 @@ public:
     virtual SDL_Texture* getNextTexture(int dt) = 0;
     virtual SDL_Rect* getNextSrcRect(int dt) = 0;
     Texture * getLightTexture();
-    void setLightTexture(Texture * lightTexture);
+    void setLightTexture(Texture *lightTexture, bool addTrueModFalse);
 };
 
 class StaticArtComponent : public ArtComponent {

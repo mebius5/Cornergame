@@ -30,7 +30,9 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_BACKGROUND3, "resources/background3.png");
     this->entityBuilder.loadTexture(TEX_DARKBACKGROUND1, "resources/greyBackground1.png");
     this->entityBuilder.loadTexture(TEX_TORCH,"resources/torch.png");
-    this->entityBuilder.loadTexture(TEX_LIGHT128,"resources/gaussianBlur.png");
+    this->entityBuilder.loadTexture(TEX_LIGHT_ADD_128_FIRE,"resources/light_fire_add_128.png");
+    this->entityBuilder.loadTexture(TEX_LIGHT_ADD_600_HERO,"resources/light_add_600_hero.png");
+    this->entityBuilder.loadTexture(TEX_LIGHT_MOD_GLOBAL, "resources/light_mod_global.png");
     this->entityBuilder.loadHealthBar(200, 40);
     this->entityBuilder.loadAmmoBar(50, 8);
 }
@@ -540,7 +542,7 @@ void EntityManager::populateLevel(Level* level) {
                     break;
                 case TILE_TORCH:{
                     Entity * entity = createAnimatedBackgroundObject(TEX_TORCH, j*32, i*32, 2, 5);
-                    entity->art->setLightTexture(&this->entityBuilder.textureMap[TEX_LIGHT128]);
+                    setLightTexture(entity,TEX_LIGHT_ADD_128_FIRE, true);
                     break;
                 }
                 case TILE_PU_JUMP:
@@ -567,6 +569,10 @@ void EntityManager::populateLevel(Level* level) {
             }
         }
     }
+}
+
+void EntityManager::setLightTexture(Entity *entity, TextureEnum lightTex, bool addTrueModFalse) {
+    this->entityBuilder.setLightTexture(entity,lightTex,addTrueModFalse);
 }
 
 void EntityManager::printCommands() {

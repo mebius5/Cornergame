@@ -15,11 +15,11 @@ private:
     SDL_Renderer* renderer;
     std::vector<std::vector<Texture>> terrainTexMap;  // indexes by type & width
     std::vector<std::vector<TTF_Font*>> fontMap;      // indexes by font & size
+    std::vector<Texture> textureMap;
     SDL_Surface* createTextSurface(FontEnum font, const char *text, int fontSize,
                                    int r, int g, int b, int a, int windowW);
     SDL_Surface* loadImage(const char* filename);
 public:
-    std::vector<Texture> textureMap;
     EntityBuilder(SDL_Renderer *renderer);
     void loadTexture(TextureEnum texType, const char* filename);
     void loadHealthBar(int width, int height);
@@ -63,6 +63,7 @@ public:
     Entity* createFadingTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
                           bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
     Entity* createProjectile(TextureEnum texType, int x, int y, float charge, int dir, int ownerID, Entity * closest);
+    void setLightTexture(Entity * entity, TextureEnum lightTex, bool addTrueModFalse);
 };
 
 #endif
