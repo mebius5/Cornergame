@@ -23,13 +23,13 @@ Andrew
   movement direction for a limited time.
 
 Grady
-- TODO: ON DEATH
 - Added support for lighting effect for static objects
 - Added objectAnimationComponent for animations for non-hero or enemy objects
 - Added torch
 - Created lighting blur filters
 - Added ability to select multiple levels for gameplay
 - Added global lighting (for dark theme levels)
+- Fixed a segfault bug due to onDeath
 - Cleaned up code
 
 Pratyush
