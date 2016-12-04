@@ -27,11 +27,10 @@ private:
     SDL_Keycode leftDodge;
     SDL_Keycode rightDodge;
     bool jumpPressed;
-    SpawnProjCommand* spawnCommand;
     float holdTime;
     float maxHold;
 public:
-    HeroInputComponent(Entity* entity, bool wasd, SpawnProjCommand* spawnCommand);
+    HeroInputComponent(Entity* entity, bool wasd);
     ~HeroInputComponent();
     void updateTime(int dt);
     void keyDown(SDL_Keycode keycode);

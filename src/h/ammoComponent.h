@@ -8,6 +8,9 @@ class AmmoComponent : public Component {
 private:
     int ammo;
     int maxAmmo;
+    SpawnProjCommand* spawnCommand;
+    SpawnProjCommand* bombCommand;
+    bool hasBomb;
     bool isUnlimited;
 
 public:
@@ -15,10 +18,10 @@ public:
     ~AmmoComponent();
     int getAmmo();
     int getMaxAmmo();
-    void spendAmmo();
+    void spendAmmo(float charge);
     void toggleUnlimited();
-    bool hasAmmo();
     void addAmmo(int amount);
+    void addBomb();
 };
 
 #endif

@@ -21,6 +21,10 @@ Andrew
 - Added dodge feature -> allows a roll or aerial dodge with limited
   invincibility, at the cost of not being able to shoot, jump or change
   movement direction for a limited time.
+- Refactored AmmoComponent and InputComponent responsibilities to make adding
+  new ammo types easier
+- Added explosive projectiles. Look for new power up that gives you one bomb,
+  dealing damage over time.
 
 Grady
 - TODO: ON DEATH

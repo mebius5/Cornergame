@@ -1,6 +1,6 @@
 #include "inputComponent.h"
 
-HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnProjCommand* spawnCommand) :
+HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd) :
     InputComponent(entity),
     runCommand(new PlaySoundCommand(SFX_RUNNING)),
     stopCommand(new StopSoundCommand(SFX_RUNNING)),
@@ -12,16 +12,12 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd, SpawnProjComma
     leftDodge(wasd ? SDLK_c : SDLK_COMMA),
     rightDodge(wasd ? SDLK_b : SDLK_SLASH),
     jumpPressed(false),
-    spawnCommand(spawnCommand),
     holdTime(-1.0f),
     maxHold(500.0f) {
 }
 
 HeroInputComponent::~HeroInputComponent() {
     this->entity = NULL;
-    if (spawnCommand) {
-        delete spawnCommand;
-    }
     if (runCommand) {
         delete runCommand;
     }
@@ -91,29 +87,11 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
     } else if (keycode == this->shootKey) {
         if (this->entity->physics->dodgeTime >= 0)
             return;
-
         // don't allow a shot if not charged
         if (this->holdTime <= 0) {
             return;
         }
-
-        // check if enough ammo to shoot
-        if (!this->entity->ammo->hasAmmo()) {
-            return;
-        }
-        this->entity->ammo->spendAmmo();
-
-        this->entity->actionState = ACTION_THROW;
-        this->spawnCommand->dir = this->entity->dir;
-        if (this->spawnCommand->dir == 1) {
-            this->spawnCommand->x = entity->x + this->entity->width + 16; // TODO remove magic numbers
-        } else {
-            this->spawnCommand->x = entity->x - 32;
-        }
-        this->spawnCommand->y = entity->y+20;
-        this->spawnCommand->ownerID = entity->getId();
-        this->spawnCommand->charge = this->holdTime / this->maxHold;
-        Component::commandList->push_back(this->spawnCommand);
+        this->entity->ammo->spendAmmo(this->holdTime / this->maxHold);
 
         // reset hold time
         this->holdTime = -1.0f;
