@@ -74,7 +74,7 @@ StateEnum LevelSelectState::run() {
         this->drawingHandler.draw(dt);
 
         StateEnum nextState = this->controlHandler.handleStateCommands();
-        if (nextState != STATE_NONE && nextState != STATE_MENU)
+        if (nextState != STATE_NONE)
             return nextState;
     }
 

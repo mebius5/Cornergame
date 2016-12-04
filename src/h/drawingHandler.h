@@ -1,6 +1,7 @@
 #ifndef CORNERGAME_DRAWING_HANDLER_H
 #define CORNERGAME_DRAWING_HANDLER_H
 
+#include <array>
 #include <vector>
 #include "entity.h"
 #include "camera.h"

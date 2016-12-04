@@ -1,4 +1,3 @@
-#include <array>
 #include "drawingHandler.h"
 
 DrawingHandler::DrawingHandler(std::vector<Command*>& commandList,
