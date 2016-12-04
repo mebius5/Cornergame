@@ -30,10 +30,10 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
 void PlayState::begin(int levelnum) {
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
 
-    if(levelnum%2==0){ //Dark theme for odd levels
+    if(levelnum%2==1){ //Light theme for even levels
         this->entityManager.createBackground(TEX_BACKGROUND1, 0, 0, 0.25);
         this->entityManager.createBackground(TEX_BACKGROUND2, 0, 0, 0.5);
-    } else {
+    } else { //Dark theme for odd levels
         this->entityManager.createBackground(TEX_DARKBACKGROUND1,0,0,0.25);
         this->entityManager.createBackground(TEX_BACKGROUND2, 0, 0, 0.5);
     }
