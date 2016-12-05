@@ -30,6 +30,7 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_BACKGROUND2, "resources/background2.png");
     this->entityBuilder.loadTexture(TEX_BACKGROUND3, "resources/background3.png");
     this->entityBuilder.loadTexture(TEX_DARKBACKGROUND1, "resources/greyBackground1.png");
+    this->entityBuilder.loadTexture(TEX_DARKBACKGROUND2, "resources/greyBackground2.png");
     this->entityBuilder.loadTexture(TEX_TORCH,"resources/torch.png");
     this->entityBuilder.loadTexture(TEX_LIGHT_ADD_128_FIRE,"resources/light_fire_add_128.png");
     this->entityBuilder.loadTexture(TEX_LIGHT_ADD_600_HERO,"resources/light_add_600_hero.png");
@@ -194,8 +195,8 @@ Entity* EntityManager::createEnemy(TextureEnum texType, int x, int y) {
     return entity;
 }
 
-Entity* EntityManager::createBackground(TextureEnum texType, int x, int y, float speed) {
-    Entity* entity = this->entityBuilder.createBackground(texType, x, y, speed);
+Entity* EntityManager::createBackground(TextureEnum texType, int x, int y, int w, int h,float speed) {
+    Entity* entity = this->entityBuilder.createBackground(texType, x, y, w, h, speed);
     this->addEntity(entity);
     return entity;
 }

@@ -61,6 +61,14 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
             this->entity->actionState = ACTION_IDLE;
             this->actionTime = 0;
         }
+    } else if (this->entity->actionState == ACTION_DODGE) {
+        this->actionTime += dt;
+        if (this->actionTime > 360) {
+            this->actionTime = 0;
+            this->entity->actionState = ACTION_IDLE;
+        }
+        clip.x = (actionTime / 90) * 32 + startpos;
+        clip.y = 160;
     } else if (this->entity->actionState == ACTION_SLIDING) {
         this->actionTime += dt;
         clip.x = (actionTime / 250) * 32 + startpos;
@@ -80,6 +88,6 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
         clip.y = 32;
     }
     clip.w = (this->surfaceW) / 8;
-    clip.h = (this->surfaceH) / 5;
+    clip.h = (this->surfaceH) / 6;
     return &clip;
 }
