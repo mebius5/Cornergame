@@ -71,9 +71,11 @@ public:
 class BombCollisionComponent : public DynamicCollisionComponent {
 private:
     Command* despawnCommand;
+    bool exploded;
 public:
-    BombCollisionComponent(Entity* entity, Command* entCollisionCmd);
+    BombCollisionComponent(Entity* entity);
     ~BombCollisionComponent();
+    void explode();
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onStaticCollision(StaticCollisionComponent* otherComp);
 };

@@ -36,6 +36,7 @@ SRCFILES = \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
 	objectAnimationComponent.cpp \
+	oneTimeAnimationComponent.cpp \
 	physicsComponent.cpp \
 	physicsHandler.cpp \
 	playState.cpp \

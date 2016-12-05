@@ -62,7 +62,18 @@ protected:
     DynamicCollisionComponent* collisionComp;
 public:
     AnimationComponent(Entity* entity, Texture texture, LayerEnum layer);
-    SDL_Texture* getNextTexture(int dt);
+    virtual SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+};
+
+class OneTimeAnimationComponent : public AnimationComponent {
+private:
+    Command* despawnCommand;
+    int animationTime;
+    int frames;
+public:
+    ~OneTimeAnimationComponent();
+    OneTimeAnimationComponent(Entity* entity, Texture texture, LayerEnum layer, int animationTime, int frames);
     SDL_Rect* getNextSrcRect(int dt);
 };
 
