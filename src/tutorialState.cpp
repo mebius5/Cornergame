@@ -29,7 +29,9 @@ void TutorialState::begin(int /*level*/) {
     Level level1(levelFile.c_str(), windowW, windowH);
     this->entityManager.populateLevel(&level1);
     this->hero = entityManager.heroEntities[0];
+    this->hero->health->replaceOnDeathCommand(new SwitchStateCommand(STATE_MENU));
     this->hero2 = entityManager.heroEntities[1];
+    this->hero2->health->replaceOnDeathCommand(new SwitchStateCommand(STATE_MENU));
     this->levelW = level1.width*32;
     this->levelH = level1.height*32;
 }

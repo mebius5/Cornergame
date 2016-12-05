@@ -20,6 +20,7 @@ public:
     void die();
     bool isIsInvincible() const;
     void setIsInvincible(bool isInvincible);
+    void replaceOnDeathCommand(Command * newOnDeath);
 };
 
 #endif
