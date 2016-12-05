@@ -36,7 +36,7 @@ public:
     std::vector<PowerUpCollisionComponent*> powerUpCollisionComponents;
     std::vector<FadingTerrainColComponent*> fadingTerrainColComponents;
 
-            EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW);
+    EntityManager(SDL_Renderer *renderer, std::vector<Command *> &cmdList, int windowW);
     ~EntityManager();
 
     void addEntity(Entity* entity);     // add entity/components to map/vectors
@@ -83,6 +83,7 @@ public:
         bool freeRight, bool freeLeft);
     Entity* createBounce(TextureEnum tileType, int x, int y);
     Entity* createProjectile(int x, int y, float charge, int dir, int ownerID, ProjEnum projType);
+    void setLightTexture(Entity * entity, TextureEnum lightTex, bool addTrueModFalse);
     void handleSpawns();
     void populateLevel(Level* level);
     void printCommands();

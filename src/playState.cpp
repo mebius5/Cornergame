@@ -34,7 +34,8 @@ void PlayState::begin(int levelnum) {
         this->entityManager.createBackground(TEX_BACKGROUND1, 0, 0, 2816, 704, 0.25);
         this->entityManager.createBackground(TEX_BACKGROUND2, 0, 0, 2816, 704, 0.5);
     } else { //Dark theme for odd levels
-        this->entityManager.createBackground(TEX_DARKBACKGROUND1,0,0, 1024, 704, 0.25);
+        Entity* background = this->entityManager.createBackground(TEX_DARKBACKGROUND1,0,0, 1024, 704, 0.25);
+        this->entityManager.setLightTexture(background, TEX_LIGHT_MOD_GLOBAL, false);
         this->entityManager.createBackground(TEX_DARKBACKGROUND2, 0, 0, 1024, 704, 0.5);
     }
 
@@ -47,6 +48,12 @@ void PlayState::begin(int levelnum) {
         this->hero1->score->wins = this->p1wins;
         this->hero2->score->wins = this->p2wins;
     //}
+
+    if(levelnum%2==0){ //Apply global dark light for even levels
+        this->entityManager.setLightTexture(this->hero1,TEX_LIGHT_ADD_600_HERO, true);
+        this->entityManager.setLightTexture(this->hero2,TEX_LIGHT_ADD_600_HERO, true);
+    }
+
     this->levelW = level.width * 32;
     this->levelH = level.height * 32;
 }

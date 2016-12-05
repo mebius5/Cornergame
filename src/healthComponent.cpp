@@ -10,8 +10,10 @@ HealthComponent::HealthComponent(Entity * entity, int maxHealth, Command* onDeat
 
 HealthComponent::~HealthComponent() {
     this->entity = NULL;
-    if (this->onDeath)
+    if (this->onDeath){
         delete this->onDeath;
+        this->onDeath = NULL;
+    }
 }
 
 int HealthComponent::getHealth() {
@@ -45,4 +47,12 @@ bool HealthComponent::isIsInvincible() const {
 
 void HealthComponent::setIsInvincible(bool isInvincible) {
     HealthComponent::isInvincible = isInvincible;
+}
+
+void HealthComponent::replaceOnDeathCommand(Command *newOnDeath) {
+    if (this->onDeath){
+        delete this->onDeath;
+        this->onDeath = NULL;
+    }
+    this->onDeath = newOnDeath;
 }

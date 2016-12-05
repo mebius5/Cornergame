@@ -92,7 +92,7 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
     } else if (dynamic_cast<HeroCollisionComponent*>(entity->collision) 
             && entity->actionState == ACTION_DODGE) {
         SDL_RendererFlip flip = SDL_FLIP_NONE;
-        double angle = dynamic_cast<AnimationComponent*>(entity->art)->actionTime;
+        double angle = dynamic_cast<AnimationComponent*>(entity->art)->actionTime * entity->dir;
         SDL_RenderCopyEx(this->renderer, artComponent->getNextTexture(dt),
                    artComponent->getNextSrcRect(dt), &dest, angle, NULL, flip);
     } else {
