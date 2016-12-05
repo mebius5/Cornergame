@@ -57,10 +57,10 @@ protected:
     int surfaceW;
     int surfaceH;
     int timecount;
-    int actionTime;
     SDL_Rect clip;
     DynamicCollisionComponent* collisionComp;
 public:
+    int actionTime;
     AnimationComponent(Entity* entity, Texture texture, LayerEnum layer);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);

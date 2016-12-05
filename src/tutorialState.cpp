@@ -23,7 +23,7 @@ TutorialState::TutorialState(int windowW, int windowH, EntityManager& entityMana
 
 void TutorialState::begin(int /*level*/) {
     this->soundHandler.playBackgroundMusic(MUSIC_PLAY);
-    this->entityManager.createBackground(TEX_BACKGROUND1, 0, 0, 0.4);
+    this->entityManager.createBackground(TEX_BACKGROUND1, 0, 0, 2816, 704, 0.4);
 
     std::string levelFile = "levels/tutorial.txt";
     Level level1(levelFile.c_str(), windowW, windowH);

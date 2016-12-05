@@ -81,14 +81,20 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
                       entity->drawHeight};
 
     if (entity->rotates && entity->physics->xVelocity != 0) {
-        double angle = atan((double)entity->physics->yVelocity/(double)entity->physics->xVelocity);
-        angle *= 180/M_PI;
         SDL_RendererFlip flip = SDL_FLIP_NONE;
         if (entity->physics->xVelocity < 0) {
             flip = SDL_FLIP_HORIZONTAL;
         }
+        double angle = atan((double)entity->physics->yVelocity/(double)entity->physics->xVelocity);
+        angle *= 180/M_PI;
         SDL_RenderCopyEx(this->renderer, artComponent->getNextTexture(dt),
                        artComponent->getNextSrcRect(dt), &dest, angle, NULL, flip);
+    } else if (dynamic_cast<HeroCollisionComponent*>(entity->collision) 
+            && entity->actionState == ACTION_DODGE) {
+        SDL_RendererFlip flip = SDL_FLIP_NONE;
+        double angle = dynamic_cast<AnimationComponent*>(entity->art)->actionTime;
+        SDL_RenderCopyEx(this->renderer, artComponent->getNextTexture(dt),
+                   artComponent->getNextSrcRect(dt), &dest, angle, NULL, flip);
     } else {
         SDL_RenderCopy(this->renderer, artComponent->getNextTexture(dt),
                        artComponent->getNextSrcRect(dt), &dest);

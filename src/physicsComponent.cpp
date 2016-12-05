@@ -240,6 +240,7 @@ void PhysicsComponent::dodge(int dir) {
         this->yAccel = 0;
         this->entity->dir = dir;
         this->aerialDodges++;
+        this->entity->actionState = ACTION_DODGE;
     }
 }
 
