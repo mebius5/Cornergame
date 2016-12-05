@@ -23,6 +23,7 @@ void PowerUpComponent::update(int dt) {
                     deactivateInfHealthPwrUp();
                     break;
                 case (int)TEX_PWRUP_AMMO:
+                case (int)TEX_PWRUP_BOMB:
                     break; //One time thing for ammo, so no deactivation
                 case (int)TEX_PWRUP_BEER:
                     deactivateBeerPwrUp();
@@ -51,6 +52,10 @@ void PowerUpComponent::activatePowerUp(TextureEnum pwrUpType) {
         }
         case TEX_PWRUP_BEER:{
             activateBeerPwrUp();
+            break;
+        }
+        case TEX_PWRUP_BOMB:{
+            entity->ammo->addBomb();
             break;
         }
         default:

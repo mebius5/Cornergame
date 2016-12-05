@@ -16,6 +16,7 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP_OVERLAY, "resources/wingsOverlay.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_AMMO, "resources/paper.png");
+    this->entityBuilder.loadTexture(TEX_PWRUP_BOMB, "resources/bomb-128.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_BEER, "resources/beer.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_BEER_OVERLAY, "resources/beerOverlay.png");
     this->entityBuilder.loadTexture(TEX_TREE1, "resources/greentree1.png");
@@ -416,7 +417,7 @@ Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int
     if (projType == PROJ_HERO)
         entity = this->entityBuilder.createProjectile(TEX_PROJECTILE, x, y, charge, dir, ownerID, closest_entity);
     else        // if projType == PROJ_BOMB
-        entity = this->entityBuilder.createBomb(TEX_PROJECTILE, x, y, charge, dir, closest_entity);
+        entity = this->entityBuilder.createBomb(TEX_PWRUP_BOMB, x, y, charge, dir, closest_entity);
     this->addEntity(entity);
     return entity;
 }
@@ -558,6 +559,9 @@ void EntityManager::populateLevel(Level* level) {
                     break;
                 case TILE_PU_BEER:
                     createPowerUp(TEX_PWRUP_BEER, SFX_DRINK, j*32, i*32);
+                    break;
+                case TILE_PU_BOMB:
+                    createPowerUp(TEX_PWRUP_BOMB, SFX_AMMO, j*32, i*32);
                     break;
                 case TILE_FADEINTEXT:
                     createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),

@@ -5,11 +5,6 @@ BombCollisionComponent::BombCollisionComponent(Entity* entity) :
     exploded(false) {
 }
 
-BombCollisionComponent::~BombCollisionComponent() {
-    if (this->despawnCommand)
-        delete this->despawnCommand;
-}
-
 void BombCollisionComponent::explode() {
     if (this->exploded)
         return;

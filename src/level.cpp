@@ -198,6 +198,7 @@ void Level::determineTileType(char a, int i, int j) {
         case 'H': tile = TILE_PU_HEALTH; break;
         case 'B': tile = TILE_PU_BEER; break;
         case 'A': tile = TILE_PU_AMMO; break;
+        case 'X': tile = TILE_PU_BOMB; break;
         case 'T': tile = TILE_TREE1; break;
         case 't': tile = TILE_TREE2; break;
         case 'b': tile = TILE_BENCH; break;
