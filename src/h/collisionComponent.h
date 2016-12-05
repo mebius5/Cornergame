@@ -71,8 +71,10 @@ public:
 class BombCollisionComponent : public DynamicCollisionComponent {
 private:
     bool exploded;
+    Command* screenShakeCmd;
 public:
     BombCollisionComponent(Entity* entity);
+    ~BombCollisionComponent();
     void explode();
     void onEntityCollision(DynamicCollisionComponent* otherComp);
     void onStaticCollision(StaticCollisionComponent* otherComp);

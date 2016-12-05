@@ -2,7 +2,12 @@
 
 BombCollisionComponent::BombCollisionComponent(Entity* entity) :
     DynamicCollisionComponent(entity),
-    exploded(false) {
+    exploded(false),
+    screenShakeCmd(new CameraShakeCommand()) {
+}
+
+BombCollisionComponent::~BombCollisionComponent() {
+    delete this->screenShakeCmd;
 }
 
 void BombCollisionComponent::explode() {
@@ -16,6 +21,7 @@ void BombCollisionComponent::explode() {
     this->entity->height *= 3;
     this->entity->drawX = this->entity->width/2 - this->entity->drawWidth/2;
     this->entity->drawY = this->entity->height/2 - this->entity->drawHeight/2;
+    Component::commandList->push_back(this->screenShakeCmd);
 }
 
 void BombCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
