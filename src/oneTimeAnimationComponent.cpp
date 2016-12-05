@@ -1,12 +1,26 @@
 #include "artComponent.h"
 
-OneTimeAnimationComponent::OneTimeAnimationComponent(Entity* entity, Texture texture,
+OneTimeAnimationComponent::OneTimeAnimationComponent(Entity* entity, Texture animationTex,
                                                      LayerEnum layer, int animationTime,
-                                                     int frames) :
-    AnimationComponent(entity, texture, layer),
+                                                     int frames, Texture defaultTex) :
+    AnimationComponent(entity, defaultTex, layer),
     despawnCommand(new DespawnEntityCommand(entity->getId())),
     animationTime(animationTime),
-    frames(frames) {
+    frames(frames),
+    animationTex(animationTex),
+    started(false) {
+}
+
+void OneTimeAnimationComponent::startAnimation() {
+    if (this->started)
+        return;
+    this->started = true;
+
+    this->entity->drawWidth = animationTex.width / this->frames;
+    this->entity->drawHeight = animationTex.height;
+    this->texture = animationTex.sdlTexture;
+    this->surfaceW = animationTex.width;
+    this->surfaceH = animationTex.height;
 }
 
 OneTimeAnimationComponent::~OneTimeAnimationComponent() {
@@ -14,6 +28,9 @@ OneTimeAnimationComponent::~OneTimeAnimationComponent() {
 }
 
 SDL_Rect* OneTimeAnimationComponent::getNextSrcRect(int dt) {
+    if (!this->started)     // return full source rect before activated
+        return NULL;
+
     this->actionTime += dt;
     clip.x = (this->actionTime / (this->animationTime/this->frames)) * this->surfaceW;
     clip.y = 0;

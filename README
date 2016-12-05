@@ -24,7 +24,8 @@ Andrew
 - Refactored AmmoComponent and InputComponent responsibilities to make adding
   new ammo types easier
 - Added explosive projectiles. Look for new power up that gives you one bomb,
-  dealing damage over time.
+  dealing damage over time. Wrote code to allow for explosion animation on
+  impact, we just have to draw it!
 - small bugfixes with Quit button and torches on level loop
 
 Grady
@@ -124,6 +125,7 @@ QUIRKS
 - disabled the down key due to bugs that allow you to sink into the terrain
 
 TODOS
+*Global illumination should move w/ camera
 Kill acceleration? -> more responsive w/ velocity based.
 verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
 revamp terrain -> fewer rectangles!

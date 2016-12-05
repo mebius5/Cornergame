@@ -71,9 +71,13 @@ private:
     Command* despawnCommand;
     int animationTime;
     int frames;
+    Texture animationTex;
+    bool started;
 public:
     ~OneTimeAnimationComponent();
-    OneTimeAnimationComponent(Entity* entity, Texture texture, LayerEnum layer, int animationTime, int frames);
+    OneTimeAnimationComponent(Entity* entity, Texture texture, LayerEnum layer,
+                              int animationTime, int frames, Texture defaultTex);
+    void startAnimation();
     SDL_Rect* getNextSrcRect(int dt);
 };
 
