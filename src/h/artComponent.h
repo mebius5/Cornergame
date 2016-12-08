@@ -15,8 +15,8 @@ protected:
 public:
     LayerEnum layer;
     bool movesWithCamera;
-    int offsetX;
-    int offsetY;
+    float offsetX;
+    float offsetY;
     bool isVisible;
     bool globalLighting;
 
