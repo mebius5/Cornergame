@@ -32,6 +32,7 @@ public:
     Entity* createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes);
     Entity* createBackground(TextureEnum texType, int x, int y, int w, int h, float speed);
     Entity* createHealthBar(int x, int y, Entity* owner);
+    Entity* createHealthBarOverlay(int x, int y, TextureEnum texType);
     Entity* createAmmoBar(int x, int y, Entity* owner);
     // Entity* createScoreBox(int x, int y, Entity* owner, FontEnum font, int fontSize);
 
