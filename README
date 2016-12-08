@@ -16,34 +16,21 @@ Assignment 11 Task Writeups
 Now the even levels are dark themed
 
 Akshay
-- Fell very sick, couldn't really do much
-- Working on a particle filter (may not be ready by submission time)
+
 
 Andrew
-- Added dodge feature -> allows a roll or aerial dodge with limited
-  invincibility, at the cost of not being able to shoot, jump or change
-  movement direction for a limited time.
-- Refactored AmmoComponent and InputComponent responsibilities to make adding
-  new ammo types easier
-- Added explosive projectiles. Look for new power up that gives you one bomb,
-  dealing damage over time. Wrote code to allow for explosion animation on
-  impact, we just have to draw it!
-- small bugfixes with Quit button and torches on level loop
+- Fixed bugs with bomb disappearing, player getting stuck in tight spaces,
+  dodge animation not showing up while hero is in midair
+- tuned camera movement speed
+
 
 Grady
-- Added support for lighting effect for static objects
-- Added objectAnimationComponent for animations for non-hero or enemy objects
-- Added torch
-- Created lighting blur filters
-- Added ability to select multiple levels for gameplay
-- Added global lighting (for dark theme levels)
-- Fixed a segfault bug due to onDeath
-- Cleaned up code
+- Tweaked global lighting to allow variation in background size without
+  affecting light filter
+- Tweaked lighting filters
+- Tweaked tutorial level
 
 Pratyush
--added animation for dodge
--added two backgrounds for dark theme levels (editted 
-from assets from open game art)
 
 
 
@@ -132,6 +119,10 @@ QUIRKS
 
 TODOS
 *Global illumination should move w/ camera
+*Disappearing explosive?
+*Slowmo with dodge -> slowmo doesn't end
+*Parallax rounding error?
+*bomb indicator for ammo
 Kill acceleration? -> more responsive w/ velocity based.
 verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
 revamp terrain -> fewer rectangles!

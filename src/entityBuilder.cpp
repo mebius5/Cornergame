@@ -6,7 +6,7 @@ EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
     terrainTexMap(NTERRAIN, std::vector<Texture>(256)),
-    fontMap(NFONT, std::vector<TTF_Font*>(128)),
+    fontMap(NFONT, std::vector<TTF_Font*>(256)),
     textureMap(NTEXTURE)
 {
     // seed random
@@ -129,7 +129,7 @@ void EntityBuilder::freeFonts() {
 /* Entity creation operations */
 Entity * EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sfxType, bool wasd) {
     Texture texture = this->textureMap[texType];
-    Entity* hero = new Entity(this->nextId++, x, y, 32, 64, 64, 64);
+    Entity* hero = new Entity(this->nextId++, x, y, 32, 62, 64, 64);
     PlaySoundCommand* command = NULL;
     if (sfxType != SFX_NONE)
         command = new PlaySoundCommand(sfxType);
@@ -147,7 +147,7 @@ Entity * EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sf
 
 Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vector<Entity*>* heroes) {
     Texture texture = this->textureMap[texType];
-    Entity* enemy = new RespawnEntity(this->nextId++, x, y, 56, 64, 64, 64);
+    Entity* enemy = new RespawnEntity(this->nextId++, x, y, 56, 62, 64, 64);
     enemy->collision = new EnemyCollisionComponent(enemy);
     enemy->art = new AnimationComponent(enemy, texture, LAYER_ENEMY);
     enemy->ai = new EnemyAiComponent(enemy, heroes);
@@ -170,9 +170,16 @@ Entity* EntityBuilder::createBackground(TextureEnum texType, int x, int y, int w
 
 Entity* EntityBuilder::createHealthBar(int x, int y, Entity* owner) {
     Texture texture = this->textureMap[TEX_HEALTHBAR];
-    Entity* healthBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);
+    Entity* healthBar = new Entity(this->nextId++, x, y, texture.width/2, texture.height, texture.width/2, texture.height);
     healthBar->art = new HealthBarArtComponent(healthBar, owner, texture);
     return healthBar;
+}
+
+Entity* EntityBuilder::createHealthBarOverlay(int x, int y, TextureEnum texType) {
+    Texture texture = this->textureMap[texType];
+    Entity* healthBarOverlay = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+    healthBarOverlay->art = new StaticArtComponent(healthBarOverlay, texture.sdlTexture, LAYER_HUD2, true);
+    return healthBarOverlay;
 }
 
 Entity* EntityBuilder::createAmmoBar(int, int, Entity* owner) {

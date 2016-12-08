@@ -18,6 +18,7 @@ public:
     int offsetX;
     int offsetY;
     bool isVisible;
+    bool globalLighting;
 
     ArtComponent(Entity* entity, LayerEnum layer, bool movesWithCamera);
     virtual ~ArtComponent(){};

@@ -39,7 +39,8 @@ ArtComponent::ArtComponent(Entity* entity, LayerEnum layer, bool movesWithCamera
     lightTexture(NULL),
     layer(layer),
     movesWithCamera(movesWithCamera),
-    isVisible(true)
+    isVisible(true),
+    globalLighting(false)
 {
     if (this->movesWithCamera) {
         this->offsetX = (int) entity->x;
@@ -55,8 +56,10 @@ Texture * ArtComponent::getLightTexture() {
 void ArtComponent::setLightTexture(Texture *lightTexture, bool addTrueModFalse) {
     this->lightTexture = lightTexture;
     if(addTrueModFalse){
+        globalLighting=false;
         SDL_SetTextureBlendMode(lightTexture->sdlTexture, SDL_BLENDMODE_ADD);
     } else {
+        globalLighting=true;
         SDL_SetTextureBlendMode(lightTexture->sdlTexture, SDL_BLENDMODE_MOD);
     }
 }

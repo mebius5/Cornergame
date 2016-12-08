@@ -16,7 +16,8 @@ TerrainCollisionComponent::~TerrainCollisionComponent() {
 }
 
 void TerrainCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
-    if (dynamic_cast<ProjectileCollisionComponent*>(otherComp))     // ignore projectiles
+    if (dynamic_cast<ProjectileCollisionComponent*>(otherComp)
+            || dynamic_cast<BombCollisionComponent*>(otherComp))     // ignore projectiles
         return;
 
     Entity* other = otherComp->entity;
