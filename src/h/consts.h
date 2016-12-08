@@ -6,8 +6,8 @@
 #define NCHANS 16       // number of sfx channels
 #define NLAYERS 11
 #define NTERRAIN 4
-#define NTEXTURE 37
-#define NFONT 1
+#define NTEXTURE 45
+#define NFONT 2
 #define MAXLEVELS 5
 
 enum Tile {

@@ -233,7 +233,7 @@ void EntityManager::createFadeInText(FontEnum font,
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
+    while(((i = tempText.find("\n"))!=std::string::npos)|| ((i = tempText.find("\\"))!=std::string::npos)){
         Entity * entity = this->entityBuilder.createFadeInText(
                 font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha, windowW, x, y+yOffset);
         this->addEntity(entity);
@@ -253,7 +253,7 @@ void EntityManager::createCenteredFadeInText(FontEnum font,
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
+    while(((i = tempText.find("\n"))!=std::string::npos)|| ((i = tempText.find("\\"))!=std::string::npos)){
         Entity * entity = this->entityBuilder.createFadeInText(
                 font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha, windowW, 0, 0);
         entity->x = (windowW/2 - entity->width/2);
@@ -276,7 +276,7 @@ void EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const ch
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
+    while(((i = tempText.find("\n"))!=std::string::npos)|| ((i = tempText.find("\\"))!=std::string::npos)){
         Entity * entity = this->entityBuilder.createFadeInText(
                 font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha, windowW, 0, yPos+yOffset);
         entity->x = (windowW/2 - entity->width/2);
@@ -300,7 +300,7 @@ Entity* EntityManager::createHorizontallyCenteredFadeInMenuText(FontEnum font, c
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
+    while(((i = tempText.find("\n"))!=std::string::npos)|| ((i = tempText.find("\\"))!=std::string::npos)){
         Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInMenuText(
                 font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha,
                 windowW, yPos+yOffset, index, numOptions, nextState);
@@ -325,7 +325,7 @@ Entity* EntityManager::createHorizontallyCenteredSelectLevelText(FontEnum fontTy
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
+    while(((i = tempText.find("\n"))!=std::string::npos)|| ((i = tempText.find("\\"))!=std::string::npos)){
         Entity* entity = this->entityBuilder.createHorizontallyCenteredSelectLevelText(
                 fontType, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha,
                 windowW, yPos+yOffset, index, numOptions, nextState, levelSelected);
@@ -576,7 +576,7 @@ void EntityManager::populateLevel(Level* level) {
                     break;
                 case TILE_FADEINTEXT:
                     createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
-                                     30, 255, 255, 255, 0, windowW, j*32, i*32);
+                                     30, 0, 0, 0, 0, windowW, j*32, i*32);
                     stringCount++;
                     break;
                 case TILE_NORMALTEXT:
