@@ -53,16 +53,16 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
 
     if(!previewOn && entity->collision && dynamic_cast<HeroCollisionComponent*>(entity->collision)) {
         detectBorderCollision(entity, dt);
-        float xThresh = (float) (minX + windowW * .5);        // threshholds for camera shifting based on
-        float yLowerThresh = (float) (minY + windowH * .85);  //  hero position
+        float xThresh = (float) (minX + windowW * .6);          // threshholds for camera shifting based on
+        float yLowerThresh = (float) (minY + windowH * .85);    //  hero position
         float yUpperThresh = (float) (minY + windowH * .15);
         if (entity->y >= yLowerThresh) {            // shift y smoothly if past 3/4 of the way down
             shift(0, (int) ((entity->y - yLowerThresh) * .05 * dt));
         } else if (entity->y <= yUpperThresh) {
             shift(0, (int) ((entity->y - yUpperThresh) * .01 * dt));
         }
-        if (entity->x >= (minX+(windowW)*.5)) {     // shift x smoothly if heroes past half way
-            shift((int) ((entity->x - xThresh) * .0007 * dt), 0);
+        if (entity->x >= xThresh) {                 // shift x smoothly if heroes past half way
+            shift((int) ((entity->x - xThresh) * .0014 * dt), 0);
         }
     }
 
@@ -89,7 +89,7 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
         angle *= 180/M_PI;
         SDL_RenderCopyEx(this->renderer, artComponent->getNextTexture(dt),
                        artComponent->getNextSrcRect(dt), &dest, angle, NULL, flip);
-    } else if (dynamic_cast<HeroCollisionComponent*>(entity->collision) 
+    } else if (dynamic_cast<HeroCollisionComponent*>(entity->collision)
             && entity->actionState == ACTION_DODGE) {
         SDL_RendererFlip flip = SDL_FLIP_NONE;
         double angle = dynamic_cast<AnimationComponent*>(entity->art)->actionTime * entity->dir;
@@ -125,12 +125,11 @@ void Camera::drawLighting(int , ArtComponent *artComponent) {
     }
 }
 
-void Camera::shift(int dx, int dy) {
+void Camera::shift(float dx, float dy) {
     minX += dx;
     minY += dy;
     maxX += dx;
     maxY += dy;
-
 
     std::vector<BackgroundArtComponent*>::iterator bgit;
     for (bgit = this->bgComponents.begin(); bgit != this->bgComponents.end(); ++bgit) {

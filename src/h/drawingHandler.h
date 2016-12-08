@@ -13,7 +13,7 @@ private:
     std::array<int, NLAYERS>& layerIndices;
     SDL_Renderer* renderer;
     Camera camera;
-    int shiftCount;
+    float shiftCount;
     int windowW;
     void removeInvalidComponents();
 public:

@@ -19,7 +19,9 @@ Akshay
 
 
 Andrew
-- Fixed bugs with bomb disappearing and player getting stuck in tight spaces.
+- Fixed bugs with bomb disappearing, player getting stuck in tight spaces,
+  dodge animation not showing up while hero is in midair
+- tuned camera movement speed
 
 
 Grady
@@ -118,6 +120,7 @@ TODOS
 *Global illumination should move w/ camera
 *Disappearing explosive?
 *Slowmo with dodge -> slowmo doesn't end
+*Parallax rounding error?
 *bomb indicator for ammo
 Kill acceleration? -> more responsive w/ velocity based.
 verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)

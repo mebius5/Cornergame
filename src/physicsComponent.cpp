@@ -241,6 +241,7 @@ void PhysicsComponent::dodge(int dir) {
         this->entity->dir = dir;
         this->aerialDodges++;
         this->entity->actionState = ACTION_DODGE;
+        static_cast<AnimationComponent*>(this->entity->art)->actionTime = 0;
     }
 }
 
