@@ -11,6 +11,7 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_ENEMY, "spritesheets/lax.png");
     this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
     this->entityBuilder.loadTexture(TEX_BOUNCE, "spritesheets/bounce.png");
+    this->entityBuilder.loadTexture(TEX_PARTICLE, "spritesheets/dust.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH, "resources/star.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH_OVERLAY, "resources/starOverlay.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
@@ -88,6 +89,9 @@ void EntityManager::addEntity(Entity* entity) {
     if (entity->physics) {
         this->physicsComponents.push_back(entity->physics);
     }
+    if (entity->particle) {
+        this->particleComponents.push_back(entity->particle);
+    }
     if (entity->health) {
         this->healthComponents.push_back(entity->health);
     }
@@ -163,6 +167,7 @@ void EntityManager::clear() {
     this->bgComponents.clear();
     this->inputComponents.clear();
     this->physicsComponents.clear();
+    this->particleComponents.clear();
     this->healthComponents.clear();
     this->scoreComponents.clear();
     this->staticCollisionComponents.clear();
@@ -423,6 +428,12 @@ Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int
     return entity;
 }
 
+Entity* EntityManager::createParticle(int x, int y) {
+    Entity* entity = this->entityBuilder.createParticle(TEX_PARTICLE, x, y);
+    this->addEntity(entity);
+    return entity;
+}
+
 void EntityManager::handleSpawns() {
     std::vector<Command*>::iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
@@ -430,6 +441,8 @@ void EntityManager::handleSpawns() {
             this->createProjectile(eCmd->x, eCmd->y, eCmd->charge, eCmd->dir, eCmd->ownerID, eCmd->projType);
         } else if (DespawnEntityCommand* dCmd = dynamic_cast<DespawnEntityCommand*>(*it)) {
             this->deleteEntity(dCmd->id);
+        } else if (SpawnParticleCommand* sCmd = dynamic_cast<SpawnParticleCommand*>(*it)) {
+            this->createParticle(sCmd->x, sCmd->y);
         } else if (TempHideCommand* tCmd = dynamic_cast<TempHideCommand*>(*it)) {
             this->hideEntity(tCmd->id);
         } else if (dynamic_cast<LoopLevelCommand*>(*it)){

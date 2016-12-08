@@ -11,6 +11,7 @@ class HealthComponent;
 class PhysicsComponent;
 class PowerUpComponent;
 class AmmoComponent;
+class ParticleComponent;
 
 #include "artComponent.h"
 #include "inputComponent.h"
@@ -21,6 +22,7 @@ class AmmoComponent;
 #include "healthComponent.h"
 #include "powerUpComponent.h"
 #include "ammoComponent.h"
+#include "particleComponent.h"
 
 class Entity {
 protected:
@@ -47,6 +49,7 @@ public:
     HealthComponent* health;
     PowerUpComponent* powerUp;
     AmmoComponent* ammo;
+    ParticleComponent* particle;
 
     Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHeight);
     virtual ~Entity();

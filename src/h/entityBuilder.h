@@ -63,6 +63,7 @@ public:
     Entity* createFadingTerrain(TerrainTexEnum texType, int x, int y, int numberHorizontal,
                           bool freeTop, bool freeBot, bool freeRight, bool freeLeft);
     Entity* createProjectile(TextureEnum texType, int x, int y, float charge, int dir, int ownerID, Entity* closest);
+    Entity* createParticle(TextureEnum texType, int x, int y);
     Entity* createBomb(TextureEnum texType, int x, int y, float charge, int dir, Entity* closest);
     void setLightTexture(Entity * entity, TextureEnum lightTex, bool addTrueModFalse);
 };

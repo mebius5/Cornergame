@@ -19,7 +19,8 @@ Entity::Entity(int id, float x, float y, int w, int h, int drawWidth, int drawHe
     ai(NULL),
     health(NULL),
     powerUp(NULL),
-    ammo(NULL) {
+    ammo(NULL),
+    particle(NULL) {
     drawX = this->width/2 - this->drawWidth/2;
     drawY = this->height/2 - this->drawHeight/2;
 }
@@ -43,6 +44,8 @@ Entity::~Entity() {
         delete this->powerUp;
     if (this->ammo)
         delete this->ammo;
+    if (this->particle)
+        delete this->particle;
 }
 
 int Entity::getId() {
@@ -68,6 +71,8 @@ void Entity::validate() {
         this->powerUp->validate();
     if (this->ammo)
         this->ammo->validate();
+    if (this->particle)
+        this->particle->validate();
 }
 
 void Entity::invalidate() {
@@ -89,4 +94,6 @@ void Entity::invalidate() {
         this->powerUp->invalidate();
     if (this->ammo)
         this->ammo->invalidate();
+    if (this->particle)
+        this->particle->invalidate();
 }
