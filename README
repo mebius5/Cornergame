@@ -42,7 +42,7 @@ Grady
 
 Pratyush
 -added animation for dodge
--added two backgrounds for dark theme levels (editted 
+-added two backgrounds for dark theme levels (editted
 from assets from open game art)
 
 
@@ -132,6 +132,9 @@ QUIRKS
 
 TODOS
 *Global illumination should move w/ camera
+*Disappearing explosive?
+*Slowmo with dodge -> slowmo doesn't end
+*bomb indicator for ammo
 Kill acceleration? -> more responsive w/ velocity based.
 verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
 revamp terrain -> fewer rectangles!
