@@ -4,7 +4,7 @@ TutorialState::TutorialState(int windowW, int windowH, EntityManager& entityMana
                              std::vector<Command*>& commandList, SDL_Renderer* renderer,
                              DrawingHandler& drawingHandler, InputHandler& inputHandler, SoundHandler& soundHandler,
                              ControlHandler& controlHandler, AiHandler& aiHandler, CollisionHandler& collisionHandler,
-                             ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
+                             ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler, ParticleHandler& particleHandler,
                              PowerUpHandler& powerUpHandler, TimeHandler& timeHandler):
     State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
@@ -15,6 +15,7 @@ TutorialState::TutorialState(int windowW, int windowH, EntityManager& entityMana
     collisionHandler(collisionHandler),
     scoreHandler(scoreHandler),
     physicsHandler(physicsHandler),
+    particleHandler(particleHandler),
     powerUpHandler(powerUpHandler),
     timeHandler(timeHandler),
     levelW(0),
@@ -77,6 +78,7 @@ StateEnum TutorialState::run() {
             this->aiHandler.updateAi(dt);
             this->inputHandler.handleEvents(dt);
             this->physicsHandler.update(dt);
+            this->particleHandler.update(dt);
             this->collisionHandler.handleCollisions();
             this->scoreHandler.handleScore(dt);
             this->drawingHandler.checkCameraShakes();

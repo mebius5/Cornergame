@@ -4,14 +4,15 @@ StartState::StartState(int windowW, int windowH, EntityManager& entityManager,
                 std::vector<Command*>& commandList, SDL_Renderer* renderer,
                 DrawingHandler& drawingHandler, InputHandler& inputHandler,
                 SoundHandler& soundHandler, ControlHandler& controlHandler,
-                CollisionHandler& collisionHandler, PhysicsHandler& physicsHandler) :
+                CollisionHandler& collisionHandler, PhysicsHandler& physicsHandler, ParticleHandler& particleHandler) :
     State(entityManager, commandList, renderer, windowW, windowH),
     drawingHandler(drawingHandler),
     inputHandler(inputHandler),
     soundHandler(soundHandler),
     controlHandler(controlHandler),
     collisionHandler(collisionHandler),
-    physicsHandler(physicsHandler) {
+    physicsHandler(physicsHandler),
+    particleHandler(particleHandler) {
 }
 
 void StartState::begin(int /*level*/) {
@@ -43,6 +44,7 @@ StateEnum StartState::run() {
 
         this->inputHandler.handleEvents(dt);
         this->physicsHandler.update(dt);
+        this->particleHandler.update(dt);
         this->collisionHandler.handleCollisions();
         this->drawingHandler.draw(dt);
 

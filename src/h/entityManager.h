@@ -28,6 +28,7 @@ public:
     std::vector<DynamicCollisionComponent*> dynamicCollisionComponents;
     std::vector<InputComponent*> inputComponents;
     std::vector<PhysicsComponent*> physicsComponents;
+    std::vector<ParticleComponent*> particleComponents;
     std::vector<HealthComponent*> healthComponents;
     std::vector<ScoreComponent*> scoreComponents;
     std::vector<PowerUpComponent*> powerUpComponents;
@@ -77,6 +78,7 @@ public:
     Entity* createLevelPreview(TextureEnum tex, int x, int y);
     Entity* createVictoryZone(int x, int y);
     Entity* createPowerUp(TextureEnum pwrUpType, SfxEnum pwrSound, int x, int y);
+    Entity* createParticle(int x, int y);
     Entity* createStaticBackgroundObject(TextureEnum texType, int x, int y);
     Entity* createAnimatedBackgroundObject(TextureEnum texType, int x, int y, int fps, int numFrames);
     //Entity* createStaticBackgroundObject(TextureEnum texType, TextureEnum lightType, int x, int y);

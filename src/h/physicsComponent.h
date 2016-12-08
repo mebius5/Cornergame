@@ -16,7 +16,6 @@ private:
     float xAccel;
     float yAccel;
     float accelAmount;
-    float gravity;
     float slideVelocity;
     int jumps;
     bool infiniteJumps;
@@ -34,6 +33,7 @@ public:
     float maxYVelocity;
     float jumpVelocity;
     float deceleration;
+    float gravity;
     int maxJumps;
     int dodgeTime;
     int maxDodgeTime;
@@ -43,7 +43,7 @@ public:
     PhysicsComponent(Entity* entity);
     ~PhysicsComponent();
 
-    void updateLocation(int dt);
+    virtual void updateLocation(int dt);
     void freeze();
     bool isFrozen();
     void jump(float velocity = -1);

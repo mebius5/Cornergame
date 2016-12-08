@@ -90,6 +90,13 @@ public:
     void restartAnimation();
 };
 
+class ParticleAnimationComponent : public AnimationComponent {
+public:
+    ParticleAnimationComponent(Entity* entity, Texture texture);
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+};
+
 class BackgroundArtComponent : public ArtComponent {
 private:
     SDL_Texture* texture;
