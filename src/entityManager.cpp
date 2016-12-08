@@ -35,7 +35,9 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_LIGHT_ADD_128_FIRE,"resources/light_fire_add_128.png");
     this->entityBuilder.loadTexture(TEX_LIGHT_ADD_600_HERO,"resources/light_add_600_hero.png");
     this->entityBuilder.loadTexture(TEX_LIGHT_MOD_GLOBAL, "resources/light_mod_global.png");
-    this->entityBuilder.loadHealthBar(200, 40);
+    this->entityBuilder.loadTexture(TEX_HEALTHBAROVERLAY1, "resources/healthbaroverlay1.png");
+    this->entityBuilder.loadTexture(TEX_HEALTHBAROVERLAY2, "resources/healthbaroverlay2.png");
+    this->entityBuilder.loadHealthBar(250, 40);
     this->entityBuilder.loadAmmoBar(50, 8);
 }
 
@@ -203,6 +205,12 @@ Entity* EntityManager::createBackground(TextureEnum texType, int x, int y, int w
 
 Entity* EntityManager::createHealthBar(int x, int y, Entity* owner) {
     Entity* entity = this->entityBuilder.createHealthBar(x, y, owner);
+    this->addEntity(entity);
+    return entity;
+}
+
+Entity* EntityManager::createHealthBarOverlay(int x, int y, TextureEnum texType) {
+    Entity* entity = this->entityBuilder.createHealthBarOverlay(x, y, texType);
     this->addEntity(entity);
     return entity;
 }
@@ -522,13 +530,15 @@ void EntityManager::populateLevel(Level* level) {
                     break;
                 case TILE_SPAWN1: {
                     Entity* hero = createHero(TEX_HERO, j * 32, i * 32, SFX_ALERT, false);
-                    createHealthBar(100, 50, hero);
+                    createHealthBar(50, 40, hero);
+                    createHealthBarOverlay(25, 20, TEX_HEALTHBAROVERLAY1);
                     createAmmoBar(400, 50, hero);
                     break;
                 }
                 case TILE_SPAWN2: {
                     Entity* hero2 = createHero(TEX_HERO2, j * 32, i * 32, SFX_ALERT, true);
-                    createHealthBar(100, 100, hero2);
+                    createHealthBar(750, 40, hero2);
+                    createHealthBarOverlay(725, 20, TEX_HEALTHBAROVERLAY2);
                     createAmmoBar(400, 100, hero2);
                     break;
                 }

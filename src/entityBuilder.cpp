@@ -165,9 +165,16 @@ Entity* EntityBuilder::createBackground(TextureEnum texType, int x, int y, int w
 
 Entity* EntityBuilder::createHealthBar(int x, int y, Entity* owner) {
     Texture texture = this->textureMap[TEX_HEALTHBAR];
-    Entity* healthBar = new Entity(this->nextId++, x, y, texture.width / 2, texture.height, texture.width / 2, texture.height);
+    Entity* healthBar = new Entity(this->nextId++, x, y, texture.width/2, texture.height, texture.width/2, texture.height);
     healthBar->art = new HealthBarArtComponent(healthBar, owner, texture);
     return healthBar;
+}
+
+Entity* EntityBuilder::createHealthBarOverlay(int x, int y, TextureEnum texType) {
+    Texture texture = this->textureMap[texType];
+    Entity* healthBarOverlay = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+    healthBarOverlay->art = new StaticArtComponent(healthBarOverlay, texture.sdlTexture, LAYER_HUD2, true);
+    return healthBarOverlay;
 }
 
 Entity* EntityBuilder::createAmmoBar(int, int, Entity* owner) {
