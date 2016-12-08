@@ -13,7 +13,7 @@ private:
 public:
     ParticleComponent(Entity* entity, SpawnParticleCommand* spawnCommand);
     ~ParticleComponent();
-    void startSpawning(int time);
+    void startSpawning(int upper, int lower);
     void update(int dt);
 };
 

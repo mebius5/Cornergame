@@ -1,7 +1,12 @@
 #include "artComponent.h"
 
 ParticleAnimationComponent::ParticleAnimationComponent(Entity* entity, Texture tex):
-    AnimationComponent(entity, tex, LAYER_OVERLAY) {
+    AnimationComponent(entity, tex, LAYER_OVERLAY),
+    despawnCommand(new DespawnEntityCommand(entity->getId())) {
+}
+
+ParticleAnimationComponent::~ParticleAnimationComponent() {
+    delete this->despawnCommand;
 }
 
 SDL_Texture* ParticleAnimationComponent::getNextTexture(int /*dt*/) {
@@ -14,5 +19,8 @@ SDL_Rect* ParticleAnimationComponent::getNextSrcRect(int dt) {
     clip.y = 0;
     clip.w = this->surfaceW / 4;
     clip.h = this->surfaceH;
+    if (this->actionTime >= 500) {
+        Component::commandList->push_back(this->despawnCommand);
+    }
     return &clip;
 }

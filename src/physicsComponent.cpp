@@ -214,7 +214,7 @@ void PhysicsComponent::jump(float velocity) {
             this->xVelocity = -.25f * velocity;
         if (this->jumpCommand)
             Component::commandList->push_back(this->jumpCommand);
-        this->entity->particle->startSpawning(150);
+        this->entity->particle->startSpawning(120, 180);
     }
 }
 

@@ -91,8 +91,11 @@ public:
 };
 
 class ParticleAnimationComponent : public AnimationComponent {
+private:
+    Command* despawnCommand;
 public:
     ParticleAnimationComponent(Entity* entity, Texture texture);
+    ~ParticleAnimationComponent();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };

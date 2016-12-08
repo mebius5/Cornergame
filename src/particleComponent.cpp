@@ -1,11 +1,13 @@
 #include "particleComponent.h"
+#include <stdlib.h>
 
 ParticleComponent::ParticleComponent(Entity * entity, SpawnParticleCommand* spawnCommand):
     Component(entity),
     timeLeft(0),
     timeSinceSpawn(0),
-    spawnInterval(20),
+    spawnInterval(50),
     spawnCommand(spawnCommand) {
+        srand(time(NULL));
 }
 
 ParticleComponent::~ParticleComponent() {
@@ -16,8 +18,8 @@ ParticleComponent::~ParticleComponent() {
     }
 }
 
-void ParticleComponent::startSpawning(int time) {
-    this->timeLeft = time;
+void ParticleComponent::startSpawning(int upper, int lower) {
+    this->timeLeft = lower + rand() % (upper - lower);
 }
 
 void ParticleComponent::update(int dt) {
@@ -31,9 +33,11 @@ void ParticleComponent::update(int dt) {
     // else spawn if enough time passed
     this->timeSinceSpawn += dt;
     if (this->timeSinceSpawn >= this->spawnInterval) {
-        this->timeSinceSpawn -= this->spawnInterval;
-        this->spawnCommand->x = this->entity->x;
-        this->spawnCommand->y = this->entity->y;
-        Component::commandList->push_back(this->spawnCommand);
+        for (int i = 0; i < this->timeSinceSpawn / this->spawnInterval; i++) {
+            this->timeSinceSpawn -= this->spawnInterval;
+            this->spawnCommand->x = this->entity->x;
+            this->spawnCommand->y = this->entity->y;
+            Component::commandList->push_back(this->spawnCommand);
+        }
     }
 }
