@@ -20,7 +20,8 @@ Akshay
 
 Andrew
 - Fixed bugs with bomb disappearing, player getting stuck in tight spaces,
-  dodge animation not showing up while hero is in midair
+  dodge animation not showing up while hero is in midair, parallax rounding
+  error disabling parallax
 - tuned camera movement speed
 
 
@@ -123,6 +124,7 @@ TODOS
 *Slowmo with dodge -> slowmo doesn't end
 *Parallax rounding error?
 *bomb indicator for ammo
+*OneTimeAnimationComponent -> original size based on passed entity
 Kill acceleration? -> more responsive w/ velocity based.
 verify deletion was implemented properly w/ vectors! (valgrind in ugrad lab?)
 revamp terrain -> fewer rectangles!
