@@ -110,13 +110,18 @@ void Camera::drawLighting(int , ArtComponent *artComponent) {
 
     Texture *lightTexture = NULL;
     if ((lightTexture = artComponent->getLightTexture()) != NULL) {
-        SDL_Rect lightRect = {(int) entity->x + entity->width / 2 - lightTexture->width / 2 - (int) minX - offsetX,
-                              (int) entity->y + entity->height / 2 - lightTexture->height / 2 - (int) minY - offsetY,
-                              lightTexture->width,
-                              lightTexture->height};
-        //std::cout << lightRect.x << " " << lightRect.y << " " << lightRect.w << " " << lightRect.h << std::endl;
-        //std::cout << entity->x << " " << entity->y << " " << std::endl;
-        SDL_RenderCopy(this->renderer, lightTexture->sdlTexture, NULL, &lightRect);
+        if(artComponent->globalLighting){
+            SDL_RenderCopy(this->renderer, lightTexture->sdlTexture, NULL, NULL);
+        }else {
+            SDL_Rect lightRect = {(int) entity->x + entity->width / 2 - lightTexture->width / 2 - (int) minX - offsetX,
+                                  (int) entity->y + entity->height / 2 - lightTexture->height / 2 - (int) minY - offsetY,
+                                  lightTexture->width,
+                                  lightTexture->height};
+            //std::cout << lightRect.x << " " << lightRect.y << " " << lightRect.w << " " << lightRect.h << std::endl;
+            //std::cout << entity->x << " " << entity->y << " " << std::endl;
+            SDL_RenderCopy(this->renderer, lightTexture->sdlTexture, NULL, &lightRect);
+        }
+
     }
 }
 
