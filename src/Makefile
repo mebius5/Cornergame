@@ -44,6 +44,7 @@ SRCFILES = \
 	powerUpCollisionComponent.cpp \
 	powerUpComponent.cpp \
 	powerUpHandler.cpp \
+	projectileArtComponent.cpp \
 	projectileCollisionComponent.cpp \
 	respawnEntity.cpp \
 	resultsState.cpp \

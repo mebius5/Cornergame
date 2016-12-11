@@ -27,3 +27,11 @@ SDL_Rect * HealthBarArtComponent::getNextSrcRect(int) {
 
     return & this->clip;
 }
+
+SDL_RendererFlip  HealthBarArtComponent::getNextFlip(int /*dt*/) {
+    if (entity->rotates) {
+        return SDL_FLIP_HORIZONTAL;
+    } else {
+        return SDL_FLIP_NONE;
+    }
+}

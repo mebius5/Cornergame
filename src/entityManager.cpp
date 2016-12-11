@@ -537,7 +537,8 @@ void EntityManager::populateLevel(Level* level) {
                 }
                 case TILE_SPAWN2: {
                     Entity* hero2 = createHero(TEX_HERO2, j * 32, i * 32, SFX_ALERT, true);
-                    createHealthBar(750, 40, hero2);
+                    Entity* hb = createHealthBar(750, 40, hero2);
+                    hb->rotates = true;
                     createHealthBarOverlay(725, 20, TEX_HEALTHBAROVERLAY2);
                     createAmmoBar(400, 100, hero2);
                     break;

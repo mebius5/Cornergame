@@ -22,9 +22,11 @@ public:
 
     ArtComponent(Entity* entity, LayerEnum layer, bool movesWithCamera);
     virtual ~ArtComponent(){};
-    virtual void updateLocation() { };      // for ArtComponents with owners
+    virtual void updateLocation() {};      // for ArtComponents with owners
     virtual SDL_Texture* getNextTexture(int dt) = 0;
     virtual SDL_Rect* getNextSrcRect(int dt) = 0;
+    virtual double getNextAngle(int /*dt*/){return 0;};
+    virtual SDL_RendererFlip  getNextFlip(int /*dt*/){return SDL_FLIP_NONE;};
     Texture * getLightTexture();
     void setLightTexture(Texture *lightTexture, bool addTrueModFalse);
 };
@@ -37,6 +39,7 @@ public:
                        bool movesWithCamera);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
+    SDL_RendererFlip getNextFlip(int dt);
 };
 
 class ObjectAnimationComponent : public ArtComponent {
@@ -50,6 +53,7 @@ public:
     ObjectAnimationComponent(Entity* entity, SDL_Texture* texture, LayerEnum layer, bool movesWithCamera, int fps, int numFrames);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
+
 };
 
 class AnimationComponent : public ArtComponent {
@@ -65,6 +69,8 @@ public:
     AnimationComponent(Entity* entity, Texture texture, LayerEnum layer);
     virtual SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
+    double getNextAngle(int dt);
+    SDL_RendererFlip  getNextFlip(int dt);
 };
 
 class OneTimeAnimationComponent : public AnimationComponent {
@@ -88,6 +94,17 @@ public:
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
     void restartAnimation();
+};
+
+class ProjectileArtComponent : public ArtComponent {
+private:
+    SDL_Texture* texture;
+public:
+    ProjectileArtComponent(Entity* entity, SDL_Texture* texture);
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+    double getNextAngle(int dt);
+    SDL_RendererFlip  getNextFlip(int dt);
 };
 
 class BackgroundArtComponent : public ArtComponent {
@@ -139,6 +156,8 @@ public:
     HealthBarArtComponent(Entity* entity, Entity* owner, Texture tex);
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
+    SDL_RendererFlip  getNextFlip(int dt);
+
 };
 
 class AmmoBarArtComponent: public ArtComponent {
@@ -183,8 +202,8 @@ public:
 //     ScoreTextArtComponent(Entity* entity, SDL_Renderer* renderer, TTF_Font* font,
 //                           ScoreComponent* ownerScore, int layer);
 //     ~ScoreTextArtComponent();
-//     SDL_Texture* getNextTexture(int dt);
-//     SDL_Rect* getNextSrcRect(int dt);
+//    double getNextAngle(int dt);
+//    SDL_RendererFlip  getNextFlip(int dt);
 // };
 
 #endif

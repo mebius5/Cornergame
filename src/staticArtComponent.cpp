@@ -14,3 +14,11 @@ SDL_Texture* StaticArtComponent::getNextTexture(int /*dt*/) {
 SDL_Rect* StaticArtComponent::getNextSrcRect(int /*dt*/) {
     return NULL;
 }
+
+SDL_RendererFlip StaticArtComponent::getNextFlip(int /*dt*/) {
+	if (entity->rotates) {
+		return SDL_FLIP_HORIZONTAL;
+	} else {
+		return SDL_FLIP_NONE;
+	}
+}

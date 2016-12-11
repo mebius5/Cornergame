@@ -91,3 +91,15 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
     clip.h = (this->surfaceH) / 6;
     return &clip;
 }
+
+double AnimationComponent::getNextAngle(int /*dt*/) {
+    if (this->entity->rotates && this->entity->actionState == ACTION_DODGE) {
+        return this->actionTime * entity->dir;
+    } else {
+        return 0;
+    }
+}
+
+SDL_RendererFlip AnimationComponent::getNextFlip(int /*dt*/) {
+    return SDL_FLIP_NONE;
+}

@@ -137,7 +137,7 @@ Entity * EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sf
     hero->physics = new PhysicsComponent(hero);
     hero->powerUp = new PowerUpComponent(hero);
     hero->ammo = new AmmoComponent(hero, 4);
-
+    hero->rotates = true;
     return hero;
 }
 
@@ -330,7 +330,7 @@ Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, float
     Texture texture = this->textureMap[texType];
     Entity* projectile = new Entity(this->nextId++, x, y, 20, 20, texture.width, texture.height);
     projectile->rotates = true;
-    projectile->art = new StaticArtComponent(projectile, texture.sdlTexture, LAYER_HERO, false);
+    projectile->art = new ProjectileArtComponent(projectile, texture.sdlTexture);
     DespawnEntityCommand* dCmd = new DespawnEntityCommand(projectile->getId());
     projectile->collision = new ProjectileCollisionComponent(projectile, dCmd, ownerId);
     projectile->physics = new PhysicsComponent(projectile);
