@@ -1,12 +1,16 @@
 #include "entityBuilder.h"
+#include "movementComponent.h"
+#include <stdlib.h>
 
 EntityBuilder::EntityBuilder(SDL_Renderer *renderer) :
     nextId(0),
     renderer(renderer),
     terrainTexMap(NTERRAIN, std::vector<Texture>(256)),
-    fontMap(NFONT, std::vector<TTF_Font*>(128)),
+    fontMap(NFONT, std::vector<TTF_Font*>(256)),
     textureMap(NTEXTURE)
 {
+    // seed random
+    srand(time(NULL));
 }
 
 /* Helper methods */
@@ -138,6 +142,7 @@ Entity * EntityBuilder::createHero(TextureEnum texType, int x, int y, SfxEnum sf
     hero->powerUp = new PowerUpComponent(hero);
     hero->ammo = new AmmoComponent(hero, 4);
     hero->rotates = true;
+    hero->particle = new ParticleComponent(hero, new SpawnParticleCommand());
     return hero;
 }
 
@@ -153,6 +158,7 @@ Entity* EntityBuilder::createEnemy(TextureEnum texType, int x, int y, std::vecto
     enemy->physics->maxXVelocity = 0.1f;
     enemy->physics->jumpVelocity = 0.4f;
     enemy->physics->maxJumps = 1;
+    enemy->particle = new ParticleComponent(enemy, new SpawnParticleCommand());
     return enemy;
 }
 
@@ -340,6 +346,16 @@ Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, float
     projectile->physics->deceleration = 0.0f;
     projectile->physics->target = closest;
     return projectile;
+}
+
+Entity* EntityBuilder::createParticle(TextureEnum texType, int x, int y) {
+    Texture texture = this->textureMap[texType];
+    Entity* particle = new Entity(this->nextId++, x, y, 20, 20, 20, 20);
+    particle->art = new ParticleAnimationComponent(particle, texture);
+    particle->physics = new MovementComponent(particle);
+    particle->physics->xVelocity = 0.01 * (rand() % 20 - 10);
+    particle->physics->xVelocity = 0.01 * (rand() % 20 - 10);
+    return particle;
 }
 
 Entity* EntityBuilder::createBomb(TextureEnum texType, int x, int y, float charge, int dir, Entity* closest) {

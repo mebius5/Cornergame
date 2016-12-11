@@ -5,7 +5,7 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
                  DrawingHandler& drawingHandler, InputHandler& inputHandler,
                  SoundHandler& soundHandler, ControlHandler& controlHandler,
                  AiHandler& aiHandler, CollisionHandler& collisionHandler,
-                 ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
+                 ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler, ParticleHandler& particleHandler,
                  PowerUpHandler& powerUpHandler, TimeHandler& timeHandler,
                  ResultsState& resultsState, HighscoreState& highscoreState) :
     State(entityManager, commandList, renderer, windowW, windowH),
@@ -17,6 +17,7 @@ PlayState::PlayState(int windowW, int windowH, EntityManager& entityManager,
     collisionHandler(collisionHandler),
     scoreHandler(scoreHandler),
     physicsHandler(physicsHandler),
+    particleHandler(particleHandler),
     powerUpHandler(powerUpHandler),
     timeHandler(timeHandler),
     resultsState(resultsState),
@@ -98,6 +99,7 @@ StateEnum PlayState::run() {
             this->aiHandler.updateAi(dt);
             this->inputHandler.handleEvents(dt);
             this->physicsHandler.update(dt);
+            this->particleHandler.update(dt);
             this->collisionHandler.handleCollisions();
             this->scoreHandler.handleScore(dt);
             this->drawingHandler.checkCameraShakes();

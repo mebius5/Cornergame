@@ -11,6 +11,7 @@ EntityManager::EntityManager(SDL_Renderer* renderer, std::vector<Command*>& cmdL
     this->entityBuilder.loadTexture(TEX_ENEMY, "spritesheets/lax.png");
     this->entityBuilder.loadTexture(TEX_PROJECTILE, "spritesheets/ball.png");
     this->entityBuilder.loadTexture(TEX_BOUNCE, "spritesheets/bounce.png");
+    this->entityBuilder.loadTexture(TEX_PARTICLE, "spritesheets/dust.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH, "resources/star.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFHEALTH_OVERLAY, "resources/starOverlay.png");
     this->entityBuilder.loadTexture(TEX_PWRUP_INFJUMP, "resources/wings.png");
@@ -90,6 +91,9 @@ void EntityManager::addEntity(Entity* entity) {
     if (entity->physics) {
         this->physicsComponents.push_back(entity->physics);
     }
+    if (entity->particle) {
+        this->particleComponents.push_back(entity->particle);
+    }
     if (entity->health) {
         this->healthComponents.push_back(entity->health);
     }
@@ -165,6 +169,7 @@ void EntityManager::clear() {
     this->bgComponents.clear();
     this->inputComponents.clear();
     this->physicsComponents.clear();
+    this->particleComponents.clear();
     this->healthComponents.clear();
     this->scoreComponents.clear();
     this->staticCollisionComponents.clear();
@@ -233,7 +238,7 @@ void EntityManager::createFadeInText(FontEnum font,
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
+    while(((i = tempText.find("\n"))!=std::string::npos)|| ((i = tempText.find("\\"))!=std::string::npos)){
         Entity * entity = this->entityBuilder.createFadeInText(
                 font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha, windowW, x, y+yOffset);
         this->addEntity(entity);
@@ -253,7 +258,7 @@ void EntityManager::createCenteredFadeInText(FontEnum font,
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
+    while(((i = tempText.find("\n"))!=std::string::npos)|| ((i = tempText.find("\\"))!=std::string::npos)){
         Entity * entity = this->entityBuilder.createFadeInText(
                 font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha, windowW, 0, 0);
         entity->x = (windowW/2 - entity->width/2);
@@ -276,7 +281,7 @@ void EntityManager::createHorizontallyCenteredFadeInText(FontEnum font, const ch
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
+    while(((i = tempText.find("\n"))!=std::string::npos)|| ((i = tempText.find("\\"))!=std::string::npos)){
         Entity * entity = this->entityBuilder.createFadeInText(
                 font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha, windowW, 0, yPos+yOffset);
         entity->x = (windowW/2 - entity->width/2);
@@ -300,7 +305,7 @@ Entity* EntityManager::createHorizontallyCenteredFadeInMenuText(FontEnum font, c
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
+    while(((i = tempText.find("\n"))!=std::string::npos)|| ((i = tempText.find("\\"))!=std::string::npos)){
         Entity* entity = this->entityBuilder.createHorizontallyCenteredFadeInMenuText(
                 font, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha,
                 windowW, yPos+yOffset, index, numOptions, nextState);
@@ -325,7 +330,7 @@ Entity* EntityManager::createHorizontallyCenteredSelectLevelText(FontEnum fontTy
     std::string tempText = text;
     std::string::size_type  i=0;
     int yOffset=0;
-    while((i = tempText.find("\n"))!=std::string::npos){
+    while(((i = tempText.find("\n"))!=std::string::npos)|| ((i = tempText.find("\\"))!=std::string::npos)){
         Entity* entity = this->entityBuilder.createHorizontallyCenteredSelectLevelText(
                 fontType, tempText.substr(0,i).c_str(), fontSize, r, g, b, initialAlpha,
                 windowW, yPos+yOffset, index, numOptions, nextState, levelSelected);
@@ -431,6 +436,12 @@ Entity* EntityManager::createProjectile(int x, int y, float charge, int dir, int
     return entity;
 }
 
+Entity* EntityManager::createParticle(int x, int y) {
+    Entity* entity = this->entityBuilder.createParticle(TEX_PARTICLE, x, y);
+    this->addEntity(entity);
+    return entity;
+}
+
 void EntityManager::handleSpawns() {
     std::vector<Command*>::iterator it;
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
@@ -438,6 +449,8 @@ void EntityManager::handleSpawns() {
             this->createProjectile(eCmd->x, eCmd->y, eCmd->charge, eCmd->dir, eCmd->ownerID, eCmd->projType);
         } else if (DespawnEntityCommand* dCmd = dynamic_cast<DespawnEntityCommand*>(*it)) {
             this->deleteEntity(dCmd->id);
+        } else if (SpawnParticleCommand* sCmd = dynamic_cast<SpawnParticleCommand*>(*it)) {
+            this->createParticle(sCmd->x, sCmd->y);
         } else if (TempHideCommand* tCmd = dynamic_cast<TempHideCommand*>(*it)) {
             this->hideEntity(tCmd->id);
         } else if (dynamic_cast<LoopLevelCommand*>(*it)){
@@ -577,7 +590,7 @@ void EntityManager::populateLevel(Level* level) {
                     break;
                 case TILE_FADEINTEXT:
                     createFadeInText(FONT_GLOBAL, level->getStringList()[stringCount].c_str(),
-                                     30, 255, 255, 255, 0, windowW, j*32, i*32);
+                                     30, 0, 0, 0, 0, windowW, j*32, i*32);
                     stringCount++;
                     break;
                 case TILE_NORMALTEXT:

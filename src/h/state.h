@@ -15,6 +15,7 @@
 #include "level.h"
 #include "powerUpHandler.h"
 #include "timeHandler.h"
+#include "particleHandler.h"
 
 class State {
 protected:
@@ -39,12 +40,13 @@ private:
     ControlHandler& controlHandler;
     CollisionHandler& collisionHandler;
     PhysicsHandler& physicsHandler;
+    ParticleHandler& particleHandler;
 public:
     StartState(int windowW, int windowH, EntityManager& entityManager,
                std::vector<Command*>& commandList, SDL_Renderer* renderer,
                DrawingHandler& drawingHandler, InputHandler& inputHandler,
                SoundHandler& soundHandler, ControlHandler& controlHandler,
-               CollisionHandler& collisionHandler, PhysicsHandler& physicsHandler);
+               CollisionHandler& collisionHandler, PhysicsHandler& physicsHandler, ParticleHandler& particleHandler);
     void begin(int level);
     StateEnum run();
     void cleanup(StateEnum next);
@@ -152,6 +154,7 @@ private:
     CollisionHandler& collisionHandler;
     ScoreHandler& scoreHandler;
     PhysicsHandler& physicsHandler;
+    ParticleHandler& particleHandler;
     PowerUpHandler& powerUpHandler;
     TimeHandler& timeHandler;
     ResultsState& resultsState;
@@ -168,7 +171,7 @@ public:
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler,
               AiHandler& aiHandler, CollisionHandler& collisionHandler,
-              ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
+              ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler, ParticleHandler& particleHandler,
               PowerUpHandler& powerUpHandler, TimeHandler& timeHandler,
               ResultsState& resultsState, HighscoreState& highscoreState);
     void begin(int level);
@@ -186,6 +189,7 @@ private:
     CollisionHandler& collisionHandler;
     ScoreHandler& scoreHandler;
     PhysicsHandler& physicsHandler;
+    ParticleHandler& particleHandler;
     PowerUpHandler& powerUpHandler;
     TimeHandler& timeHandler;
     Entity* hero;
@@ -198,7 +202,7 @@ public:
               DrawingHandler& drawingHandler, InputHandler& inputHandler,
               SoundHandler& soundHandler, ControlHandler& controlHandler,
               AiHandler& aiHandler, CollisionHandler& collisionHandler,
-              ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler,
+              ScoreHandler& scoreHandler, PhysicsHandler& physicsHandler, ParticleHandler& particleHandler,
               PowerUpHandler& powerUpHandler, TimeHandler& timeHandler);
     void begin(int level);
     StateEnum run();

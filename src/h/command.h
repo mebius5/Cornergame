@@ -90,4 +90,11 @@ public:
     TimeNormalCommand();
 };
 
+class SpawnParticleCommand : public Command {
+public:
+    float x;
+    float y;
+    SpawnParticleCommand();
+};
+
 #endif

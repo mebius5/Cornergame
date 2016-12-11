@@ -106,10 +106,11 @@ void GameManager::run() {
     PhysicsHandler physicsHandler(entityMgr.physicsComponents);
     PowerUpHandler powerUpHandler(entityMgr.powerUpComponents);
     TimeHandler timeHandler(commandList);
+    ParticleHandler particleHandler(entityMgr.particleComponents);
 
     StartState startState(this->width, this->height, entityMgr, commandList,
                           this->renderer, drawingHandler, inputHandler,
-                          soundHandler, controlHandler, collisionHandler, physicsHandler);
+                          soundHandler, controlHandler, collisionHandler, physicsHandler, particleHandler);
     MenuState menuState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler);
@@ -132,13 +133,13 @@ void GameManager::run() {
     PlayState playState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
-                        collisionHandler, scoreHandler, physicsHandler,
+                        collisionHandler, scoreHandler, physicsHandler, particleHandler,
                         powerUpHandler, timeHandler, resultsState, highscoreState);
 
     TutorialState tutorialState(this->width, this->height, entityMgr, commandList,
                         this->renderer, drawingHandler, inputHandler,
                         soundHandler, controlHandler, aiHandler,
-                        collisionHandler, scoreHandler, physicsHandler,
+                        collisionHandler, scoreHandler, physicsHandler, particleHandler,
                         powerUpHandler, timeHandler);
 
     // Load music resources

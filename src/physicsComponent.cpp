@@ -10,7 +10,6 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     xAccel(0.0f),
     yAccel(0.0f),
     accelAmount(.001f),
-    gravity(0.0022f),
     slideVelocity(.1f),
     jumps(0),
     infiniteJumps(false),
@@ -25,6 +24,7 @@ PhysicsComponent::PhysicsComponent(Entity* entity) :
     maxYVelocity(2.0f),
     jumpVelocity(.5f),
     deceleration(.0018f),
+    gravity(0.0022f),
     maxJumps(1),
     dodgeTime(-1),
     maxDodgeTime(600),
@@ -214,6 +214,7 @@ void PhysicsComponent::jump(float velocity) {
             this->xVelocity = -.25f * velocity;
         if (this->jumpCommand)
             Component::commandList->push_back(this->jumpCommand);
+        this->entity->particle->startSpawning(120, 180);
     }
 }
 
@@ -241,6 +242,7 @@ void PhysicsComponent::dodge(int dir) {
         this->entity->dir = dir;
         this->aerialDodges++;
         this->entity->actionState = ACTION_DODGE;
+        static_cast<AnimationComponent*>(this->entity->art)->actionTime = 0;
     }
 }
 

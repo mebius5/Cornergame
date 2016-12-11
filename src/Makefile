@@ -35,8 +35,12 @@ SRCFILES = \
 	levelTransitState.cpp \
 	menuOptionInputComponent.cpp \
 	menuState.cpp \
+    movementComponent.cpp \
 	objectAnimationComponent.cpp \
 	oneTimeAnimationComponent.cpp \
+    particleAnimationComponent.cpp\
+    particleComponent.cpp \
+    particleHandler.cpp \
 	physicsComponent.cpp \
 	physicsHandler.cpp \
 	playState.cpp \

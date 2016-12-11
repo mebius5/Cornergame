@@ -60,11 +60,10 @@ void DrawingHandler::draw(int dt) {
 }
 
 void DrawingHandler::shift(int dt) {
-    shiftCount+=dt;
-
-    if(shiftCount>=10){
-        camera.shift(shiftCount/10,0);
-        shiftCount=shiftCount%10;
+    this->shiftCount += dt;
+    if (this->shiftCount >= 10) {
+        this->camera.shift(this->shiftCount/20, 0);
+        this->shiftCount = 0;
     }
 }
 

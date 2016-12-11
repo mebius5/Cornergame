@@ -15,8 +15,8 @@ protected:
 public:
     LayerEnum layer;
     bool movesWithCamera;
-    int offsetX;
-    int offsetY;
+    float offsetX;
+    float offsetY;
     bool isVisible;
     bool globalLighting;
 
@@ -105,6 +105,17 @@ public:
     SDL_Rect* getNextSrcRect(int dt);
     double getNextAngle(int dt);
     SDL_RendererFlip  getNextFlip(int dt);
+};
+
+
+class ParticleAnimationComponent : public AnimationComponent {
+private:
+    Command* despawnCommand;
+public:
+    ParticleAnimationComponent(Entity* entity, Texture texture);
+    ~ParticleAnimationComponent();
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
 };
 
 class BackgroundArtComponent : public ArtComponent {

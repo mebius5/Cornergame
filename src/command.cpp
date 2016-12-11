@@ -49,3 +49,6 @@ TimeSlowCommand::TimeSlowCommand() {
 
 TimeNormalCommand::TimeNormalCommand() {
 }
+
+SpawnParticleCommand::SpawnParticleCommand() {
+}
