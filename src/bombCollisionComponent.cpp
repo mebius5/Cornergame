@@ -16,7 +16,7 @@ void BombCollisionComponent::explode() {
     this->exploded = true;
     static_cast<OneTimeAnimationComponent*>(this->entity->art)->startAnimation();
     this->entity->x -= this->entity->width;
-    this->entity->y -= this->entity->height;
+    this->entity->y -= this->entity->height*2;
     this->entity->width *= 3;
     this->entity->height *= 3;
     this->entity->drawX = this->entity->width/2 - this->entity->drawWidth/2;

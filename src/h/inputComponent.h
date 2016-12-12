@@ -29,6 +29,8 @@ private:
     bool jumpPressed;
     float holdTime;
     float maxHold;
+    bool leftPressed;
+    bool rightPressed;
 public:
     HeroInputComponent(Entity* entity, bool wasd);
     ~HeroInputComponent();

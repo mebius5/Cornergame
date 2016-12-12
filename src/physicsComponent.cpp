@@ -73,6 +73,8 @@ void PhysicsComponent::updateLocation(int dt) {
     if (onRightWall || onLeftWall) {
         if (this->startSlideCommand)
             Component::commandList->push_back(this->startSlideCommand);
+        if (!onGround)
+            this->entity->particle->setIndefSpawn(true);
     }
 
     // rotate velocities if homing on target
@@ -171,6 +173,8 @@ void PhysicsComponent::updateLocation(int dt) {
     if (!onRightWall && !onLeftWall) {
         if (this->stopSlideCommand)
             Component::commandList->push_back(this->stopSlideCommand);
+        if (this->entity->health)
+            this->entity->particle->setIndefSpawn(false);
     }
 
     // apply slow motion if close to target
