@@ -271,3 +271,7 @@ void PhysicsComponent::clearAccelerationY() {
 bool PhysicsComponent::isInfiniteJumpOn() {
     return this->infiniteJumps;
 }
+
+void PhysicsComponent::disableSlow() {
+    this->timeSlowCommand->valid = false;
+}

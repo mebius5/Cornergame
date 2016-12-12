@@ -34,7 +34,7 @@ int TimeHandler::forward(int dt) {
 
     // handle slow motion
     if (this->slowMotion) {
-       
+
         // keep track of remainder so we don't lose time
         remainder += dt % 4;
         if (remainder > 4) {
@@ -60,9 +60,11 @@ void TimeHandler::handleTimeCommands() {
     for (it = this->commandList.begin(); it != this->commandList.end(); ) {
         if (TimeFreezeCommand* timeCmd = dynamic_cast<TimeFreezeCommand*>(*it)) {
             this->frozenTime += timeCmd->time;
-        } else if (dynamic_cast<TimeSlowCommand*>(*it)) {
-            this->slowMotion = true;
-            this->commandList.push_back(this->lowerVolumeCommand);
+        } else if (TimeSlowCommand* cmd = dynamic_cast<TimeSlowCommand*>(*it)) {
+            if (cmd->valid) {
+                this->slowMotion = true;
+                this->commandList.push_back(this->lowerVolumeCommand);
+            }
         } else if (dynamic_cast<TimeNormalCommand*>(*it)) {
             this->slowMotion = false;
             this->commandList.push_back(this->raiseVolumeCommand);

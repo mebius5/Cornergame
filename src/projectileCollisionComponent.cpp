@@ -4,15 +4,15 @@ ProjectileCollisionComponent::ProjectileCollisionComponent(Entity* entity, Comma
     DynamicCollisionComponent(entity),
     despawnCommand(cmd),
     timeFreezeCommand(new TimeFreezeCommand(20)),
+    timeNormalCommand(new TimeNormalCommand()),
     ownerID(ownerID) {
 }
 
 ProjectileCollisionComponent::~ProjectileCollisionComponent() {
     if (this->despawnCommand)
         delete this->despawnCommand;
-    if (this->timeFreezeCommand){
-        delete this->timeFreezeCommand;
-    }
+    delete this->timeFreezeCommand;
+    delete this->timeNormalCommand;
 }
 
 void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherComp) {
@@ -35,8 +35,9 @@ void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* 
         }
         Component::commandList->push_back(this->despawnCommand);
         Component::commandList->push_back(this->timeFreezeCommand);
+        Component::commandList->push_back(this->timeNormalCommand);
         this->entity->particle->setIndefSpawn(false);
-
+        this->entity->physics->disableSlow();
     // if collision with owner, return as ammo
     } else if (otherComp->entity->getId() == this->ownerID) {
         otherComp->entity->ammo->addAmmo(1);

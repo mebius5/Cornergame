@@ -82,6 +82,7 @@ public:
 
 class TimeSlowCommand: public Command {
 public:
+    bool valid;
     TimeSlowCommand();
 };
 

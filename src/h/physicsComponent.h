@@ -11,7 +11,7 @@ private:
     Command* jumpCommand;
     Command* startSlideCommand;
     Command* stopSlideCommand;
-    Command* timeSlowCommand;
+    TimeSlowCommand* timeSlowCommand;
     Command* timeNormalCommand;
     float xAccel;
     float yAccel;
@@ -56,6 +56,7 @@ public:
     void accelerateY(int dir);
     void clearAccelerationX();
     void clearAccelerationY();
+    void disableSlow();
 };
 
 #endif

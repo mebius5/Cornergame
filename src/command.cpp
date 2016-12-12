@@ -44,7 +44,8 @@ TimeFreezeCommand::TimeFreezeCommand(int time) :
     time(time) {
 }
 
-TimeSlowCommand::TimeSlowCommand() {
+TimeSlowCommand::TimeSlowCommand() :
+    valid(true) {
 }
 
 TimeNormalCommand::TimeNormalCommand() {
