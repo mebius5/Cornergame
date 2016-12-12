@@ -19,6 +19,14 @@ ParticleComponent::~ParticleComponent() {
     }
 }
 
+void ParticleComponent::slowSpawn() {
+    this->spawnInterval = 150;
+}
+
+void ParticleComponent::fastSpawn() {
+    this->spawnInterval = 50;
+}
+
 void ParticleComponent::startSpawning(int upper, int lower) {
     this->timeLeft = lower + rand() % (upper - lower);
     this->timeSinceSpawn = this->spawnInterval;
