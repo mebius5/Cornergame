@@ -52,8 +52,8 @@ void ParticleComponent::update(int dt) {
         int num_spawns = this->timeSinceSpawn / this->spawnInterval;
         for (int i = 0; i < num_spawns; i++) {
             this->timeSinceSpawn -= this->spawnInterval;
-            this->spawnCommand->x = this->entity->x;
-            this->spawnCommand->y = this->entity->y;
+            this->spawnCommand->x = this->entity->x + this->entity->width / 2;
+            this->spawnCommand->y = this->entity->y + this->entity->height;
             Component::commandList->push_back(this->spawnCommand);
         }
     }
