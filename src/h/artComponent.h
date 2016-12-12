@@ -111,9 +111,12 @@ public:
 class ParticleAnimationComponent : public AnimationComponent {
 private:
     Command* despawnCommand;
+    int counter;
+    int lastDraw;
 public:
     ParticleAnimationComponent(Entity* entity, Texture texture);
     ~ParticleAnimationComponent();
+    void updateLocation();
     SDL_Texture* getNextTexture(int dt);
     SDL_Rect* getNextSrcRect(int dt);
 };

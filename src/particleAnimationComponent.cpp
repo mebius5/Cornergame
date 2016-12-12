@@ -2,14 +2,23 @@
 
 ParticleAnimationComponent::ParticleAnimationComponent(Entity* entity, Texture tex):
     AnimationComponent(entity, tex, LAYER_OVERLAY),
-    despawnCommand(new DespawnEntityCommand(entity->getId())) {
+    despawnCommand(new DespawnEntityCommand(entity->getId())),
+    counter(0),
+    lastDraw(0) {
 }
 
 ParticleAnimationComponent::~ParticleAnimationComponent() {
     delete this->despawnCommand;
 }
 
+void ParticleAnimationComponent::updateLocation() {
+    if (counter - lastDraw > 5)
+        Component::commandList->push_back(this->despawnCommand);
+    counter++;
+}
+
 SDL_Texture* ParticleAnimationComponent::getNextTexture(int /*dt*/) {
+    lastDraw = counter;
     return this->texture;
 }
 
