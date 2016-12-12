@@ -48,6 +48,10 @@ void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* 
 void ProjectileCollisionComponent::onStaticCollision(StaticCollisionComponent* otherComp) {
     // only react to terrain, not other static objects
     if (dynamic_cast<TerrainCollisionComponent*>(otherComp)) {
+        // create dust if first collision
+        if (!this->entity->physics->isFrozen()) {
+            this->entity->particle->startSpawning(80, 120);
+        }
         // stop moving
         this->entity->physics->freeze();
         this->entity->physics->target = NULL;
