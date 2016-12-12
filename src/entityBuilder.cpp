@@ -345,6 +345,7 @@ Entity* EntityBuilder::createProjectile(TextureEnum texType, int x, int y, float
     projectile->physics->yVelocity = -0.4f;
     projectile->physics->deceleration = 0.0f;
     projectile->physics->target = closest;
+    projectile->particle = new ParticleComponent(projectile, new SpawnParticleCommand());
     return projectile;
 }
 
@@ -354,7 +355,7 @@ Entity* EntityBuilder::createParticle(TextureEnum texType, int x, int y) {
     particle->art = new ParticleAnimationComponent(particle, texture);
     particle->physics = new MovementComponent(particle);
     particle->physics->xVelocity = 0.01 * (rand() % 20 - 10);
-    particle->physics->xVelocity = 0.01 * (rand() % 20 - 10);
+    particle->physics->yVelocity = 0.01 * (rand() % 20 - 10);
     return particle;
 }
 
@@ -371,6 +372,8 @@ Entity* EntityBuilder::createBomb(TextureEnum texType, int x, int y, float charg
     projectile->physics->yVelocity = -0.4f;
     projectile->physics->deceleration = 0.0f;
     projectile->physics->target = closest;
+    projectile->particle = new ParticleComponent(projectile, new SpawnParticleCommand());
+    projectile->particle->setIndefSpawn(true);
     return projectile;
 }
 

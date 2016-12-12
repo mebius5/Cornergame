@@ -6,6 +6,7 @@ ParticleComponent::ParticleComponent(Entity * entity, SpawnParticleCommand* spaw
     timeLeft(0),
     timeSinceSpawn(0),
     spawnInterval(50),
+    indefSpawn(false),
     spawnCommand(spawnCommand) {
         srand(time(NULL));
 }
@@ -22,12 +23,18 @@ void ParticleComponent::startSpawning(int upper, int lower) {
     this->timeLeft = lower + rand() % (upper - lower);
 }
 
+void ParticleComponent::setIndefSpawn(bool spawn) {
+    this->indefSpawn = spawn;
+}
+
 void ParticleComponent::update(int dt) {
     // see if out of time
     this->timeLeft -= dt;
     if (this->timeLeft <= 0) {
         this->timeLeft = 0;
-        return;
+        if (!this->indefSpawn) {
+            return;
+        }
     }
 
     // else spawn if enough time passed
