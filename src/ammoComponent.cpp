@@ -30,7 +30,7 @@ void AmmoComponent::toggleUnlimited() {
 
 void AmmoComponent::spendAmmo(float charge) {
     // check if enough ammo to shoot
-    if (this->ammo <= 0 && !this->isUnlimited)
+    if (this->ammo <= 0 && !this->hasBomb && !this->isUnlimited)
         return;
 
     SpawnProjCommand* command;
