@@ -194,6 +194,8 @@ Entity * EntityManager::createHero(TextureEnum texType, int x, int y, SfxEnum sf
     this->addEntity(pwr2);
     Entity *pwr4 = this->entityBuilder.createPowerUpOverlay(TEX_PWRUP_BEER_OVERLAY, x, y, entity, TEX_PWRUP_BEER);
     this->addEntity(pwr4);
+    Entity* bombIndicator = this->entityBuilder.createBombIndicator(entity);
+    this->addEntity(bombIndicator);
     return entity;
 }
 

@@ -34,6 +34,7 @@ public:
     Entity* createHealthBar(int x, int y, Entity* owner);
     Entity* createHealthBarOverlay(int x, int y, TextureEnum texType);
     Entity* createAmmoBar(int x, int y, Entity* owner);
+    Entity* createBombIndicator(Entity* owner);
     // Entity* createScoreBox(int x, int y, Entity* owner, FontEnum font, int fontSize);
 
     Entity* createFadeInText(FontEnum fontType, const char *text, int fontSize,

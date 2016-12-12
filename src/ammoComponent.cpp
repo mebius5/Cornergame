@@ -6,8 +6,8 @@ AmmoComponent::AmmoComponent(Entity * entity, int maxAmmo):
     maxAmmo(maxAmmo),
     spawnCommand(new SpawnProjCommand(PROJ_HERO)),
     bombCommand(new SpawnProjCommand(PROJ_BOMB)),
-    hasBomb(false),
-    isUnlimited(false) {
+    isUnlimited(false),
+    hasBomb(false) {
 }
 
 AmmoComponent::~AmmoComponent() {

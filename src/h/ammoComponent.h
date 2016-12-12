@@ -10,10 +10,10 @@ private:
     int maxAmmo;
     SpawnProjCommand* spawnCommand;
     SpawnProjCommand* bombCommand;
-    bool hasBomb;
     bool isUnlimited;
 
 public:
+    bool hasBomb;
     AmmoComponent(Entity* entity, int maxAmmo);
     ~AmmoComponent();
     int getAmmo();

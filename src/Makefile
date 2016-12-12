@@ -7,6 +7,7 @@ SRCFILES = \
 	animationComponent.cpp \
 	backgroundArtComponent.cpp \
 	bombCollisionComponent.cpp \
+	bombIndicatorArtComponent.cpp \
 	bounceAnimationComponent.cpp \
 	bounceCollisionComponent.cpp \
 	camera.cpp \

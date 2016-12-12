@@ -18,10 +18,17 @@ Assignment 12 Task Writeups
 Akshay
 
 Andrew
-- Fixed bugs with bomb disappearing, player getting stuck in tight spaces,
-  dodge animation not showing up while hero is in midair, parallax rounding
-  error disabling parallax
+- bug fixes:
+    - bomb no longer disappears randomly
+    - players don't get stuck in tight spaces
+    - dodge animation now shows up while hero is in midair
+    - parallax rounding bug fixed
+    - able to fire a bomb when you have no ammo
+    - made bomb damage time based
+    - fixed slow mo not shutting off when killing blow is dodged
+    - fixed particles not disappearing when off screen
 - tuned camera movement speed
+- added indicator for when you have a bomb
 
 
 Grady

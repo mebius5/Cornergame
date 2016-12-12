@@ -188,6 +188,20 @@ public:
     SDL_Rect* getNextSrcRect(int dt);
 };
 
+class BombIndicatorArtComponent : public ArtComponent {
+private:
+    SDL_Texture* texture;
+    AmmoComponent* ownerAmmo;
+    SDL_Rect clip;
+    float width;
+    int height;
+public:
+    BombIndicatorArtComponent(Entity* entity, Entity* owner, Texture tex);
+    void updateLocation();
+    SDL_Texture* getNextTexture(int dt);
+    SDL_Rect* getNextSrcRect(int dt);
+};
+
 class TextFadeInComponent : public ArtComponent {
 private:
     SDL_Surface* surface;

@@ -190,6 +190,13 @@ Entity* EntityBuilder::createAmmoBar(int, int, Entity* owner) {
     return ammoBar;
 }
 
+Entity* EntityBuilder::createBombIndicator(Entity* owner) {
+    Texture bombTex = this->textureMap[TEX_BOMB];
+    Entity* bombEntity = new Entity(this->nextId++, owner->x, owner->y, bombTex.width/8, bombTex.height/2, bombTex.width/16, bombTex.height/4);
+    bombEntity->art = new BombIndicatorArtComponent(bombEntity, owner, bombTex);
+    return bombEntity;
+}
+
 // Entity* EntityBuilder::createScoreBox(int x, int y, Entity* owner, FontEnum fontType, int fontSize) {
 //     if (!this->fontMap[fontType][fontSize])
 //         this->loadFont(fontType, fontSize);
