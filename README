@@ -28,7 +28,8 @@ Grady
 - Tweaked global lighting to allow variation in background size without
   affecting light filter
 - Edited lighting filters to allow better lighting effect
-- Modified tutorial level
+- Modified tutorial level to show new power ups and terrains
+- Modified menu state to remove adjust volume option
 
 Pratyush
 
