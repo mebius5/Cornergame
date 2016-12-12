@@ -21,10 +21,13 @@ ParticleComponent::~ParticleComponent() {
 
 void ParticleComponent::startSpawning(int upper, int lower) {
     this->timeLeft = lower + rand() % (upper - lower);
+    this->timeSinceSpawn = this->spawnInterval;
 }
 
 void ParticleComponent::setIndefSpawn(bool spawn) {
     this->indefSpawn = spawn;
+    if (spawn)
+        this->timeSinceSpawn = this->spawnInterval;
 }
 
 void ParticleComponent::update(int dt) {

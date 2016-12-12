@@ -61,8 +61,10 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
             }
         } else if (keycode == this->leftDodge) {
             this->entity->physics->dodge(-1);
+            this->entity->particle->startSpawning(300, 400);
         } else if (keycode == this->rightDodge) {
             this->entity->physics->dodge(1);
+            this->entity->particle->startSpawning(300, 400);
         }
     }
 
