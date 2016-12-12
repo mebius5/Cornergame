@@ -39,13 +39,9 @@ void HeroInputComponent::updateTime(int dt) {
     // see if we're holding down a key
     if (this->leftPressed) {
         this->entity->physics->accelerateX(-1);
-        if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
-            Component::commandList->push_back(this->runCommand);
     }
     if (this->rightPressed) {
         this->entity->physics->accelerateX(1);
-        if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
-            Component::commandList->push_back(this->runCommand);
     }
 }
 
