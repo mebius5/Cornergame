@@ -359,11 +359,9 @@ Entity* EntityBuilder::createParticle(TextureEnum texType, int x, int y) {
 }
 
 Entity* EntityBuilder::createBomb(TextureEnum texType, int x, int y, float charge, int dir, Entity* closest) {
-    Texture texture = this->textureMap[texType];
-    Texture animation = this->textureMap[TEX_PWRUP_BOMB];
+    Texture animation = this->textureMap[texType];
     Entity* projectile = new Entity(this->nextId++, x, y, 20, 20, 32, 32);
-    projectile->rotates = true;
-    projectile->art = new OneTimeAnimationComponent(projectile, animation, LAYER_HERO, 1500, 1, texture);
+    projectile->art = new OneTimeAnimationComponent(projectile, animation, LAYER_HERO, 1500);
     projectile->collision = new BombCollisionComponent(projectile);
     projectile->physics = new PhysicsComponent(projectile);
     projectile->physics->xVelocity = dir * charge * 0.7f;
