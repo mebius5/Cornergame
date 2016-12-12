@@ -35,9 +35,9 @@ void PlayState::begin(int levelnum) {
         this->entityManager.createBackground(TEX_BACKGROUND1, 0, 0, 2816, 704, 0.25);
         this->entityManager.createBackground(TEX_BACKGROUND2, 0, 0, 2816, 704, 0.5);
     } else { //Dark theme for odd levels
-        Entity* background = this->entityManager.createBackground(TEX_DARKBACKGROUND1,0,0, 1024, 704, 0.25);
+        Entity* background = this->entityManager.createBackground(TEX_DARKBACKGROUND1,0,0, 2212, 704, 0.25);
         this->entityManager.setLightTexture(background, TEX_LIGHT_MOD_GLOBAL, false);
-        this->entityManager.createBackground(TEX_DARKBACKGROUND2, 0, 0, 1024, 704, 0.5);
+        this->entityManager.createBackground(TEX_DARKBACKGROUND2, 0, 0, 2212, 704, 0.5);
     }
 
     Level level(levelnum, windowW, windowH);

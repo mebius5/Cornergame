@@ -92,4 +92,4 @@ clean:
 
 #For compiling on mac only
 mac:
-	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) $(INCLUDE) $(MACFLAGS)
+	$(CXX) -o $(TARGET) $(SRCFILES) $(CXXFLAGS) -g $(INCLUDE) $(MACFLAGS)

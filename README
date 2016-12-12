@@ -12,11 +12,10 @@ cd src/
 make
 ./gameManager
 
-Assignment 11 Task Writeups
-Now the even levels are dark themed
+Assignment 12 Task Writeups
+(PROBABLY NOT FINAL VERSION, WILL SUBMIT FINAL VERSION ON MONDAY)
 
 Akshay
-
 
 Andrew
 - Fixed bugs with bomb disappearing, player getting stuck in tight spaces,
@@ -28,11 +27,12 @@ Andrew
 Grady
 - Tweaked global lighting to allow variation in background size without
   affecting light filter
-- Tweaked lighting filters
-- Tweaked tutorial level
+- Edited lighting filters to allow better lighting effect
+- Modified tutorial level to show new power ups and terrains
+- Modified menu state to remove adjust volume option
+- Fixed dark theme background to display parallax scroll properly
 
 Pratyush
-
 
 
 
@@ -40,6 +40,7 @@ GENERAL CONTROLS
 - Press ESC to quit game
 - Press q to return to MENU
 - Press p to skip preview, transit text, results, etc.
+- Press l to skip level
 
 GAMEPLAY CONTROLS
 - Player 1 uses wasd to move, v to shoot, c and m to dodge to left and right

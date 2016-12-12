@@ -9,11 +9,13 @@ private:
     int timeLeft;
     int timeSinceSpawn;
     int spawnInterval;
+    bool indefSpawn;
     SpawnParticleCommand* spawnCommand;
 public:
     ParticleComponent(Entity* entity, SpawnParticleCommand* spawnCommand);
     ~ParticleComponent();
     void startSpawning(int upper, int lower);
+    void setIndefSpawn(bool spawn);
     void update(int dt);
 };
 

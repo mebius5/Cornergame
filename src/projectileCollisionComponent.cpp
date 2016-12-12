@@ -21,6 +21,7 @@ void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* 
             dynamic_cast<HeroCollisionComponent*>(otherComp)) {
         otherComp->entity->ammo->addAmmo(1);
         Component::commandList->push_back(this->despawnCommand);
+        this->entity->particle->setIndefSpawn(false);
 
     // if not frozen and collision with damagable, get destroyed and deal damage
     } else if (otherComp->entity->getId() != this->ownerID &&
@@ -34,19 +35,26 @@ void ProjectileCollisionComponent::onEntityCollision(DynamicCollisionComponent* 
         }
         Component::commandList->push_back(this->despawnCommand);
         Component::commandList->push_back(this->timeFreezeCommand);
+        this->entity->particle->setIndefSpawn(false);
 
     // if collision with owner, return as ammo
     } else if (otherComp->entity->getId() == this->ownerID) {
         otherComp->entity->ammo->addAmmo(1);
         Component::commandList->push_back(this->despawnCommand);
+        this->entity->particle->setIndefSpawn(false);
     }
 }
 
 void ProjectileCollisionComponent::onStaticCollision(StaticCollisionComponent* otherComp) {
     // only react to terrain, not other static objects
     if (dynamic_cast<TerrainCollisionComponent*>(otherComp)) {
+        // create dust if first collision
+        if (!this->entity->physics->isFrozen()) {
+            this->entity->particle->startSpawning(80, 120);
+        }
         // stop moving
         this->entity->physics->freeze();
         this->entity->physics->target = NULL;
+        this->entity->particle->setIndefSpawn(false);
     }
 }
