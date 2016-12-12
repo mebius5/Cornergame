@@ -79,10 +79,12 @@ SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
             this->actionTime = 0;
         }
     } else if (this->entity->actionState == ACTION_DAMAGE) {
+        this->entity->health->setIsInvincible(true);
         this->actionTime += dt;
         if (this->actionTime > 1000) {
             this->actionTime = 0;
             this->entity->actionState = ACTION_IDLE;
+            this->entity->health->setIsInvincible(false);
         }
         clip.x = ((actionTime / 250) % 2) * 32 + startpos + 32;
         clip.y = 32;
