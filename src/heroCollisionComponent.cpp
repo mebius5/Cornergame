@@ -31,6 +31,7 @@ void HeroCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
         if (this->projCollisionCommand && !projComp->entity->physics->isFrozen() &&
                 this->entity->getId() != projComp->ownerID) {
             Component::commandList->push_back(this->projCollisionCommand);
+            Component::commandList->push_back(this->cameraShakeCommand);
         }
     }
 }
