@@ -82,7 +82,7 @@ void Camera::draw(int dt, ArtComponent *artComponent) {
 
     if (entity->rotates ) {
         SDL_RenderCopyEx(this->renderer, artComponent->getNextTexture(dt),
-                       artComponent->getNextSrcRect(dt), &dest, 
+                       artComponent->getNextSrcRect(dt), &dest,
                        artComponent->getNextAngle(dt), NULL, artComponent->getNextFlip(dt));
     } else {
         SDL_RenderCopy(this->renderer, artComponent->getNextTexture(dt),
@@ -171,7 +171,7 @@ void Camera::detectBorderCollision(Entity* entity, int dt) {
         if (minX - entity->x > 50)      // get squished!
             entity->health->die();
         entity->physics->bump(1);
-        entity->health->takeDamage(10);
+        entity->health->takeUnblockableDamage(10);
         entity->actionState = ACTION_DAMAGE;
     } else if (entity->x + entity->width > maxX) {
         entity->x = maxX - entity->width - shiftAmount;

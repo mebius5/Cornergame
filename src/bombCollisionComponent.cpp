@@ -29,7 +29,7 @@ void BombCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
         this->entity->physics->freeze();
         this->entity->physics->target = NULL;
         this->explode();
-        otherComp->entity->health->takeDamage(50);
+        otherComp->entity->health->splash = true;
         otherComp->entity->actionState = ACTION_DAMAGE;
     }
 }

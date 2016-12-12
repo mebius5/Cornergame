@@ -51,7 +51,6 @@ void DrawingHandler::draw(int dt) {
 
     for (it = this->componentList.begin(); it != this->componentList.end(); ++it) {
         ArtComponent* artComp = *it;
-        artComp->updateLocation();
         if (artComp->isVisible)
             camera.drawLighting(dt, artComp);
     }

@@ -38,8 +38,7 @@ SDL_Rect* OneTimeAnimationComponent::getNextSrcRect(int dt) {
         if (this->actionTime < 500) {
             clip.x = (this->actionTime / 75) * 32;
         } else if (!this->ended) {
-            this->ended = true;;
-            this->entity->height /= 3;
+            this->ended = true;
             clip.x = 224;
         } else {
             clip.x = 224;
@@ -53,6 +52,3 @@ SDL_Rect* OneTimeAnimationComponent::getNextSrcRect(int dt) {
 
     return &clip;
 }
-
-
-

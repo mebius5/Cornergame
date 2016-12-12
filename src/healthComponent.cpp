@@ -5,7 +5,8 @@ HealthComponent::HealthComponent(Entity * entity, int maxHealth, Command* onDeat
     health(maxHealth),
     maxHealth(maxHealth),
     isInvincible(false),
-    onDeath(onDeath) {
+    onDeath(onDeath),
+    splash(false) {
 }
 
 HealthComponent::~HealthComponent() {
@@ -34,6 +35,12 @@ void HealthComponent::takeDamage(int damage) {
         if (this->health <= 0)
             Component::commandList->push_back(this->onDeath);
     }
+}
+
+void HealthComponent::takeUnblockableDamage(int damage) {
+    this->health -= damage;
+    if (this->health <= 0)
+        Component::commandList->push_back(this->onDeath);
 }
 
 void HealthComponent::die() {

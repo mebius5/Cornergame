@@ -11,12 +11,14 @@ private:
     bool isInvincible;
     Command* onDeath;
 public:
+    bool splash;
     HealthComponent(Entity* entity, int maxHealth, Command* onDeath);
     ~HealthComponent();
     int getHealth();
     int getMaxHealth();
     void toggleInvincibility();
     void takeDamage(int damage);
+    void takeUnblockableDamage(int damage);
     void die();
     bool isIsInvincible() const;
     void setIsInvincible(bool isInvincible);

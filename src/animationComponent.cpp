@@ -16,6 +16,11 @@ SDL_Texture* AnimationComponent::getNextTexture(int /*dt*/) {
 }
 
 SDL_Rect* AnimationComponent::getNextSrcRect(int dt) {
+    if (this->entity->health->splash) {
+        this->entity->health->takeUnblockableDamage(dt);
+        this->entity->health->splash = false;
+    }
+
     bool& onGround = this->collisionComp->onGround;
     bool& onLeftWall = this->collisionComp->onLeftWall;
     bool& onRightWall = this->collisionComp->onRightWall;
