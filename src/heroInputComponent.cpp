@@ -132,4 +132,8 @@ void HeroInputComponent::invertControl() {
     tempKey = this->leftDodge;
     this->leftDodge = this->rightDodge;
     this->rightDodge = tempKey;
+
+    bool temp = this->leftPressed;
+    this->leftPressed = this->rightPressed;
+    this->rightPressed = temp;
 }

@@ -30,6 +30,7 @@ void BombCollisionComponent::onEntityCollision(DynamicCollisionComponent* otherC
         this->entity->physics->target = NULL;
         this->explode();
         otherComp->entity->health->splash = true;
+        this->entity->particle->setIndefSpawn(false);
         otherComp->entity->actionState = ACTION_DAMAGE;
     }
 }
@@ -39,5 +40,6 @@ void BombCollisionComponent::onStaticCollision(StaticCollisionComponent* otherCo
         this->entity->physics->freeze();
         this->entity->physics->target = NULL;
         this->explode();
+        this->entity->particle->setIndefSpawn(false);
     }
 }

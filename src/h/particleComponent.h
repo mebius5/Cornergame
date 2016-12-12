@@ -14,6 +14,8 @@ private:
 public:
     ParticleComponent(Entity* entity, SpawnParticleCommand* spawnCommand);
     ~ParticleComponent();
+    void slowSpawn();
+    void fastSpawn();
     void startSpawning(int upper, int lower);
     void setIndefSpawn(bool spawn);
     void update(int dt);
