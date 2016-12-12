@@ -354,8 +354,8 @@ Entity* EntityBuilder::createParticle(TextureEnum texType, int x, int y) {
     Entity* particle = new Entity(this->nextId++, x, y, 20, 20, 20, 20);
     particle->art = new ParticleAnimationComponent(particle, texture);
     particle->physics = new MovementComponent(particle);
-    particle->physics->xVelocity = 0.01 * (rand() % 20 - 10);
-    particle->physics->yVelocity = 0.01 * (rand() % 20 - 10);
+    particle->physics->xVelocity = 0.006 * (rand() % 20 - 10);
+    particle->physics->yVelocity = 0.006 * (rand() % 20 - 10);
     return particle;
 }
 
