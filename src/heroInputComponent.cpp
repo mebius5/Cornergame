@@ -13,7 +13,9 @@ HeroInputComponent::HeroInputComponent(Entity* entity, bool wasd) :
     rightDodge(wasd ? SDLK_b : SDLK_SLASH),
     jumpPressed(false),
     holdTime(-1.0f),
-    maxHold(500.0f) {
+    maxHold(500.0f),
+    leftPressed(false),
+    rightPressed(false) {
 }
 
 HeroInputComponent::~HeroInputComponent() {
@@ -34,6 +36,17 @@ void HeroInputComponent::updateTime(int dt) {
             this->holdTime = this->maxHold;
         }
     }
+    // see if we're holding down a key
+    if (this->leftPressed) {
+        this->entity->physics->accelerateX(-1);
+        if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
+            Component::commandList->push_back(this->runCommand);
+    }
+    if (this->rightPressed) {
+        this->entity->physics->accelerateX(1);
+        if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
+            Component::commandList->push_back(this->runCommand);
+    }
 }
 
 void HeroInputComponent::keyDown(SDL_Keycode keycode) {
@@ -50,10 +63,12 @@ void HeroInputComponent::keyDown(SDL_Keycode keycode) {
             this->entity->physics->accelerateX(-1);
             if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
                 Component::commandList->push_back(this->runCommand);
+            this->leftPressed = true;
         } else if (keycode == this->rightKey) {
             this->entity->physics->accelerateX(1);
             if (this->runCommand && dynamic_cast<HeroCollisionComponent*>(this->entity->collision)->onGround)
                 Component::commandList->push_back(this->runCommand);
+            this->rightPressed = true;
         } else if (keycode == this->shootKey) {
             // start to charge the shot
             if (this->holdTime < 0) {
@@ -83,6 +98,10 @@ void HeroInputComponent::keyUp(SDL_Keycode keycode) {
     } else if (keycode == this->downKey) {
         this->entity->physics->clearAccelerationY();
     } else if (keycode == this->leftKey || keycode == this->rightKey) {
+        if (keycode == this->leftKey)
+            this->leftPressed = false;
+        if (keycode == this->rightKey)
+            this->rightPressed = false;
         this->entity->physics->clearAccelerationX();
         if (this->stopCommand)
             Component::commandList->push_back(this->stopCommand);
