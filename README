@@ -15,6 +15,11 @@ make
 Assignment 12 Task Writeups
 
 Akshay
+- Created an animation for a dust particle
+- Built a particle component that generates particles at an entity for a random amount of time
+- Added particle effect to jumping animation, projectile collisions, sliding on walls, dodging, trail of smoke behind "bomb"
+- Fixed bug where player wouldn't keep moving after dodge if arrow key held
+- Fixed bug where player would keep moving after key release upon picking up beer
 
 Andrew
 - bug fixes:
