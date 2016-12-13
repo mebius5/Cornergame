@@ -17,22 +17,22 @@ void MenuState::begin(int /*level*/) {
     this->entityManager.createHorizontallyCenteredFadeInMenuText(
             FONT_GLOBAL, "Play", 80,
             255, 255, 255, 0, this->windowW, 100,
-            0, 5, STATE_LEVEL_SELECT);
+            0, 4, STATE_LEVEL_SELECT);
 
     this->entityManager.createHorizontallyCenteredFadeInMenuText(
             FONT_GLOBAL, "Tutorial", 80,
             255, 255, 255, 0, this->windowW, 250,
-            1, 5, STATE_TUTORIAL);
+            1, 4, STATE_TUTORIAL);
 
     this->entityManager.createHorizontallyCenteredFadeInMenuText(
             FONT_GLOBAL, "Highscore", 80,
             255, 255, 255, 0, this->windowW, 400,
-            2, 5, STATE_HIGHSCORE);
+            2, 4, STATE_HIGHSCORE);
 
     this->entityManager.createHorizontallyCenteredFadeInMenuText(
             FONT_GLOBAL, "Quit", 80,
             255, 255, 255, 0, this->windowW, 550,
-            3, 5, STATE_QUIT);
+            3, 4, STATE_QUIT);
 }
 
 StateEnum MenuState::run() {

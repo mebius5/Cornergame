@@ -6,7 +6,7 @@ BombIndicatorArtComponent::BombIndicatorArtComponent(Entity* entity, Entity* own
     ownerAmmo(owner->ammo),
     width(tex.width/8),
     height(tex.height/2) {
-    this->clip = {0, 0, tex.width/8, tex.height/2};
+    this->clip = {0, 0, (int)this->width, this->height};
 }
 
 void BombIndicatorArtComponent::updateLocation() {
