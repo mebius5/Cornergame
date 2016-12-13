@@ -6,7 +6,7 @@
  */
 
 GameManager::GameManager() :
-    title("<GAME NAME>"),
+    title("Super College Brawl"),
     width(1024),
     height(704)
 {
