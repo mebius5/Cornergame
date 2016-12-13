@@ -5,18 +5,22 @@ FadingTerrainArtComponent::FadingTerrainArtComponent(Entity *entity, SDL_Texture
     texture(texture),
     shakeTime(-999),
     maxShakeTime(1000) {
+    this->clip = {0,0,32,32};
 }
 
 void FadingTerrainArtComponent::startShake() {
     this->shakeTime=maxShakeTime;
 }
 
-SDL_Texture* FadingTerrainArtComponent::getNextTexture(int dt) {
-    int shakeDist = 10;
-    if(shakeTime!=-999){
+SDL_Texture* FadingTerrainArtComponent::getNextTexture(int) {
+    return this->texture;
+}
+
+SDL_Rect* FadingTerrainArtComponent::getNextSrcRect(int dt) {
+    if (shakeTime != -999) {
         this->shakeTime -= dt;
         if (this->shakeTime > 0) {
-            this->entity->x += (int) (cos(this->shakeTime) * shakeDist * (((float) this->shakeTime) / this->maxShakeTime));
+            clip.x = (1000 - shakeTime)/100 * 32;
         } else {
             this->shakeTime = -999;
             this->isVisible = false;
@@ -25,11 +29,7 @@ SDL_Texture* FadingTerrainArtComponent::getNextTexture(int dt) {
             }
         }
     }
-    return this->texture;
-}
-
-SDL_Rect* FadingTerrainArtComponent::getNextSrcRect(int) {
-    return NULL;
+    return &clip;
 }
 
 void FadingTerrainArtComponent::resetComponent() {

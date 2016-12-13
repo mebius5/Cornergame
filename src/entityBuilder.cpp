@@ -332,7 +332,7 @@ Entity* EntityBuilder::createFadingTerrain(TerrainTexEnum texType, int x, int y,
     if (!this->terrainTexMap[texType][numberHorizontal].sdlTexture)
         this->loadTerrain(texType, numberHorizontal);
     Texture texture = this->terrainTexMap[texType][numberHorizontal];
-    Entity* terrain = new Entity(this->nextId++, x, y, texture.width, texture.height, texture.width, texture.height);
+    Entity* terrain = new Entity(this->nextId++, x, y, texture.width/10, texture.height, texture.width/10, texture.height);
 
     terrain->art = new FadingTerrainArtComponent(terrain, texture.sdlTexture);
     terrain->collision = new FadingTerrainColComponent(terrain, freeTop, freeBot, freeRight, freeLeft);

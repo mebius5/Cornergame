@@ -150,6 +150,7 @@ private:
     SDL_Texture* texture;
     int shakeTime;
     int maxShakeTime;
+    SDL_Rect clip;
 public:
     FadingTerrainArtComponent(Entity* entity, SDL_Texture* texture);
     SDL_Texture* getNextTexture(int dt);
