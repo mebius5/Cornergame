@@ -17,6 +17,7 @@ SDL_Texture* FadingTerrainArtComponent::getNextTexture(int) {
 }
 
 SDL_Rect* FadingTerrainArtComponent::getNextSrcRect(int dt) {
+    clip.x = 0;
     if (shakeTime != -999) {
         this->shakeTime -= dt;
         if (this->shakeTime > 0) {

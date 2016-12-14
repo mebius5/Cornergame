@@ -44,7 +44,11 @@ Grady
 - Fixed dark theme background to display parallax scroll properly
 
 Pratyush
-
+-Added new sand crumbling animation
+-Added new water balloon animation
+-Made water balloon hitbox change over time
+-Added healthbars
+-Refactored code for rotations
 
 
 GENERAL CONTROLS
